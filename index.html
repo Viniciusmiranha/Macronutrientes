@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NUTRIQ - Calculadora Nutricional</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         CABEÇALHO / MENU
+    ====================================================== -->
+
+    <header class="header">
+
+        <!-- LOGO -->
+        <div class="logo-container">
+
+            <label for="logoInput" class="logo-label">
+
+                <!-- Imagem que posteriormente poderá receber a logo -->
+                <img
+                    src=""
+                    alt="Logo NUTRIQ"
+                    id="logoPreview"
+                >
+
+                <!-- Campo para selecionar imagem da logo -->
+                <input
+                    type="file"
+                    id="logoInput"
+                    name="logo"
+                    accept="image/*"
+                >
+
+            </label>
+
+            <div class="logo-text">
+                <h1>NUTRIQ</h1>
+                <span>CALCULE. ENTENDA. EVOLUA.</span>
+            </div>
+
+        </div>
+
+
+        <!-- NAVEGAÇÃO -->
+        <nav class="navigation">
+
+            <a href="#inicio">
+                <span>⌂</span>
+                Início
+            </a>
+
+            <a href="#calculadora">
+                <span>▥</span>
+                Calculadora de Macros
+            </a>
+
+            <a href="#imc">
+                <span>♙</span>
+                Calcular IMC
+            </a>
+
+            <!-- ÂNCORA PARA A SEÇÃO SOBRE NÓS -->
+            <a href="#sobre">
+                <span>ⓘ</span>
+                Sobre Nós
+            </a>
+
+        </nav>
+
+
+        <!-- BOTÃO LOGIN -->
+        <button
+            type="button"
+            class="login-button"
+            id="btnLogin"
+        >
+            ♙ Entrar / Login
+        </button>
+
+    </header>
+
+
+    <!-- =====================================================
+         CONTEÚDO PRINCIPAL
+    ====================================================== -->
+
+    <main id="inicio">
+
+
+        <!-- =================================================
+             TÍTULO PRINCIPAL
+        ================================================== -->
+
+        <section class="intro">
+
+            <h2>Calculadora de Macronutrientes</h2>
+
+            <p>
+                Descubra suas necessidades nutricionais diárias
+                de forma personalizada e alcance seus objetivos
+                com mais precisão.
+            </p>
+
+        </section>
+
+
+
+        <!-- =================================================
+             ÁREA DA CALCULADORA
+        ================================================== -->
+
+        <section
+            class="calculator-section"
+            id="calculadora"
+        >
+
+
+            <!-- =============================================
+                 CARD LATERAL - MACROS
+            ============================================== -->
+
+            <aside class="side-card macros-card">
+
+                <h3>Macros</h3>
+
+                <div class="card-icon">
+                    💪
+                </div>
+
+                <p>
+                    Calcule suas necessidades diárias de
+                    proteínas, carboidratos e gorduras de
+                    acordo com seu perfil e objetivo.
+                </p>
+
+            </aside>
+
+
+
+            <!-- =============================================
+                 CALCULADORA CENTRAL
+            ============================================== -->
+
+            <div class="calculator-container">
+
+
+                <!-- ABAS -->
+                <div class="calculator-tabs">
+
+                    <button
+                        type="button"
+                        class="tab active"
+                        id="tabMacros"
+                    >
+                        ▦ Calcular Macronutrientes
+                    </button>
+
+                    <button
+                        type="button"
+                        class="tab"
+                        id="tabIMC"
+                    >
+                        ♙ Calcular IMC
+                    </button>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     FORMULÁRIO DE MACRONUTRIENTES
+                ========================================== -->
+
+                <section
+                    class="macro-form"
+                    id="macroForm"
+                >
+
+                    <h3>♙ Seus Dados</h3>
+
+
+                    <form>
+
+                        <!-- LINHA 1 -->
+                        <div class="form-row">
+
+
+                            <!-- SEXO -->
+                            <div class="form-group">
+
+                                <label for="sexo">
+                                    Sexo
+                                </label>
+
+                                <select
+                                    id="sexo"
+                                    name="sexo"
+                                >
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option value="masculino">
+                                        Masculino
+                                    </option>
+
+                                    <option value="feminino">
+                                        Feminino
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+
+                            <!-- IDADE -->
+                            <div class="form-group">
+
+                                <label for="idade">
+                                    Idade
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="idade"
+                                    name="idade"
+                                    placeholder="Ex: 25"
+                                >
+
+                            </div>
+
+
+
+                            <!-- PESO -->
+                            <div class="form-group">
+
+                                <label for="peso">
+                                    Peso (kg)
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="peso"
+                                    name="peso"
+                                    placeholder="Ex: 70"
+                                    step="0.1"
+                                >
+
+                            </div>
+
+
+
+                            <!-- ALTURA -->
+                            <div class="form-group">
+
+                                <label for="altura">
+                                    Altura (cm)
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="altura"
+                                    name="altura"
+                                    placeholder="Ex: 175"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- LINHA 2 -->
+                        <div class="form-row">
+
+
+                            <!-- NÍVEL DE ATIVIDADE -->
+                            <div class="form-group">
+
+                                <label for="atividade">
+                                    Nível de Atividade
+                                </label>
+
+                                <select
+                                    id="atividade"
+                                    name="atividade"
+                                >
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option value="sedentario">
+                                        Sedentário
+                                    </option>
+
+                                    <option value="leve">
+                                        Atividade Leve
+                                    </option>
+
+                                    <option value="moderado">
+                                        Moderadamente Ativo
+                                    </option>
+
+                                    <option value="ativo">
+                                        Muito Ativo
+                                    </option>
+
+                                    <option value="atleta">
+                                        Extremamente Ativo
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+
+                            <!-- OBJETIVO -->
+                            <div class="form-group">
+
+                                <label for="objetivo">
+                                    Objetivo
+                                </label>
+
+                                <select
+                                    id="objetivo"
+                                    name="objetivo"
+                                >
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option value="emagrecer">
+                                        Emagrecer
+                                    </option>
+
+                                    <option value="manter">
+                                        Manter Peso
+                                    </option>
+
+                                    <option value="ganhar">
+                                        Ganhar Massa Muscular
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- BOTÃO -->
+                        <button
+                            type="submit"
+                            class="calculate-button"
+                        >
+                            Calcular Macros ↗
+                        </button>
+
+                    </form>
+
+                </section>
+
+
+
+                <!-- =========================================
+                     FORMULÁRIO IMC
+                ========================================== -->
+
+                <section
+                    class="imc-form"
+                    id="imc"
+                >
+
+                    <h3>Calcular IMC</h3>
+
+                    <form>
+
+                        <div class="form-group">
+
+                            <label for="imc-peso">
+                                Peso (kg)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="imc-peso"
+                                name="imc-peso"
+                                placeholder="Ex: 70"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="imc-altura">
+                                Altura (cm)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="imc-altura"
+                                name="imc-altura"
+                                placeholder="Ex: 175"
+                            >
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="calculate-button"
+                        >
+                            Calcular IMC ↗
+                        </button>
+
+                    </form>
+
+                </section>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 CARD LATERAL - IMC
+            ============================================== -->
+
+            <aside class="side-card imc-card">
+
+                <h3>IMC</h3>
+
+                <div class="card-icon">
+                    ♡
+                </div>
+
+                <p>
+                    Descubra seu Índice de Massa Corporal
+                    e entenda melhor sua condição física atual.
+                </p>
+
+            </aside>
+
+        </section>
+
+
+
+        <!-- =================================================
+             BENEFÍCIOS
+        ================================================== -->
+
+        <section class="benefits">
+
+            <article class="benefit">
+
+                <div class="benefit-icon">
+                    ◎
+                </div>
+
+                <div>
+                    <h3>Personalizado</h3>
+
+                    <p>
+                        Resultados adaptados ao seu corpo,
+                        rotina e objetivo.
+                    </p>
+                </div>
+
+            </article>
+
+
+
+            <article class="benefit">
+
+                <div class="benefit-icon">
+                    ▥
+                </div>
+
+                <div>
+                    <h3>Baseado em Ciência</h3>
+
+                    <p>
+                        Cálculos precisos com fórmulas
+                        reconhecidas.
+                    </p>
+                </div>
+
+            </article>
+
+
+
+            <article class="benefit">
+
+                <div class="benefit-icon">
+                    ♢
+                </div>
+
+                <div>
+                    <h3>Simples e Rápido</h3>
+
+                    <p>
+                        Obtenha suas informações
+                        em poucos segundos.
+                    </p>
+                </div>
+
+            </article>
+
+
+
+            <article class="benefit">
+
+                <div class="benefit-icon">
+                    ♧
+                </div>
+
+                <div>
+                    <h3>Saúde em Foco</h3>
+
+                    <p>
+                        Mais que números, um estilo
+                        de vida equilibrado.
+                    </p>
+                </div>
+
+            </article>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SOBRE NÓS
+             ÂNCORA: #sobre
+        ================================================== -->
+
+        <section
+            class="about-section"
+            id="sobre"
+        >
+
+            <div class="about-header">
+
+                <span>QUEM SOMOS</span>
+
+                <h2>Sobre Nós</h2>
+
+                <p>
+                    Conheça a equipe e o projeto por trás
+                    do NUTRIQ.
+                </p>
+
+            </div>
+
+
+
+            <!-- PROJETO -->
+            <article class="project">
+
+                <h3>Sobre o Projeto</h3>
+
+                <p>
+                    O NUTRIQ é um projeto desenvolvido com
+                    o objetivo de auxiliar os usuários no
+                    acompanhamento de suas necessidades
+                    nutricionais.
+                </p>
+
+                <p>
+                    A plataforma oferece ferramentas para
+                    cálculo de macronutrientes e Índice de
+                    Massa Corporal (IMC), proporcionando
+                    informações de maneira simples,
+                    organizada e personalizada.
+                </p>
+
+            </article>
+
+
+
+            <!-- EQUIPE -->
+            <section class="team">
+
+                <h3>Nossa Equipe</h3>
+
+
+                <div class="team-grid">
+
+
+                    <article class="team-member">
+
+                        <div class="member-image">
+                            <!-- Imagem do integrante -->
+                        </div>
+
+                        <h4>Vinícius</h4>
+
+                        <p>Frontend</p>
+
+                    </article>
+
+
+
+                    <article class="team-member">
+
+                        <div class="member-image">
+                            <!-- Imagem do integrante -->
+                        </div>
+
+                        <h4>Gabriel</h4>
+
+                        <p>Backend</p>
+
+                    </article>
+
+
+
+                    <article class="team-member">
+
+                        <div class="member-image">
+                            <!-- Imagem do integrante -->
+                        </div>
+
+                        <h4>Gabriel Costa</h4>
+
+                        <p>Design</p>
+
+                    </article>
+
+
+
+                    <article class="team-member">
+
+                        <div class="member-image">
+                            <!-- Imagem do integrante -->
+                        </div>
+
+                        <h4>Luis David</h4>
+
+                        <p>Documentação</p>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+
+
+   <!-- =====================================================
+     MODAL DE LOGIN
+===================================================== -->
+
+<div class="login-modal" id="loginModal">
+
+    <div class="login-overlay"></div>
+
+    <div class="login-box">
+
+        <!-- CABEÇALHO -->
+
+        <div class="login-header">
+
+            <div>
+                <h2 id="loginTitle">Entrar na sua conta</h2>
+                <p id="loginSubtitle">
+                    Acesse sua conta no NUTRIQ
+                </p>
+            </div>
+
+            <button
+                type="button"
+                class="close-login"
+                id="closeLogin">
+                &times;
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             LOGIN
+        ================================================== -->
+
+        <form class="login-form" id="loginForm">
+
+            <div class="form-group">
+
+                <label for="loginEmail">
+                    E-mail
+                </label>
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="seu@email.com"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="loginPassword">
+                    Senha
+                </label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Digite sua senha"
+                    required>
+
+            </div>
+
+
+            <div class="forgot-password">
+
+                <button type="button">
+                    Esqueci minha senha
+                </button>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="submit-login">
+
+                Entrar
+
+            </button>
+
+
+            <div class="login-divider">
+
+                <span>ou</span>
+
+            </div>
+
+
+            <div class="create-account">
+
+                <p>
+                    Ainda não possui uma conta?
+                </p>
+
+                <button
+                    type="button"
+                    id="criarConta">
+
+                    Criar uma conta
+
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <!-- =================================================
+             CADASTRO
+        ================================================== -->
+
+        <form
+            class="register-form"
+            id="registerForm"
+            style="display: none;">
+
+            <div class="register-fields">
+
+                <div class="form-group">
+
+                    <label for="nome">
+                        Nome completo
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nome"
+                        placeholder="Digite seu nome completo">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="nascimento">
+                        Data de nascimento
+                    </label>
+
+                    <input
+                        type="date"
+                        id="nascimento">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="cpf">
+                        CPF
+                    </label>
+
+                    <input
+                        type="text"
+                        id="cpf"
+                        placeholder="000.000.000-00">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="emailCadastro">
+                        E-mail
+                    </label>
+
+                    <input
+                        type="email"
+                        id="emailCadastro"
+                        placeholder="seu@email.com">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="telefone">
+                        Telefone
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="telefone"
+                        placeholder="(00) 00000-0000">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="senhaCadastro">
+                        Senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="senhaCadastro"
+                        placeholder="Crie uma senha">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="confirmarSenha">
+                        Confirmar senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmarSenha"
+                        placeholder="Digite a senha novamente">
+
+                </div>
+
+            </div>
+
+
+            <div class="terms">
+
+                <label>
+
+                    <input type="checkbox">
+
+                    <span>
+                        Concordo com os termos de uso
+                        e política de privacidade.
+                    </span>
+
+                </label>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="submit-login">
+
+                Criar conta
+
+            </button>
+
+
+            <div class="create-account">
+
+                <p>
+                    Já possui uma conta?
+                </p>
+
+                <button
+                    type="button"
+                    id="voltarLogin">
+
+                    Voltar para o login
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+    <!-- =====================================================
+         RODAPÉ
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <p>
+            © 2026 NUTRIQ - Todos os direitos reservados.
+        </p>
+
+    </footer>
+
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
