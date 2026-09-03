@@ -30,3 +30,54 @@ const macros = calcularProteinaISSN(pesoAtual, objetivoAtual);
 console.log(`Meta diária: ${macros.alvoDiario}`);
 console.log(`Dose por refeição: ${macros.doseIdealPorRefeicao} (${macros.frequencia})`);
 
+/**
+ * Calculadora Completa de Macronutrientes (Padrão ISSN)
+ */
+function calcularMacrosCompletos(peso, objetivo, nivelAtividade) {
+  // 1. Proteínas (1.4 a 2.0 g/kg para manutenção; 2.4 a 3.1 g/kg para déficit agressivo)
+  let multProteina = (objetivo === "cutting") ? 2.5 : 2.0; 
+  let proteinaDiaria = peso * multProteina;
+  
+  // 2. Gorduras (0.8 a 1.2 g/kg para manter o perfil hormonal)
+  let multGordura = 1.0; 
+  let gorduraDiaria = peso * multGordura;
+  
+  // 3. Carboidratos (3.0 a 5.0 g/kg para atividade moderada; > 5.0 para alta intensidade)
+  let multCarbo = (nivelAtividade === "moderada") ? 4.0 : 3.0;
+  if (objetivo === "cutting") multCarbo -= 1.5; // Reduz os carbos no déficit calórico
+  let carboDiario = peso * multCarbo;
+  
+  // Constantes de conversão energética
+  let kcalProteina = proteinaDiaria * 4;
+  let kcalCarbo = carboDiario * 4;
+  let kcalGordura = gorduraDiaria * 9;
+  let caloriasTotais = kcalProteina + kcalCarbo + kcalGordura;
+  
+  return {
+    calorias: `${caloriasTotais.toFixed(0)} kcal`,
+    macros: {
+      // Fontes comuns: frango desfiado, carne moída
+      proteina: `${proteinaDiaria.toFixed(0)}g (${kcalProteina.toFixed(0)} kcal)`,
+      
+      // Fontes comuns: pasta de amendoim (evitando opções como queijo, abacate ou castanhas)
+      gordura: `${gorduraDiaria.toFixed(0)}g (${kcalGordura.toFixed(0)} kcal)`,
+      
+      // Fontes comuns: arroz, feijão, porção de 30g de aveia
+      carbo: `${carboDiario.toFixed(0)}g (${kcalCarbo.toFixed(0)} kcal)`
+    }
+  };
+}
+
+// Testando a aplicação:
+// Exemplo para 87 kg com rotina moderada (ex: treino de força 3x/semana + corrida 2x/semana)
+const pesoAtual = 87;
+const objetivoAtual = "manutencao"; 
+const rotinaAtual = "moderada";
+
+const resultado = calcularMacrosCompletos(pesoAtual, objetivoAtual, rotinaAtual);
+
+// Use Logger.log(resultado) se estiver rodando no Google Apps Script
+console.log(`Alvo Calórico: ${resultado.calorias}`);
+console.log(`Proteínas: ${resultado.macros.proteina}`);
+console.log(`Gorduras: ${resultado.macros.gordura}`);
+console.log(`Carboidratos: ${resultado.macros.carbo}`);
