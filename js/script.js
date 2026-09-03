@@ -206,52 +206,6 @@ if (tabIMC && tabMacros && macroForm && imcForm) {
 
 
 /* =========================================================
-   FORMULÁRIO DE MACRONUTRIENTES
-========================================================= */
-
-const formularioMacros =
-    document.querySelector(".macro-form form");
-
-
-if (formularioMacros) {
-
-    formularioMacros.addEventListener("submit", function (event) {
-
-        event.preventDefault();
-
-        alert(
-            "Cálculo de macronutrientes será implementado posteriormente."
-        );
-
-    });
-
-}
-
-
-/* =========================================================
-   FORMULÁRIO DE IMC
-========================================================= */
-
-const formularioIMC =
-    document.querySelector(".imc-form form");
-
-
-if (formularioIMC) {
-
-    formularioIMC.addEventListener("submit", function (event) {
-
-        event.preventDefault();
-
-        alert(
-            "Cálculo do IMC será implementado posteriormente."
-        );
-
-    });
-
-}
-
-
-/* =========================================================
    FORMULÁRIO DE LOGIN
 ========================================================= */
 
