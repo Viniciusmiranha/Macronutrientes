@@ -84,7 +84,6 @@ a {
 
     display: flex;
     align-items: center;
-    justify-content: space-between;
 
     padding: 0 44px;
 
@@ -106,76 +105,28 @@ a {
 }
 
 
-/* =========================================================
+/* =========================
    LOGO
-========================================================= */
+========================= */
 
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 12px;
 
-    min-width: 260px;
-}
-
-.logo-label {
-    width: 44px;
-    height: 44px;
-
-    border-radius: 50%;
-
-    background: #e4e9df;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
-
-    cursor: pointer;
+    min-width: auto;
 
     flex-shrink: 0;
 }
 
-.logo-label img {
-    width: 100%;
-    height: 100%;
+.logo {
+    width: 200px;
 
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center;
 
     display: block;
-}
 
-/* Campo de seleção da imagem fica invisível */
-#logoInput {
-    display: none;
-}
-
-
-/* Nome da marca */
-
-.logo-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.logo-text h1 {
-    font-size: 20px;
-    font-weight: 600;
-
-    letter-spacing: 1px;
-
-    line-height: 1;
-}
-
-.logo-text span {
-    font-size: 7px;
-
-    letter-spacing: 1.2px;
-
-    color: #bfcac4;
-
-    margin-top: 4px;
+    flex-shrink: 0;
 }
 
 
@@ -189,7 +140,10 @@ a {
     display: flex;
     align-items: center;
 
-    gap: 42px;
+    gap: 30px;
+
+    margin-left: auto;
+    margin-right: 25px;
 }
 
 .navigation a {
@@ -246,6 +200,7 @@ a {
     transform: scaleX(1);
 }
 
+
 /* =========================================================
    BOTÃO LOGIN
 ========================================================= */
@@ -268,11 +223,14 @@ a {
     gap: 7px;
 
     transition: 0.2s ease;
+
+    flex-shrink: 0;
 }
 
 .login-button:hover {
     background: #b9ccbc;
 }
+
 
 
 /* =========================================================
@@ -438,7 +396,7 @@ a {
 
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
 
     border-bottom: 1px solid var(--borda);
 
@@ -511,6 +469,8 @@ a {
 }
 
 
+
+
 /* =========================================================
    LINHAS DO FORMULÁRIO
 ========================================================= */
@@ -528,6 +488,99 @@ a {
 .form-row:nth-of-type(2) {
     grid-template-columns: 1fr 1fr;
 }
+
+/* =========================================================
+   FORMULÁRIO DE ÁGUA
+========================================================= */
+
+.agua-form {
+    display: none;
+
+    padding: 30px;
+}
+
+.agua-form h3 {
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #374640;
+
+    padding-bottom: 14px;
+
+    border-bottom: 1px solid #dce1dc;
+
+    margin-bottom: 20px;
+}
+
+.agua-form .form-group {
+    margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   RESULTADO DA ÁGUA
+========================================================= */
+
+.agua-result {
+    display: none;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-top: 25px;
+
+    padding: 18px;
+
+    background: #edf5f1;
+
+    border: 1px solid #d5e3dc;
+
+    border-radius: 10px;
+
+    color: #29443b;
+}
+
+.agua-result.active {
+    display: flex;
+}
+
+.agua-result-icon {
+    width: 45px;
+    height: 45px;
+
+    border-radius: 50%;
+
+    background: #d9ebe4;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 22px;
+
+    flex-shrink: 0;
+}
+
+.agua-result strong {
+    display: block;
+
+    font-size: 22px;
+
+    color: #193b35;
+
+    margin-bottom: 2px;
+}
+
+.agua-result p {
+    margin: 0;
+
+    font-size: 11px;
+
+    color: #687873;
+}
+
 
 
 /* =========================================================
@@ -1555,10 +1608,17 @@ a {
     }
 
     .calculator-tabs {
-        height: auto;
+    height: 59px;
 
-        grid-template-columns: 1fr 1fr;
-    }
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    border-bottom: 1px solid var(--borda);
+
+    background: #fafbf9;
+}
+
 
     .tab {
         padding: 15px 8px;

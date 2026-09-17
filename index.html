@@ -13,67 +13,47 @@
 <body>
 
     <!-- =====================================================
-         CABECALKKKKKHO / MENU
+         CABECALHO / MENU
     ====================================================== -->
 
     <header class="header">
 
-        <!-- LOGO -->
-        <div class="logo-container">
-
-            <label for="logoInput" class="logo-label">
-
-                <!-- Imagem que posteriormente poderá receber a logo -->
-                <img
-                    src=""
-                    alt="Logo NUTRIQ"
-                    id="logoPreview"
-                >
-
-                <!-- Campo para selecionar imagem da logo -->
-                <input
-                    type="file"
-                    id="logoInput"
-                    name="logo"
-                    accept="image/*"
-                >
-
-            </label>
-
-            <div class="logo-text">
-                <h1>NUTRIQ</h1>
-                <span>CALCULE. ENTENDA. EVOLUA.</span>
-            </div>
-
-        </div>
-
-
-        <!-- NAVEGAÇÃO -->
-        <nav class="navigation">
-
-            <a href="#inicio">
-                <span>⌂</span>
-                Início
-            </a>
-            <!-- ÂNCORA PARA A SEÇÃO SOBRE NÓS -->
-            <a href="#sobre">
-                <span>ⓘ</span>
-                Sobre Nós
-            </a>
-
-        </nav>
-
-
-        <!-- BOTÃO LOGIN -->
-        <button
-            type="button"
-            class="login-button"
-            id="btnLogin"
+    <!-- LOGO -->
+    <div class="logo-container">
+        <img
+            src="img/logo.png"
+            alt="Logo NUTRIQ"
+            id="logoPreview"
+            class="logo"
         >
-            ♙ Entrar / Login
-        </button>
+    </div>
 
-    </header>
+    <!-- NAVEGAÇÃO -->
+    <nav class="navigation">
+
+        <a href="#inicio">
+            <span>⌂</span>
+            Início
+        </a>
+
+        <a href="#sobre">
+            <span>ⓘ</span>
+            Sobre Nós
+        </a>
+
+    </nav>
+
+    <!-- BOTÃO LOGIN -->
+    <button
+        type="button"
+        class="login-button"
+        id="btnLogin"
+    >
+        ♙ Entrar / Login
+    </button>
+
+</header>
+
 
 
     <!-- =====================================================
@@ -100,351 +80,482 @@
         </section>
 
 
+<!-- =================================================
+     ÁREA DA CALCULADORA
+================================================== -->
 
-        <!-- =================================================
-             ÁREA DA CALCULADORA
-        ================================================== -->
+<section
+    class="calculator-section"
+    id="calculadora"
+>
+
+    <!-- =============================================
+         CARD LATERAL - MACROS
+    ============================================== -->
+
+    <aside class="side-card macros-card">
+
+        <h3>Macros</h3>
+
+        <div class="card-icon">
+            💪
+        </div>
+
+        <p>
+            Calcule suas necessidades diárias de
+            proteínas, carboidratos e gorduras de
+            acordo com seu perfil e objetivo.
+        </p>
+
+    </aside>
+
+
+    <!-- =============================================
+         CALCULADORA CENTRAL
+    ============================================== -->
+
+    <div class="calculator-container">
+
+        <!-- =========================================
+             ABAS
+        ========================================== -->
+
+        <div class="calculator-tabs">
+
+            <button
+                type="button"
+                class="tab active"
+                id="tabMacros"
+            >
+                ⚖ Macros
+            </button>
+
+            <button
+                type="button"
+                class="tab"
+                id="tabIMC"
+            >
+                ⚕ IMC
+            </button>
+
+            <button
+                type="button"
+                class="tab"
+                id="tabAgua"
+            >
+                💧 Água
+            </button>
+
+        </div>
+
+
+        <!-- =========================================
+             FORMULÁRIO DE MACRONUTRIENTES
+        ========================================== -->
 
         <section
-            class="calculator-section"
-            id="calculadora"
+            class="macro-form"
+            id="macroForm"
         >
 
+            <h3>♙ Seus Dados</h3>
 
-            <!-- =============================================
-                 CARD LATERAL - MACROS
-            ============================================== -->
+            <form>
 
-            <aside class="side-card macros-card">
+                <!-- LINHA 1 -->
 
-                <h3>Macros</h3>
+                <div class="form-row">
 
-                <div class="card-icon">
-                    💪
+                    <!-- SEXO -->
+
+                    <div class="form-group">
+
+                        <label for="sexo">
+                            Sexo
+                        </label>
+
+                        <select
+                            id="sexo"
+                            name="sexo"
+                        >
+
+                            <option value="">
+                                Selecione
+                            </option>
+
+                            <option value="masculino">
+                                Masculino
+                            </option>
+
+                            <option value="feminino">
+                                Feminino
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- IDADE -->
+
+                    <div class="form-group">
+
+                        <label for="idade">
+                            Idade
+                        </label>
+
+                        <input
+                            type="number"
+                            id="idade"
+                            name="idade"
+                            placeholder="Ex: 25"
+                        >
+
+                    </div>
+
+
+                    <!-- PESO -->
+
+                    <div class="form-group">
+
+                        <label for="peso">
+                            Peso (kg)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="peso"
+                            name="peso"
+                            placeholder="Ex: 70"
+                            step="0.1"
+                        >
+
+                    </div>
+
+
+                    <!-- ALTURA -->
+
+                    <div class="form-group">
+
+                        <label for="altura">
+                            Altura (cm)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="altura"
+                            name="altura"
+                            placeholder="Ex: 175"
+                        >
+
+                    </div>
+
                 </div>
 
-                <p>
-                    Calcule suas necessidades diárias de
-                    proteínas, carboidratos e gorduras de
-                    acordo com seu perfil e objetivo.
-                </p>
 
-            </aside>
+                <!-- LINHA 2 -->
+
+                <div class="form-row">
+
+                    <!-- NÍVEL DE ATIVIDADE -->
+
+                    <div class="form-group">
+
+                        <label for="atividade">
+                            Nível de Atividade
+                        </label>
+
+                        <select
+                            id="atividade"
+                            name="atividade"
+                        >
+
+                            <option value="">
+                                Selecione
+                            </option>
+
+                            <option value="sedentario">
+                                Sedentário
+                            </option>
+
+                            <option value="leve">
+                                Atividade Leve
+                            </option>
+
+                            <option value="moderado">
+                                Moderadamente Ativo
+                            </option>
+
+                            <option value="ativo">
+                                Muito Ativo
+                            </option>
+
+                            <option value="atleta">
+                                Extremamente Ativo
+                            </option>
+
+                        </select>
+
+                    </div>
 
 
+                    <!-- OBJETIVO -->
 
-            <!-- =============================================
-                 CALCULADORA CENTRAL
-            ============================================== -->
+                    <div class="form-group">
 
-            <div class="calculator-container">
+                        <label for="objetivo">
+                            Objetivo
+                        </label>
 
+                        <select
+                            id="objetivo"
+                            name="objetivo"
+                        >
 
-                <!-- ABAS -->
-                <div class="calculator-tabs">
+                            <option value="">
+                                Selecione
+                            </option>
 
-                    <button
-                        type="button"
-                        class="tab active"
-                        id="tabMacros"
-                    >
-                        ▦ Calcular Macronutrientes
-                    </button>
+                            <option value="emagrecer">
+                                Emagrecer
+                            </option>
 
-                    <button
-                        type="button"
-                        class="tab"
-                        id="tabIMC"
-                    >
-                        ♙ Calcular IMC
-                    </button>
+                            <option value="manter">
+                                Manter Peso
+                            </option>
+
+                            <option value="ganhar">
+                                Ganhar Massa Muscular
+                            </option>
+
+                        </select>
+
+                    </div>
 
                 </div>
 
 
+                <!-- BOTÃO -->
 
-                <!-- =========================================
-                     FORMULÁRIO DE MACRONUTRIENTES
-                ========================================== -->
-
-                <section
-                    class="macro-form"
-                    id="macroForm"
+                <button
+                    type="submit"
+                    class="calculate-button"
                 >
+                    Calcular Macros ↗
+                </button>
 
-                    <h3>♙ Seus Dados</h3>
+            </form>
 
+        </section>
 
-                    <form>
 
-                        <!-- LINHA 1 -->
-                        <div class="form-row">
+        <!-- =========================================
+             FORMULÁRIO IMC
+        ========================================== -->
 
+        <section
+            class="imc-form"
+            id="imcForm"
+        >
 
-                            <!-- SEXO -->
-                            <div class="form-group">
+            <h3>Calcular IMC</h3>
 
-                                <label for="sexo">
-                                    Sexo
-                                </label>
+            <form>
 
-                                <select
-                                    id="sexo"
-                                    name="sexo"
-                                >
+                <div class="form-group">
 
-                                    <option value="">
-                                        Selecione
-                                    </option>
+                    <label for="imc-peso">
+                        Peso (kg)
+                    </label>
 
-                                    <option value="masculino">
-                                        Masculino
-                                    </option>
+                    <input
+                        type="number"
+                        id="imc-peso"
+                        name="imc-peso"
+                        placeholder="Ex: 70"
+                        step="0.1"
+                    >
 
-                                    <option value="feminino">
-                                        Feminino
-                                    </option>
+                </div>
 
-                                </select>
 
-                            </div>
+                <div class="form-group">
 
+                    <label for="imc-altura">
+                        Altura (cm)
+                    </label>
 
+                    <input
+                        type="number"
+                        id="imc-altura"
+                        name="imc-altura"
+                        placeholder="Ex: 175"
+                        step="0.1"
+                    >
 
-                            <!-- IDADE -->
-                            <div class="form-group">
+                </div>
 
-                                <label for="idade">
-                                    Idade
-                                </label>
 
-                                <input
-                                    type="number"
-                                    id="idade"
-                                    name="idade"
-                                    placeholder="Ex: 25"
-                                >
-
-                            </div>
-
-
-
-                            <!-- PESO -->
-                            <div class="form-group">
-
-                                <label for="peso">
-                                    Peso (kg)
-                                </label>
-
-                                <input
-                                    type="number"
-                                    id="peso"
-                                    name="peso"
-                                    placeholder="Ex: 70"
-                                    step="0.1"
-                                >
-
-                            </div>
-
-
-
-                            <!-- ALTURA -->
-                            <div class="form-group">
-
-                                <label for="altura">
-                                    Altura (cm)
-                                </label>
-
-                                <input
-                                    type="number"
-                                    id="altura"
-                                    name="altura"
-                                    placeholder="Ex: 175"
-                                >
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- LINHA 2 -->
-                        <div class="form-row">
-
-
-                            <!-- NÍVEL DE ATIVIDADE -->
-                            <div class="form-group">
-
-                                <label for="atividade">
-                                    Nível de Atividade
-                                </label>
-
-                                <select
-                                    id="atividade"
-                                    name="atividade"
-                                >
-
-                                    <option value="">
-                                        Selecione
-                                    </option>
-
-                                    <option value="sedentario">
-                                        Sedentário
-                                    </option>
-
-                                    <option value="leve">
-                                        Atividade Leve
-                                    </option>
-
-                                    <option value="moderado">
-                                        Moderadamente Ativo
-                                    </option>
-
-                                    <option value="ativo">
-                                        Muito Ativo
-                                    </option>
-
-                                    <option value="atleta">
-                                        Extremamente Ativo
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-
-
-                            <!-- OBJETIVO -->
-                            <div class="form-group">
-
-                                <label for="objetivo">
-                                    Objetivo
-                                </label>
-
-                                <select
-                                    id="objetivo"
-                                    name="objetivo"
-                                >
-
-                                    <option value="">
-                                        Selecione
-                                    </option>
-
-                                    <option value="emagrecer">
-                                        Emagrecer
-                                    </option>
-
-                                    <option value="manter">
-                                        Manter Peso
-                                    </option>
-
-                                    <option value="ganhar">
-                                        Ganhar Massa Muscular
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- BOTÃO -->
-                        <button
-                            type="submit"
-                            class="calculate-button"
-                        >
-                            Calcular Macros ↗
-                        </button>
-
-                    </form>
-
-                </section>
-
-
-
-                <!-- =========================================
-                     FORMULÁRIO IMC
-                ========================================== -->
-
-                <section
-                    class="imc-form"
-                    id="imc"
+                <button
+                    type="submit"
+                    class="calculate-button"
                 >
+                    Calcular IMC ↗
+                </button>
 
-                    <h3>Calcular IMC</h3>
+            </form>
 
-                    <form>
-
-                        <div class="form-group">
-
-                            <label for="imc-peso">
-                                Peso (kg)
-                            </label>
-
-                            <input
-                                type="number"
-                                id="imc-peso"
-                                name="imc-peso"
-                                placeholder="Ex: 70"
-                            >
-
-                        </div>
+        </section>
 
 
-                        <div class="form-group">
+        <!-- =========================================
+             FORMULÁRIO DE ÁGUA
+        ========================================== -->
 
-                            <label for="imc-altura">
-                                Altura (cm)
-                            </label>
+        <section
+            class="agua-form"
+            id="aguaForm"
+        >
 
-                            <input
-                                type="number"
-                                id="imc-altura"
-                                name="imc-altura"
-                                placeholder="Ex: 175"
-                            >
-
-                        </div>
+            <h3>
+                Calcule sua necessidade diária de água
+            </h3>
 
 
-                        <button
-                            type="submit"
-                            class="calculate-button"
-                        >
-                            Calcular IMC ↗
-                        </button>
+            <!-- PESO -->
 
-                    </form>
+            <div class="form-group">
 
-                </section>
+                <label for="aguaPeso">
+                    Peso (kg)
+                </label>
+
+                <input
+                    type="number"
+                    id="aguaPeso"
+                    placeholder="Ex: 70"
+                    min="1"
+                    step="0.1"
+                >
 
             </div>
 
 
+            <!-- ATIVIDADE -->
 
-            <!-- =============================================
-                 CARD LATERAL - IMC
-            ============================================== -->
+            <div class="form-group">
 
-            <aside class="side-card imc-card">
+                <label for="aguaAtividade">
+                    Nível de atividade física
+                </label>
 
-                <h3>IMC</h3>
+                <select id="aguaAtividade">
 
-                <div class="card-icon">
-                    ♡
+                    <option value="0">
+                        Baixa atividade
+                    </option>
+
+                    <option value="350">
+                        Atividade moderada
+                    </option>
+
+                    <option value="700">
+                        Alta atividade
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- CLIMA -->
+
+            <div class="form-group">
+
+                <label for="aguaClima">
+                    Condição do ambiente
+                </label>
+
+                <select id="aguaClima">
+
+                    <option value="0">
+                        Clima ameno
+                    </option>
+
+                    <option value="300">
+                        Clima quente
+                    </option>
+
+                    <option value="500">
+                        Muito quente
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- BOTÃO -->
+
+            <button
+                type="button"
+                class="calculate-button"
+                id="calculateAgua"
+            >
+                Calcular água ↗
+            </button>
+
+
+            <!-- RESULTADO -->
+
+            <div
+                class="agua-result"
+                id="aguaResult"
+            >
+
+                <span class="agua-result-icon">
+                    💧
+                </span>
+
+                <div>
+
+                    <strong id="aguaResultado">
+                        0 L
+                    </strong>
+
+                    <p>
+                        Estimativa de água por dia
+                    </p>
+
                 </div>
 
-                <p>
-                    Descubra seu Índice de Massa Corporal
-                    e entenda melhor sua condição física atual.
-                </p>
-
-            </aside>
+            </div>
 
         </section>
 
+    </div>
+
+
+    <!-- =============================================
+         CARD LATERAL - IMC
+    ============================================== -->
+
+    <aside class="side-card imc-card">
+
+        <h3>IMC</h3>
+
+        <div class="card-icon">
+            ♡
+        </div>
+
+        <p>
+            Descubra seu Índice de Massa Corporal
+            e entenda melhor sua condição física atual.
+        </p>
+
+    </aside>
+
+</section>
 
 
         <!-- =================================================
@@ -561,19 +672,18 @@
 
                 <h3>Sobre o Projeto</h3>
 
-                <p>
-               Quem Somos
+                <p>Quem Somos
 
-Somos estudantes da Universidade de Sorocaba (UNISO) e o NUTRIQ foi
- desenvolvido como parte do nosso Projeto Integrador do segundo semestre da graduação.
+Somos estudantes da Universidade de Sorocaba (UNISO) e o NUTRIQ foi 
+desenvolvido como parte do nosso Projeto Integrador do segundo semestre da graduação.
 
-O projeto surgiu da proposta de transformar os conhecimentos adquiridos em sala de aula em
- uma solução prática e acessível. Por meio do NUTRIQ, buscamos utilizar tecnologia e informação 
- para auxiliar os usuários no acompanhamento de suas necessidades nutricionais, de forma simples,
-  organizada e intuitiva.
-Mais do que desenvolver uma plataforma, o NUTRIQ representa nossa experiência de aprendizado, colaboração 
-e aplicação prática dos conhecimentos ao longo da nossa formação acadêmica.
-                </p>
+O projeto surgiu da proposta de transformar os conhecimentos adquiridos em sala de aula
+ em uma solução prática e acessível. Por meio do NUTRIQ, buscamos utilizar tecnologia e 
+ informação para auxiliar os usuários no acompanhamento de suas necessidades nutricionais,
+  de forma simples, organizada e intuitiva.
+
+Mais do que desenvolver uma plataforma, o NUTRIQ representa nossa experiência de aprendizado,
+ colaboração e aplicação prática dos conhecimentos ao longo da nossa formação acadêmica.</p>
 
             </article>
 
@@ -590,28 +700,26 @@ e aplicação prática dos conhecimentos ao longo da nossa formação acadêmica
 
                     <article class="team-member">
                         <h4>Vinícius</h4>
-                        <p>Frontend</p>
+                
                     </article>
 
 
 
                     <article class="team-member">
                         <h4>Gabriel</h4>
-                        <p>Backend</p>
+                    
                     </article>
 
 
 
                     <article class="team-member">
                         <h4>Gabriel Costa</h4>
-                        <p>Design</p>
                     </article>
 
 
 
                     <article class="team-member">
                         <h4>Luis David</h4>
-                        <p>Documentação</p>
 
                     </article>
 

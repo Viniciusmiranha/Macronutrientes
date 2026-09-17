@@ -813,3 +813,66 @@ function mostrarResultadoIMC(
     `;
 
 }
+
+// =========================================================
+// CALCULADORA DE ÁGUA
+// =========================================================
+
+const tabAgua = document.getElementById("tabAgua");
+const aguaForm = document.getElementById("aguaForm");
+
+const calculateAgua = document.getElementById("calculateAgua");
+
+const aguaPeso = document.getElementById("aguaPeso");
+const aguaAtividade = document.getElementById("aguaAtividade");
+const aguaClima = document.getElementById("aguaClima");
+
+const aguaResult = document.getElementById("aguaResult");
+const aguaResultado = document.getElementById("aguaResultado");
+
+
+calculateAgua.addEventListener("click", function () {
+
+    const peso = parseFloat(aguaPeso.value);
+
+    if (!peso || peso <= 0) {
+
+        alert("Digite um peso válido.");
+
+        return;
+    }
+
+
+    // Estimativa inicial:
+    // 35 ml de água por kg de peso
+
+    const aguaBase = peso * 35;
+
+
+    // Acréscimos conforme atividade e ambiente
+
+    const atividade =
+        parseFloat(aguaAtividade.value);
+
+    const clima =
+        parseFloat(aguaClima.value);
+
+
+    const aguaTotal =
+        aguaBase + atividade + clima;
+
+
+    // Converte ml para litros
+
+    const litros =
+        aguaTotal / 1000;
+
+
+    aguaResultado.textContent =
+        litros.toFixed(2) + " L";
+
+
+    aguaResult.classList.add("active");
+
+});
+
