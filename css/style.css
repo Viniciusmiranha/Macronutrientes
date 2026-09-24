@@ -2825,6 +2825,367 @@ body.reduce-motion *::after {
     transform: translateX(2px);
 }
 
+/* =========================================================
+   ACESSIBILIDADE APRIMORADA
+========================================================= */
+
+/* ---------------------------------------------------------
+   ESCALA DE TEXTO
+--------------------------------------------------------- */
+
+html {
+    font-size: calc(16px * var(--escala, 1));
+}
+
+/* Mantém elementos importantes legíveis */
+body {
+    line-height: 1.6;
+}
+
+p,
+li,
+label,
+input,
+select,
+textarea,
+button {
+    font-size: 1rem;
+}
+
+
+/* ---------------------------------------------------------
+   FOCO PARA NAVEGAÇÃO POR TECLADO
+--------------------------------------------------------- */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #2f6f5e;
+    outline-offset: 3px;
+    border-radius: 5px;
+}
+
+/* Modo de navegação por teclado */
+.keyboard-navigation *:focus-visible {
+    outline: 4px solid #f2b705 !important;
+    outline-offset: 4px !important;
+}
+
+
+/* ---------------------------------------------------------
+   ALTO CONTRASTE
+--------------------------------------------------------- */
+
+body.contraste {
+    background: #ffffff !important;
+    color: #000000 !important;
+}
+
+body.contraste header,
+body.contraste .header {
+    background: #000000 !important;
+    color: #ffffff !important;
+    border-bottom: 3px solid #ffffff;
+}
+
+body.contraste a {
+    color: #0000ee !important;
+    text-decoration: underline;
+}
+
+body.contraste button {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: 2px solid #000000 !important;
+}
+
+body.contraste button:hover,
+body.contraste button:focus {
+    background: #000000 !important;
+    color: #ffffff !important;
+}
+
+body.contraste input,
+body.contraste select,
+body.contraste textarea {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: 2px solid #000000 !important;
+}
+
+body.contraste input::placeholder,
+body.contraste textarea::placeholder {
+    color: #333333 !important;
+}
+
+body.contraste .calculator-container,
+body.contraste .side-card,
+body.contraste .benefit,
+body.contraste .resultado-imc,
+body.contraste .resultado-macros,
+body.contraste .agua-result,
+body.contraste .about-section,
+body.contraste .login-box {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: 2px solid #000000 !important;
+    box-shadow: none !important;
+}
+
+body.contraste .tab {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: 2px solid #000000 !important;
+}
+
+body.contraste .tab.active {
+    background: #000000 !important;
+    color: #ffffff !important;
+}
+
+body.contraste h1,
+body.contraste h2,
+body.contraste h3,
+body.contraste h4,
+body.contraste p,
+body.contraste span,
+body.contraste label {
+    color: #000000 !important;
+}
+
+body.contraste header h1,
+body.contraste header h2,
+body.contraste header h3,
+body.contraste header p,
+body.contraste header span,
+body.contraste header a {
+    color: #ffffff !important;
+}
+
+
+/* ---------------------------------------------------------
+   MENU DE ACESSIBILIDADE
+--------------------------------------------------------- */
+
+.accessibility-toggle {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+
+    background: #17342f;
+    color: #ffffff;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    z-index: 9998;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.accessibility-toggle:hover {
+    transform: scale(1.08);
+    background: #52766a;
+}
+
+.accessibility-toggle:focus-visible {
+    outline: 4px solid #f2b705;
+    outline-offset: 4px;
+}
+
+
+/* ---------------------------------------------------------
+   PAINEL
+--------------------------------------------------------- */
+
+.accessibility-panel {
+    position: fixed;
+
+    right: 20px;
+    bottom: 85px;
+
+    width: 300px;
+    max-width: calc(100vw - 30px);
+
+    padding: 20px;
+
+    background: #ffffff;
+    color: #1d2b27;
+
+    border: 2px solid #d9ded9;
+    border-radius: 14px;
+
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.20);
+
+    z-index: 10000;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(15px) scale(0.96);
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        visibility 0.2s ease;
+}
+
+.accessibility-panel.active {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(0) scale(1);
+}
+
+
+/* Título do painel */
+
+.accessibility-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 15px;
+}
+
+.accessibility-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+
+/* Botões */
+
+.accessibility-options {
+    display: grid;
+    gap: 10px;
+}
+
+.accessibility-options button {
+    width: 100%;
+
+    min-height: 44px;
+
+    padding: 10px 12px;
+
+    border: 1px solid #cfd6d1;
+    border-radius: 8px;
+
+    background: #f5f7f5;
+    color: #1d2b27;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.accessibility-options button:hover {
+    background: #e4ebe6;
+    border-color: #52766a;
+    transform: translateX(2px);
+}
+
+.accessibility-options button:focus-visible {
+    outline: 3px solid #f2b705;
+    outline-offset: 2px;
+}
+
+
+/* ---------------------------------------------------------
+   DARK MODE + ACESSIBILIDADE
+--------------------------------------------------------- */
+
+body.dark-mode .accessibility-panel {
+    background: #18221f;
+    color: #f5f5f5;
+    border-color: #3b4a45;
+}
+
+body.dark-mode .accessibility-options button {
+    background: #25322e;
+    color: #ffffff;
+    border-color: #45554f;
+}
+
+body.dark-mode .accessibility-options button:hover {
+    background: #30423c;
+}
+
+
+/* ---------------------------------------------------------
+   REDUÇÃO DE MOVIMENTO
+--------------------------------------------------------- */
+
+body.reduce-motion *,
+body.reduce-motion *::before,
+body.reduce-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}
+
+
+/* ---------------------------------------------------------
+   ÁREAS CLICÁVEIS
+--------------------------------------------------------- */
+
+button,
+.accessibility-toggle,
+.close-login,
+.tab {
+    min-height: 44px;
+}
+
+
+/* ---------------------------------------------------------
+   MENSAGENS DE ERRO E FEEDBACK
+--------------------------------------------------------- */
+
+.feedback-message {
+    role: alert;
+}
+
+.feedback-error {
+    border-left: 5px solid #b42318;
+}
+
+.feedback-success {
+    border-left: 5px solid #18794e;
+}
+
+.feedback-info {
+    border-left: 5px solid #2563eb;
+}
+
 
 /* =========================================================
    ACESSIBILIDADE - MODO ESCURO
