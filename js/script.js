@@ -1,1796 +1,1729 @@
-```javascript
 "use strict";
 
 /* =========================================================
    NUTRIQ
    SCRIPT PRINCIPAL
-
-   FUNCIONALIDADES:
-   - Calculadora de Macronutrientes
-   - Calculadora de IMC
-   - Calculadora de Água
-   - TMB
-   - GET
-   - Objetivos de calorias
-   - Abas das calculadoras
-   - Login / Cadastro
-   - Sistema de feedback
-   - Modo escuro
-   - Acessibilidade
-   - Header dinâmico
-   - Animações
-   - Preview da logo
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
 
-    /* =====================================================
-       ELEMENTOS PRINCIPAIS
-    ===================================================== */
+/* =========================================================
+   HEADER - ESCONDER AO ROLAR
+========================================================= */
 
-    const header = document.querySelector(".header");
+const header = document.querySelector(".header");
 
-    /* =====================================================
-       LOGIN
-    ===================================================== */
+let ultimaPosicao = window.scrollY;
 
-    const btnLogin = document.getElementById("btnLogin");
-    const loginModal = document.getElementById("loginModal");
-    const closeLogin = document.getElementById("closeLogin");
-    const loginOverlay = document.querySelector(".login-overlay");
+window.addEventListener("scroll", () => {
 
-    const loginForm = document.getElementById("loginForm");
-    const registerForm = document.getElementById("registerForm");
+    if (!header) return;
 
-    const criarConta = document.getElementById("criarConta");
-    const voltarLogin = document.getElementById("voltarLogin");
+    const posicaoAtual = window.scrollY;
 
-    const loginTitle = document.getElementById("loginTitle");
-    const loginSubtitle = document.getElementById("loginSubtitle");
+    // No topo, sempre mostrar
+    if (posicaoAtual <= 20) {
 
-    /* =====================================================
-       LOGO
-    ===================================================== */
+        header.classList.remove("hidden");
 
-    const logoInput = document.getElementById("logoInput");
-    const logoPreview = document.getElementById("logoPreview");
-
-    /* =====================================================
-       CALCULADORAS
-    ===================================================== */
-
-    const macroForm = document.getElementById("macroForm");
-    const imcForm = document.getElementById("imcForm");
-    const aguaForm = document.getElementById("aguaForm");
-
-    const formularioMacros =
-        document.querySelector(".macro-form form");
-
-    const formularioIMC =
-        document.querySelector(".imc-form form");
-
-    /* =====================================================
-       ABAS
-    ===================================================== */
-
-    const tabMacros = document.getElementById("tabMacros");
-    const tabIMC = document.getElementById("tabIMC");
-    const tabAgua = document.getElementById("tabAgua");
-
-    /* =====================================================
-       CALCULADORA DE ÁGUA
-    ===================================================== */
-
-    const calculateAgua = document.getElementById("calculateAgua");
-    const aguaPeso = document.getElementById("aguaPeso");
-    const aguaAtividade = document.getElementById("aguaAtividade");
-    const aguaClima = document.getElementById("aguaClima");
-
-    const aguaResult = document.getElementById("aguaResult");
-    const aguaResultado = document.getElementById("aguaResultado");
-
-    /* =====================================================
-       CONFIGURAÇÕES
-    ===================================================== */
-
-    const fatoresAtividade = {
-        sedentario: 1.20,
-        leve: 1.375,
-        moderado: 1.55,
-        ativo: 1.725,
-        atleta: 1.90
-    };
-
-    /* =====================================================
-       UTILITÁRIOS
-    ===================================================== */
-
-    function converterNumero(valor) {
-        if (typeof valor !== "string") {
-            return Number(valor);
-        }
-
-        return Number(
-            valor.trim().replace(",", ".")
-        );
     }
 
-    function arredondar(numero) {
-        return Math.round(numero);
+    // Descendo
+    else if (posicaoAtual > ultimaPosicao) {
+
+        header.classList.add("hidden");
+
     }
 
-    /* =====================================================
-       SISTEMA GLOBAL DE FEEDBACK
-    ===================================================== */
+    // Subindo
+    else {
 
-    function criarContainerFeedback() {
+        header.classList.remove("hidden");
 
-        let container =
-            document.getElementById("feedbackContainer");
+    }
 
-        if (container) {
-            return container;
-        }
+    ultimaPosicao = posicaoAtual;
+});
+
+
+/* =========================================================
+   ELEMENTOS DAS ABAS
+========================================================= */
+
+const tabMacros = document.getElementById("tabMacros");
+const tabIMC = document.getElementById("tabIMC");
+const tabAgua = document.getElementById("tabAgua");
+
+const macroForm = document.getElementById("macroForm");
+const imcForm = document.getElementById("imcForm");
+const aguaForm = document.getElementById("aguaForm");
+
+
+/* =========================================================
+   FUNÇÃO - MOSTRAR ABA
+========================================================= */
+
+function mostrarAba(aba) {
+
+    if (!macroForm || !imcForm || !aguaForm) return;
+
+    // Esconde todos
+    macroForm.style.display = "none";
+    imcForm.style.display = "none";
+    aguaForm.style.display = "none";
+
+    // Remove ativo
+    document.querySelectorAll(".tab").forEach(tab => {
+        tab.classList.remove("active");
+    });
+
+    // Mostra selecionado
+    if (aba === "macros") {
+
+        macroForm.style.display = "block";
+        tabMacros?.classList.add("active");
+
+    }
+
+    if (aba === "imc") {
+
+        imcForm.style.display = "block";
+        tabIMC?.classList.add("active");
+
+    }
+
+    if (aba === "agua") {
+
+        aguaForm.style.display = "block";
+        tabAgua?.classList.add("active");
+
+    }
+
+    // Pequena animação
+    const formularioAtual =
+        aba === "macros"
+            ? macroForm
+            : aba === "imc"
+                ? imcForm
+                : aguaForm;
+
+    formularioAtual.classList.remove("calculator-visible");
+
+    void formularioAtual.offsetWidth;
+
+    formularioAtual.classList.add("calculator-visible");
+}
+
+
+/* =========================================================
+   EVENTOS DAS ABAS
+========================================================= */
+
+tabMacros?.addEventListener("click", () => {
+    mostrarAba("macros");
+});
+
+tabIMC?.addEventListener("click", () => {
+    mostrarAba("imc");
+});
+
+tabAgua?.addEventListener("click", () => {
+    mostrarAba("agua");
+});
+
+
+/* =========================================================
+   FEEDBACK VISUAL
+========================================================= */
+
+function mostrarFeedback(mensagem, tipo = "info") {
+
+    let container = document.getElementById("feedbackContainer");
+
+    // Cria automaticamente caso não exista
+    if (!container) {
 
         container = document.createElement("div");
 
         container.id = "feedbackContainer";
 
-        container.setAttribute("aria-live", "polite");
-        container.setAttribute("aria-atomic", "true");
-
         document.body.appendChild(container);
-
-        return container;
     }
 
-    function mostrarFeedback(
-        mensagem,
-        tipo = "success"
-    ) {
+    const feedback = document.createElement("div");
 
-        const container =
-            criarContainerFeedback();
+    feedback.className = `feedback-message feedback-${tipo}`;
 
-        const feedback =
-            document.createElement("div");
+    let icone = "i";
 
-        feedback.className =
-            `feedback-message feedback-${tipo}`;
-
-        const icones = {
-            success: "✓",
-            error: "!",
-            info: "i"
-        };
-
-        feedback.innerHTML = `
-            <span class="feedback-icon">
-                ${icones[tipo] || "i"}
-            </span>
-
-            <span class="feedback-text">
-                ${mensagem}
-            </span>
-
-            <button
-                type="button"
-                class="feedback-close"
-                aria-label="Fechar mensagem"
-            >
-                ×
-            </button>
-        `;
-
-        container.appendChild(feedback);
-
-        const fechar =
-            feedback.querySelector(".feedback-close");
-
-        if (fechar) {
-            fechar.addEventListener("click", () => {
-                removerFeedback(feedback);
-            });
-        }
-
-        requestAnimationFrame(() => {
-            feedback.classList.add("visible");
-        });
-
-        setTimeout(() => {
-            removerFeedback(feedback);
-        }, 4500);
+    if (tipo === "success") {
+        icone = "✓";
     }
 
-    function removerFeedback(elemento) {
-
-        if (!elemento || !elemento.isConnected) {
-            return;
-        }
-
-        elemento.classList.remove("visible");
-
-        setTimeout(() => {
-
-            if (elemento.isConnected) {
-                elemento.remove();
-            }
-
-        }, 300);
+    if (tipo === "error") {
+        icone = "!";
     }
 
-    /* =====================================================
-       HEADER — ESCONDER AO ROLAR
-    ===================================================== */
+    feedback.innerHTML = `
 
-    let ultimaPosicao = window.scrollY;
+        <div class="feedback-icon">
+            ${icone}
+        </div>
 
-    if (header) {
+        <div class="feedback-text">
+            ${mensagem}
+        </div>
 
-        window.addEventListener(
-            "scroll",
-            () => {
+        <button
+            type="button"
+            class="feedback-close"
+            aria-label="Fechar mensagem"
+        >
+            ×
+        </button>
 
-                const posicaoAtual = window.scrollY;
+    `;
 
-                if (posicaoAtual <= 20) {
+    container.appendChild(feedback);
 
-                    header.classList.remove("hidden");
-
-                } else if (posicaoAtual > ultimaPosicao) {
-
-                    header.classList.add("hidden");
-
-                } else {
-
-                    header.classList.remove("hidden");
-                }
-
-                ultimaPosicao = posicaoAtual;
-            },
-            { passive: true }
-        );
-    }
-
-    /* =====================================================
-       LOGIN — ABRIR
-    ===================================================== */
-
-    function abrirLogin() {
-
-        if (!loginModal) {
-            return;
-        }
-
-        loginModal.classList.add("active");
-
-        loginModal.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        document.body.style.overflow = "hidden";
-
-        const primeiroCampo =
-            loginModal.querySelector("input");
-
-        if (primeiroCampo) {
-
-            setTimeout(() => {
-                primeiroCampo.focus();
-            }, 150);
-        }
-    }
-
-    /* =====================================================
-       LOGIN — FECHAR
-    ===================================================== */
-
-    function fecharLogin() {
-
-        if (!loginModal) {
-            return;
-        }
-
-        loginModal.classList.remove("active");
-
-        loginModal.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-        document.body.style.overflow = "";
-    }
-
-    if (btnLogin) {
-        btnLogin.addEventListener("click", abrirLogin);
-    }
-
-    if (closeLogin) {
-        closeLogin.addEventListener("click", fecharLogin);
-    }
-
-    if (loginOverlay) {
-
-        loginOverlay.addEventListener(
-            "click",
-            (event) => {
-
-                if (event.target === loginOverlay) {
-                    fecharLogin();
-                }
-            }
-        );
-    }
-
-    /* =====================================================
-       ESC — FECHAR LOGIN
-    ===================================================== */
-
-    document.addEventListener("keydown", (event) => {
-
-        if (event.key === "Escape") {
-            fecharLogin();
-        }
+    requestAnimationFrame(() => {
+        feedback.classList.add("visible");
     });
 
-    /* =====================================================
-       PREVIEW DA LOGO
-    ===================================================== */
+    const fechar = () => {
 
-    if (logoInput && logoPreview) {
+        feedback.classList.remove("visible");
 
-        logoInput.addEventListener(
-            "change",
-            (event) => {
+        setTimeout(() => {
+            feedback.remove();
+        }, 300);
 
-                const arquivo =
-                    event.target.files[0];
-
-                if (!arquivo) {
-                    return;
-                }
-
-                if (!arquivo.type.startsWith("image/")) {
-
-                    mostrarFeedback(
-                        "Selecione um arquivo de imagem válido.",
-                        "error"
-                    );
-
-                    logoInput.value = "";
-                    return;
-                }
-
-                const imagemURL =
-                    URL.createObjectURL(arquivo);
-
-                logoPreview.src = imagemURL;
-
-                logoPreview.onload = () => {
-                    URL.revokeObjectURL(imagemURL);
-                };
-            }
-        );
-    }
-
-    /* =====================================================
-       ABAS DAS CALCULADORAS
-    ===================================================== */
-
-    const calculadoras = {
-        macros: {
-            elemento: macroForm,
-            aba: tabMacros
-        },
-
-        imc: {
-            elemento: imcForm,
-            aba: tabIMC
-        },
-
-        agua: {
-            elemento: aguaForm,
-            aba: tabAgua
-        }
     };
 
-    function mostrarCalculadora(tipo) {
+    feedback
+        .querySelector(".feedback-close")
+        .addEventListener("click", fechar);
 
-        Object.values(calculadoras).forEach(
-            (calculadora) => {
+    setTimeout(fechar, 4500);
+}
 
-                if (calculadora.elemento) {
 
-                    calculadora.elemento.classList.remove(
-                        "calculator-visible"
-                    );
+/* =========================================================
+   FUNÇÕES AUXILIARES
+========================================================= */
 
-                    calculadora.elemento.style.display =
-                        "none";
-                }
+function numeroValido(valor) {
 
-                if (calculadora.aba) {
+    return valor !== "" &&
+           valor !== null &&
+           valor !== undefined &&
+           Number.isFinite(Number(valor)) &&
+           Number(valor) > 0;
 
-                    calculadora.aba.classList.remove(
-                        "active"
-                    );
+}
 
-                    calculadora.aba.setAttribute(
-                        "aria-selected",
-                        "false"
-                    );
-                }
-            }
+
+function arredondar(numero, casas = 1) {
+
+    const fator = Math.pow(10, casas);
+
+    return Math.round(numero * fator) / fator;
+
+}
+
+
+/* =========================================================
+   IMC
+========================================================= */
+
+const imcFormElement = document.querySelector(".imc-form form");
+
+imcFormElement?.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const peso = Number(
+        document.getElementById("imc-peso")?.value
+    );
+
+    const alturaCm = Number(
+        document.getElementById("imc-altura")?.value
+    );
+
+    if (!numeroValido(peso) || !numeroValido(alturaCm)) {
+
+        mostrarFeedback(
+            "Preencha corretamente o peso e a altura.",
+            "error"
         );
 
-        const selecionada =
-            calculadoras[tipo];
-
-        if (!selecionada) {
-            return;
-        }
-
-        if (selecionada.elemento) {
-
-            selecionada.elemento.style.display =
-                "block";
-
-            requestAnimationFrame(() => {
-
-                selecionada.elemento.classList.add(
-                    "calculator-visible"
-                );
-            });
-        }
-
-        if (selecionada.aba) {
-
-            selecionada.aba.classList.add("active");
-
-            selecionada.aba.setAttribute(
-                "aria-selected",
-                "true"
-            );
-        }
+        return;
     }
 
-    if (tabMacros) {
-        tabMacros.addEventListener(
-            "click",
-            () => mostrarCalculadora("macros")
+    if (alturaCm < 50 || alturaCm > 250) {
+
+        mostrarFeedback(
+            "Digite uma altura válida entre 50 cm e 250 cm.",
+            "error"
         );
+
+        return;
     }
 
-    if (tabIMC) {
-        tabIMC.addEventListener(
-            "click",
-            () => mostrarCalculadora("imc")
-        );
+    const altura = alturaCm / 100;
+
+    const imc = peso / (altura * altura);
+
+    let classificacao;
+    let classe = "";
+
+    if (imc < 18.5) {
+
+        classificacao = "Abaixo do peso";
+        classe = "imc-baixo";
+
+    } else if (imc < 25) {
+
+        classificacao = "Peso normal";
+        classe = "imc-normal";
+
+    } else if (imc < 30) {
+
+        classificacao = "Sobrepeso";
+        classe = "imc-sobrepeso";
+
+    } else {
+
+        classificacao = "Obesidade";
+        classe = "imc-obesidade";
+
     }
 
-    if (tabAgua) {
-        tabAgua.addEventListener(
-            "click",
-            () => mostrarCalculadora("agua")
-        );
-    }
-
-    /* =====================================================
-       LOGIN / CADASTRO
-    ===================================================== */
-
-    function mostrarCadastro() {
-
-        if (!loginForm || !registerForm) {
-            return;
-        }
-
-        loginForm.style.display = "none";
-        registerForm.style.display = "block";
-
-        if (loginTitle) {
-            loginTitle.textContent = "Criar sua conta";
-        }
-
-        if (loginSubtitle) {
-            loginSubtitle.textContent =
-                "Preencha seus dados para começar";
-        }
-    }
-
-    function mostrarLogin() {
-
-        if (!loginForm || !registerForm) {
-            return;
-        }
-
-        registerForm.style.display = "none";
-        loginForm.style.display = "block";
-
-        if (loginTitle) {
-            loginTitle.textContent =
-                "Entrar na sua conta";
-        }
-
-        if (loginSubtitle) {
-            loginSubtitle.textContent =
-                "Acesse sua conta no NUTRIQ";
-        }
-    }
-
-    if (criarConta) {
-
-        criarConta.addEventListener(
-            "click",
-            (event) => {
-
-                event.preventDefault();
-                mostrarCadastro();
-            }
-        );
-    }
-
-    if (voltarLogin) {
-
-        voltarLogin.addEventListener(
-            "click",
-            (event) => {
-
-                event.preventDefault();
-                mostrarLogin();
-            }
-        );
-    }
-
-    /* =====================================================
-       LOGIN
-    ===================================================== */
-
-    if (loginForm) {
-
-        loginForm.addEventListener(
-            "submit",
-            (event) => {
-
-                event.preventDefault();
-
-                mostrarFeedback(
-                    "Login será conectado ao sistema posteriormente.",
-                    "info"
-                );
-            }
-        );
-    }
-
-    /* =====================================================
-       CADASTRO
-    ===================================================== */
-
-    if (registerForm) {
-
-        registerForm.addEventListener(
-            "submit",
-            (event) => {
-
-                event.preventDefault();
-
-                mostrarFeedback(
-                    "Cadastro será conectado ao sistema posteriormente.",
-                    "info"
-                );
-            }
-        );
-    }
-
-    /* =====================================================
-       IMC
-    ===================================================== */
-
-    function calcularIMC(peso, alturaCentimetros) {
-
-        const alturaMetros =
-            alturaCentimetros / 100;
-
-        return peso /
-            (alturaMetros * alturaMetros);
-    }
-
-    function classificarIMC(imc) {
-
-        if (imc < 18.5) {
-
-            return {
-                nome: "Abaixo do peso",
-                classe: "imc-baixo",
-                percentual: 25
-            };
-        }
-
-        if (imc < 25) {
-
-            return {
-                nome: "Peso normal",
-                classe: "imc-normal",
-                percentual: 50
-            };
-        }
-
-        if (imc < 30) {
-
-            return {
-                nome: "Sobrepeso",
-                classe: "imc-sobrepeso",
-                percentual: 68
-            };
-        }
-
-        if (imc < 35) {
-
-            return {
-                nome: "Obesidade grau I",
-                classe: "imc-obesidade",
-                percentual: 80
-            };
-        }
-
-        if (imc < 40) {
-
-            return {
-                nome: "Obesidade grau II",
-                classe: "imc-obesidade",
-                percentual: 90
-            };
-        }
-
-        return {
-            nome: "Obesidade grau III",
-            classe: "imc-obesidade",
-            percentual: 100
-        };
-    }
-
-    /* =====================================================
-       FORMULÁRIO DO IMC
-    ===================================================== */
-
-    if (formularioIMC) {
-
-        formularioIMC.addEventListener(
-            "submit",
-            (event) => {
-
-                event.preventDefault();
-
-                const campoPeso =
-                    document.getElementById("imc-peso");
-
-                const campoAltura =
-                    document.getElementById("imc-altura");
-
-                if (!campoPeso || !campoAltura) {
-
-                    mostrarFeedback(
-                        "Não foi possível localizar os campos do IMC.",
-                        "error"
-                    );
-
-                    return;
-                }
-
-                const peso =
-                    converterNumero(campoPeso.value);
-
-                const altura =
-                    converterNumero(campoAltura.value);
-
-                if (
-                    !Number.isFinite(peso) ||
-                    peso <= 0
-                ) {
-
-                    mostrarFeedback(
-                        "Informe um peso válido.",
-                        "error"
-                    );
-
-                    campoPeso.focus();
-                    return;
-                }
-
-                if (
-                    !Number.isFinite(altura) ||
-                    altura <= 0
-                ) {
-
-                    mostrarFeedback(
-                        "Informe uma altura válida.",
-                        "error"
-                    );
-
-                    campoAltura.focus();
-                    return;
-                }
-
-                if (
-                    altura < 50 ||
-                    altura > 250
-                ) {
-
-                    mostrarFeedback(
-                        "A altura deve estar entre 50 cm e 250 cm.",
-                        "error"
-                    );
-
-                    campoAltura.focus();
-                    return;
-                }
-
-                const imc =
-                    calcularIMC(peso, altura);
-
-                const classificacao =
-                    classificarIMC(imc);
-
-                mostrarResultadoIMC(
-                    imc,
-                    classificacao
-                );
-
-                mostrarFeedback(
-                    "IMC calculado com sucesso.",
-                    "success"
-                );
-            }
-        );
-    }
-
-    /* =====================================================
-       RESULTADO DO IMC
-    ===================================================== */
-
-    function mostrarResultadoIMC(
+    criarResultadoIMC(
         imc,
-        classificacao
-    ) {
+        classificacao,
+        classe
+    );
 
-        if (!formularioIMC) {
-            return;
-        }
+    mostrarFeedback(
+        "Cálculo do IMC realizado com sucesso!",
+        "success"
+    );
 
-        let resultado =
-            document.getElementById("resultadoIMC");
+});
 
-        if (!resultado) {
 
-            resultado =
-                document.createElement("section");
+/* =========================================================
+   CRIAR RESULTADO DO IMC
+========================================================= */
 
-            resultado.id =
-                "resultadoIMC";
+function criarResultadoIMC(imc, classificacao, classe) {
 
-            resultado.className =
-                "resultado-imc";
+    let resultado = document.querySelector(".resultado-imc");
 
-            formularioIMC.after(resultado);
-        }
+    if (!resultado) {
 
-        resultado.setAttribute(
-            "aria-live",
-            "polite"
+        resultado = document.createElement("div");
+
+        resultado.className = "resultado-imc";
+
+        imcForm.appendChild(resultado);
+    }
+
+    const imcFormatado = arredondar(imc, 1);
+
+    // Posição aproximada do marcador
+    let porcentagem = ((imc - 15) / (40 - 15)) * 100;
+
+    porcentagem = Math.max(
+        0,
+        Math.min(100, porcentagem)
+    );
+
+    resultado.innerHTML = `
+
+        <div class="resultado-header">
+
+            <span class="resultado-label">
+                Resultado
+            </span>
+
+            <h3>
+                Seu Índice de Massa Corporal
+            </h3>
+
+            <p>
+                O resultado calculado com base no seu peso e altura.
+            </p>
+
+        </div>
+
+        <div class="imc-result-main">
+
+            <strong class="imc-number">
+                ${imcFormatado}
+            </strong>
+
+            <span class="imc-unit">
+                kg/m²
+            </span>
+
+        </div>
+
+        <div class="imc-classificacao ${classe}">
+
+            <span>
+                Classificação
+            </span>
+
+            <strong>
+                ${classificacao}
+            </strong>
+
+        </div>
+
+        <div class="imc-scale">
+
+            <div class="imc-scale-track">
+
+                <div
+                    class="imc-marker"
+                    style="left: ${porcentagem}%"
+                ></div>
+
+            </div>
+
+            <div class="imc-scale-labels">
+
+                <span>Baixo</span>
+                <span>Normal</span>
+                <span>Sobrepeso</span>
+                <span>Obesidade</span>
+
+            </div>
+
+        </div>
+    `;
+
+    resultado.classList.remove("resultado-visible");
+
+    void resultado.offsetWidth;
+
+    resultado.classList.add("resultado-visible");
+}
+
+
+/* =========================================================
+   CÁLCULO DE ÁGUA
+========================================================= */
+
+const calcularAgua = document.getElementById("calculateAgua");
+
+calcularAgua?.addEventListener("click", () => {
+
+    const peso = Number(
+        document.getElementById("aguaPeso")?.value
+    );
+
+    const atividade = Number(
+        document.getElementById("aguaAtividade")?.value || 0
+    );
+
+    const clima = Number(
+        document.getElementById("aguaClima")?.value || 0
+    );
+
+    if (!numeroValido(peso)) {
+
+        mostrarFeedback(
+            "Digite seu peso para calcular a quantidade de água.",
+            "error"
         );
 
-        resultado.innerHTML = `
+        return;
+    }
 
-            <div class="resultado-header">
+    if (peso < 20 || peso > 300) {
 
-                <span class="resultado-label">
-                    Resultado
-                </span>
+        mostrarFeedback(
+            "Digite um peso válido.",
+            "error"
+        );
 
-                <h3>
-                    Seu IMC
-                </h3>
+        return;
+    }
 
-            </div>
+    /*
+       Base:
+       35 mL de água por kg de peso
 
-            <div class="imc-result-main">
+       Depois são adicionados os valores
+       selecionados para atividade e clima.
+    */
 
-                <strong class="imc-number">
-                    ${imc.toFixed(1)}
-                </strong>
+    const aguaBase = peso * 35;
 
-                <span class="imc-unit">
-                    kg/m²
-                </span>
+    const aguaTotalMl =
+        aguaBase +
+        atividade +
+        clima;
 
-            </div>
+    const aguaLitros =
+        aguaTotalMl / 1000;
 
-            <div class="imc-classificacao ${classificacao.classe}">
+    const resultado = document.getElementById("aguaResult");
+    const texto = document.getElementById("aguaResultado");
+
+    if (texto) {
+
+        texto.textContent =
+            `${arredondar(aguaLitros, 2)} L`;
+
+    }
+
+    resultado?.classList.remove("active");
+
+    void resultado?.offsetWidth;
+
+    resultado?.classList.add("active");
+
+    mostrarFeedback(
+        "Sua estimativa diária de água foi calculada!",
+        "success"
+    );
+
+});
+
+
+/* =========================================================
+   MACRONUTRIENTES
+========================================================= */
+
+const macroFormElement = document.querySelector(".macro-form form");
+
+macroFormElement?.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const sexo =
+        document.getElementById("sexo")?.value;
+
+    const idade =
+        Number(document.getElementById("idade")?.value);
+
+    const peso =
+        Number(document.getElementById("peso")?.value);
+
+    const altura =
+        Number(document.getElementById("altura")?.value);
+
+    const atividade =
+        document.getElementById("atividade")?.value;
+
+    const objetivo =
+        document.getElementById("objetivo")?.value;
+
+
+    /* =========================
+       VALIDAÇÃO
+    ========================= */
+
+    if (!sexo) {
+
+        mostrarFeedback(
+            "Selecione seu sexo.",
+            "error"
+        );
+
+        return;
+    }
+
+    if (!numeroValido(idade) ||
+        !numeroValido(peso) ||
+        !numeroValido(altura)) {
+
+        mostrarFeedback(
+            "Preencha idade, peso e altura corretamente.",
+            "error"
+        );
+
+        return;
+    }
+
+    if (!atividade) {
+
+        mostrarFeedback(
+            "Selecione seu nível de atividade.",
+            "error"
+        );
+
+        return;
+    }
+
+    if (!objetivo) {
+
+        mostrarFeedback(
+            "Selecione seu objetivo.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /* =========================
+       VALIDAÇÕES DE FAIXA
+    ========================= */
+
+    if (idade < 10 || idade > 100) {
+
+        mostrarFeedback(
+            "Digite uma idade entre 10 e 100 anos.",
+            "error"
+        );
+
+        return;
+    }
+
+    if (peso < 25 || peso > 300) {
+
+        mostrarFeedback(
+            "Digite um peso válido.",
+            "error"
+        );
+
+        return;
+    }
+
+    if (altura < 100 || altura > 250) {
+
+        mostrarFeedback(
+            "Digite uma altura entre 100 cm e 250 cm.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       TMB - MIFFLIN-ST JEOR
+    ===================================================== */
+
+    let tmb;
+
+    if (sexo === "masculino") {
+
+        tmb =
+            (10 * peso) +
+            (6.25 * altura) -
+            (5 * idade) +
+            5;
+
+    } else {
+
+        tmb =
+            (10 * peso) +
+            (6.25 * altura) -
+            (5 * idade) -
+            161;
+
+    }
+
+
+    /* =====================================================
+       FATOR DE ATIVIDADE
+    ===================================================== */
+
+    const fatoresAtividade = {
+
+        sedentario: 1.2,
+
+        leve: 1.375,
+
+        moderado: 1.55,
+
+        ativo: 1.725,
+
+        atleta: 1.9
+
+    };
+
+
+    const fator =
+        fatoresAtividade[atividade];
+
+
+    /*
+       Gasto energético diário estimado
+    */
+
+    const gasto =
+        tmb * fator;
+
+
+    /* =====================================================
+       AJUSTE POR OBJETIVO
+    ===================================================== */
+
+    let calorias;
+
+    if (objetivo === "emagrecer") {
+
+        calorias = gasto * 0.80;
+
+    } else if (objetivo === "ganhar") {
+
+        calorias = gasto * 1.10;
+
+    } else {
+
+        calorias = gasto;
+
+    }
+
+
+    /*
+       Proteína:
+       2 g por kg
+
+       Gordura:
+       25% das calorias
+
+       Carboidratos:
+       calorias restantes
+    */
+
+    const proteinaGramas =
+        peso * 2;
+
+    const gorduraGramas =
+        (calorias * 0.25) / 9;
+
+    const caloriasProteina =
+        proteinaGramas * 4;
+
+    const caloriasGordura =
+        gorduraGramas * 9;
+
+    const carboidratoGramas =
+        Math.max(
+            0,
+            (calorias -
+                caloriasProteina -
+                caloriasGordura) / 4
+        );
+
+
+    /* =====================================================
+       PORCENTAGENS
+    ===================================================== */
+
+    const percentualProteina =
+        (caloriasProteina / calorias) * 100;
+
+    const percentualGordura =
+        (caloriasGordura / calorias) * 100;
+
+    const percentualCarboidrato =
+        (carboidratoGramas * 4 / calorias) * 100;
+
+
+    criarResultadoMacros({
+
+        calorias,
+
+        proteina: proteinaGramas,
+
+        carboidrato: carboidratoGramas,
+
+        gordura: gorduraGramas,
+
+        percentualProteina,
+
+        percentualCarboidrato,
+
+        percentualGordura,
+
+        tmb,
+
+        gasto
+
+    });
+
+
+    mostrarFeedback(
+        "Seus macronutrientes foram calculados com sucesso!",
+        "success"
+    );
+
+});
+
+
+/* =========================================================
+   RESULTADO DOS MACRONUTRIENTES
+========================================================= */
+
+function criarResultadoMacros(dados) {
+
+    let resultado =
+        document.querySelector(".resultado-macros");
+
+    if (!resultado) {
+
+        resultado = document.createElement("div");
+
+        resultado.className =
+            "resultado-macros";
+
+        macroForm.appendChild(resultado);
+
+    }
+
+
+    resultado.innerHTML = `
+
+        <div class="resultado-header">
+
+            <span class="resultado-label">
+                Resultado
+            </span>
+
+            <h3>
+                Seus Macronutrientes
+            </h3>
+
+            <p>
+                Estimativa diária baseada nos dados informados.
+            </p>
+
+        </div>
+
+
+        <div class="resultado-calorias">
+
+            <span>
+                Necessidade energética estimada
+            </span>
+
+            <strong>
+                ${Math.round(dados.calorias)}
+                <small>kcal/dia</small>
+            </strong>
+
+        </div>
+
+
+        <div class="macro-result-grid">
+
+
+            <!-- PROTEÍNA -->
+
+            <div class="macro-result-card">
+
+                <div class="macro-card-icon">
+                    P
+                </div>
 
                 <span>
-                    Classificação
+                    Proteínas
                 </span>
 
                 <strong>
-                    ${classificacao.nome}
+                    ${arredondar(dados.proteina, 0)} g
                 </strong>
 
-            </div>
-
-            <div class="imc-scale">
-
-                <div class="imc-scale-track">
+                <div class="macro-progress">
 
                     <span
-                        class="imc-marker"
-                        style="left: ${classificacao.percentual}%"
+                        style="width: ${Math.min(
+                            dados.percentualProteina,
+                            100
+                        )}%"
                     ></span>
 
                 </div>
 
-                <div class="imc-scale-labels">
+                <small>
+                    ${arredondar(
+                        dados.percentualProteina,
+                        0
+                    )}% das calorias
+                </small>
 
-                    <span>Baixo</span>
-                    <span>Normal</span>
-                    <span>Sobrepeso</span>
-                    <span>Obesidade</span>
+            </div>
 
+
+            <!-- CARBOIDRATO -->
+
+            <div class="macro-result-card">
+
+                <div class="macro-card-icon">
+                    C
                 </div>
 
-            </div>
-        `;
-
-        requestAnimationFrame(() => {
-
-            resultado.classList.add(
-                "resultado-visible"
-            );
-        });
-    }
-
-    /* =====================================================
-       TMB
-       Fórmula de Mifflin-St Jeor
-    ===================================================== */
-
-    function calcularTMB(
-        sexo,
-        peso,
-        altura,
-        idade
-    ) {
-
-        if (sexo === "masculino") {
-
-            return (
-                (10 * peso) +
-                (6.25 * altura) -
-                (5 * idade) +
-                5
-            );
-        }
-
-        if (sexo === "feminino") {
-
-            return (
-                (10 * peso) +
-                (6.25 * altura) -
-                (5 * idade) -
-                161
-            );
-        }
-
-        return 0;
-    }
-
-    /* =====================================================
-       GET
-    ===================================================== */
-
-    function calcularGET(
-        tmb,
-        atividade
-    ) {
-
-        const fator =
-            fatoresAtividade[atividade];
-
-        if (!fator) {
-            return 0;
-        }
-
-        return tmb * fator;
-    }
-
-    /* =====================================================
-       CALORIAS PELO OBJETIVO
-    ===================================================== */
-
-    function calcularCaloriasObjetivo(
-        get,
-        objetivo
-    ) {
-
-        const multiplicadores = {
-            emagrecer: 0.80,
-            ganhar: 1.10,
-            manter: 1
-        };
-
-        return get *
-            (multiplicadores[objetivo] || 1);
-    }
-
-    /* =====================================================
-       MACRONUTRIENTES
-    ===================================================== */
-
-    function calcularMacros(
-        calorias,
-        peso,
-        objetivo
-    ) {
-
-        const proteinaPorKg =
-            objetivo === "emagrecer" ||
-            objetivo === "ganhar"
-                ? 2.0
-                : 1.8;
-
-        const gorduraPorKg = 0.8;
-
-        const proteina =
-            peso * proteinaPorKg;
-
-        const gordura =
-            peso * gorduraPorKg;
-
-        const caloriasProteina =
-            proteina * 4;
-
-        const caloriasGordura =
-            gordura * 9;
-
-        const caloriasCarboidrato =
-            Math.max(
-                0,
-                calorias -
-                caloriasProteina -
-                caloriasGordura
-            );
-
-        const carboidrato =
-            caloriasCarboidrato / 4;
-
-        return {
-            proteina: arredondar(proteina),
-            carboidrato: arredondar(carboidrato),
-            gordura: arredondar(gordura),
-            calorias: arredondar(calorias)
-        };
-    }
-
-    /* =====================================================
-       VALIDAÇÃO DOS MACROS
-    ===================================================== */
-
-    function validarDadosMacros(
-        sexo,
-        idade,
-        peso,
-        altura,
-        atividade,
-        objetivo
-    ) {
-
-        if (!sexo) {
-
-            mostrarFeedback(
-                "Selecione o sexo.",
-                "error"
-            );
-
-            return false;
-        }
-
-        if (
-            !Number.isFinite(idade) ||
-            idade < 1 ||
-            idade > 120
-        ) {
-
-            mostrarFeedback(
-                "Informe uma idade entre 1 e 120 anos.",
-                "error"
-            );
-
-            return false;
-        }
-
-        if (
-            !Number.isFinite(peso) ||
-            peso <= 0
-        ) {
-
-            mostrarFeedback(
-                "Informe um peso válido.",
-                "error"
-            );
-
-            return false;
-        }
-
-        if (
-            !Number.isFinite(altura) ||
-            altura < 50 ||
-            altura > 250
-        ) {
-
-            mostrarFeedback(
-                "Informe uma altura entre 50 cm e 250 cm.",
-                "error"
-            );
-
-            return false;
-        }
-
-        if (!atividade) {
-
-            mostrarFeedback(
-                "Selecione seu nível de atividade.",
-                "error"
-            );
-
-            return false;
-        }
-
-        if (!objetivo) {
-
-            mostrarFeedback(
-                "Selecione seu objetivo.",
-                "error"
-            );
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /* =====================================================
-       FORMULÁRIO DE MACROS
-    ===================================================== */
-
-    if (formularioMacros) {
-
-        formularioMacros.addEventListener(
-            "submit",
-            (event) => {
-
-                event.preventDefault();
-
-                const sexoElement =
-                    document.getElementById("sexo");
-
-                const idadeElement =
-                    document.getElementById("idade");
-
-                const pesoElement =
-                    document.getElementById("peso");
-
-                const alturaElement =
-                    document.getElementById("altura");
-
-                const atividadeElement =
-                    document.getElementById("atividade");
-
-                const objetivoElement =
-                    document.getElementById("objetivo");
-
-                if (
-                    !sexoElement ||
-                    !idadeElement ||
-                    !pesoElement ||
-                    !alturaElement ||
-                    !atividadeElement ||
-                    !objetivoElement
-                ) {
-
-                    mostrarFeedback(
-                        "Não foi possível localizar todos os campos.",
-                        "error"
-                    );
-
-                    return;
-                }
-
-                const sexo =
-                    sexoElement.value;
-
-                const idade =
-                    converterNumero(
-                        idadeElement.value
-                    );
-
-                const peso =
-                    converterNumero(
-                        pesoElement.value
-                    );
-
-                const altura =
-                    converterNumero(
-                        alturaElement.value
-                    );
-
-                const atividade =
-                    atividadeElement.value;
-
-                const objetivo =
-                    objetivoElement.value;
-
-                if (
-                    !validarDadosMacros(
-                        sexo,
-                        idade,
-                        peso,
-                        altura,
-                        atividade,
-                        objetivo
-                    )
-                ) {
-                    return;
-                }
-
-                const tmb =
-                    calcularTMB(
-                        sexo,
-                        peso,
-                        altura,
-                        idade
-                    );
-
-                const get =
-                    calcularGET(
-                        tmb,
-                        atividade
-                    );
-
-                const calorias =
-                    calcularCaloriasObjetivo(
-                        get,
-                        objetivo
-                    );
-
-                const macros =
-                    calcularMacros(
-                        calorias,
-                        peso,
-                        objetivo
-                    );
-
-                mostrarResultadoMacros(
-                    tmb,
-                    get,
-                    macros,
-                    objetivo
-                );
-
-                mostrarFeedback(
-                    "Cálculo concluído com sucesso.",
-                    "success"
-                );
-            }
-        );
-    }
-
-    /* =====================================================
-       RESULTADO DOS MACROS
-    ===================================================== */
-
-    function mostrarResultadoMacros(
-        tmb,
-        get,
-        macros,
-        objetivo
-    ) {
-
-        if (!formularioMacros) {
-            return;
-        }
-
-        let resultado =
-            document.getElementById(
-                "resultadoMacros"
-            );
-
-        if (!resultado) {
-
-            resultado =
-                document.createElement("section");
-
-            resultado.id =
-                "resultadoMacros";
-
-            resultado.className =
-                "resultado-macros";
-
-            formularioMacros.after(resultado);
-        }
-
-        const objetivos = {
-            emagrecer: "Emagrecimento",
-            ganhar: "Ganho de Massa Muscular",
-            manter: "Manutenção do Peso"
-        };
-
-        const nomeObjetivo =
-            objetivos[objetivo] ||
-            "Manutenção do Peso";
-
-        resultado.setAttribute(
-            "aria-live",
-            "polite"
-        );
-
-        resultado.innerHTML = `
-
-            <div class="resultado-header">
-
-                <span class="resultado-label">
-                    Resultado personalizado
-                </span>
-
-                <h3>
-                    Seu plano diário
-                </h3>
-
-                <p>
-                    Objetivo:
-                    <strong>
-                        ${nomeObjetivo}
-                    </strong>
-                </p>
-
-            </div>
-
-            <div class="resultado-calorias">
-
                 <span>
-                    Necessidade calórica diária
+                    Carboidratos
                 </span>
 
                 <strong>
-                    ${macros.calorias}
-                    <small>kcal</small>
+                    ${arredondar(
+                        dados.carboidrato,
+                        0
+                    )} g
+                </strong>
+
+                <div class="macro-progress">
+
+                    <span
+                        style="width: ${Math.min(
+                            dados.percentualCarboidrato,
+                            100
+                        )}%"
+                    ></span>
+
+                </div>
+
+                <small>
+                    ${arredondar(
+                        dados.percentualCarboidrato,
+                        0
+                    )}% das calorias
+                </small>
+
+            </div>
+
+
+            <!-- GORDURA -->
+
+            <div class="macro-result-card">
+
+                <div class="macro-card-icon">
+                    G
+                </div>
+
+                <span>
+                    Gorduras
+                </span>
+
+                <strong>
+                    ${arredondar(
+                        dados.gordura,
+                        0
+                    )} g
+                </strong>
+
+                <div class="macro-progress">
+
+                    <span
+                        style="width: ${Math.min(
+                            dados.percentualGordura,
+                            100
+                        )}%"
+                    ></span>
+
+                </div>
+
+                <small>
+                    ${arredondar(
+                        dados.percentualGordura,
+                        0
+                    )}% das calorias
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="resultado-base">
+
+            <div>
+
+                <span>
+                    TMB
+                </span>
+
+                <strong>
+                    ${Math.round(dados.tmb)} kcal
                 </strong>
 
             </div>
 
-            <div class="macro-result-grid">
 
-                <div class="macro-result-card">
+            <div>
 
-                    <div class="macro-card-icon">
-                        P
-                    </div>
+                <span>
+                    Gasto diário estimado
+                </span>
 
-                    <span>
-                        Proteínas
-                    </span>
-
-                    <strong>
-                        ${macros.proteina} g
-                    </strong>
-
-                    <div class="macro-progress">
-                        <span style="width: 75%"></span>
-                    </div>
-
-                    <small>
-                        ${macros.proteina * 4} kcal
-                    </small>
-
-                </div>
-
-
-                <div class="macro-result-card">
-
-                    <div class="macro-card-icon">
-                        C
-                    </div>
-
-                    <span>
-                        Carboidratos
-                    </span>
-
-                    <strong>
-                        ${macros.carboidrato} g
-                    </strong>
-
-                    <div class="macro-progress">
-                        <span style="width: 60%"></span>
-                    </div>
-
-                    <small>
-                        ${macros.carboidrato * 4} kcal
-                    </small>
-
-                </div>
-
-
-                <div class="macro-result-card">
-
-                    <div class="macro-card-icon">
-                        G
-                    </div>
-
-                    <span>
-                        Gorduras
-                    </span>
-
-                    <strong>
-                        ${macros.gordura} g
-                    </strong>
-
-                    <div class="macro-progress">
-                        <span style="width: 40%"></span>
-                    </div>
-
-                    <small>
-                        ${macros.gordura * 9} kcal
-                    </small>
-
-                </div>
+                <strong>
+                    ${Math.round(dados.gasto)} kcal
+                </strong>
 
             </div>
 
-            <div class="resultado-base">
+        </div>
 
-                <div>
+    `;
 
-                    <span>
-                        Taxa metabólica basal
-                    </span>
 
-                    <strong>
-                        ${arredondar(tmb)} kcal
-                    </strong>
+    resultado.classList.remove(
+        "resultado-visible"
+    );
 
-                </div>
+    void resultado.offsetWidth;
 
-                <div>
+    resultado.classList.add(
+        "resultado-visible"
+    );
 
-                    <span>
-                        Gasto diário estimado
-                    </span>
+}
 
-                    <strong>
-                        ${arredondar(get)} kcal
-                    </strong>
 
-                </div>
+/* =========================================================
+   LOGIN / CADASTRO
+========================================================= */
 
-            </div>
-        `;
+const btnLogin =
+    document.getElementById("btnLogin");
 
-        requestAnimationFrame(() => {
+const closeLogin =
+    document.getElementById("closeLogin");
 
-            resultado.classList.add(
-                "resultado-visible"
-            );
-        });
+const criarConta =
+    document.getElementById("criarConta");
+
+const voltarLogin =
+    document.getElementById("voltarLogin");
+
+const loginForm =
+    document.getElementById("loginForm");
+
+const registerForm =
+    document.getElementById("registerForm");
+
+const loginTitle =
+    document.getElementById("loginTitle");
+
+const loginSubtitle =
+    document.getElementById("loginSubtitle");
+
+
+function abrirLogin() {
+
+    const modal =
+        document.querySelector(".login-modal");
+
+    /*
+       Caso seu HTML ainda não possua
+       .login-modal, criamos a classe
+       no elemento principal.
+    */
+
+    if (modal) {
+
+        modal.classList.add("active");
+
+        document.body.style.overflow = "hidden";
     }
 
-    /* =====================================================
-       CALCULADORA DE ÁGUA
-    ===================================================== */
+}
 
-    if (
-        calculateAgua &&
-        aguaPeso &&
-        aguaAtividade &&
-        aguaClima &&
-        aguaResult &&
-        aguaResultado
-    ) {
 
-        calculateAgua.addEventListener(
-            "click",
-            () => {
+function fecharLogin() {
 
-                const peso =
-                    converterNumero(
-                        aguaPeso.value
-                    );
+    const modal =
+        document.querySelector(".login-modal");
 
-                if (
-                    !Number.isFinite(peso) ||
-                    peso <= 0
-                ) {
+    if (modal) {
 
-                    mostrarFeedback(
-                        "Digite um peso válido.",
-                        "error"
-                    );
+        modal.classList.remove("active");
 
-                    aguaPeso.focus();
-                    return;
-                }
+        document.body.style.overflow = "";
 
-                if (
-                    peso < 10 ||
-                    peso > 400
-                ) {
-
-                    mostrarFeedback(
-                        "O peso deve estar entre 10 kg e 400 kg.",
-                        "error"
-                    );
-
-                    aguaPeso.focus();
-                    return;
-                }
-
-                const atividade =
-                    converterNumero(
-                        aguaAtividade.value
-                    ) || 0;
-
-                const clima =
-                    converterNumero(
-                        aguaClima.value
-                    ) || 0;
-
-                /*
-                   Base:
-                   35 ml por kg
-                */
-
-                const aguaBase =
-                    peso * 35;
-
-                const aguaTotal =
-                    aguaBase +
-                    atividade +
-                    clima;
-
-                const litros =
-                    aguaTotal / 1000;
-
-                aguaResultado.textContent =
-                    litros.toFixed(2) + " L";
-
-                aguaResult.classList.add("active");
-
-                aguaResult.setAttribute(
-                    "aria-live",
-                    "polite"
-                );
-
-                const metaVisual =
-                    Math.min(
-                        100,
-                        (litros / 3) * 100
-                    );
-
-                aguaResult.style.setProperty(
-                    "--water-progress",
-                    `${metaVisual}%`
-                );
-
-                mostrarFeedback(
-                    "Sua estimativa de hidratação foi calculada.",
-                    "success"
-                );
-            }
-        );
     }
 
-    /* =====================================================
-       MODO ESCURO
-    ===================================================== */
+}
 
-    function atualizarTema(botao) {
 
-        const escuro =
-            document.body.classList.contains(
-                "dark-mode"
-            );
+btnLogin?.addEventListener(
+    "click",
+    abrirLogin
+);
 
-        if (escuro) {
 
-            botao.textContent = "☀";
+closeLogin?.addEventListener(
+    "click",
+    fecharLogin
+);
 
-            botao.setAttribute(
-                "aria-label",
-                "Ativar modo claro"
-            );
 
-        } else {
+document.querySelector(
+    ".login-overlay"
+)?.addEventListener(
+    "click",
+    fecharLogin
+);
 
-            botao.textContent = "☾";
 
-            botao.setAttribute(
-                "aria-label",
-                "Ativar modo escuro"
-            );
-        }
+criarConta?.addEventListener(
+    "click",
+    () => {
+
+        if (loginForm)
+            loginForm.style.display = "none";
+
+        if (registerForm)
+            registerForm.style.display = "block";
+
+        if (loginTitle)
+            loginTitle.textContent =
+                "Criar sua conta";
+
+        if (loginSubtitle)
+            loginSubtitle.textContent =
+                "Cadastre-se no NUTRIQ";
+
     }
+);
 
-    function criarControleTema() {
 
-        if (
-            document.getElementById(
-                "themeToggle"
-            )
-        ) {
-            return;
+voltarLogin?.addEventListener(
+    "click",
+    () => {
+
+        if (registerForm)
+            registerForm.style.display = "none";
+
+        if (loginForm)
+            loginForm.style.display = "block";
+
+        if (loginTitle)
+            loginTitle.textContent =
+                "Entrar na sua conta";
+
+        if (loginSubtitle)
+            loginSubtitle.textContent =
+                "Acesse sua conta no NUTRIQ";
+
+    }
+);
+
+
+/* =========================================================
+   FECHAR MODAL COM ESC
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (event.key === "Escape") {
+
+            fecharLogin();
+
         }
 
-        const headerLocal =
-            document.querySelector(".header");
+    }
+);
 
-        if (!headerLocal) {
-            return;
-        }
 
-        const botao =
-            document.createElement("button");
+/* =========================================================
+   MODO ESCURO
+========================================================= */
+
+function criarBotaoTema() {
+
+    let botao =
+        document.querySelector(".theme-toggle");
+
+    if (!botao) {
+
+        botao = document.createElement("button");
 
         botao.type = "button";
-        botao.id = "themeToggle";
-        botao.className = "theme-toggle";
+
+        botao.className =
+            "theme-toggle";
 
         botao.setAttribute(
             "aria-label",
             "Ativar modo escuro"
         );
 
-        botao.textContent = "☾";
+        botao.innerHTML = "🌙";
 
-        const areaLogin =
-            document.querySelector(
-                ".login-button"
-            );
+        const header =
+            document.querySelector(".header");
 
-        if (areaLogin) {
+        if (header) {
 
-            areaLogin.parentNode.insertBefore(
-                botao,
-                areaLogin
-            );
+            header.appendChild(botao);
 
-        } else {
-
-            headerLocal.appendChild(botao);
         }
 
-        atualizarTema(botao);
-
-        botao.addEventListener(
-            "click",
-            () => {
-
-                const escuro =
-                    document.body.classList.toggle(
-                        "dark-mode"
-                    );
-
-                localStorage.setItem(
-                    "nutriq-theme",
-                    escuro ? "dark" : "light"
-                );
-
-                atualizarTema(botao);
-
-                mostrarFeedback(
-                    escuro
-                        ? "Modo escuro ativado."
-                        : "Modo claro ativado.",
-                    "info"
-                );
-            }
-        );
     }
 
-    function carregarTema() {
+    return botao;
 
-        const tema =
-            localStorage.getItem(
-                "nutriq-theme"
-            );
+}
 
-        if (tema === "dark") {
 
-            document.body.classList.add(
+const themeToggle =
+    criarBotaoTema();
+
+
+function atualizarTema() {
+
+    const modoEscuro =
+        localStorage.getItem(
+            "nutriq-dark-mode"
+        ) === "true";
+
+    if (modoEscuro) {
+
+        document.body.classList.add(
+            "dark-mode"
+        );
+
+        themeToggle.innerHTML = "☀️";
+
+        themeToggle.setAttribute(
+            "aria-label",
+            "Desativar modo escuro"
+        );
+
+    } else {
+
+        document.body.classList.remove(
+            "dark-mode"
+        );
+
+        themeToggle.innerHTML = "🌙";
+
+        themeToggle.setAttribute(
+            "aria-label",
+            "Ativar modo escuro"
+        );
+
+    }
+
+}
+
+
+themeToggle?.addEventListener(
+    "click",
+    () => {
+
+        const ativo =
+            document.body.classList.toggle(
                 "dark-mode"
             );
-        }
+
+        localStorage.setItem(
+            "nutriq-dark-mode",
+            ativo
+        );
+
+        atualizarTema();
+
     }
+);
 
-    carregarTema();
-    criarControleTema();
 
-    /* =====================================================
-       ACESSIBILIDADE
-       REDUÇÃO DE ANIMAÇÕES
-    ===================================================== */
+atualizarTema();
 
-    function criarControleAcessibilidade() {
 
-        if (
-            document.getElementById(
-                "accessibilityToggle"
-            )
-        ) {
-            return;
-        }
+/* =========================================================
+   ACESSIBILIDADE
+========================================================= */
 
-        const botao =
-            document.createElement("button");
+function criarAcessibilidade() {
+
+    let botao =
+        document.querySelector(
+            ".accessibility-toggle"
+        );
+
+    if (!botao) {
+
+        botao = document.createElement("button");
 
         botao.type = "button";
-
-        botao.id =
-            "accessibilityToggle";
 
         botao.className =
             "accessibility-toggle";
 
-        botao.textContent = "A";
+        botao.innerHTML = "♿";
 
         botao.setAttribute(
             "aria-label",
-            "Ativar redução de animações"
+            "Abrir opções de acessibilidade"
         );
-
-        botao.title =
-            "Reduzir animações";
 
         document.body.appendChild(botao);
 
-        botao.addEventListener(
+    }
+
+    return botao;
+
+}
+
+
+const accessibilityButton =
+    criarAcessibilidade();
+
+
+/* =========================================================
+   PAINEL DE ACESSIBILIDADE
+========================================================= */
+
+let painelAcessibilidade = null;
+
+
+function criarPainelAcessibilidade() {
+
+    if (painelAcessibilidade)
+        return painelAcessibilidade;
+
+
+    painelAcessibilidade =
+        document.createElement("div");
+
+    painelAcessibilidade.className =
+        "accessibility-panel";
+
+
+    painelAcessibilidade.innerHTML = `
+
+        <div class="accessibility-header">
+
+            <strong>
+                Acessibilidade
+            </strong>
+
+            <button
+                type="button"
+                id="fecharAcessibilidade"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="accessibility-options">
+
+            <button
+                type="button"
+                id="aumentarTexto"
+            >
+                A+ Aumentar texto
+            </button>
+
+
+            <button
+                type="button"
+                id="diminuirTexto"
+            >
+                A− Diminuir texto
+            </button>
+
+
+            <button
+                type="button"
+                id="resetarTexto"
+            >
+                ↺ Tamanho padrão
+            </button>
+
+
+            <button
+                type="button"
+                id="reduzirMovimento"
+            >
+                ◉ Reduzir animações
+            </button>
+
+        </div>
+
+    `;
+
+
+    document.body.appendChild(
+        painelAcessibilidade
+    );
+
+
+    painelAcessibilidade
+        .querySelector(
+            "#fecharAcessibilidade"
+        )
+        .addEventListener(
+            "click",
+            fecharPainelAcessibilidade
+        );
+
+
+    painelAcessibilidade
+        .querySelector(
+            "#aumentarTexto"
+        )
+        .addEventListener(
+            "click",
+            () => alterarEscala(0.1)
+        );
+
+
+    painelAcessibilidade
+        .querySelector(
+            "#diminuirTexto"
+        )
+        .addEventListener(
+            "click",
+            () => alterarEscala(-0.1)
+        );
+
+
+    painelAcessibilidade
+        .querySelector(
+            "#resetarTexto"
+        )
+        .addEventListener(
             "click",
             () => {
 
-                const reduzido =
-                    document.body.classList.toggle(
+                document.documentElement.style
+                    .setProperty(
+                        "--escala",
+                        "1"
+                    );
+
+                localStorage.setItem(
+                    "nutriq-escala",
+                    "1"
+                );
+
+            }
+        );
+
+
+    painelAcessibilidade
+        .querySelector(
+            "#reduzirMovimento"
+        )
+        .addEventListener(
+            "click",
+            () => {
+
+                document.body.classList.toggle(
+                    "reduce-motion"
+                );
+
+                const ativo =
+                    document.body.classList.contains(
                         "reduce-motion"
                     );
 
                 localStorage.setItem(
                     "nutriq-reduce-motion",
-                    reduzido ? "true" : "false"
+                    ativo
                 );
 
-                mostrarFeedback(
-                    reduzido
-                        ? "Animações reduzidas."
-                        : "Animações normais ativadas.",
-                    "info"
-                );
             }
         );
+
+
+    return painelAcessibilidade;
+
+}
+
+
+function abrirPainelAcessibilidade() {
+
+    const painel =
+        criarPainelAcessibilidade();
+
+    painel.classList.add("active");
+
+}
+
+
+function fecharPainelAcessibilidade() {
+
+    if (painelAcessibilidade) {
+
+        painelAcessibilidade
+            .classList.remove("active");
+
     }
 
-    function carregarAcessibilidade() {
+}
 
-        const reduzido =
-            localStorage.getItem(
-                "nutriq-reduce-motion"
-            );
 
-        if (reduzido === "true") {
+function alterarEscala(valor) {
 
-            document.body.classList.add(
-                "reduce-motion"
-            );
-        }
-    }
+    const atual =
+        parseFloat(
+            getComputedStyle(
+                document.documentElement
+            ).getPropertyValue("--escala")
+        ) || 1;
 
-    carregarAcessibilidade();
-    criarControleAcessibilidade();
 
-    /* =====================================================
-       FOCO VISÍVEL PARA TECLADO
-    ===================================================== */
+    let novaEscala =
+        atual + valor;
 
-    document.addEventListener(
-        "keydown",
-        (event) => {
 
-            if (event.key === "Tab") {
-
-                document.body.classList.add(
-                    "keyboard-navigation"
-                );
-            }
-        }
-    );
-
-    document.addEventListener(
-        "mousedown",
-        () => {
-
-            document.body.classList.remove(
-                "keyboard-navigation"
-            );
-        }
-    );
-
-    /* =====================================================
-       ANIMAÇÕES AO ENTRAR NA TELA
-    ===================================================== */
-
-    const elementosAnimados =
-        document.querySelectorAll(
-            ".side-card, .benefit, .about-section, .intro"
+    novaEscala =
+        Math.max(
+            0.8,
+            Math.min(
+                1.5,
+                novaEscala
+            )
         );
 
-    if (
-        elementosAnimados.length &&
-        "IntersectionObserver" in window
-    ) {
 
-        const observer =
-            new IntersectionObserver(
-                (entradas, observador) => {
+    novaEscala =
+        Math.round(
+            novaEscala * 10
+        ) / 10;
 
-                    entradas.forEach(
-                        (entrada) => {
 
-                            if (
-                                entrada.isIntersecting
-                            ) {
+    document.documentElement.style
+        .setProperty(
+            "--escala",
+            novaEscala
+        );
 
-                                entrada.target.classList.add(
-                                    "animate-in"
-                                );
 
-                                observador.unobserve(
-                                    entrada.target
-                                );
-                            }
-                        }
-                    );
-                },
-                {
-                    threshold: 0.12
+    localStorage.setItem(
+        "nutriq-escala",
+        novaEscala
+    );
+
+}
+
+
+accessibilityButton?.addEventListener(
+    "click",
+    abrirPainelAcessibilidade
+);
+
+
+/* =========================================================
+   RESTAURAR ACESSIBILIDADE
+========================================================= */
+
+const escalaSalva =
+    localStorage.getItem(
+        "nutriq-escala"
+    );
+
+
+if (escalaSalva) {
+
+    document.documentElement.style
+        .setProperty(
+            "--escala",
+            escalaSalva
+        );
+
+}
+
+
+const reduzirMovimentoSalvo =
+    localStorage.getItem(
+        "nutriq-reduce-motion"
+    );
+
+
+if (reduzirMovimentoSalvo === "true") {
+
+    document.body.classList.add(
+        "reduce-motion"
+    );
+
+}
+
+
+/* =========================================================
+   ANIMAÇÕES DE ENTRADA
+========================================================= */
+
+const elementosAnimados =
+    document.querySelectorAll(
+        ".benefit, .side-card, .about-section, .project, .team-member"
+    );
+
+
+elementosAnimados.forEach(
+    elemento => {
+
+        elemento.classList.add(
+            "animate-ready"
+        );
+
+    }
+);
+
+
+const observer =
+    new IntersectionObserver(
+        entradas => {
+
+            entradas.forEach(
+                entrada => {
+
+                    if (
+                        entrada.isIntersecting
+                    ) {
+
+                        entrada.target.classList.add(
+                            "animate-in"
+                        );
+
+                        observer.unobserve(
+                            entrada.target
+                        );
+
+                    }
+
                 }
             );
 
-        elementosAnimados.forEach(
-            (elemento) => {
-
-                elemento.classList.add(
-                    "animate-ready"
-                );
-
-                observer.observe(elemento);
-            }
-        );
-    }
-
-    /* =====================================================
-       CARREGAMENTO DA PÁGINA
-    ===================================================== */
-
-    window.addEventListener(
-        "load",
-        () => {
-
-            document.body.classList.add(
-                "page-loaded"
-            );
+        },
+        {
+            threshold: 0.12
         }
     );
 
-    /* =====================================================
-       CALCULADORA INICIAL
-    ===================================================== */
 
-    mostrarCalculadora("macros");
+elementosAnimados.forEach(
+    elemento => {
 
-});
-```
+        observer.observe(elemento);
+
+    }
+);
+
+
+/* =========================================================
+   FORMULÁRIO DE LOGIN
+========================================================= */
+
+loginForm?.addEventListener(
+    "submit",
+    event => {
+
+        event.preventDefault();
+
+        const email =
+            document.getElementById(
+                "loginEmail"
+            )?.value.trim();
+
+        const senha =
+            document.getElementById(
+                "loginPassword"
+            )?.value.trim();
+
+
+        if (!email || !senha) {
+
+            mostrarFeedback(
+                "Preencha seu e-mail e senha.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        /*
+           Aqui futuramente você poderá
+           conectar sua API/backend.
+        */
+
+        mostrarFeedback(
+            "Login recebido. O sistema de autenticação poderá ser conectado ao backend.",
+            "info"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   FORMULÁRIO DE CADASTRO
+========================================================= */
+
+registerForm?.addEventListener(
+    "submit",
+    event => {
+
+        event.preventDefault();
+
+        const senha =
+            document.getElementById(
+                "senhaCadastro"
+            )?.value;
+
+        const confirmar =
+            document.getElementById(
+                "confirmarSenha"
+            )?.value;
+
+        const termos =
+            registerForm.querySelector(
+                'input[type="checkbox"]'
+            )?.checked;
+
+
+        if (senha !== confirmar) {
+
+            mostrarFeedback(
+                "As senhas não são iguais.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if (!termos) {
+
+            mostrarFeedback(
+                "Aceite os termos de uso para continuar.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        mostrarFeedback(
+            "Cadastro preenchido com sucesso. A conexão com o backend poderá ser adicionada posteriormente.",
+            "success"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        mostrarAba("macros");
+
+    }
+);
