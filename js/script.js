@@ -1413,3 +1413,47 @@ document.addEventListener(
 
     }
 );
+
+
+/* =========================================================
+   HEADER — ESCONDER SUTILMENTE COM O MOUSE
+========================================================= */
+
+const header = document.querySelector(".header");
+
+let ultimaPosicaoMouseY = window.innerHeight / 2;
+let headerEscondido = false;
+
+if (header) {
+
+    document.addEventListener("mousemove", (event) => {
+
+        const posicaoAtualMouseY = event.clientY;
+
+        // Movimento do mouse para baixo
+        if (
+            posicaoAtualMouseY > ultimaPosicaoMouseY + 15 &&
+            !headerEscondido
+        ) {
+
+            header.classList.add("mouse-hidden");
+            headerEscondido = true;
+
+        }
+
+        // Movimento do mouse para cima
+        else if (
+            posicaoAtualMouseY < ultimaPosicaoMouseY - 15 &&
+            headerEscondido
+        ) {
+
+            header.classList.remove("mouse-hidden");
+            headerEscondido = false;
+
+        }
+
+        ultimaPosicaoMouseY = posicaoAtualMouseY;
+
+    });
+
+}
