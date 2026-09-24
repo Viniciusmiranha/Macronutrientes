@@ -1,11 +1,14 @@
+```javascript
 /* =========================================================
-   NUTRIQ - SCRIPT PRINCIPAL
-   Menu, Login, Cadastro, Logo e Abas das Calculadoras
+   NUTRIQ
+   SCRIPT PRINCIPAL
 ========================================================= */
 
+"use strict";
+
 
 /* =========================================================
-   MENU - ESCONDER AO ROLAR PARA BAIXO
+   MENU / HEADER
 ========================================================= */
 
 const header = document.querySelector(".header");
@@ -13,16 +16,16 @@ const header = document.querySelector(".header");
 let ultimaPosicao = window.scrollY;
 
 if (header) {
-    window.addEventListener("scroll", function () {
+    window.addEventListener("scroll", () => {
 
         const posicaoAtual = window.scrollY;
 
         if (posicaoAtual <= 20) {
             header.classList.remove("hidden");
-        }
+        } 
         else if (posicaoAtual > ultimaPosicao) {
             header.classList.add("hidden");
-        }
+        } 
         else {
             header.classList.remove("hidden");
         }
@@ -42,54 +45,18 @@ const closeLogin = document.getElementById("closeLogin");
 const loginOverlay = document.querySelector(".login-overlay");
 
 
-/* Abrir login */
+function abrirLogin() {
 
-if (btnLogin && loginModal) {
+    if (!loginModal) {
+        return;
+    }
 
-    btnLogin.addEventListener("click", function () {
+    loginModal.classList.add("active");
+    loginModal.setAttribute("aria-hidden", "false");
 
-        loginModal.classList.add("active");
-
-        loginModal.setAttribute("aria-hidden", "false");
-
-        document.body.style.overflow = "hidden";
-
-    });
-
+    document.body.style.overflow = "hidden";
 }
 
-
-/* Fechar pelo X */
-
-if (closeLogin) {
-
-    closeLogin.addEventListener("click", function () {
-
-        fecharLogin();
-
-    });
-
-}
-
-
-/* Fechar clicando no fundo */
-
-if (loginOverlay) {
-
-    loginOverlay.addEventListener("click", function (event) {
-
-        if (event.target === loginOverlay) {
-
-            fecharLogin();
-
-        }
-
-    });
-
-}
-
-
-/* Função para fechar */
 
 function fecharLogin() {
 
@@ -98,38 +65,53 @@ function fecharLogin() {
     }
 
     loginModal.classList.remove("active");
-
     loginModal.setAttribute("aria-hidden", "true");
 
     document.body.style.overflow = "";
-
 }
 
 
-/* Fechar com ESC */
+if (btnLogin) {
+    btnLogin.addEventListener("click", abrirLogin);
+}
 
-document.addEventListener("keydown", function (event) {
+
+if (closeLogin) {
+    closeLogin.addEventListener("click", fecharLogin);
+}
+
+
+if (loginOverlay) {
+
+    loginOverlay.addEventListener("click", (event) => {
+
+        if (event.target === loginOverlay) {
+            fecharLogin();
+        }
+
+    });
+}
+
+
+document.addEventListener("keydown", (event) => {
 
     if (event.key === "Escape") {
-
         fecharLogin();
-
     }
 
 });
 
 
 /* =========================================================
-   LOGO - SELECIONAR IMAGEM
+   LOGO / PREVISUALIZAÇÃO DE IMAGEM
 ========================================================= */
 
 const logoInput = document.getElementById("logoInput");
 const logoPreview = document.getElementById("logoPreview");
 
-
 if (logoInput && logoPreview) {
 
-    logoInput.addEventListener("change", function (event) {
+    logoInput.addEventListener("change", (event) => {
 
         const arquivo = event.target.files[0];
 
@@ -139,7 +121,7 @@ if (logoInput && logoPreview) {
 
         if (!arquivo.type.startsWith("image/")) {
 
-            alert("Selecione um arquivo de imagem.");
+            alert("Selecione um arquivo de imagem válido.");
 
             logoInput.value = "";
 
@@ -150,6 +132,10 @@ if (logoInput && logoPreview) {
 
         logoPreview.src = imagemURL;
 
+        logoPreview.onload = () => {
+            URL.revokeObjectURL(imagemURL);
+        };
+
     });
 
 }
@@ -157,124 +143,67 @@ if (logoInput && logoPreview) {
 
 /* =========================================================
    ABAS DAS CALCULADORAS
-   MACRONUTRIENTES / IMC / ÁGUA
 ========================================================= */
-
-
-/*
-    BOTÕES DAS ABAS
-*/
-
-const tabMacros = document.getElementById("tabMacros");
-const tabIMC = document.getElementById("tabIMC");
-const tabAgua = document.getElementById("tabAgua");
-
-
-/*
-    FORMULÁRIOS
-
-    IMPORTANTE:
-    O formulário do IMC é "imcForm".
-*/
 
 const macroForm = document.getElementById("macroForm");
 const imcForm = document.getElementById("imcForm");
 const aguaForm = document.getElementById("aguaForm");
 
 
-/* =========================================================
-   FUNÇÃO CENTRAL PARA TROCAR DE CALCULADORA
-========================================================= */
-
 function mostrarCalculadora(tipo) {
 
-    /*
-        Primeiro escondemos todas as calculadoras.
-    */
+    const calculadoras = {
+        macros: {
+            elemento: macroForm,
+            aba: tabMacros
+        },
 
-    if (macroForm) {
-        macroForm.style.display = "none";
-    }
+        imc: {
+            elemento: imcForm,
+            aba: tabIMC
+        },
 
-    if (imcForm) {
-        imcForm.style.display = "none";
-    }
-
-    if (aguaForm) {
-        aguaForm.style.display = "none";
-    }
-
-
-    /*
-        Removemos "active" de todas as abas.
-    */
-
-    if (tabMacros) {
-        tabMacros.classList.remove("active");
-    }
-
-    if (tabIMC) {
-        tabIMC.classList.remove("active");
-    }
-
-    if (tabAgua) {
-        tabAgua.classList.remove("active");
-    }
+        agua: {
+            elemento: aguaForm,
+            aba: tabAgua
+        }
+    };
 
 
-    /*
-        Agora mostramos somente
-        a calculadora selecionada.
-    */
+    Object.values(calculadoras).forEach((calculadora) => {
 
-    if (tipo === "macros") {
-
-        if (macroForm) {
-            macroForm.style.display = "block";
+        if (calculadora.elemento) {
+            calculadora.elemento.style.display = "none";
         }
 
-        if (tabMacros) {
-            tabMacros.classList.add("active");
+        if (calculadora.aba) {
+            calculadora.aba.classList.remove("active");
         }
 
+    });
+
+
+    const selecionada = calculadoras[tipo];
+
+    if (!selecionada) {
+        return;
     }
 
 
-    else if (tipo === "imc") {
-
-        if (imcForm) {
-            imcForm.style.display = "block";
-        }
-
-        if (tabIMC) {
-            tabIMC.classList.add("active");
-        }
-
+    if (selecionada.elemento) {
+        selecionada.elemento.style.display = "block";
     }
 
-
-    else if (tipo === "agua") {
-
-        if (aguaForm) {
-            aguaForm.style.display = "block";
-        }
-
-        if (tabAgua) {
-            tabAgua.classList.add("active");
-        }
-
+    if (selecionada.aba) {
+        selecionada.aba.classList.add("active");
     }
 
 }
 
 
-/* =========================================================
-   ABA - MACRONUTRIENTES
-========================================================= */
-
 if (tabMacros) {
 
-    tabMacros.addEventListener("click", function (event) {
+    tabMacros.addEventListener("click", (event) => {
 
         event.preventDefault();
 
@@ -285,13 +214,9 @@ if (tabMacros) {
 }
 
 
-/* =========================================================
-   ABA - IMC
-========================================================= */
-
 if (tabIMC) {
 
-    tabIMC.addEventListener("click", function (event) {
+    tabIMC.addEventListener("click", (event) => {
 
         event.preventDefault();
 
@@ -302,13 +227,9 @@ if (tabIMC) {
 }
 
 
-/* =========================================================
-   ABA - ÁGUA
-========================================================= */
-
 if (tabAgua) {
 
-    tabAgua.addEventListener("click", function (event) {
+    tabAgua.addEventListener("click", (event) => {
 
         event.preventDefault();
 
@@ -319,24 +240,102 @@ if (tabAgua) {
 }
 
 
+mostrarCalculadora("macros");
+
+
 /* =========================================================
-   ESTADO INICIAL
-   MACRONUTRIENTES ABERTO
+   LOGIN / CADASTRO
 ========================================================= */
 
-mostrarCalculadora("macros");
+const loginForm = document.getElementById("loginForm");
+const registerForm = document.getElementById("registerForm");
+
+const criarConta = document.getElementById("criarConta");
+const voltarLogin = document.getElementById("voltarLogin");
+
+const loginTitle = document.getElementById("loginTitle");
+const loginSubtitle = document.getElementById("loginSubtitle");
+
+
+function mostrarCadastro() {
+
+    if (!loginForm || !registerForm) {
+        return;
+    }
+
+    loginForm.style.display = "none";
+    registerForm.style.display = "block";
+
+
+    if (loginTitle) {
+        loginTitle.textContent = "Criar sua conta";
+    }
+
+
+    if (loginSubtitle) {
+        loginSubtitle.textContent =
+            "Preencha seus dados para começar";
+    }
+
+}
+
+
+function mostrarLogin() {
+
+    if (!loginForm || !registerForm) {
+        return;
+    }
+
+    registerForm.style.display = "none";
+    loginForm.style.display = "block";
+
+
+    if (loginTitle) {
+        loginTitle.textContent = "Entrar na sua conta";
+    }
+
+
+    if (loginSubtitle) {
+        loginSubtitle.textContent =
+            "Acesse sua conta no NUTRIQ";
+    }
+
+}
+
+
+if (criarConta) {
+
+    criarConta.addEventListener("click", (event) => {
+
+        event.preventDefault();
+
+        mostrarCadastro();
+
+    });
+
+}
+
+
+if (voltarLogin) {
+
+    voltarLogin.addEventListener("click", (event) => {
+
+        event.preventDefault();
+
+        mostrarLogin();
+
+    });
+
+}
 
 
 /* =========================================================
    FORMULÁRIO DE LOGIN
 ========================================================= */
 
-const loginForm = document.getElementById("loginForm");
-
-
 if (loginForm) {
 
-    loginForm.addEventListener("submit", function (event) {
+    loginForm.addEventListener("submit", (event) => {
 
         event.preventDefault();
 
@@ -350,97 +349,12 @@ if (loginForm) {
 
 
 /* =========================================================
-   LOGIN / CRIAR CONTA
-========================================================= */
-
-const criarConta = document.getElementById("criarConta");
-
-const voltarLogin = document.getElementById("voltarLogin");
-
-const registerForm = document.getElementById("registerForm");
-
-const loginTitle = document.getElementById("loginTitle");
-
-const loginSubtitle = document.getElementById("loginSubtitle");
-
-
-/* =========================================================
-   ABRIR TELA DE CADASTRO
-========================================================= */
-
-if (criarConta && loginForm && registerForm) {
-
-    criarConta.addEventListener("click", function (event) {
-
-        event.preventDefault();
-
-        loginForm.style.display = "none";
-
-        registerForm.style.display = "block";
-
-
-        if (loginTitle) {
-
-            loginTitle.textContent =
-                "Criar sua conta";
-
-        }
-
-
-        if (loginSubtitle) {
-
-            loginSubtitle.textContent =
-                "Preencha seus dados para começar";
-
-        }
-
-    });
-
-}
-
-
-/* =========================================================
-   VOLTAR PARA LOGIN
-========================================================= */
-
-if (voltarLogin && loginForm && registerForm) {
-
-    voltarLogin.addEventListener("click", function (event) {
-
-        event.preventDefault();
-
-        registerForm.style.display = "none";
-
-        loginForm.style.display = "block";
-
-
-        if (loginTitle) {
-
-            loginTitle.textContent =
-                "Entrar na sua conta";
-
-        }
-
-
-        if (loginSubtitle) {
-
-            loginSubtitle.textContent =
-                "Acesse sua conta no NUTRIQ";
-
-        }
-
-    });
-
-}
-
-
-/* =========================================================
    FORMULÁRIO DE CADASTRO
 ========================================================= */
 
 if (registerForm) {
 
-    registerForm.addEventListener("submit", function (event) {
+    registerForm.addEventListener("submit", (event) => {
 
         event.preventDefault();
 
@@ -450,4 +364,5 @@ if (registerForm) {
 
     });
 
-          }
+}
+```
