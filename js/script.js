@@ -1180,81 +1180,42 @@ document.addEventListener(
     }
 );
 
-
 /* =========================================================
-   MODO ESCURO
+   MODO ESCURO - LUA / SOL
 ========================================================= */
 
-function criarBotaoTema() {
-
-    let botao =
-        document.querySelector(".theme-toggle");
-
-    if (!botao) {
-
-        botao = document.createElement("button");
-
-        botao.type = "button";
-
-        botao.className =
-            "theme-toggle";
-
-        botao.setAttribute(
-            "aria-label",
-            "Ativar modo escuro"
-        );
-
-        botao.innerHTML = "🌙";
-
-        const header =
-            document.querySelector(".header");
-
-        if (header) {
-
-            header.appendChild(botao);
-
-        }
-
-    }
-
-    return botao;
-
-}
-
-
-const themeToggle =
-    criarBotaoTema();
+const themeToggle = document.getElementById("themeToggle");
+const themeIcon = document.getElementById("themeIcon");
 
 
 function atualizarTema() {
 
     const modoEscuro =
-        localStorage.getItem(
-            "nutriq-dark-mode"
-        ) === "true";
+        localStorage.getItem("nutriq-dark-mode") === "true";
+
 
     if (modoEscuro) {
 
-        document.body.classList.add(
-            "dark-mode"
-        );
+        document.body.classList.add("dark-mode");
 
-        themeToggle.innerHTML = "☀️";
+        if (themeIcon) {
+            themeIcon.src = "img/foto-sol.png";
+        }
 
-        themeToggle.setAttribute(
+        themeToggle?.setAttribute(
             "aria-label",
             "Desativar modo escuro"
         );
 
     } else {
 
-        document.body.classList.remove(
-            "dark-mode"
-        );
+        document.body.classList.remove("dark-mode");
 
-        themeToggle.innerHTML = "🌙";
+        if (themeIcon) {
+            themeIcon.src = "img/foto-lua.png";
+        }
 
-        themeToggle.setAttribute(
+        themeToggle?.setAttribute(
             "aria-label",
             "Ativar modo escuro"
         );
@@ -1264,28 +1225,23 @@ function atualizarTema() {
 }
 
 
-themeToggle?.addEventListener(
-    "click",
-    () => {
+themeToggle?.addEventListener("click", () => {
 
-        const ativo =
-            document.body.classList.toggle(
-                "dark-mode"
-            );
+    const modoEscuro =
+        document.body.classList.toggle("dark-mode");
 
-        localStorage.setItem(
-            "nutriq-dark-mode",
-            ativo
-        );
+    localStorage.setItem(
+        "nutriq-dark-mode",
+        modoEscuro
+    );
 
-        atualizarTema();
+    atualizarTema();
 
-    }
-);
+});
 
 
+/* Carrega o tema salvo */
 atualizarTema();
-
 
 /* =========================================================
    ANIMAÇÕES DE ENTRADA

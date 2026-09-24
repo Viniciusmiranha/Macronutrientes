@@ -103,6 +103,30 @@ a {
     transform: translateY(-35%);
 }
 
+/* =========================================================
+   BOTÃO LUA / SOL
+========================================================= */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-left: auto;
+}
+
+.theme-toggle img {
+    width: 30px;
+    height: 30px;
+
+    object-fit: contain;
+
+    transition: transform 0.25s ease;
+}
+
+.theme-toggle:hover img {
+    transform: scale(1.12);
+}
+
 
 /* =========================
    LOGO
@@ -2429,21 +2453,52 @@ textarea,
 
 }
 
+/* =========================================================
+   AÇÕES DO HEADER
+========================================================= */
 
-.theme-toggle:hover {
-
-    transform: rotate(12deg) scale(1.05);
-
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-left: auto;
 }
 
 
-.keyboard-navigation
-*:focus-visible {
+/* =========================================================
+   BOTÃO LUA / SOL
+========================================================= */
 
-    outline: 3px solid #75a28d !important;
+.theme-toggle {
+    width: 44px;
+    height: 44px;
 
-    outline-offset: 3px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+    padding: 0;
+    margin: 0;
+
+    border: none;
+    background: transparent;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+}
+
+.theme-toggle img {
+    width: 30px;
+    height: 30px;
+
+    object-fit: contain;
+
+    transition: transform 0.25s ease;
+}
+
+.theme-toggle:hover img {
+    transform: scale(1.12);
 }
 
 
@@ -2637,16 +2692,11 @@ body.dark-mode .feedback-text {
 
 }
 
-
 body.dark-mode .theme-toggle {
-
-    background: #202c27;
-
-    border-color: #3a4941;
-
-    color: #e8eee9;
-
+    background: transparent;
+    border-color: transparent;
 }
+
 /* =========================================================
    DARK MODE — CORREÇÃO COMPLETA DOS CARDS
 ========================================================= */
@@ -2922,117 +2972,6 @@ body.reduce-motion *::after {
 
 }
 
-/* ---------------------------------------------------------
-   FOCO PARA NAVEGAÇÃO POR TECLADO
---------------------------------------------------------- */
-
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-    outline: 3px solid #2f6f5e;
-    outline-offset: 3px;
-    border-radius: 5px;
-}
-
-/* Modo de navegação por teclado */
-.keyboard-navigation *:focus-visible {
-    outline: 4px solid #f2b705 !important;
-    outline-offset: 4px !important;
-}
-
-
-/* ---------------------------------------------------------
-   ALTO CONTRASTE
---------------------------------------------------------- */
-
-body.contraste {
-    background: #ffffff !important;
-    color: #000000 !important;
-}
-
-body.contraste header,
-body.contraste .header {
-    background: #000000 !important;
-    color: #ffffff !important;
-    border-bottom: 3px solid #ffffff;
-}
-
-body.contraste a {
-    color: #0000ee !important;
-    text-decoration: underline;
-}
-
-body.contraste button {
-    background: #ffffff !important;
-    color: #000000 !important;
-    border: 2px solid #000000 !important;
-}
-
-body.contraste button:hover,
-body.contraste button:focus {
-    background: #000000 !important;
-    color: #ffffff !important;
-}
-
-body.contraste input,
-body.contraste select,
-body.contraste textarea {
-    background: #ffffff !important;
-    color: #000000 !important;
-    border: 2px solid #000000 !important;
-}
-
-body.contraste input::placeholder,
-body.contraste textarea::placeholder {
-    color: #333333 !important;
-}
-
-body.contraste .calculator-container,
-body.contraste .side-card,
-body.contraste .benefit,
-body.contraste .resultado-imc,
-body.contraste .resultado-macros,
-body.contraste .agua-result,
-body.contraste .about-section,
-body.contraste .login-box {
-    background: #ffffff !important;
-    color: #000000 !important;
-    border: 2px solid #000000 !important;
-    box-shadow: none !important;
-}
-
-body.contraste .tab {
-    background: #ffffff !important;
-    color: #000000 !important;
-    border: 2px solid #000000 !important;
-}
-
-body.contraste .tab.active {
-    background: #000000 !important;
-    color: #ffffff !important;
-}
-
-body.contraste h1,
-body.contraste h2,
-body.contraste h3,
-body.contraste h4,
-body.contraste p,
-body.contraste span,
-body.contraste label {
-    color: #000000 !important;
-}
-
-body.contraste header h1,
-body.contraste header h2,
-body.contraste header h3,
-body.contraste header p,
-body.contraste header span,
-body.contraste header a {
-    color: #ffffff !important;
-}
-
 
 
 /* ---------------------------------------------------------
@@ -3279,6 +3218,7 @@ body.contraste header a {
         height: 34px;
         margin-right: 5px;
     }
+}
 
 @media (max-width: 480px) {
 
@@ -3383,22 +3323,4 @@ body.contraste header a {
         padding: 11px;
         font-size: 13px;
     }
-}
-
-
-
-
-    html {
-        scroll-behavior: auto;
-    }
-
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-
 }
