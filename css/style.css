@@ -2438,57 +2438,6 @@ textarea,
 }
 
 
-/* =========================================================
-   ACESSIBILIDADE
-========================================================= */
-
-.accessibility-toggle {
-
-    position: fixed;
-
-    right: 18px;
-
-    bottom: 18px;
-
-    z-index: 9998;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    width: 46px;
-
-    height: 46px;
-
-    border: 2px solid #ffffff;
-
-    border-radius: 50%;
-
-    background: #365b46;
-
-    color: #ffffff;
-
-    box-shadow:
-        0 5px 18px rgba(0, 0, 0, 0.18);
-
-    cursor: pointer;
-
-    font-size: 16px;
-
-    font-weight: 800;
-
-}
-
-
-.accessibility-toggle:hover {
-
-    transform: scale(1.08);
-
-}
-
-
 .keyboard-navigation
 *:focus-visible {
 
@@ -2699,6 +2648,261 @@ body.dark-mode .theme-toggle {
     color: #e8eee9;
 
 }
+/* =========================================================
+   DARK MODE — CORREÇÃO COMPLETA DOS CARDS
+========================================================= */
+
+body.dark-mode {
+
+    background: #101714;
+    color: #edf4ef;
+
+}
+
+
+/* ---------------------------------------------------------
+   TEXTOS
+--------------------------------------------------------- */
+
+body.dark-mode .intro h2,
+body.dark-mode .intro p,
+body.dark-mode .about-header h2,
+body.dark-mode .about-header p,
+body.dark-mode .project h3,
+body.dark-mode .project p,
+body.dark-mode .team-member h3,
+body.dark-mode .team-member p {
+    color: #edf4ef;
+}
+
+
+/* ---------------------------------------------------------
+   CARDS DE BENEFÍCIOS
+   Personalizado baseado em ciência
+   Simples e rápido
+   Saúde e foco
+--------------------------------------------------------- */
+
+body.dark-mode .benefits,
+body.dark-mode .benefit {
+
+    background: #1b2521;
+    color: #edf4ef;
+    border-color: #34433b;
+
+}
+
+
+body.dark-mode .benefit h3,
+body.dark-mode .benefit h4,
+body.dark-mode .benefit p,
+body.dark-mode .benefit span {
+
+    color: #edf4ef;
+
+}
+
+
+/* ---------------------------------------------------------
+   CALCULADORA
+--------------------------------------------------------- */
+
+body.dark-mode .calculator-container {
+
+    background: #1b2521;
+    color: #edf4ef;
+    border-color: #34433b;
+
+}
+
+
+body.dark-mode .calculator-tabs {
+
+    background: #17201c;
+    border-color: #34433b;
+
+}
+
+
+body.dark-mode .tab {
+
+    background: #17201c;
+    color: #cbd8d1;
+
+}
+
+
+body.dark-mode .tab.active {
+
+    background: #26362f;
+    color: #ffffff;
+
+}
+
+
+/* ---------------------------------------------------------
+   FORMULÁRIOS
+--------------------------------------------------------- */
+
+body.dark-mode .macro-form,
+body.dark-mode .imc-form,
+body.dark-mode .agua-form {
+
+    background: #1b2521;
+    color: #edf4ef;
+
+}
+
+
+body.dark-mode .form-group label {
+
+    color: #dce8e1;
+
+}
+
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+
+    background: #202c27;
+    color: #ffffff;
+    border-color: #405149;
+
+}
+
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+
+    color: #9aa9a1;
+
+}
+
+
+/* ---------------------------------------------------------
+   RESULTADOS
+--------------------------------------------------------- */
+
+body.dark-mode .resultado-imc,
+body.dark-mode .resultado-macros,
+body.dark-mode .agua-result {
+
+    background: #1b2923;
+    color: #edf4ef;
+    border-color: #3b4d44;
+
+}
+
+
+body.dark-mode .macro-result-card {
+
+    background: #202c27;
+    color: #edf4ef;
+    border-color: #3b4d44;
+
+}
+
+
+body.dark-mode .resultado-header,
+body.dark-mode .resultado-label,
+body.dark-mode .resultado-base,
+body.dark-mode .resultado-calorias {
+
+    color: #edf4ef;
+
+}
+
+
+/* ---------------------------------------------------------
+   SOBRE / EQUIPE
+--------------------------------------------------------- */
+
+body.dark-mode .about-section {
+
+    background: #151e1a;
+    color: #edf4ef;
+
+}
+
+
+body.dark-mode .team-member {
+
+    background: #1b2521;
+    color: #edf4ef;
+    border-color: #34433b;
+
+}
+
+
+/* ---------------------------------------------------------
+   CARDS LATERAIS
+--------------------------------------------------------- */
+
+body.dark-mode .side-card {
+
+    background: #1b2521;
+    color: #edf4ef;
+    border-color: #34433b;
+
+}
+
+
+body.dark-mode .side-card h3,
+body.dark-mode .side-card p {
+
+    color: #edf4ef;
+
+}
+
+
+/* ---------------------------------------------------------
+   LOGIN
+--------------------------------------------------------- */
+
+body.dark-mode .login-box {
+
+    background: #1b2521;
+    color: #edf4ef;
+    border-color: #34433b;
+
+}
+
+
+body.dark-mode .login-header,
+body.dark-mode .login-form,
+body.dark-mode .register-form {
+
+    color: #edf4ef;
+
+}
+
+
+body.dark-mode .login-box input {
+
+    background: #202c27;
+    color: #ffffff;
+    border-color: #405149;
+
+}
+
+
+body.dark-mode .login-box label {
+
+    color: #dce8e1;
+
+}
+
+/* ---------------------------------------------------------
+   FOOTER
+--------------------------------------------------------- */
+
+body.dark-mode .footer {
+
+    background: #0b1210;
+    color: #b9c8c0;
+
+}
 
 
 /* =========================================================
@@ -2786,33 +2990,6 @@ body.reduce-motion *::after {
     background: #e9f0eb;
     border-color: #9bb1a5;
     transform: translateX(2px);
-}
-
-/* =========================================================
-   ACESSIBILIDADE APRIMORADA
-========================================================= */
-
-/* ---------------------------------------------------------
-   ESCALA DE TEXTO
---------------------------------------------------------- */
-
-html {
-    font-size: calc(16px * var(--escala, 1));
-}
-
-/* Mantém elementos importantes legíveis */
-body {
-    line-height: 1.6;
-}
-
-p,
-li,
-label,
-input,
-select,
-textarea,
-button {
-    font-size: 1rem;
 }
 
 
@@ -3024,42 +3201,6 @@ body.contraste header a {
     outline-offset: 2px;
 }
 
-
-/* ---------------------------------------------------------
-   DARK MODE + ACESSIBILIDADE
---------------------------------------------------------- */
-
-body.dark-mode .accessibility-panel {
-    background: #18221f;
-    color: #f5f5f5;
-    border-color: #3b4a45;
-}
-
-body.dark-mode .accessibility-options button {
-    background: #25322e;
-    color: #ffffff;
-    border-color: #45554f;
-}
-
-body.dark-mode .accessibility-options button:hover {
-    background: #30423c;
-}
-
-
-/* ---------------------------------------------------------
-   REDUÇÃO DE MOVIMENTO
---------------------------------------------------------- */
-
-body.reduce-motion *,
-body.reduce-motion *::before,
-body.reduce-motion *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-}
-
-
 /* ---------------------------------------------------------
    ÁREAS CLICÁVEIS
 --------------------------------------------------------- */
@@ -3086,43 +3227,6 @@ button,
 
 .feedback-info {
     border-left: 5px solid #2563eb;
-}
-
-
-/* =========================================================
-   ACESSIBILIDADE - MODO ESCURO
-========================================================= */
-
-body.dark-mode .accessibility-panel {
-    background: #1b2521;
-    border-color: #34433b;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
-}
-
-body.dark-mode .accessibility-header {
-    border-color: #34433b;
-}
-
-body.dark-mode .accessibility-header strong {
-    color: #edf4ef;
-}
-
-body.dark-mode .accessibility-header button {
-    color: #dbe5df;
-}
-
-body.dark-mode .accessibility-header button:hover {
-    background: #26342e;
-}
-
-body.dark-mode .accessibility-options button {
-    background: #202c27;
-    border-color: #35443c;
-    color: #e1ebe5;
-}
-
-body.dark-mode .accessibility-options button:hover {
-    background: #293a32;
 }
 
 
@@ -3490,7 +3594,7 @@ body.dark-mode .accessibility-options button:hover {
 }
 
 
-@media (prefers-reduced-motion: reduce) {
+
 
     html {
         scroll-behavior: auto;
