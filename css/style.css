@@ -2923,76 +2923,6 @@ body.reduce-motion *::after {
 
 }
 
-/* Cabeçalho do painel */
-
-.accessibility-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-bottom: 15px;
-    padding-bottom: 12px;
-
-    border-bottom: 1px solid #dce3de;
-}
-
-.accessibility-header strong {
-    color: #263b33;
-    font-size: 15px;
-}
-
-.accessibility-header button {
-    width: 28px;
-    height: 28px;
-
-    border: none;
-    border-radius: 50%;
-
-    background: transparent;
-    color: #52635b;
-
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.accessibility-header button:hover {
-    background: #edf2ee;
-}
-
-/* Botões */
-
-.accessibility-options {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.accessibility-options button {
-    width: 100%;
-
-    padding: 10px 12px;
-
-    border: 1px solid #d8e0da;
-    border-radius: 8px;
-
-    background: #f7f9f7;
-    color: #30443c;
-
-    font-size: 12px;
-    text-align: left;
-
-    cursor: pointer;
-
-    transition: 0.2s ease;
-}
-
-.accessibility-options button:hover {
-    background: #e9f0eb;
-    border-color: #9bb1a5;
-    transform: translateX(2px);
-}
-
-
 /* ---------------------------------------------------------
    FOCO PARA NAVEGAÇÃO POR TECLADO
 --------------------------------------------------------- */
@@ -3104,113 +3034,6 @@ body.contraste header a {
     color: #ffffff !important;
 }
 
-
-.accessibility-toggle:hover {
-    transform: scale(1.08);
-    background: #52766a;
-}
-
-.accessibility-toggle:focus-visible {
-    outline: 4px solid #f2b705;
-    outline-offset: 4px;
-}
-
-
-/* ---------------------------------------------------------
-   PAINEL
---------------------------------------------------------- */
-
-.accessibility-panel {
-    position: fixed;
-
-    right: 20px;
-    bottom: 85px;
-
-    width: 300px;
-    max-width: calc(100vw - 30px);
-
-    padding: 20px;
-
-    background: #ffffff;
-    color: #1d2b27;
-
-    border: 2px solid #d9ded9;
-    border-radius: 14px;
-
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.20);
-
-    z-index: 10000;
-
-    opacity: 0;
-    visibility: hidden;
-
-    transform: translateY(15px) scale(0.96);
-
-    transition:
-        opacity 0.2s ease,
-        transform 0.2s ease,
-        visibility 0.2s ease;
-}
-
-.accessibility-panel.active {
-    opacity: 1;
-    visibility: visible;
-
-    transform: translateY(0) scale(1);
-}
-
-.accessibility-header h3 {
-    margin: 0;
-    font-size: 1.1rem;
-}
-
-.accessibility-options button {
-    width: 100%;
-
-    min-height: 44px;
-
-    padding: 10px 12px;
-
-    border: 1px solid #cfd6d1;
-    border-radius: 8px;
-
-    background: #f5f7f5;
-    color: #1d2b27;
-
-    font-size: 0.95rem;
-    font-weight: 600;
-
-    text-align: left;
-
-    cursor: pointer;
-
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease;
-}
-
-.accessibility-options button:hover {
-    background: #e4ebe6;
-    border-color: #52766a;
-    transform: translateX(2px);
-}
-
-.accessibility-options button:focus-visible {
-    outline: 3px solid #f2b705;
-    outline-offset: 2px;
-}
-
-/* ---------------------------------------------------------
-   ÁREAS CLICÁVEIS
---------------------------------------------------------- */
-
-button,
-.accessibility-toggle,
-.close-login,
-.tab {
-    min-height: 44px;
-}
 
 
 /* ---------------------------------------------------------
@@ -3458,20 +3281,6 @@ button,
         margin-right: 5px;
     }
 
-    .accessibility-panel {
-        right: 15px;
-        bottom: 72px;
-        width: calc(100vw - 30px);
-        max-width: 320px;
-    }
-
-    .accessibility-toggle {
-        right: 15px;
-        bottom: 15px;
-    }
-
-}
-
 @media (max-width: 480px) {
 
     .header {
@@ -3575,22 +3384,6 @@ button,
         padding: 11px;
         font-size: 13px;
     }
-
-    .accessibility-panel {
-        right: 10px;
-        bottom: 70px;
-        width: calc(100vw - 20px);
-        max-width: none;
-    }
-
-    .accessibility-toggle {
-        right: 12px;
-        bottom: 12px;
-        width: 48px;
-        height: 48px;
-        font-size: 20px;
-    }
-
 }
 
 

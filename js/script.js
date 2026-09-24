@@ -4,15 +4,22 @@
    NUTRIQ
    SCRIPT PRINCIPAL
 ========================================================= */
-
-
 /* =========================================================
-   HEADER - ESCONDER AO ROLAR
+   HEADER - ESCONDER AO ROLAR E MOVIMENTO DO MOUSE
 ========================================================= */
 
 const header = document.querySelector(".header");
 
 let ultimaPosicao = window.scrollY;
+let ultimaPosicaoMouseY = window.innerHeight / 2;
+
+let headerEscondidoScroll = false;
+let headerEscondidoMouse = false;
+
+
+/* =========================================================
+   HEADER - ESCONDER AO ROLAR
+========================================================= */
 
 window.addEventListener("scroll", () => {
 
@@ -24,6 +31,7 @@ window.addEventListener("scroll", () => {
     if (posicaoAtual <= 20) {
 
         header.classList.remove("hidden");
+        headerEscondidoScroll = false;
 
     }
 
@@ -31,6 +39,7 @@ window.addEventListener("scroll", () => {
     else if (posicaoAtual > ultimaPosicao) {
 
         header.classList.add("hidden");
+        headerEscondidoScroll = true;
 
     }
 
@@ -38,12 +47,56 @@ window.addEventListener("scroll", () => {
     else {
 
         header.classList.remove("hidden");
+        headerEscondidoScroll = false;
 
     }
 
     ultimaPosicao = posicaoAtual;
+
 });
 
+
+/* =========================================================
+   HEADER - MOVIMENTO SUTIL DO MOUSE
+========================================================= */
+
+if (header) {
+
+    document.addEventListener("mousemove", (event) => {
+
+        const posicaoAtualMouseY = event.clientY;
+
+        // Mouse descendo
+        if (
+            posicaoAtualMouseY >
+            ultimaPosicaoMouseY + 20
+        ) {
+
+            if (!headerEscondidoScroll) {
+
+                header.classList.add("mouse-hidden");
+                headerEscondidoMouse = true;
+
+            }
+
+        }
+
+        // Mouse subindo
+        else if (
+            posicaoAtualMouseY <
+            ultimaPosicaoMouseY - 20
+        ) {
+
+            header.classList.remove("mouse-hidden");
+            headerEscondidoMouse = false;
+
+        }
+
+        ultimaPosicaoMouseY = posicaoAtualMouseY;
+
+    });
+
+}
 
 /* =========================================================
    ELEMENTOS DAS ABAS
@@ -1414,46 +1467,3 @@ document.addEventListener(
     }
 );
 
-
-/* =========================================================
-   HEADER — ESCONDER SUTILMENTE COM O MOUSE
-========================================================= */
-
-const header = document.querySelector(".header");
-
-let ultimaPosicaoMouseY = window.innerHeight / 2;
-let headerEscondido = false;
-
-if (header) {
-
-    document.addEventListener("mousemove", (event) => {
-
-        const posicaoAtualMouseY = event.clientY;
-
-        // Movimento do mouse para baixo
-        if (
-            posicaoAtualMouseY > ultimaPosicaoMouseY + 15 &&
-            !headerEscondido
-        ) {
-
-            header.classList.add("mouse-hidden");
-            headerEscondido = true;
-
-        }
-
-        // Movimento do mouse para cima
-        else if (
-            posicaoAtualMouseY < ultimaPosicaoMouseY - 15 &&
-            headerEscondido
-        ) {
-
-            header.classList.remove("mouse-hidden");
-            headerEscondido = false;
-
-        }
-
-        ultimaPosicaoMouseY = posicaoAtualMouseY;
-
-    });
-
-}
