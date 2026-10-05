@@ -741,7 +741,6 @@ patientLoginButton.addEventListener(
     }
 );
 
-
 /* =========================================================
    LOGIN
 ========================================================= */
@@ -800,22 +799,44 @@ loginForm.addEventListener(
 
         }
 
-
         if (!valido) {
             return;
         }
 
 
-        mostrarFeedback(
-            "success",
-            perfilAtual === "paciente"
-                ? "Acesso validado. O sistema poderá autenticar o paciente quando conectado ao banco de dados."
-                : "Acesso validado. O sistema poderá autenticar o nutricionista quando conectado ao banco de dados."
+        /* =========================================================
+           LOGIN VALIDADO
+        ========================================================= */
+
+        /*
+           Salva que o usuário passou pelo login.
+        */
+
+        sessionStorage.setItem(
+            "usuarioLogado",
+            "true"
         );
+
+
+        /*
+           Salva o tipo de usuário:
+           paciente ou nutricionista
+        */
+
+        sessionStorage.setItem(
+            "perfilUsuario",
+            perfilAtual
+        );
+
+
+        /*
+           Vai para a página principal
+        */
+
+        window.location.href = "pagina1.html";
 
     }
 );
-
 
 /* =========================================================
    CADASTRO DO NUTRICIONISTA

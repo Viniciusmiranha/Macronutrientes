@@ -1,5 +1,19 @@
 "use strict";
 
+
+/* =========================================================
+   PROTEÇÃO DA PÁGINA
+========================================================= */
+
+const usuarioLogado =
+    sessionStorage.getItem("usuarioLogado");
+
+if (usuarioLogado !== "true") {
+
+    window.location.href = "index.html";
+
+}
+
 /* =========================================================
    NUTRIQ
    SCRIPT PRINCIPAL
