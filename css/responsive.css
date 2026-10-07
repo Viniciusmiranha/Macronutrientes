@@ -1,0 +1,471 @@
+
+
+/* =========================================================
+   TABLET / NOTEBOOK
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    :root {
+        --margem-site: 40px;
+    }
+
+    .hero-container {
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(400px, 0.9fr);
+
+        gap: 50px;
+    }
+
+    .hero h1 {
+        font-size:
+            clamp(38px, 4vw, 50px);
+    }
+
+    .contact-container {
+        gap: 55px;
+    }
+
+    .about-section .section-container {
+        grid-template-columns:
+            250px 1fr;
+
+        gap: 40px;
+    }
+
+    .nav {
+        gap: 25px;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+    :root {
+        --margem-site: 40px;
+    }
+
+    .hero-container {
+        grid-template-columns: 1fr;
+
+        max-width: 720px;
+    }
+
+    .hero {
+        padding-top: 110px;
+    }
+
+    .hero-content {
+        text-align: center;
+    }
+
+    .hero-description {
+        margin-left: auto;
+
+        margin-right: auto;
+    }
+
+    .hero-features {
+        text-align: left;
+    }
+
+    .profile-card {
+        width: 100%;
+    }
+
+    .about-section .section-container {
+        grid-template-columns: 1fr;
+    }
+
+    .section-heading {
+        text-align: center;
+    }
+
+    .heading-line {
+        margin-left: auto;
+
+        margin-right: auto;
+    }
+
+    .benefits-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        row-gap: 30px;
+    }
+
+    .functionalities-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .contact-container {
+        grid-template-columns: 1fr;
+
+        gap: 35px;
+
+        max-width: 720px;
+    }
+
+    .contact-content {
+        text-align: center;
+    }
+
+    .contact-content p {
+        margin-left: auto;
+
+        margin-right: auto;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    :root {
+        --margem-site: 28px;
+    }
+
+    .header {
+        height: 64px;
+    }
+
+    .header-container {
+        width:
+            calc(100% - 28px);
+    }
+
+
+    /* =========================
+       MENU MOBILE
+    ========================= */
+
+    .nav {
+        position: fixed;
+
+        top: 64px;
+
+        left: 0;
+
+        width: 100%;
+
+        padding:
+            15px 20px 20px;
+
+        background:
+            rgba(248, 250, 248, 0.98);
+
+        backdrop-filter: blur(15px);
+
+        -webkit-backdrop-filter: blur(15px);
+
+        border-bottom:
+            1px solid var(--borda);
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 0;
+
+        transform:
+            translateY(-120%);
+
+        opacity: 0;
+
+        pointer-events: none;
+
+        transition:
+            transform 0.3s ease,
+            opacity 0.3s ease;
+    }
+
+    .nav.mobile-open {
+        transform:
+            translateY(0);
+
+        opacity: 1;
+
+        pointer-events: auto;
+    }
+
+    body.dark-mode .nav {
+        background:
+            rgba(15, 31, 28, 0.98);
+    }
+
+    .nav-link {
+        width: 100%;
+
+        text-align: center;
+
+        padding: 13px;
+    }
+
+    .nav-link::after {
+        bottom: 7px;
+
+        left: 50%;
+
+        transform:
+            translateX(-50%);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active:hover::after {
+        width: 100%;
+    }
+
+    .nav-link.active::after {
+        width: 0;
+    }
+
+
+    /* =========================
+       BOTÕES HEADER
+    ========================= */
+
+    .menu-button {
+        display: block;
+    }
+
+    .login-header-button {
+        display: none;
+    }
+
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+        padding-top: 95px;
+
+        padding-bottom: 50px;
+    }
+
+    .hero-container {
+        width:
+            calc(100% - 28px);
+
+        gap: 35px;
+    }
+
+    .hero-content {
+        padding-top: 10px;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+
+        letter-spacing: -1px;
+    }
+
+    .hero-description {
+        font-size: 13px;
+    }
+
+
+    /* =========================
+       FEATURES
+    ========================= */
+
+    .hero-features {
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 20px;
+    }
+
+    .hero-feature {
+        border-right: none;
+
+        padding: 0;
+    }
+
+
+    /* =========================
+       PROFILE CARD
+    ========================= */
+
+    .profile-card {
+        padding: 22px;
+    }
+
+    .profile-card h2 {
+        font-size: 25px;
+    }
+
+    .profile-option {
+        grid-template-columns:
+            48px 1fr 35px;
+
+        padding: 13px;
+    }
+
+    .profile-option-icon {
+        width: 45px;
+
+        height: 45px;
+
+        font-size: 28px;
+    }
+
+    .profile-option-text p {
+        font-size: 10px;
+    }
+
+
+    /* =========================
+       BENEFÍCIOS
+    ========================= */
+
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .benefit-card {
+        border-left: none;
+
+        border-bottom:
+            1px solid var(--borda);
+
+        padding: 15px 0;
+    }
+
+    .benefit-card:last-child {
+        border-bottom: none;
+    }
+
+
+    /* =========================
+       FUNCIONALIDADES
+    ========================= */
+
+    .functionalities-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title-center h2 {
+        font-size: 29px;
+    }
+
+
+    /* =========================
+       CONTATO
+    ========================= */
+
+    .contact-content h2 {
+        font-size: 30px;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .footer-container {
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+
+    /* =========================
+       MODAL
+    ========================= */
+
+    .modal {
+        padding:
+            28px 22px;
+    }
+}
+
+
+/* =========================================================
+   CELULARES PEQUENOS
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .hero h1 {
+        font-size: 31px;
+    }
+
+    .theme-button {
+        display: none;
+    }
+
+    .profile-option {
+        grid-template-columns:
+            40px 1fr 32px;
+    }
+
+    .profile-option-icon {
+        width: 38px;
+
+        height: 38px;
+
+        font-size: 23px;
+    }
+
+    .arrow {
+        width: 30px;
+
+        height: 30px;
+
+        font-size: 17px;
+    }
+
+    .profile-card {
+        padding: 18px;
+    }
+
+    .hero-features {
+        gap: 14px;
+    }
+
+    .hero-feature h3 {
+        font-size: 11px;
+    }
+
+    .hero-feature p {
+        font-size: 9px;
+    }
+}
+
+
+/* =========================================================
+   ACESSIBILIDADE
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration:
+            0.01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            0.01ms !important;
+
+        scroll-behavior:
+            auto !important;
+    }
+}

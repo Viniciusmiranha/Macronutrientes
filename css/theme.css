@@ -1,0 +1,135 @@
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+body.dark-mode {
+    --fundo: #0f1f1c;
+
+    --fundo-card: #172a26;
+
+    --texto: #e5f1ec;
+
+    --texto-secundario: #a9bdb7;
+
+    --verde-claro: #1c3931;
+
+    --borda: #29443d;
+}
+
+
+/* HEADER DARK */
+
+body.dark-mode .header {
+    background:
+        rgba(15, 31, 28, 0.94);
+
+    border-color: #29443d;
+}
+
+
+/* NAV DARK */
+
+body.dark-mode .nav-link {
+    color: #bdd0c9;
+}
+
+body.dark-mode .nav-link:hover,
+body.dark-mode .nav-link.active {
+    color: #7bb69d;
+}
+
+body.dark-mode .nav-link::after {
+    background: #7bb69d;
+}
+
+
+/* TÍTULOS DARK */
+
+body.dark-mode .hero h1,
+body.dark-mode .profile-card h2,
+body.dark-mode .section-heading h2,
+body.dark-mode .section-title-center h2,
+body.dark-mode .contact-content h2 {
+    color: #e5f1ec;
+}
+
+
+/* CARDS DARK */
+
+body.dark-mode .profile-card,
+body.dark-mode .profile-option,
+body.dark-mode .modal,
+body.dark-mode .function-card,
+body.dark-mode .contact-card {
+    background: #172a26;
+
+    border-color: #29443d;
+}
+
+
+/* TEXTOS DOS CARDS */
+
+body.dark-mode .profile-option-text h3,
+body.dark-mode .hero-feature h3,
+body.dark-mode .benefit-card h3,
+body.dark-mode .function-card h3,
+body.dark-mode .contact-item strong {
+    color: #dcece5;
+}
+
+body.dark-mode .profile-option-text p,
+body.dark-mode .hero-description,
+body.dark-mode .hero-feature p,
+body.dark-mode .benefit-card p,
+body.dark-mode .function-card p,
+body.dark-mode .contact-content p,
+body.dark-mode .profile-subtitle {
+    color: #a9bdb7;
+}
+
+
+/* SEÇÕES DARK */
+
+body.dark-mode .about-section,
+body.dark-mode .contact-section {
+    background: #132723;
+
+    border-color: #29443d;
+}
+
+body.dark-mode .functionalities-section {
+    background: #0f1f1c;
+}
+
+
+/* INPUTS DARK */
+
+body.dark-mode .form-group input {
+    background: #10211e;
+
+    color: white;
+
+    border-color: #35534b;
+}
+
+
+/* BOTÕES DARK */
+
+body.dark-mode .secondary-button {
+    background: #172a26;
+
+    border-color: #42645a;
+
+    color: #c9ddd5;
+}
+
+body.dark-mode .theme-button {
+    color: #d5e6df;
+}
+
+body.dark-mode .login-header-button {
+    color: #d5e6df;
+
+    border-color: #42645a;
+}

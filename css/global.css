@@ -1,0 +1,89 @@
+
+
+/* =========================================================
+   VARIÁVEIS
+========================================================= */
+
+:root {
+    --verde-principal: #24594d;
+    --verde-escuro: #123f38;
+    --verde-claro: #eaf4ee;
+    --verde-suave: #f1f7f3;
+
+    --texto: #123d3b;
+    --texto-secundario: #607a76;
+
+    --fundo: #f8faf8;
+    --fundo-card: #ffffff;
+
+    --borda: #dce6e1;
+
+    --sombra:
+        0 18px 45px rgba(24, 68, 59, 0.08);
+
+    --sombra-forte:
+        0 25px 65px rgba(24, 68, 59, 0.13);
+
+    --raio: 14px;
+
+    --transicao: 0.3s ease;
+
+    /* Largura máxima do conteúdo */
+    --largura-site: 1320px;
+
+    /* Espaçamento lateral */
+    --margem-site: 60px;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+
+body {
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background: var(--fundo);
+
+    color: var(--texto);
+
+    line-height: 1.6;
+
+    overflow-x: hidden;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
