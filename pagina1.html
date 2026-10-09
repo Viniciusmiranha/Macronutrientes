@@ -6,310 +6,416 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#f6faf8">
     <meta name="description" content="Painel profissional NUTRIQ para gerenciamento de pacientes, dietas, avaliações e atendimentos nutricionais.">
+
     <title>Painel Profissional | NUTRIQ</title>
+
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
 </head>
+
 <body class="dashboard-page">
+
     <div class="dashboard-layout">
+
         <aside class="dashboard-sidebar" id="dashboardSidebar">
+
             <a href="pagina1.html" class="dashboard-brand" aria-label="NUTRIQ - Página inicial">
-                <img src="img/logo.png" alt="NUTRIQ">
+                <img src="img/logo (1).png" alt="Logo NUTRIQ">
             </a>
 
             <nav class="dashboard-navigation" aria-label="Navegação principal">
+
                 <a href="pagina1.html" class="dashboard-nav-link active" aria-current="page">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>
+                    </svg>
                     <span>Início</span>
                 </a>
 
                 <a href="pacientes.html" class="dashboard-nav-link">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="10" cy="7" r="4"/>
+                        <path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
                     <span>Meus pacientes</span>
                 </a>
 
-                <a href="dietas.html" class="dashboard-nav-link">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3V1h6v2M9 8h6M9 12h6M9 16h4"/></svg>
-                    <span>Dietas</span>
+                <a href="planos-alimentares.html" class="dashboard-nav-link">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="5" y="3" width="14" height="18" rx="2"/>
+                        <path d="M9 3V1h6v2M9 8h6M9 12h6M9 16h4"/>
+                    </svg>
+                    <span>Planos alimentares</span>
                 </a>
 
                 <details class="dashboard-nav-group" open>
                     <summary class="dashboard-nav-link">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h2m4 0h2M8 11h2m4 0h2M8 15h2m4 0h2M10 21v-3h4v3"/></svg>
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="4" y="3" width="16" height="18" rx="2"/>
+                            <path d="M8 7h2m4 0h2M8 11h2m4 0h2M8 15h2m4 0h2"/>
+                        </svg>
                         <span>Calculadoras</span>
-                        <svg class="dashboard-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                        <svg class="dashboard-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="m6 9 6 6 6-6"/>
+                        </svg>
                     </summary>
+
                     <div class="dashboard-submenu">
-                        <a href="calculadora.html#imc">IMC</a>
-                        <a href="calculadora.html#macronutrientes">Macronutrientes</a>
-                        <a href="calculadora.html#agua">Ingestão de água</a>
+                        <a href="index.html#imc">Índice de massa corporal</a>
+                        <a href="index.html#macros">Macronutrientes</a>
+                        <a href="index.html#agua">Ingestão de água</a>
                     </div>
                 </details>
 
-                <a href="relatorios.html" class="dashboard-nav-link">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9h4v10M10 19V5h4v14M16 19V2h4v17M2 21h20"/></svg>
-                    <span>Relatórios</span>
+                <a href="consultas.html" class="dashboard-nav-link">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="3" y="5" width="18" height="16" rx="2"/>
+                        <path d="M16 3v4M8 3v4M3 10h18"/>
+                    </svg>
+                    <span>Consultas</span>
                 </a>
 
                 <a href="agenda.html" class="dashboard-nav-link">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="3" y="5" width="18" height="16" rx="2"/>
+                        <path d="M16 3v4M8 3v4M3 10h18M8 14h2m4 0h2m-8 3h2"/>
+                    </svg>
                     <span>Agenda</span>
                 </a>
 
-                <a href="materiais.html" class="dashboard-nav-link">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-                    <span>Meus materiais</span>
+                <a href="relatorios.html" class="dashboard-nav-link">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 19V9h4v10M10 19V5h4v14M16 19V2h4v17M2 21h20"/>
+                    </svg>
+                    <span>Relatórios</span>
                 </a>
 
-                <a href="configuracoes.html" class="dashboard-nav-link">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.6a8 8 0 0 1-1.8 1l-.3 1.8h-2.8l-.3-1.8a8 8 0 0 1-1.8-1l-1.7.6-1.4-2.4 1.4-1.1a8 8 0 0 1 0-2l-1.4-1.1 1.4-2.4 1.7.6a8 8 0 0 1 1.8-1l.3-1.8h2.8l.3 1.8a8 8 0 0 1 1.8 1l1.7-.6 1.4 2.4-1.4 1.1a8 8 0 0 1 0 2z"/></svg>
-                    <span>Configurações</span>
+                <a href="perfil.html" class="dashboard-nav-link">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="8" r="4"/>
+                        <path d="M4 21a8 8 0 0 1 16 0"/>
+                    </svg>
+                    <span>Meu perfil</span>
                 </a>
+
             </nav>
 
             <div class="dashboard-plan-card">
                 <div class="dashboard-plan-heading">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.4 4.8 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z"/><path d="M5 20h14"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="m12 3 2.4 4.8 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z"/>
+                    </svg>
                     <div>
                         <span>Seu plano</span>
                         <strong>Profissional</strong>
                     </div>
                 </div>
-                <a href="plano.html" class="dashboard-plan-button">
-                    Ver detalhes
+
+                <a href="perfil.html" class="dashboard-plan-button">
+                    Ver meu perfil
                     <span aria-hidden="true">→</span>
                 </a>
             </div>
+
+            <button type="button" class="dashboard-plan-button" id="btnSair">
+                Sair da conta
+                <span aria-hidden="true">↗</span>
+            </button>
+
         </aside>
 
         <div class="dashboard-main">
+
             <header class="dashboard-topbar">
-                <button class="dashboard-menu-toggle" id="dashboardMenuToggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="dashboardSidebar">
+
+                <button
+                    class="dashboard-menu-toggle"
+                    id="dashboardMenuToggle"
+                    type="button"
+                    aria-label="Abrir menu"
+                    aria-expanded="false"
+                    aria-controls="dashboardSidebar"
+                >
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
 
-                <form class="dashboard-search" role="search" action="busca.html" method="get">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
-                    <input type="search" name="q" placeholder="Buscar pacientes, dietas ou ferramentas..." aria-label="Buscar pacientes, dietas ou ferramentas">
+                <form class="dashboard-search" id="dashboardSearch" role="search">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="11" cy="11" r="7"/>
+                        <path d="m16 16 4 4"/>
+                    </svg>
+
+                    <input
+                        type="search"
+                        id="campoBusca"
+                        placeholder="Buscar pacientes..."
+                        aria-label="Buscar pacientes"
+                    >
                 </form>
 
                 <div class="dashboard-topbar-actions">
-                    <button class="dashboard-icon-button" type="button" aria-label="Notificações">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/><circle cx="19" cy="5" r="2"/></svg>
+
+                    <button
+                        class="dashboard-icon-button"
+                        id="btnNotificacoes"
+                        type="button"
+                        aria-label="Notificações"
+                    >
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/>
+                        </svg>
                     </button>
 
-                    <button class="dashboard-profile-button" type="button" aria-label="Abrir perfil profissional">
+                    <a
+                        href="perfil.html"
+                        class="dashboard-profile-button"
+                        aria-label="Abrir perfil profissional"
+                        style="text-decoration:none"
+                    >
                         <span class="dashboard-avatar dashboard-avatar-professional">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="12" cy="8" r="4"/>
+                                <path d="M4 21a8 8 0 0 1 16 0"/>
+                            </svg>
                         </span>
+
                         <span class="dashboard-profile-details">
-                            <strong id="professionalName">Dra. Mariana Silva</strong>
+                            <strong id="professionalName">Meu perfil</strong>
                             <span>Nutricionista</span>
                         </span>
-                        <svg class="dashboard-profile-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
-                    </button>
+                    </a>
+
                 </div>
+
             </header>
 
             <main class="dashboard-content">
+
                 <section class="dashboard-welcome" aria-labelledby="welcomeTitle">
-                    <h1 id="welcomeTitle">Olá, Dra. Mariana!</h1>
-                    <p>Gerencie seus pacientes, crie planos alimentares e acompanhe resultados, tudo em um só lugar.</p>
+                    <h1 id="welcomeTitle">Olá, seja bem-vindo!</h1>
+                    <p>
+                        Acompanhe seus pacientes, organize os planos alimentares
+                        e gerencie seus atendimentos em um só lugar.
+                    </p>
                 </section>
 
                 <section class="dashboard-metrics" aria-label="Resumo do consultório">
+
                     <article class="dashboard-metric-card">
                         <div class="dashboard-metric-icon dashboard-icon-green">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="10" cy="7" r="4"/>
+                                <path d="M20 21v-2a4 4 0 0 0-3-3.87"/>
+                            </svg>
                         </div>
                         <div class="dashboard-metric-info">
                             <span>Seus pacientes</span>
                             <strong>124</strong>
-                            <small class="dashboard-growth">↑ +12% este mês</small>
-                        </div>
-                        <div class="dashboard-mini-chart dashboard-chart-green" aria-hidden="true">
-                            <span></span><span></span><span></span><span></span>
+                            <small class="dashboard-growth">Total demonstrativo</small>
                         </div>
                     </article>
 
                     <article class="dashboard-metric-card">
                         <div class="dashboard-metric-icon dashboard-icon-green">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l5 5v13H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M14 3v6h6M8 13h8M8 17h8"/></svg>
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M6 3h9l5 5v13H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+                                <path d="M14 3v6h6M8 13h8M8 17h8"/>
+                            </svg>
                         </div>
                         <div class="dashboard-metric-info">
-                            <span>Dietas ativas</span>
+                            <span>Planos alimentares</span>
                             <strong>87</strong>
-                            <small class="dashboard-growth">↑ +8% este mês</small>
-                        </div>
-                        <div class="dashboard-mini-chart dashboard-chart-green" aria-hidden="true">
-                            <span></span><span></span><span></span><span></span>
+                            <small class="dashboard-growth">Total demonstrativo</small>
                         </div>
                     </article>
 
                     <article class="dashboard-metric-card">
                         <div class="dashboard-metric-icon dashboard-icon-blue">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="5" height="10" rx="1"/><rect x="10" y="4" width="5" height="17" rx="1"/><rect x="17" y="8" width="5" height="13" rx="1"/></svg>
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <rect x="3" y="11" width="5" height="10" rx="1"/>
+                                <rect x="10" y="4" width="5" height="17" rx="1"/>
+                                <rect x="17" y="8" width="5" height="13" rx="1"/>
+                            </svg>
                         </div>
                         <div class="dashboard-metric-info">
-                            <span>Avaliações registradas</span>
+                            <span>Avaliações</span>
                             <strong>256</strong>
-                            <small class="dashboard-growth">↑ +20% este mês</small>
-                        </div>
-                        <div class="dashboard-mini-chart dashboard-chart-blue" aria-hidden="true">
-                            <span></span><span></span><span></span><span></span>
+                            <small class="dashboard-growth">Total demonstrativo</small>
                         </div>
                     </article>
 
                     <article class="dashboard-metric-card">
                         <div class="dashboard-metric-icon dashboard-icon-green">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8z"/></svg>
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8z"/>
+                            </svg>
                         </div>
                         <div class="dashboard-metric-info">
                             <span>Taxa de adesão</span>
                             <strong>92%</strong>
-                            <small class="dashboard-growth">↑ +6% este mês</small>
-                        </div>
-                        <div class="dashboard-mini-chart dashboard-chart-green" aria-hidden="true">
-                            <span></span><span></span><span></span><span></span>
+                            <small class="dashboard-growth">Valor demonstrativo</small>
                         </div>
                     </article>
+
                 </section>
 
                 <div class="dashboard-overview-grid">
-                    <section class="dashboard-panel dashboard-patients-panel" aria-labelledby="recentPatientsTitle">
+
+                    <section
+                        class="dashboard-panel dashboard-patients-panel"
+                        aria-labelledby="recentPatientsTitle"
+                    >
                         <div class="dashboard-panel-heading">
                             <h2 id="recentPatientsTitle">Pacientes recentes</h2>
-                            <a href="pacientes.html" class="dashboard-view-all">Ver todos <span aria-hidden="true">→</span></a>
+                            <a href="pacientes.html" class="dashboard-view-all">
+                                Ver todos <span aria-hidden="true">→</span>
+                            </a>
                         </div>
 
-                        <div class="dashboard-patient-list">
-                            <article class="dashboard-patient-row">
+                        <div class="dashboard-patient-list" id="listaPacientes">
+
+                            <article class="dashboard-patient-row" data-nome="João Lucas">
                                 <span class="dashboard-avatar">JL</span>
                                 <div class="dashboard-patient-identity">
                                     <strong>João Lucas</strong>
                                     <span>28 anos</span>
                                 </div>
-                                <span class="dashboard-status dashboard-status-progress">Em acompanhamento</span>
-                                <time datetime="2025-01-12">12/01/2025</time>
-                                <button class="dashboard-more-button" type="button" aria-label="Mais opções para João Lucas">⋮</button>
+                                <span class="dashboard-status dashboard-status-progress">
+                                    Em acompanhamento
+                                </span>
+                                <time datetime="2026-10-08">08/10/2026</time>
+                                <a href="pacientes.html" class="dashboard-more-button" aria-label="Ver João Lucas">→</a>
                             </article>
 
-                            <article class="dashboard-patient-row">
+                            <article class="dashboard-patient-row" data-nome="Ana Mendes">
                                 <span class="dashboard-avatar">AM</span>
                                 <div class="dashboard-patient-identity">
                                     <strong>Ana Mendes</strong>
                                     <span>34 anos</span>
                                 </div>
-                                <span class="dashboard-status dashboard-status-active">Dieta ativa</span>
-                                <time datetime="2025-03-11">11/03/2025</time>
-                                <button class="dashboard-more-button" type="button" aria-label="Mais opções para Ana Mendes">⋮</button>
+                                <span class="dashboard-status dashboard-status-active">
+                                    Plano ativo
+                                </span>
+                                <time datetime="2026-10-07">07/10/2026</time>
+                                <a href="pacientes.html" class="dashboard-more-button" aria-label="Ver Ana Mendes">→</a>
                             </article>
 
-                            <article class="dashboard-patient-row">
+                            <article class="dashboard-patient-row" data-nome="Ricardo Souza">
                                 <span class="dashboard-avatar">RS</span>
                                 <div class="dashboard-patient-identity">
                                     <strong>Ricardo Souza</strong>
                                     <span>45 anos</span>
                                 </div>
-                                <span class="dashboard-status dashboard-status-pending">Aguardando retorno</span>
-                                <time datetime="2025-01-10">10/01/2025</time>
-                                <button class="dashboard-more-button" type="button" aria-label="Mais opções para Ricardo Souza">⋮</button>
+                                <span class="dashboard-status dashboard-status-pending">
+                                    Aguardando retorno
+                                </span>
+                                <time datetime="2026-10-06">06/10/2026</time>
+                                <a href="pacientes.html" class="dashboard-more-button" aria-label="Ver Ricardo Souza">→</a>
                             </article>
 
-                            <article class="dashboard-patient-row">
+                            <article class="dashboard-patient-row" data-nome="Larissa Campos">
                                 <span class="dashboard-avatar">LC</span>
                                 <div class="dashboard-patient-identity">
                                     <strong>Larissa Campos</strong>
                                     <span>29 anos</span>
                                 </div>
-                                <span class="dashboard-status dashboard-status-evaluation">Em avaliação</span>
-                                <time datetime="2025-03-08">08/03/2025</time>
-                                <button class="dashboard-more-button" type="button" aria-label="Mais opções para Larissa Campos">⋮</button>
+                                <span class="dashboard-status dashboard-status-evaluation">
+                                    Em avaliação
+                                </span>
+                                <time datetime="2026-10-05">05/10/2026</time>
+                                <a href="pacientes.html" class="dashboard-more-button" aria-label="Ver Larissa Campos">→</a>
                             </article>
 
-                            <article class="dashboard-patient-row">
-                                <span class="dashboard-avatar">PF</span>
-                                <div class="dashboard-patient-identity">
-                                    <strong>Pedro Fernandes</strong>
-                                    <span>37 anos</span>
-                                </div>
-                                <span class="dashboard-status dashboard-status-active">Dieta ativa</span>
-                                <time datetime="2025-03-07">07/03/2025</time>
-                                <button class="dashboard-more-button" type="button" aria-label="Mais opções para Pedro Fernandes">⋮</button>
-                            </article>
+                            <p id="buscaSemResultado" hidden>
+                                Nenhum paciente encontrado.
+                            </p>
+
                         </div>
                     </section>
 
-                    <section class="dashboard-panel dashboard-appointments-panel" aria-labelledby="appointmentsTitle">
+                    <section
+                        class="dashboard-panel dashboard-appointments-panel"
+                        aria-labelledby="appointmentsTitle"
+                    >
                         <div class="dashboard-panel-heading">
                             <h2 id="appointmentsTitle">Próximos atendimentos</h2>
-                            <a href="agenda.html" class="dashboard-view-all">Ver agenda <span aria-hidden="true">→</span></a>
+                            <a href="agenda.html" class="dashboard-view-all">
+                                Ver agenda <span aria-hidden="true">→</span>
+                            </a>
                         </div>
 
                         <div class="dashboard-appointment-list">
+
                             <article class="dashboard-appointment-row">
-                                <time class="dashboard-date-badge" datetime="2025-03-13">
-                                    <strong>13</strong>
-                                    <span>MAR</span>
+                                <time class="dashboard-date-badge" datetime="2026-10-09">
+                                    <strong>09</strong>
+                                    <span>OUT</span>
                                 </time>
                                 <div class="dashboard-appointment-info">
                                     <strong>Ana Mendes</strong>
-                                    <span>09:00 – Consulta de retorno</span>
+                                    <span>09:00 · Consulta de retorno</span>
                                 </div>
-                                <button class="dashboard-more-button" type="button" aria-label="Mais opções para atendimento de Ana Mendes">⋮</button>
-                                <a href="atendimento.html" class="dashboard-start-button">Iniciar</a>
+                                <a href="consultas.html" class="dashboard-start-button">Abrir</a>
                             </article>
 
                             <article class="dashboard-appointment-row">
-                                <time class="dashboard-date-badge" datetime="2025-03-13">
-                                    <strong>13</strong>
-                                    <span>MAR</span>
+                                <time class="dashboard-date-badge" datetime="2026-10-09">
+                                    <strong>09</strong>
+                                    <span>OUT</span>
                                 </time>
                                 <div class="dashboard-appointment-info">
                                     <strong>Ricardo Souza</strong>
-                                    <span>10:30 – Avaliação corporal</span>
+                                    <span>10:30 · Avaliação corporal</span>
                                 </div>
-                                <button class="dashboard-more-button" type="button" aria-label="Mais opções para atendimento de Ricardo Souza">⋮</button>
-                                <a href="atendimento.html" class="dashboard-start-button">Iniciar</a>
+                                <a href="consultas.html" class="dashboard-start-button">Abrir</a>
                             </article>
 
                             <article class="dashboard-appointment-row">
-                                <time class="dashboard-date-badge" datetime="2025-03-14">
-                                    <strong>14</strong>
-                                    <span>MAR</span>
+                                <time class="dashboard-date-badge" datetime="2026-10-10">
+                                    <strong>10</strong>
+                                    <span>OUT</span>
                                 </time>
                                 <div class="dashboard-appointment-info">
                                     <strong>Larissa Campos</strong>
-                                    <span>14:00 – Ajuste de dieta</span>
+                                    <span>14:00 · Retorno</span>
                                 </div>
-                                <button class="dashboard-more-button" type="button" aria-label="Mais opções para atendimento de Larissa Campos">⋮</button>
-                                <a href="atendimento.html" class="dashboard-start-button">Iniciar</a>
+                                <a href="consultas.html" class="dashboard-start-button">Abrir</a>
                             </article>
 
                             <article class="dashboard-appointment-row">
-                                <time class="dashboard-date-badge" datetime="2025-03-14">
-                                    <strong>14</strong>
-                                    <span>MAR</span>
+                                <time class="dashboard-date-badge" datetime="2026-10-10">
+                                    <strong>10</strong>
+                                    <span>OUT</span>
                                 </time>
                                 <div class="dashboard-appointment-info">
                                     <strong>João Lucas</strong>
-                                    <span>16:00 – Acompanhamento</span>
+                                    <span>16:00 · Acompanhamento</span>
                                 </div>
-                                <button class="dashboard-more-button" type="button" aria-label="Mais opções para atendimento de João Lucas">⋮</button>
-                                <a href="atendimento.html" class="dashboard-start-button">Iniciar</a>
+                                <a href="consultas.html" class="dashboard-start-button">Abrir</a>
                             </article>
+
                         </div>
                     </section>
+
                 </div>
 
-                <section class="dashboard-panel dashboard-progress-panel" aria-labelledby="monthlyProgressTitle">
+                <section
+                    class="dashboard-panel dashboard-progress-panel"
+                    aria-labelledby="monthlyProgressTitle"
+                >
                     <div class="dashboard-panel-heading">
-                        <h2 id="monthlyProgressTitle">Seu progresso este mês</h2>
-                        <a href="relatorios.html" class="dashboard-view-all">Ver relatório <span aria-hidden="true">→</span></a>
+                        <h2 id="monthlyProgressTitle">Resumo do consultório</h2>
+                        <a href="relatorios.html" class="dashboard-view-all">
+                            Ver relatórios <span aria-hidden="true">→</span>
+                        </a>
                     </div>
 
                     <div class="dashboard-progress-content">
+
                         <div class="dashboard-goal-summary">
                             <div class="dashboard-progress-ring" role="img" aria-label="78 por cento das metas concluídas">
                                 <svg viewBox="0 0 120 120" aria-hidden="true">
@@ -318,62 +424,201 @@
                                 </svg>
                                 <strong>78%</strong>
                             </div>
-                            <p>das suas metas<br>concluídas</p>
+                            <p>das metas<br>concluídas</p>
                         </div>
 
                         <div class="dashboard-goal-metrics">
+
                             <article class="dashboard-goal-item">
                                 <div class="dashboard-goal-heading">
                                     <span class="dashboard-metric-icon dashboard-icon-green">
-                                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-3-3.87"/></svg>
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                            <circle cx="10" cy="7" r="4"/>
+                                        </svg>
                                     </span>
                                     <span>Pacientes<br>atendidos</span>
                                 </div>
                                 <div class="dashboard-goal-value"><span>80%</span></div>
-                                <div class="dashboard-progress-track"><span class="dashboard-progress-green" style="width: 80%"></span></div>
+                                <div class="dashboard-progress-track">
+                                    <span class="dashboard-progress-green" style="width:80%"></span>
+                                </div>
                             </article>
 
                             <article class="dashboard-goal-item">
                                 <div class="dashboard-goal-heading">
                                     <span class="dashboard-metric-icon dashboard-icon-green">
-                                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l5 5v13H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M14 3v6h6M8 13h8M8 17h8"/></svg>
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M6 3h9l5 5v13H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+                                            <path d="M14 3v6h6M8 13h8"/>
+                                        </svg>
                                     </span>
-                                    <span>Dietas<br>entregues</span>
+                                    <span>Planos<br>elaborados</span>
                                 </div>
                                 <div class="dashboard-goal-value"><span>70%</span></div>
-                                <div class="dashboard-progress-track"><span class="dashboard-progress-green" style="width: 70%"></span></div>
+                                <div class="dashboard-progress-track">
+                                    <span class="dashboard-progress-green" style="width:70%"></span>
+                                </div>
                             </article>
 
                             <article class="dashboard-goal-item">
                                 <div class="dashboard-goal-heading">
                                     <span class="dashboard-metric-icon dashboard-icon-blue">
-                                        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="5" height="10" rx="1"/><rect x="10" y="4" width="5" height="17" rx="1"/><rect x="17" y="8" width="5" height="13" rx="1"/></svg>
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <rect x="3" y="11" width="5" height="10" rx="1"/>
+                                            <rect x="10" y="4" width="5" height="17" rx="1"/>
+                                            <rect x="17" y="8" width="5" height="13" rx="1"/>
+                                        </svg>
                                     </span>
                                     <span>Avaliações<br>realizadas</span>
                                 </div>
                                 <div class="dashboard-goal-value"><span>75%</span></div>
-                                <div class="dashboard-progress-track"><span class="dashboard-progress-blue" style="width: 75%"></span></div>
+                                <div class="dashboard-progress-track">
+                                    <span class="dashboard-progress-blue" style="width:75%"></span>
+                                </div>
                             </article>
 
                             <article class="dashboard-goal-item">
                                 <div class="dashboard-goal-heading">
                                     <span class="dashboard-metric-icon dashboard-icon-green">
-                                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8z"/></svg>
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8z"/>
+                                        </svg>
                                     </span>
                                     <span>Taxa de<br>adesão</span>
                                 </div>
                                 <div class="dashboard-goal-value"><span>92%</span></div>
-                                <div class="dashboard-progress-track"><span class="dashboard-progress-dark" style="width: 92%"></span></div>
+                                <div class="dashboard-progress-track">
+                                    <span class="dashboard-progress-dark" style="width:92%"></span>
+                                </div>
                             </article>
+
                         </div>
                     </div>
                 </section>
+
+                <footer class="dashboard-footer">
+                    <p>© 2026 NUTRIQ · Painel profissional</p>
+                </footer>
+
             </main>
+
         </div>
     </div>
 
-    <script src="js/script.js" defer></script>
-    <script src="js/tema.js" defer></script>
-    <script src="js/main.js" defer></script>
+    <div id="dashboardFeedback" role="status" aria-live="polite"></div>
+
+    <script>
+        "use strict";
+
+        const usuarioLogado = sessionStorage.getItem("usuarioLogado");
+
+        if (usuarioLogado !== "true") {
+            window.location.replace("index.html");
+        }
+
+        const sidebar = document.getElementById("dashboardSidebar");
+        const menuToggle = document.getElementById("dashboardMenuToggle");
+        const campoBusca = document.getElementById("campoBusca");
+        const listaPacientes = document.getElementById("listaPacientes");
+        const buscaSemResultado = document.getElementById("buscaSemResultado");
+        const feedback = document.getElementById("dashboardFeedback");
+
+        function mostrarFeedback(mensagem) {
+            feedback.textContent = mensagem;
+            feedback.style.cssText = [
+                "position:fixed",
+                "right:20px",
+                "bottom:20px",
+                "z-index:2000",
+                "padding:14px 18px",
+                "background:#176b58",
+                "color:#fff",
+                "border-radius:10px",
+                "box-shadow:0 5px 20px #0002"
+            ].join(";");
+
+            window.clearTimeout(mostrarFeedback.timer);
+
+            mostrarFeedback.timer = window.setTimeout(() => {
+                feedback.textContent = "";
+                feedback.style.cssText = "";
+            }, 3500);
+        }
+
+        menuToggle.addEventListener("click", () => {
+            const aberto = sidebar.classList.toggle("is-open");
+
+            menuToggle.setAttribute("aria-expanded", String(aberto));
+            menuToggle.setAttribute(
+                "aria-label",
+                aberto ? "Fechar menu" : "Abrir menu"
+            );
+        });
+
+        document.querySelectorAll(".dashboard-sidebar a").forEach(link => {
+            link.addEventListener("click", () => {
+                sidebar.classList.remove("is-open");
+                menuToggle.setAttribute("aria-expanded", "false");
+            });
+        });
+
+        document.getElementById("dashboardSearch").addEventListener("submit", event => {
+            event.preventDefault();
+        });
+
+        campoBusca.addEventListener("input", () => {
+            const termo = campoBusca.value
+                .trim()
+                .toLocaleLowerCase("pt-BR");
+
+            const pacientes = listaPacientes.querySelectorAll("[data-nome]");
+            let encontrados = 0;
+
+            pacientes.forEach(paciente => {
+                const nome = paciente.dataset.nome.toLocaleLowerCase("pt-BR");
+                const corresponde = nome.includes(termo);
+
+                paciente.hidden = !corresponde;
+
+                if (corresponde) {
+                    encontrados++;
+                }
+            });
+
+            buscaSemResultado.hidden = encontrados !== 0;
+        });
+
+        document.getElementById("btnNotificacoes").addEventListener("click", () => {
+            mostrarFeedback("Você não tem novas notificações.");
+        });
+
+        document.getElementById("btnSair").addEventListener("click", () => {
+            const confirmar = window.confirm("Deseja realmente sair da sua conta?");
+
+            if (confirmar) {
+                sessionStorage.removeItem("usuarioLogado");
+                sessionStorage.removeItem("perfilUsuario");
+                window.location.href = "index.html";
+            }
+        });
+
+        const perfilSalvo = sessionStorage.getItem("perfilUsuario");
+
+        if (perfilSalvo) {
+            try {
+                const perfil = JSON.parse(perfilSalvo);
+
+                if (perfil.nome) {
+                    document.getElementById("professionalName").textContent = perfil.nome;
+                    document.getElementById("welcomeTitle").textContent =
+                        "Olá, " + perfil.nome + "!";
+                }
+            } catch (erro) {
+                console.warn("Não foi possível carregar o perfil salvo.");
+            }
+        }
+    </script>
+
 </body>
 </html>

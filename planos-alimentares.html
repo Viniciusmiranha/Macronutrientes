@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planos alimentares | NUTRIQ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/paginas.css">
+</head>
+<body>
+    <main class="pagina-extra">
+        <div class="pagina-container">
+            <header class="pagina-topo">
+                <a class="marca" href="pagina1.html">NUTRIQ</a>
+                <a class="voltar" href="pagina1.html">← Voltar ao painel</a>
+            </header>
+
+            <section class="pagina-cabecalho">
+                <h1 class="pagina-titulo">Planos alimentares</h1>
+                <p class="pagina-descricao">
+                    Consulte modelos e organize os planos dos pacientes.
+                </p>
+            </section>
+
+            <div class="pagina-acoes">
+                <button class="botao-principal" id="criarPlano" type="button">
+                    + Criar plano
+                </button>
+            </div>
+
+            <section class="pagina-grade">
+                <article class="pagina-card">
+                    <h3>Plano equilibrado</h3>
+                    <p>Modelo demonstrativo com refeições distribuídas ao longo do dia.</p>
+                    <p style="margin-top: 14px">
+                        <span class="estado">Rascunho</span>
+                    </p>
+                </article>
+
+                <article class="pagina-card">
+                    <h3>Plano de manutenção</h3>
+                    <p>Modelo para organização do acompanhamento nutricional.</p>
+                    <p style="margin-top: 14px">
+                        <span class="estado">Modelo</span>
+                    </p>
+                </article>
+
+                <article class="pagina-card">
+                    <h3>Plano personalizado</h3>
+                    <p>Espaço para orientações após avaliação profissional.</p>
+                    <p style="margin-top: 14px">
+                        <span class="estado pendente">Em edição</span>
+                    </p>
+                </article>
+            </section>
+
+            <p id="mensagemPlano" class="mensagem" role="status"></p>
+            <p class="pagina-descricao" style="margin-top: 22px">
+                Os planos exibidos são exemplos de interface, não recomendações
+                nutricionais personalizadas.
+            </p>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById("criarPlano").addEventListener("click", function() {
+            const mensagem = document.getElementById("mensagemPlano");
+            mensagem.textContent =
+                "A criação de planos será implementada quando o formulário e o banco de dados estiverem conectados.";
+            mensagem.style.display = "block";
+        });
+    </script>
+</body>
+</html>

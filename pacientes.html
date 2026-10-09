@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacientes | NUTRIQ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/paginas.css">
+</head>
+<body>
+    <main class="pagina-extra">
+        <div class="pagina-container">
+            <header class="pagina-topo">
+                <a class="marca" href="pagina1.html">NUTRIQ</a>
+                <a class="voltar" href="pagina1.html">← Voltar ao painel</a>
+            </header>
+
+            <section class="pagina-cabecalho">
+                <h1 class="pagina-titulo">Pacientes</h1>
+                <p class="pagina-descricao">
+                    Gerencie os pacientes e consulte suas informações.
+                </p>
+            </section>
+
+            <div class="pagina-acoes">
+                <a class="botao-principal" href="#novo-paciente">
+                    + Novo paciente
+                </a>
+            </div>
+
+            <section class="pagina-painel">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Última consulta</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ana Oliveira</td>
+                            <td>ana@email.com</td>
+                            <td>02/10/2026</td>
+                            <td><span class="estado">Ativo</span></td>
+                        </tr>
+                        <tr>
+                            <td>Lucas Santos</td>
+                            <td>lucas@email.com</td>
+                            <td>28/09/2026</td>
+                            <td><span class="estado">Ativo</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mariana Costa</td>
+                            <td>mariana@email.com</td>
+                            <td>Não realizada</td>
+                            <td><span class="estado pendente">Novo</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="pagina-card" id="novo-paciente">
+                <h2>Adicionar paciente</h2>
+
+                <form id="formPaciente">
+                    <div class="form-grade">
+                        <div class="campo">
+                            <label for="nome">Nome completo</label>
+                            <input id="nome" type="text" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="email">E-mail</label>
+                            <input id="email" type="email" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="telefone">Telefone</label>
+                            <input id="telefone" type="tel">
+                        </div>
+
+                        <div class="campo">
+                            <label for="data">Data da consulta</label>
+                            <input id="data" type="date">
+                        </div>
+                    </div>
+
+                    <button class="botao-principal" type="submit">
+                        Cadastrar paciente
+                    </button>
+                </form>
+
+                <p id="mensagem" class="mensagem" role="status"></p>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById("formPaciente").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const nome = document.getElementById("nome").value;
+            const mensagem = document.getElementById("mensagem");
+
+            mensagem.textContent =
+                "Formulário preenchido para " + nome +
+                ". O cadastro ainda não foi salvo no banco de dados.";
+
+            mensagem.style.display = "block";
+            this.reset();
+        });
+    </script>
+</body>
+</html>

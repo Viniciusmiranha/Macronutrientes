@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu perfil | NUTRIQ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/paginas.css">
+</head>
+<body>
+    <main class="pagina-extra">
+        <div class="pagina-container">
+            <header class="pagina-topo">
+                <a class="marca" href="pagina1.html">NUTRIQ</a>
+                <a class="voltar" href="pagina1.html">← Voltar ao painel</a>
+            </header>
+
+            <section class="pagina-cabecalho">
+                <h1 class="pagina-titulo">Meu perfil</h1>
+                <p class="pagina-descricao">
+                    Gerencie suas informações profissionais.
+                </p>
+            </section>
+
+            <section class="pagina-card">
+                <h2>Informações profissionais</h2>
+
+                <form id="formPerfil">
+                    <div class="form-grade">
+                        <div class="campo">
+                            <label for="nome">Nome completo</label>
+                            <input id="nome" value="Nutricionista Exemplo" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="email">E-mail</label>
+                            <input id="email" type="email" value="nutricionista@exemplo.com" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="registro">Registro profissional</label>
+                            <input id="registro" placeholder="Número do registro">
+                        </div>
+
+                        <div class="campo">
+                            <label for="telefone">Telefone</label>
+                            <input id="telefone" type="tel" placeholder="(00) 00000-0000">
+                        </div>
+
+                        <div class="campo" style="grid-column: 1 / -1">
+                            <label for="sobre">Sobre você</label>
+                            <textarea id="sobre" placeholder="Breve apresentação profissional"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="pagina-acoes">
+                        <button class="botao-principal" type="submit">
+                            Salvar alterações
+                        </button>
+                        <a class="botao-secundario" href="pagina1.html">
+                            Cancelar
+                        </a>
+                    </div>
+                </form>
+
+                <p id="mensagemPerfil" class="mensagem" role="status"></p>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById("formPerfil").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const mensagem = document.getElementById("mensagemPerfil");
+            mensagem.textContent =
+                "Alterações preenchidas. O perfil ainda não foi salvo permanentemente.";
+
+            mensagem.style.display = "block";
+        });
+    </script>
+</body>
+</html>

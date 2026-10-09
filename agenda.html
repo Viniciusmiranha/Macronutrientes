@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda | NUTRIQ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/paginas.css">
+</head>
+<body>
+    <main class="pagina-extra">
+        <div class="pagina-container">
+            <header class="pagina-topo">
+                <a class="marca" href="pagina1.html">NUTRIQ</a>
+                <a class="voltar" href="pagina1.html">← Voltar ao painel</a>
+            </header>
+
+            <section class="pagina-cabecalho">
+                <h1 class="pagina-titulo">Agenda</h1>
+                <p class="pagina-descricao">
+                    Organize os horários e compromissos.
+                </p>
+            </section>
+
+            <section class="pagina-grade">
+                <article class="pagina-card">
+                    <h3>Hoje · 09:00</h3>
+                    <p><strong>Ana Oliveira</strong></p>
+                    <p>Consulta de retorno</p>
+                    <span class="estado">Confirmada</span>
+                </article>
+
+                <article class="pagina-card">
+                    <h3>Hoje · 10:30</h3>
+                    <p><strong>Lucas Santos</strong></p>
+                    <p>Primeira consulta</p>
+                    <span class="estado pendente">A confirmar</span>
+                </article>
+
+                <article class="pagina-card">
+                    <h3>Amanhã · 14:00</h3>
+                    <p><strong>Mariana Costa</strong></p>
+                    <p>Consulta de retorno</p>
+                    <span class="estado">Confirmada</span>
+                </article>
+            </section>
+
+            <section class="pagina-card">
+                <h2>Novo compromisso</h2>
+
+                <form id="formAgenda">
+                    <div class="form-grade">
+                        <div class="campo">
+                            <label for="paciente">Paciente ou título</label>
+                            <input id="paciente" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="data">Data</label>
+                            <input id="data" type="date" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="horario">Horário</label>
+                            <input id="horario" type="time" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="tipo">Tipo de consulta</label>
+                            <select id="tipo">
+                                <option>Primeira consulta</option>
+                                <option>Retorno</option>
+                                <option>Teleconsulta</option>
+                                <option>Outro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button class="botao-principal" type="submit">
+                        Adicionar compromisso
+                    </button>
+                </form>
+
+                <p id="mensagemAgenda" class="mensagem" role="status"></p>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById("formAgenda").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const nome = document.getElementById("paciente").value;
+            const mensagem = document.getElementById("mensagemAgenda");
+
+            mensagem.textContent =
+                "Compromisso de " + nome +
+                " preenchido. Ainda não foi salvo no banco de dados.";
+
+            mensagem.style.display = "block";
+            this.reset();
+        });
+    </script>
+</body>
+</html>
