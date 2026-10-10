@@ -2,198 +2,296 @@
 "use strict";
 
 /* =========================================================
-   NUTRIQ — MÉTRICAS DO DASHBOARD
-   Atualiza pacientes, planos, avaliações e adesão.
+   NUTRIQ - DASHBOARD.JS
+   Métricas e barras de progresso das metas
 ========================================================= */
-
-(() => {
-    const CHAVE_DADOS = "nutriq_dados_v1";
-
-    function obterDados() {
-        try {
-            const dadosSalvos = localStorage.getItem(CHAVE_DADOS);
-
-            if (!dadosSalvos) {
-                return {
-                    pacientes: [],
-                    planos: [],
-                    avaliacoes: [],
-                    consultas: []
-                };
-            }
-
-            const dados = JSON.parse(dadosSalvos);
-
-            return {
-                pacientes: Array.isArray(dados.pacientes)
-                    ? dados.pacientes : [],
-
-                planos: Array.isArray(dados.planos)
-                    ? dados.planos : [],
-
-                avaliacoes: Array.isArray(dados.avaliacoes)
-                    ? dados.avaliacoes : [],
-
-                consultas: Array.isArray(dados.consultas)
-                    ? dados.consultas : []
-            };
-        } catch (erro) {
-            console.error("Erro ao ler os dados do NUTRIQ:", erro);
-
-            return {
-                pacientes: [],
-                planos: [],
-                avaliacoes: [],
-                consultas: []
-            };
-        }
-    }
-
-    function atualizarTexto(id, valor) {
-        const elemento = document.getElementById(id);
-
-        if (elemento) {
-            elemento.textContent = valor;
-        }
-    }
-
-    function calcularAdesao(consultas) {
-        if (consultas.length === 0) {
-            return 0;
-        }
-
-        const statusConcluidos = [
-            "concluída",
-            "concluida",
-            "realizada",
-            "realizado",
-            "concluído",
-            "concluido"
-        ];
-
-        const concluidas = consultas.filter(consulta => {
-            const status = String(consulta.status || "")
-                .trim()
-                .toLowerCase();
-
-            return statusConcluidos.includes(status);
-        }).length;
-
-        return Math.round((concluidas / consultas.length) * 100);
-    }
-
-    function atualizarDashboard() {
-        const dados = obterDados();
-
-        // 1. Quantidades reais registradas
-        atualizarTexto("totalPacientes", dados.pacientes.length);
-        atualizarTexto("totalPlanos", dados.planos.length);
-        atualizarTexto("totalAvaliacoes", dados.avaliacoes.length);
-
-        // 2. Taxa de adesão
-        // Fórmula: consultas concluídas / total de consultas × 100
-        const adesao = calcularAdesao(dados.consultas);
-
-        atualizarTexto("taxaAdesao", `${adesao}%`);
-
-        // Também atualiza a taxa caso o HTML utilize
-        // um cartão sem o ID taxaAdesao.
-        const cartaoAdesao = document.querySelector(
-            ".dashboard-metric-card .dashboard-metric-info"
-        );
-
-        // Localiza o cartão pelo texto "Taxa de adesão".
-        document.querySelectorAll(
-            ".dashboard-metric-card"
-        ).forEach(cartao => {
-            const titulo = cartao.querySelector(
-                ".dashboard-metric-info > span"
-            );
-
-            if (
-                titulo &&
-                titulo.textContent.trim().toLowerCase() === "taxa de adesão"
-            ) {
-                const valor = cartao.querySelector(
-                    ".dashboard-metric-info > strong"
-                );
-
-                if (valor) {
-                    valor.textContent = `${adesao}%`;
-                }
-
-                const demonstracao = cartao.querySelector(
-                    ".dashboard-growth"
-                );
-
-                if (demonstracao) {
-                    demonstracao.textContent =
-                        "Percentual de consultas concluídas";
-                }
-            }
-        });
-
-        // 3. Mostra 0% nas metas quando ainda não há metas
-        atualizarTexto("percentualMetas", "0%");
-
-        // Evita avisos de variável não utilizada em configurações
-        // de desenvolvimento.
-        void cartaoAdesao;
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        atualizarDashboard();
-
-        // Atualiza quando os dados mudam nesta página.
-        window.addEventListener(
-            "nutriqDadosAtualizados",
-            atualizarDashboard
-        );
-
-        // Atualiza quando outra aba modifica o armazenamento.
-        window.addEventListener("storage", atualizarDashboard);
-    });
-
-    // Disponibiliza a atualização para outras funções do painel.
-    window.atualizarDashboardNutriq = atualizarDashboard;
-})();
-
-"use strict";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const atualizarMetricas = () => {
+    /*
+       METAS CONFIGURÁVEIS
+
+       Neste exemplo, a meta é de 10 registros para
+       cada categoria. Altere estes valores para definir
+       as metas reais do seu consultório.
+    */
+
+    const METAS = {
+        pacientes: 10,
+        planos: 10,
+        avaliacoes: 10
+    };
+
+    /* =====================================================
+       CALCULAR E LIMITAR PORCENTAGEM
+    ===================================================== */
+
+    function limitarPercentual(valor) {
+        return Math.max(0, Math.min(100, valor));
+    }
+
+    function calcularPercentual(atual, meta) {
+        if (meta <= 0) {
+            return 0;
+        }
+
+        return limitarPercentual((atual / meta) * 100);
+    }
+
+    /* =====================================================
+       CALCULAR TAXA DE ADESÃO
+
+       Considera consultas concluídas em relação
+       ao total de consultas cadastradas.
+    ===================================================== */
+
+    function calcularAdesao(consultas) {
+        if (!consultas.length) {
+            return 0;
+        }
+
+        const concluidas = consultas.filter(consulta => {
+            const status = String(consulta.status || "")
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase()
+                .trim();
+
+            return [
+                "concluida",
+                "concluido",
+                "realizada",
+                "realizado",
+                "finalizada",
+                "finalizado",
+                "completed"
+            ].includes(status);
+        }).length;
+
+        return limitarPercentual(
+            (concluidas / consultas.length) * 100
+        );
+    }
+
+    /* =====================================================
+       ATUALIZAR UMA BARRA HORIZONTAL
+    ===================================================== */
+
+    function atualizarBarra(indice, percentual, idValor) {
+        const cards = document.querySelectorAll(
+            ".dashboard-goal-item"
+        );
+
+        const card = cards[indice];
+
+        const barra = card?.querySelector(
+            ".dashboard-progress-track > span"
+        );
+
+        const valor = document.getElementById(idValor);
+
+        const porcentagem = limitarPercentual(percentual);
+
+        if (barra) {
+            barra.style.width = `${porcentagem}%`;
+            barra.style.transition = "width 0.6s ease";
+        }
+
+        if (valor) {
+            valor.textContent = `${Math.round(porcentagem)}%`;
+        }
+    }
+
+    /* =====================================================
+       ATUALIZAR CÍRCULO DE METAS CONCLUÍDAS
+    ===================================================== */
+
+    function atualizarCirculo(percentual) {
+        const circulo = document.querySelector(
+            ".dashboard-ring-value"
+        );
+
+        const texto = document.getElementById(
+            "percentualMetas"
+        );
+
+        const indicador = document.querySelector(
+            ".dashboard-progress-ring"
+        );
+
+        const porcentagem = limitarPercentual(percentual);
+
+        /*
+           O círculo SVG tem raio 48.
+           A circunferência é 2 × PI × raio.
+        */
+
+        const circunferencia = 2 * Math.PI * 48;
+
+        const deslocamento =
+            circunferencia * (1 - porcentagem / 100);
+
+        if (circulo) {
+            circulo.style.strokeDasharray =
+                `${circunferencia}`;
+
+            circulo.style.strokeDashoffset =
+                `${deslocamento}`;
+
+            circulo.style.transition =
+                "stroke-dashoffset 0.6s ease";
+        }
+
+        if (texto) {
+            texto.textContent = `${Math.round(porcentagem)}%`;
+        }
+
+        if (indicador) {
+            indicador.setAttribute(
+                "aria-label",
+                `${Math.round(porcentagem)} por cento das metas concluídas`
+            );
+        }
+    }
+
+    /* =====================================================
+       ATUALIZAR TODAS AS MÉTRICAS E BARRAS
+    ===================================================== */
+
+    function atualizarMetricas() {
+        if (!window.NutriqDados) {
+            console.warn(
+                "NutriqDados não foi carregado. Verifique a ordem dos scripts."
+            );
+
+            return;
+        }
 
         const resumo = window.NutriqDados.obterResumo();
 
-        const elementos = {
+        /* ---------------------------------------------
+           CONTADORES PRINCIPAIS DO PAINEL
+        --------------------------------------------- */
+
+        const contadores = {
             totalPacientes: resumo.totalPacientes,
             totalPlanos: resumo.totalPlanos,
-            totalAvaliacoes: resumo.totalAvaliacoes
+            totalAvaliacoes: resumo.totalAvaliacoes,
+            totalConsultas: resumo.totalConsultas
         };
 
-        Object.entries(elementos).forEach(([id, valor]) => {
-
+        Object.entries(contadores).forEach(([id, valor]) => {
             const elemento = document.getElementById(id);
 
             if (elemento) {
                 elemento.textContent = valor;
             }
-
         });
 
-    };
+        /* ---------------------------------------------
+           CALCULAR PORCENTAGENS DAS METAS
+        --------------------------------------------- */
+
+        const percentualPacientes = calcularPercentual(
+            resumo.totalPacientes,
+            METAS.pacientes
+        );
+
+        const percentualPlanos = calcularPercentual(
+            resumo.totalPlanos,
+            METAS.planos
+        );
+
+        const percentualAvaliacoes = calcularPercentual(
+            resumo.totalAvaliacoes,
+            METAS.avaliacoes
+        );
+
+        const percentualAdesao = calcularAdesao(
+            resumo.consultas
+        );
+
+        /* ---------------------------------------------
+           ATUALIZAR BARRAS HORIZONTAIS
+
+           Índice 0: Pacientes atendidos
+           Índice 1: Planos elaborados
+           Índice 2: Avaliações realizadas
+           Índice 3: Taxa de adesão
+        --------------------------------------------- */
+
+        atualizarBarra(
+            0,
+            percentualPacientes,
+            "metaPacientesValor"
+        );
+
+        atualizarBarra(
+            1,
+            percentualPlanos,
+            "metaPlanosValor"
+        );
+
+        atualizarBarra(
+            2,
+            percentualAvaliacoes,
+            "metaAvaliacoesValor"
+        );
+
+        atualizarBarra(
+            3,
+            percentualAdesao,
+            "metaAdesaoValor"
+        );
+
+        /* ---------------------------------------------
+           PORCENTAGEM GERAL DAS METAS
+
+           É a média das quatro porcentagens acima.
+        --------------------------------------------- */
+
+        const porcentagens = [
+            percentualPacientes,
+            percentualPlanos,
+            percentualAvaliacoes,
+            percentualAdesao
+        ];
+
+        const percentualGeral =
+            porcentagens.reduce(
+                (total, percentual) => total + percentual,
+                0
+            ) / porcentagens.length;
+
+        atualizarCirculo(percentualGeral);
+    }
+
+    /* =====================================================
+       EVENTOS DE ATUALIZAÇÃO
+    ===================================================== */
 
     atualizarMetricas();
+
+    /*
+       Atualiza quando um cadastro, uma edição ou uma
+       exclusão dispara o evento do banco de dados local.
+    */
 
     window.addEventListener(
         "nutriqDadosAtualizados",
         atualizarMetricas
     );
 
+    /*
+       Atualiza quando os dados mudam em outra aba.
+    */
+
     window.addEventListener(
         "storage",
         atualizarMetricas
     );
 
+    console.log(
+        "NUTRIQ: dashboard.js carregado com barras dinâmicas."
+    );
 });
