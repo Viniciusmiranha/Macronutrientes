@@ -5,26 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#f6faf8">
-    <meta name="description" content="Painel profissional NUTRIQ para gerenciamento de pacientes, dietas, avaliações e atendimentos nutricionais.">
-
+    <meta name="description" content="Painel profissional NUTRIQ para gerenciamento de pacientes, planos alimentares, avaliações e consultas.">
     <title>Painel Profissional | NUTRIQ</title>
-
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
-
 <body class="dashboard-page">
-
     <div class="dashboard-layout">
-
         <aside class="dashboard-sidebar" id="dashboardSidebar">
-
             <a href="pagina1.html" class="dashboard-brand" aria-label="NUTRIQ - Página inicial">
                 <img src="img/logo (1).png" alt="Logo NUTRIQ">
             </a>
 
             <nav class="dashboard-navigation" aria-label="Navegação principal">
-
                 <a href="pagina1.html" class="dashboard-nav-link active" aria-current="page">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>
@@ -98,7 +91,6 @@
                     </svg>
                     <span>Meu perfil</span>
                 </a>
-
             </nav>
 
             <div class="dashboard-plan-card">
@@ -122,13 +114,10 @@
                 Sair da conta
                 <span aria-hidden="true">↗</span>
             </button>
-
         </aside>
 
         <div class="dashboard-main">
-
             <header class="dashboard-topbar">
-
                 <button
                     class="dashboard-menu-toggle"
                     id="dashboardMenuToggle"
@@ -147,7 +136,6 @@
                         <circle cx="11" cy="11" r="7"/>
                         <path d="m16 16 4 4"/>
                     </svg>
-
                     <input
                         type="search"
                         id="campoBusca"
@@ -157,7 +145,6 @@
                 </form>
 
                 <div class="dashboard-topbar-actions">
-
                     <button
                         class="dashboard-icon-button"
                         id="btnNotificacoes"
@@ -173,7 +160,6 @@
                         href="perfil.html"
                         class="dashboard-profile-button"
                         aria-label="Abrir perfil profissional"
-                        style="text-decoration:none"
                     >
                         <span class="dashboard-avatar dashboard-avatar-professional">
                             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -181,19 +167,15 @@
                                 <path d="M4 21a8 8 0 0 1 16 0"/>
                             </svg>
                         </span>
-
                         <span class="dashboard-profile-details">
                             <strong id="professionalName">Meu perfil</strong>
                             <span>Nutricionista</span>
                         </span>
                     </a>
-
                 </div>
-
             </header>
 
             <main class="dashboard-content">
-
                 <section class="dashboard-welcome" aria-labelledby="welcomeTitle">
                     <h1 id="welcomeTitle">Olá, seja bem-vindo!</h1>
                     <p>
@@ -203,7 +185,6 @@
                 </section>
 
                 <section class="dashboard-metrics" aria-label="Resumo do consultório">
-
                     <article class="dashboard-metric-card">
                         <div class="dashboard-metric-icon dashboard-icon-green">
                             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -214,8 +195,8 @@
                         </div>
                         <div class="dashboard-metric-info">
                             <span>Seus pacientes</span>
-                            <strong>124</strong>
-                            <small class="dashboard-growth">Total demonstrativo</small>
+                            <strong id="totalPacientes">0</strong>
+                            <small class="dashboard-growth">Pacientes cadastrados</small>
                         </div>
                     </article>
 
@@ -228,8 +209,8 @@
                         </div>
                         <div class="dashboard-metric-info">
                             <span>Planos alimentares</span>
-                            <strong>87</strong>
-                            <small class="dashboard-growth">Total demonstrativo</small>
+                            <strong id="totalPlanos">0</strong>
+                            <small class="dashboard-growth">Planos cadastrados</small>
                         </div>
                     </article>
 
@@ -243,8 +224,8 @@
                         </div>
                         <div class="dashboard-metric-info">
                             <span>Avaliações</span>
-                            <strong>256</strong>
-                            <small class="dashboard-growth">Total demonstrativo</small>
+                            <strong id="totalAvaliacoes">0</strong>
+                            <small class="dashboard-growth">Avaliações registradas</small>
                         </div>
                     </article>
 
@@ -256,15 +237,13 @@
                         </div>
                         <div class="dashboard-metric-info">
                             <span>Taxa de adesão</span>
-                            <strong>92%</strong>
-                            <small class="dashboard-growth">Valor demonstrativo</small>
+                            <strong id="taxaAdesao">—</strong>
+                            <small class="dashboard-growth">Calculada com dados disponíveis</small>
                         </div>
                     </article>
-
                 </section>
 
                 <div class="dashboard-overview-grid">
-
                     <section
                         class="dashboard-panel dashboard-patients-panel"
                         aria-labelledby="recentPatientsTitle"
@@ -277,63 +256,8 @@
                         </div>
 
                         <div class="dashboard-patient-list" id="listaPacientes">
-
-                            <article class="dashboard-patient-row" data-nome="João Lucas">
-                                <span class="dashboard-avatar">JL</span>
-                                <div class="dashboard-patient-identity">
-                                    <strong>João Lucas</strong>
-                                    <span>28 anos</span>
-                                </div>
-                                <span class="dashboard-status dashboard-status-progress">
-                                    Em acompanhamento
-                                </span>
-                                <time datetime="2026-10-08">08/10/2026</time>
-                                <a href="pacientes.html" class="dashboard-more-button" aria-label="Ver João Lucas">→</a>
-                            </article>
-
-                            <article class="dashboard-patient-row" data-nome="Ana Mendes">
-                                <span class="dashboard-avatar">AM</span>
-                                <div class="dashboard-patient-identity">
-                                    <strong>Ana Mendes</strong>
-                                    <span>34 anos</span>
-                                </div>
-                                <span class="dashboard-status dashboard-status-active">
-                                    Plano ativo
-                                </span>
-                                <time datetime="2026-10-07">07/10/2026</time>
-                                <a href="pacientes.html" class="dashboard-more-button" aria-label="Ver Ana Mendes">→</a>
-                            </article>
-
-                            <article class="dashboard-patient-row" data-nome="Ricardo Souza">
-                                <span class="dashboard-avatar">RS</span>
-                                <div class="dashboard-patient-identity">
-                                    <strong>Ricardo Souza</strong>
-                                    <span>45 anos</span>
-                                </div>
-                                <span class="dashboard-status dashboard-status-pending">
-                                    Aguardando retorno
-                                </span>
-                                <time datetime="2026-10-06">06/10/2026</time>
-                                <a href="pacientes.html" class="dashboard-more-button" aria-label="Ver Ricardo Souza">→</a>
-                            </article>
-
-                            <article class="dashboard-patient-row" data-nome="Larissa Campos">
-                                <span class="dashboard-avatar">LC</span>
-                                <div class="dashboard-patient-identity">
-                                    <strong>Larissa Campos</strong>
-                                    <span>29 anos</span>
-                                </div>
-                                <span class="dashboard-status dashboard-status-evaluation">
-                                    Em avaliação
-                                </span>
-                                <time datetime="2026-10-05">05/10/2026</time>
-                                <a href="pacientes.html" class="dashboard-more-button" aria-label="Ver Larissa Campos">→</a>
-                            </article>
-
-                            <p id="buscaSemResultado" hidden>
-                                Nenhum paciente encontrado.
-                            </p>
-
+                            <p class="dashboard-empty-message">Nenhum paciente cadastrado ainda.</p>
+                            <p id="buscaSemResultado" hidden>Nenhum paciente encontrado.</p>
                         </div>
                     </section>
 
@@ -348,59 +272,10 @@
                             </a>
                         </div>
 
-                        <div class="dashboard-appointment-list">
-
-                            <article class="dashboard-appointment-row">
-                                <time class="dashboard-date-badge" datetime="2026-10-09">
-                                    <strong>09</strong>
-                                    <span>OUT</span>
-                                </time>
-                                <div class="dashboard-appointment-info">
-                                    <strong>Ana Mendes</strong>
-                                    <span>09:00 · Consulta de retorno</span>
-                                </div>
-                                <a href="consultas.html" class="dashboard-start-button">Abrir</a>
-                            </article>
-
-                            <article class="dashboard-appointment-row">
-                                <time class="dashboard-date-badge" datetime="2026-10-09">
-                                    <strong>09</strong>
-                                    <span>OUT</span>
-                                </time>
-                                <div class="dashboard-appointment-info">
-                                    <strong>Ricardo Souza</strong>
-                                    <span>10:30 · Avaliação corporal</span>
-                                </div>
-                                <a href="consultas.html" class="dashboard-start-button">Abrir</a>
-                            </article>
-
-                            <article class="dashboard-appointment-row">
-                                <time class="dashboard-date-badge" datetime="2026-10-10">
-                                    <strong>10</strong>
-                                    <span>OUT</span>
-                                </time>
-                                <div class="dashboard-appointment-info">
-                                    <strong>Larissa Campos</strong>
-                                    <span>14:00 · Retorno</span>
-                                </div>
-                                <a href="consultas.html" class="dashboard-start-button">Abrir</a>
-                            </article>
-
-                            <article class="dashboard-appointment-row">
-                                <time class="dashboard-date-badge" datetime="2026-10-10">
-                                    <strong>10</strong>
-                                    <span>OUT</span>
-                                </time>
-                                <div class="dashboard-appointment-info">
-                                    <strong>João Lucas</strong>
-                                    <span>16:00 · Acompanhamento</span>
-                                </div>
-                                <a href="consultas.html" class="dashboard-start-button">Abrir</a>
-                            </article>
-
+                        <div class="dashboard-appointment-list" id="listaConsultas">
+                            <p class="dashboard-empty-message">Nenhuma consulta cadastrada.</p>
                         </div>
                     </section>
-
                 </div>
 
                 <section
@@ -415,20 +290,22 @@
                     </div>
 
                     <div class="dashboard-progress-content">
-
                         <div class="dashboard-goal-summary">
-                            <div class="dashboard-progress-ring" role="img" aria-label="78 por cento das metas concluídas">
+                            <div
+                                class="dashboard-progress-ring"
+                                role="img"
+                                aria-label="Resumo de metas sem metas configuradas"
+                            >
                                 <svg viewBox="0 0 120 120" aria-hidden="true">
                                     <circle class="dashboard-ring-background" cx="60" cy="60" r="48"/>
                                     <circle class="dashboard-ring-value" cx="60" cy="60" r="48"/>
                                 </svg>
-                                <strong>78%</strong>
+                                <strong id="percentualMetas">—</strong>
                             </div>
                             <p>das metas<br>concluídas</p>
                         </div>
 
                         <div class="dashboard-goal-metrics">
-
                             <article class="dashboard-goal-item">
                                 <div class="dashboard-goal-heading">
                                     <span class="dashboard-metric-icon dashboard-icon-green">
@@ -439,9 +316,11 @@
                                     </span>
                                     <span>Pacientes<br>atendidos</span>
                                 </div>
-                                <div class="dashboard-goal-value"><span>80%</span></div>
+                                <div class="dashboard-goal-value">
+                                    <span id="metaPacientesValor">—</span>
+                                </div>
                                 <div class="dashboard-progress-track">
-                                    <span class="dashboard-progress-green" style="width:80%"></span>
+                                    <span class="dashboard-progress-green" style="width:0%"></span>
                                 </div>
                             </article>
 
@@ -455,9 +334,11 @@
                                     </span>
                                     <span>Planos<br>elaborados</span>
                                 </div>
-                                <div class="dashboard-goal-value"><span>70%</span></div>
+                                <div class="dashboard-goal-value">
+                                    <span id="metaPlanosValor">—</span>
+                                </div>
                                 <div class="dashboard-progress-track">
-                                    <span class="dashboard-progress-green" style="width:70%"></span>
+                                    <span class="dashboard-progress-green" style="width:0%"></span>
                                 </div>
                             </article>
 
@@ -472,9 +353,11 @@
                                     </span>
                                     <span>Avaliações<br>realizadas</span>
                                 </div>
-                                <div class="dashboard-goal-value"><span>75%</span></div>
+                                <div class="dashboard-goal-value">
+                                    <span id="metaAvaliacoesValor">—</span>
+                                </div>
                                 <div class="dashboard-progress-track">
-                                    <span class="dashboard-progress-blue" style="width:75%"></span>
+                                    <span class="dashboard-progress-blue" style="width:0%"></span>
                                 </div>
                             </article>
 
@@ -487,12 +370,13 @@
                                     </span>
                                     <span>Taxa de<br>adesão</span>
                                 </div>
-                                <div class="dashboard-goal-value"><span>92%</span></div>
+                                <div class="dashboard-goal-value">
+                                    <span id="metaAdesaoValor">—</span>
+                                </div>
                                 <div class="dashboard-progress-track">
-                                    <span class="dashboard-progress-dark" style="width:92%"></span>
+                                    <span class="dashboard-progress-dark" style="width:0%"></span>
                                 </div>
                             </article>
-
                         </div>
                     </div>
                 </section>
@@ -500,125 +384,12 @@
                 <footer class="dashboard-footer">
                     <p>© 2026 NUTRIQ · Painel profissional</p>
                 </footer>
-
             </main>
-
         </div>
     </div>
 
     <div id="dashboardFeedback" role="status" aria-live="polite"></div>
 
-    <script>
-        "use strict";
-
-        const usuarioLogado = sessionStorage.getItem("usuarioLogado");
-
-        if (usuarioLogado !== "true") {
-            window.location.replace("index.html");
-        }
-
-        const sidebar = document.getElementById("dashboardSidebar");
-        const menuToggle = document.getElementById("dashboardMenuToggle");
-        const campoBusca = document.getElementById("campoBusca");
-        const listaPacientes = document.getElementById("listaPacientes");
-        const buscaSemResultado = document.getElementById("buscaSemResultado");
-        const feedback = document.getElementById("dashboardFeedback");
-
-        function mostrarFeedback(mensagem) {
-            feedback.textContent = mensagem;
-            feedback.style.cssText = [
-                "position:fixed",
-                "right:20px",
-                "bottom:20px",
-                "z-index:2000",
-                "padding:14px 18px",
-                "background:#176b58",
-                "color:#fff",
-                "border-radius:10px",
-                "box-shadow:0 5px 20px #0002"
-            ].join(";");
-
-            window.clearTimeout(mostrarFeedback.timer);
-
-            mostrarFeedback.timer = window.setTimeout(() => {
-                feedback.textContent = "";
-                feedback.style.cssText = "";
-            }, 3500);
-        }
-
-        menuToggle.addEventListener("click", () => {
-            const aberto = sidebar.classList.toggle("is-open");
-
-            menuToggle.setAttribute("aria-expanded", String(aberto));
-            menuToggle.setAttribute(
-                "aria-label",
-                aberto ? "Fechar menu" : "Abrir menu"
-            );
-        });
-
-        document.querySelectorAll(".dashboard-sidebar a").forEach(link => {
-            link.addEventListener("click", () => {
-                sidebar.classList.remove("is-open");
-                menuToggle.setAttribute("aria-expanded", "false");
-            });
-        });
-
-        document.getElementById("dashboardSearch").addEventListener("submit", event => {
-            event.preventDefault();
-        });
-
-        campoBusca.addEventListener("input", () => {
-            const termo = campoBusca.value
-                .trim()
-                .toLocaleLowerCase("pt-BR");
-
-            const pacientes = listaPacientes.querySelectorAll("[data-nome]");
-            let encontrados = 0;
-
-            pacientes.forEach(paciente => {
-                const nome = paciente.dataset.nome.toLocaleLowerCase("pt-BR");
-                const corresponde = nome.includes(termo);
-
-                paciente.hidden = !corresponde;
-
-                if (corresponde) {
-                    encontrados++;
-                }
-            });
-
-            buscaSemResultado.hidden = encontrados !== 0;
-        });
-
-        document.getElementById("btnNotificacoes").addEventListener("click", () => {
-            mostrarFeedback("Você não tem novas notificações.");
-        });
-
-        document.getElementById("btnSair").addEventListener("click", () => {
-            const confirmar = window.confirm("Deseja realmente sair da sua conta?");
-
-            if (confirmar) {
-                sessionStorage.removeItem("usuarioLogado");
-                sessionStorage.removeItem("perfilUsuario");
-                window.location.href = "index.html";
-            }
-        });
-
-        const perfilSalvo = sessionStorage.getItem("perfilUsuario");
-
-        if (perfilSalvo) {
-            try {
-                const perfil = JSON.parse(perfilSalvo);
-
-                if (perfil.nome) {
-                    document.getElementById("professionalName").textContent = perfil.nome;
-                    document.getElementById("welcomeTitle").textContent =
-                        "Olá, " + perfil.nome + "!";
-                }
-            } catch (erro) {
-                console.warn("Não foi possível carregar o perfil salvo.");
-            }
-        }
-    </script>
-
+    <script src="script.js" defer></script>
 </body>
 </html>

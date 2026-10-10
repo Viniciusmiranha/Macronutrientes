@@ -1217,3 +1217,287 @@ elementosAnimados.forEach(
 console.log(
     "nutriQ carregado com sucesso."
 );
+
+
+"use strict";
+
+(() => {
+    const CHAVE_NUTRIQ = "nutriq_dados_v1";
+
+    function obterDados() {
+        try {
+            const dados = JSON.parse(
+                localStorage.getItem(CHAVE_NUTRIQ)
+            );
+
+            return {
+                pacientes: Array.isArray(dados?.pacientes) ? dados.pacientes : [],
+                planos: Array.isArray(dados?.planos) ? dados.planos : [],
+                avaliacoes: Array.isArray(dados?.avaliacoes) ? dados.avaliacoes : [],
+                consultas: Array.isArray(dados?.consultas) ? dados.consultas : []
+            };
+        } catch {
+            return {
+                pacientes: [],
+                planos: [],
+                avaliacoes: [],
+                consultas: []
+            };
+        }
+    }
+
+    function salvarDados(dados) {
+        localStorage.setItem(
+            CHAVE_NUTRIQ,
+            JSON.stringify(dados)
+        );
+
+        window.dispatchEvent(
+            new CustomEvent("nutriqDadosAtualizados")
+        );
+    }
+
+    function gerarId() {
+        return crypto.randomUUID
+            ? crypto.randomUUID()
+            : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    }
+
+    function cadastrarPaciente(dadosPaciente) {
+        const dados = obterDados();
+
+        const nome = String(dadosPaciente.nome || "").trim();
+        const email = String(dadosPaciente.email || "").trim();
+
+        if (!nome) {
+            throw new Error("Informe o nome do paciente.");
+        }
+
+        const paciente = {
+            id: gerarId(),
+            nome,
+            email,
+            telefone: String(dadosPaciente.telefone || "").trim(),
+            dataCadastro: new Date().toISOString()
+        };
+
+        dados.pacientes.push(paciente);
+        salvarDados(dados);
+
+        return paciente;
+    }
+
+    function listarPacientes() {
+        return obterDados().pacientes;
+    }
+
+    function buscarPaciente(id) {
+        return obterDados().pacientes.find(
+            paciente => paciente.id === id
+        ) || null;
+    }
+
+    function editarPaciente(id, alteracoes) {
+        const dados = obterDados();
+
+        const indice = dados.pacientes.findIndex(
+            paciente => paciente.id === id
+        );
+
+        if (indice === -1) {
+            throw new Error("Paciente não encontrado.");
+        }
+
+        dados.pacientes[indice] = {
+            ...dados.pacientes[indice],
+            nome: alteracoes.nome !== undefined
+                ? String(alteracoes.nome).trim()
+                : dados.pacientes[indice].nome,
+            email: alteracoes.email !== undefined
+                ? String(alteracoes.email).trim()
+                : dados.pacientes[indice].email,
+            telefone: alteracoes.telefone !== undefined
+                ? String(alteracoes.telefone).trim()
+                : dados.pacientes[indice].telefone
+        };
+
+        salvarDados(dados);
+
+        return dados.pacientes[indice];
+    }
+
+    function excluirPaciente(id) {
+        const dados = obterDados();
+
+        dados.pacientes = dados.pacientes.filter(
+            paciente => paciente.id !== id
+        );
+
+        dados.planos = dados.planos.filter(
+            plano => plano.pacienteId !== id
+        );
+
+        dados.avaliacoes = dados.avaliacoes.filter(
+            avaliacao => avaliacao.pacienteId !== id
+        );
+
+        dados.consultas = dados.consultas.filter(
+            consulta => consulta.pacienteId !== id
+        );
+
+        salvarDados(dados);
+    }
+
+    function cadastrarPlano(plano) {
+        const dados = obterDados();
+
+        if (!dados.pacientes.some(
+            paciente => paciente.id === plano.pacienteId
+        )) {
+            throw new Error("Selecione um paciente cadastrado.");
+        }
+
+        if (!String(plano.nome || "").trim()) {
+            throw new Error("Informe o nome do plano alimentar.");
+        }
+
+        const novoPlano = {
+            id: gerarId(),
+            pacienteId: plano.pacienteId,
+            nome: String(plano.nome).trim(),
+            descricao: String(plano.descricao || "").trim(),
+            dataCadastro: new Date().toISOString()
+        };
+
+        dados.planos.push(novoPlano);
+        salvarDados(dados);
+
+        return novoPlano;
+    }
+
+    function cadastrarAvaliacao(avaliacao) {
+        const dados = obterDados();
+
+        if (!dados.pacientes.some(
+            paciente => paciente.id === avaliacao.pacienteId
+        )) {
+            throw new Error("Selecione um paciente cadastrado.");
+        }
+
+        const novaAvaliacao = {
+            id: gerarId(),
+            pacienteId: avaliacao.pacienteId,
+            peso: Number(avaliacao.peso) || null,
+            altura: Number(avaliacao.altura) || null,
+            observacoes: String(avaliacao.observacoes || "").trim(),
+            data: avaliacao.data || new Date().toISOString()
+        };
+
+        dados.avaliacoes.push(novaAvaliacao);
+        salvarDados(dados);
+
+        return novaAvaliacao;
+    }
+
+    function cadastrarConsulta(consulta) {
+        const dados = obterDados();
+
+        if (!dados.pacientes.some(
+            paciente => paciente.id === consulta.pacienteId
+        )) {
+            throw new Error("Selecione um paciente cadastrado.");
+        }
+
+        if (!consulta.data || !consulta.horario) {
+            throw new Error("Informe a data e o horário da consulta.");
+        }
+
+        const novaConsulta = {
+            id: gerarId(),
+            pacienteId: consulta.pacienteId,
+            data: consulta.data,
+            horario: consulta.horario,
+            tipo: String(consulta.tipo || "Consulta").trim(),
+            status: "Agendada"
+        };
+
+        dados.consultas.push(novaConsulta);
+        salvarDados(dados);
+
+        return novaConsulta;
+    }
+
+    function listarPlanos() {
+        return obterDados().planos;
+    }
+
+    function listarAvaliacoes() {
+        return obterDados().avaliacoes;
+    }
+
+    function listarConsultas() {
+        return obterDados().consultas;
+    }
+
+    function obterResumo() {
+        const dados = obterDados();
+
+        return {
+            totalPacientes: dados.pacientes.length,
+            totalPlanos: dados.planos.length,
+            totalAvaliacoes: dados.avaliacoes.length,
+            totalConsultas: dados.consultas.length,
+            pacientes: dados.pacientes,
+            planos: dados.planos,
+            avaliacoes: dados.avaliacoes,
+            consultas: dados.consultas
+        };
+    }
+
+    window.NutriqDados = {
+        cadastrarPaciente,
+        listarPacientes,
+        buscarPaciente,
+        editarPaciente,
+        excluirPaciente,
+        cadastrarPlano,
+        listarPlanos,
+        cadastrarAvaliacao,
+        listarAvaliacoes,
+        cadastrarConsulta,
+        listarConsultas,
+        obterResumo
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const atualizarMetricas = () => {
+            const resumo = obterResumo();
+
+            const elementos = {
+                totalPacientes: resumo.totalPacientes,
+                totalPlanos: resumo.totalPlanos,
+                totalAvaliacoes: resumo.totalAvaliacoes
+            };
+
+            Object.entries(elementos).forEach(([id, valor]) => {
+                const elemento = document.getElementById(id);
+
+                if (elemento) {
+                    elemento.textContent = valor;
+                }
+            });
+        };
+
+        atualizarMetricas();
+
+        window.addEventListener(
+            "nutriqDadosAtualizados",
+            atualizarMetricas
+        );
+
+        window.addEventListener(
+            "storage",
+            atualizarMetricas
+        );
+    });
+})();
