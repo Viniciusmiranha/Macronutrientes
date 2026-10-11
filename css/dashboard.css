@@ -1312,3 +1312,322 @@ body.dashboard-page {
         animation-iteration-count: 1 !important;
     }
 }
+
+
+/* =========================================================
+   NUTRIQ — CARTÃO DO PLANO PROFISSIONAL
+========================================================= */
+
+.dashboard-plan-card {
+    position: relative;
+    display: grid;
+    gap: 16px;
+    margin-top: auto;
+    padding: 17px 13px 13px;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(255, 255, 255, 0.95),
+            transparent 45%
+        ),
+        linear-gradient(
+            145deg,
+            #e7f5ee 0%,
+            #f5fbf8 100%
+        );
+
+    border: 1px solid #d5e9df;
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 22px rgba(23, 107, 88, 0.07),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+    transition:
+        box-shadow 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+/* Detalhe decorativo no cartão */
+
+.dashboard-plan-card::before {
+    position: absolute;
+    top: -30px;
+    right: -25px;
+
+    width: 95px;
+    height: 95px;
+
+    content: "";
+    pointer-events: none;
+
+    background: rgba(71, 157, 122, 0.09);
+    border-radius: 50%;
+}
+
+/* Conteúdo acima do detalhe decorativo */
+
+.dashboard-plan-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Cabeçalho do plano */
+
+.dashboard-plan-heading {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+/* Ícone de estrela */
+
+.dashboard-plan-heading > svg {
+    flex: 0 0 40px;
+
+    width: 40px;
+    height: 40px;
+    padding: 9px;
+
+    color: #176b58;
+    fill: rgba(23, 107, 88, 0.08);
+    stroke: #176b58;
+    stroke-width: 1.8;
+
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #d7eae1;
+    border-radius: 12px;
+
+    box-shadow: 0 3px 8px rgba(23, 107, 88, 0.05);
+}
+
+/* Texto do plano */
+
+.dashboard-plan-heading div {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+
+.dashboard-plan-heading span {
+    color: #6b8177;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.dashboard-plan-heading strong {
+    color: #164b3b;
+    font-size: 14px;
+    font-weight: 750;
+    letter-spacing: -0.2px;
+}
+
+/* Botão "Ver meu perfil" dentro do cartão */
+
+.dashboard-plan-card .dashboard-plan-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    width: 100%;
+    min-height: 40px;
+    padding: 9px 11px;
+
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 650;
+    text-decoration: none;
+
+    background: linear-gradient(
+        135deg,
+        #217b62,
+        #145542
+    );
+
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    box-shadow: 0 4px 10px rgba(20, 85, 66, 0.13);
+
+    transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Seta do botão de perfil */
+
+.dashboard-plan-card .dashboard-plan-button > span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 23px;
+    height: 23px;
+
+    color: #ffffff;
+    font-size: 15px;
+
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 7px;
+
+    transition: transform 0.2s ease;
+}
+
+/* Efeito ao passar o mouse */
+
+.dashboard-plan-card .dashboard-plan-button:hover {
+    color: #ffffff;
+
+    background: linear-gradient(
+        135deg,
+        #176b58,
+        #0e4636
+    );
+
+    border-color: transparent;
+
+    box-shadow: 0 6px 14px rgba(20, 85, 66, 0.2);
+    transform: translateY(-1px);
+}
+
+.dashboard-plan-card .dashboard-plan-button:hover > span {
+    transform: translateX(2px);
+}
+
+.dashboard-plan-card:hover {
+    border-color: #bfded0;
+
+    box-shadow:
+        0 10px 26px rgba(23, 107, 88, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* =========================================================
+   NUTRIQ — BOTÃO SAIR DA CONTA
+========================================================= */
+
+#btnSair.dashboard-plan-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    width: 100%;
+    min-height: 43px;
+    margin-top: 11px;
+    padding: 10px 13px;
+
+    color: #985050;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left;
+
+    background: #ffffff;
+    border: 1px solid #f0dede;
+    border-radius: 11px;
+
+    box-shadow: 0 3px 10px rgba(91, 44, 44, 0.035);
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Ícone de saída */
+
+#btnSair.dashboard-plan-button > span {
+    display: inline-flex;
+    flex: 0 0 25px;
+    align-items: center;
+    justify-content: center;
+
+    width: 25px;
+    height: 25px;
+
+    color: #a65a5a;
+    font-size: 14px;
+
+    background: #fff0f0;
+    border-radius: 8px;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Interação do botão de saída */
+
+#btnSair.dashboard-plan-button:hover {
+    color: #9b3636;
+
+    background: #fff5f4;
+    border-color: #e8c3c3;
+
+    box-shadow: 0 5px 13px rgba(155, 54, 54, 0.07);
+    transform: translateY(-1px);
+}
+
+#btnSair.dashboard-plan-button:hover > span {
+    color: #ffffff;
+    background: #b84d4d;
+    transform: translate(1px, -1px);
+}
+
+#btnSair.dashboard-plan-button:active {
+    transform: translateY(0);
+}
+
+/* =========================================================
+   AJUSTES PARA SIDEBAR ESTREITA
+========================================================= */
+
+@media (max-width: 768px) {
+    .dashboard-plan-card {
+        padding: 14px 11px 11px;
+        border-radius: 14px;
+    }
+
+    .dashboard-plan-heading > svg {
+        flex-basis: 36px;
+        width: 36px;
+        height: 36px;
+        padding: 8px;
+    }
+
+    .dashboard-plan-heading strong {
+        font-size: 13px;
+    }
+
+    .dashboard-plan-card .dashboard-plan-button {
+        min-height: 39px;
+    }
+
+    #btnSair.dashboard-plan-button {
+        min-height: 42px;
+    }
+}
+
+/* Respeitar usuários que preferem menos animações */
+
+@media (prefers-reduced-motion: reduce) {
+    .dashboard-plan-card,
+    .dashboard-plan-card *,
+    #btnSair.dashboard-plan-button,
+    #btnSair.dashboard-plan-button > span {
+        transition: none !important;
+    }
+}
+
