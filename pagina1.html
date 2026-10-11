@@ -84,18 +84,34 @@
                     <span>Relatórios</span>
                 </a>
             </nav>
+<div class="dashboard-plan-card">
 
-            <div class="dashboard-plan-card">
-                <div class="dashboard-plan-heading">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="m12 3 2.4 4.8 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z"/>
-                    </svg>
-                    <div>
-                        <span>Seu plano</span>
-                        <strong>Profissional</strong>
-                    </div>
-                </div>
-            </div>
+    <div class="dashboard-plan-heading">
+
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m12 3 2.4 4.8 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z"/>
+        </svg>
+
+        <div>
+            <span>Seu plano</span>
+            <strong>Profissional</strong>
+        </div>
+
+    </div>
+
+    <!-- BOTÃO VER PLANOS -->
+    <button
+        type="button"
+        class="dashboard-plan-button"
+        id="btnVerPlanos"
+        aria-haspopup="dialog"
+        aria-controls="modalPlanos"
+    >
+        Ver planos
+        <span aria-hidden="true">→</span>
+    </button>
+
+</div>
         </aside>    
 
         <div class="dashboard-main">
@@ -371,6 +387,113 @@
     </div>
 
     <div id="dashboardFeedback" role="status" aria-live="polite"></div>
+
+
+    <!-- =====================================================
+     MODAL DE PLANOS NUTRIQ
+===================================================== -->
+
+<div
+    class="plans-modal-overlay"
+    id="modalPlanos"
+    aria-hidden="true"
+>
+    <section
+        class="plans-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="planosTitulo"
+    >
+        <header class="plans-modal-header">
+            <div>
+                <span class="plans-modal-eyebrow">NUTRIQ</span>
+                <h2 id="planosTitulo">Conheça nossos planos</h2>
+                <p>Encontre a opção ideal para sua rotina profissional.</p>
+            </div>
+
+            <button
+                type="button"
+                class="plans-modal-close"
+                id="fecharModalPlanos"
+                aria-label="Fechar janela de planos"
+            >
+                &times;
+            </button>
+        </header>
+
+        <div class="plans-grid">
+
+            <!-- PLANO ESSENCIAL -->
+            <article class="plans-option">
+                <div class="plans-option-icon" aria-hidden="true">🌱</div>
+
+                <h3>Essencial</h3>
+                <p class="plans-option-description">
+                    Para quem está começando.
+                </p>
+
+                <ul>
+                    <li>Cadastro de pacientes</li>
+                    <li>Organização de consultas</li>
+                    <li>Calculadoras nutricionais</li>
+                </ul>
+
+                <span class="plans-option-footer">
+                    Conheça esta opção
+                </span>
+            </article>
+
+            <!-- PLANO PROFISSIONAL -->
+            <article class="plans-option plans-option-featured">
+                <span class="plans-current-label">Seu plano atual</span>
+
+                <div class="plans-option-icon" aria-hidden="true">✦</div>
+
+                <h3>Profissional</h3>
+                <p class="plans-option-description">
+                    Para o acompanhamento do consultório.
+                </p>
+
+                <ul>
+                    <li>Gestão de pacientes</li>
+                    <li>Planos alimentares e avaliações</li>
+                    <li>Organização da agenda</li>
+                    <li>Relatórios do consultório</li>
+                </ul>
+
+                <span class="plans-option-footer">
+                    Plano selecionado
+                </span>
+            </article>
+
+            <!-- PLANO CLÍNICA -->
+            <article class="plans-option">
+                <div class="plans-option-icon" aria-hidden="true">✚</div>
+
+                <h3>Clínica</h3>
+                <p class="plans-option-description">
+                    Para equipes e consultórios em expansão.
+                </p>
+
+                <ul>
+                    <li>Organização do consultório</li>
+                    <li>Acompanhamento de pacientes</li>
+                    <li>Recursos para equipes</li>
+                </ul>
+
+                <span class="plans-option-footer">
+                    Conheça esta opção
+                </span>
+            </article>
+
+        </div>
+
+        <p class="plans-modal-note">
+            Os detalhes comerciais e os preços dos planos devem ser
+            definidos conforme as opções oferecidas pelo NUTRIQ.
+        </p>
+    </section>
+</div>
 
     <script src="js/main.js" defer></script>
     <script src="js/auth.js" defer></script>
