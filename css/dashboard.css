@@ -1378,27 +1378,6 @@ body.dashboard-page {
     border-radius: 6px;
 }
 
-/* =========================================================
-   SAIR DA CONTA — COMPACTO E ALINHADO
-========================================================= */
-
-#btnSair.dashboard-plan-button {
-    min-height: 35px;
-    margin-top: 7px;
-    padding: 7px 10px;
-    font-size: 11px;
-    border-radius: 9px;
-    box-shadow: none;
-}
-
-#btnSair.dashboard-plan-button > span {
-    flex: 0 0 22px;
-    width: 22px;
-    height: 22px;
-    font-size: 12px;
-    border-radius: 6px;
-}
-
 /* Efeitos mais sutis */
 
 .dashboard-plan-card:hover {
@@ -1406,9 +1385,5 @@ body.dashboard-page {
 }
 
 .dashboard-plan-card .dashboard-plan-button:hover {
-    transform: translateY(-1px);
-}
-
-#btnSair.dashboard-plan-button:hover {
     transform: translateY(-1px);
 }
