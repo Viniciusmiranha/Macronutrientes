@@ -1313,202 +1313,105 @@ body.dashboard-page {
     }
 }
 
-
 /* =========================================================
-   NUTRIQ — CARTÃO DO PLANO PROFISSIONAL
+   PLANO PROFISSIONAL — VERSÃO COMPACTA
 ========================================================= */
 
 .dashboard-plan-card {
-    position: relative;
-    display: grid;
-    gap: 16px;
+    gap: 10px;
     margin-top: auto;
-    padding: 17px 13px 13px;
-    overflow: hidden;
-
-    background:
-        radial-gradient(
-            circle at 100% 0%,
-            rgba(255, 255, 255, 0.95),
-            transparent 45%
-        ),
-        linear-gradient(
-            145deg,
-            #e7f5ee 0%,
-            #f5fbf8 100%
-        );
-
-    border: 1px solid #d5e9df;
-    border-radius: 16px;
-
-    box-shadow:
-        0 8px 22px rgba(23, 107, 88, 0.07),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-
-    transition:
-        box-shadow 0.25s ease,
-        border-color 0.25s ease,
-        transform 0.25s ease;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(23, 107, 88, 0.05);
 }
 
-/* Detalhe decorativo no cartão */
+/* Reduzir o detalhe decorativo */
 
 .dashboard-plan-card::before {
-    position: absolute;
-    top: -30px;
-    right: -25px;
-
-    width: 95px;
-    height: 95px;
-
-    content: "";
-    pointer-events: none;
-
-    background: rgba(71, 157, 122, 0.09);
-    border-radius: 50%;
+    top: -20px;
+    right: -18px;
+    width: 65px;
+    height: 65px;
 }
 
-/* Conteúdo acima do detalhe decorativo */
-
-.dashboard-plan-card > * {
-    position: relative;
-    z-index: 1;
-}
-
-/* Cabeçalho do plano */
+/* Cabeçalho mais discreto */
 
 .dashboard-plan-heading {
-    display: flex;
-    align-items: center;
-    gap: 11px;
+    gap: 8px;
 }
-
-/* Ícone de estrela */
 
 .dashboard-plan-heading > svg {
-    flex: 0 0 40px;
-
-    width: 40px;
-    height: 40px;
-    padding: 9px;
-
-    color: #176b58;
-    fill: rgba(23, 107, 88, 0.08);
-    stroke: #176b58;
-    stroke-width: 1.8;
-
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid #d7eae1;
-    border-radius: 12px;
-
-    box-shadow: 0 3px 8px rgba(23, 107, 88, 0.05);
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+    border-radius: 9px;
 }
 
-/* Texto do plano */
-
 .dashboard-plan-heading div {
-    display: grid;
-    gap: 4px;
-    min-width: 0;
+    gap: 1px;
 }
 
 .dashboard-plan-heading span {
-    color: #6b8177;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
+    font-size: 9px;
+    letter-spacing: 0.5px;
 }
 
 .dashboard-plan-heading strong {
-    color: #164b3b;
-    font-size: 14px;
-    font-weight: 750;
-    letter-spacing: -0.2px;
+    font-size: 12px;
 }
 
-/* Botão "Ver meu perfil" dentro do cartão */
+/* Botão de perfil menor */
 
 .dashboard-plan-card .dashboard-plan-button {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-
-    width: 100%;
-    min-height: 40px;
-    padding: 9px 11px;
-
-    color: #ffffff;
-    font-size: 11px;
-    font-weight: 650;
-    text-decoration: none;
-
-    background: linear-gradient(
-        135deg,
-        #217b62,
-        #145542
-    );
-
-    border: 1px solid transparent;
-    border-radius: 10px;
-
-    box-shadow: 0 4px 10px rgba(20, 85, 66, 0.13);
-
-    transition:
-        background 0.2s ease,
-        box-shadow 0.2s ease,
-        transform 0.2s ease;
+    min-height: 33px;
+    padding: 6px 9px;
+    font-size: 10px;
+    border-radius: 8px;
+    box-shadow: none;
 }
-
-/* Seta do botão de perfil */
 
 .dashboard-plan-card .dashboard-plan-button > span {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 23px;
-    height: 23px;
-
-    color: #ffffff;
-    font-size: 15px;
-
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 7px;
-
-    transition: transform 0.2s ease;
+    width: 21px;
+    height: 21px;
+    font-size: 13px;
+    border-radius: 6px;
 }
 
-/* Efeito ao passar o mouse */
+/* =========================================================
+   SAIR DA CONTA — COMPACTO E ALINHADO
+========================================================= */
+
+#btnSair.dashboard-plan-button {
+    min-height: 35px;
+    margin-top: 7px;
+    padding: 7px 10px;
+    font-size: 11px;
+    border-radius: 9px;
+    box-shadow: none;
+}
+
+#btnSair.dashboard-plan-button > span {
+    flex: 0 0 22px;
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+    border-radius: 6px;
+}
+
+/* Efeitos mais sutis */
+
+.dashboard-plan-card:hover {
+    box-shadow: 0 5px 14px rgba(23, 107, 88, 0.07);
+}
 
 .dashboard-plan-card .dashboard-plan-button:hover {
-    color: #ffffff;
-
-    background: linear-gradient(
-        135deg,
-        #176b58,
-        #0e4636
-    );
-
-    border-color: transparent;
-
-    box-shadow: 0 6px 14px rgba(20, 85, 66, 0.2);
     transform: translateY(-1px);
 }
 
-.dashboard-plan-card .dashboard-plan-button:hover > span {
-    transform: translateX(2px);
+#btnSair.dashboard-plan-button:hover {
+    transform: translateY(-1px);
 }
-
-.dashboard-plan-card:hover {
-    border-color: #bfded0;
-
-    box-shadow:
-        0 10px 26px rgba(23, 107, 88, 0.10),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-}
-
 /* =========================================================
    NUTRIQ — BOTÃO SAIR DA CONTA
 ========================================================= */
