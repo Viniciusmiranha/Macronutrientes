@@ -1348,3 +1348,74 @@ body.dashboard-page {
     box-shadow: 0 5px 14px rgba(23, 107, 88, 0.07);
 }
 
+
+
+/* BOTÃO VER PLANOS */
+
+.dashboard-page #btnVerPlanos.dashboard-plan-button {
+    appearance: none;
+    -webkit-appearance: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    width: 100%;
+    min-height: 35px;
+    padding: 7px 10px;
+
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 650;
+    text-align: left;
+
+    background: linear-gradient(135deg, #247c61, #145542);
+    border: 1px solid #1c6a52;
+    border-radius: 9px;
+
+    box-shadow: 0 3px 8px rgba(23, 107, 88, 0.12);
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.dashboard-page #btnVerPlanos.dashboard-plan-button > span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 22px;
+    width: 22px;
+    height: 22px;
+
+    color: #ffffff;
+    font-size: 14px;
+
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 6px;
+
+    transition: transform 0.2s ease;
+}
+
+.dashboard-page #btnVerPlanos.dashboard-plan-button:hover {
+    color: #ffffff;
+    background: linear-gradient(135deg, #176b58, #0e4636);
+    border-color: #145542;
+    box-shadow: 0 5px 12px rgba(23, 107, 88, 0.2);
+    transform: translateY(-1px);
+}
+
+.dashboard-page #btnVerPlanos.dashboard-plan-button:hover > span {
+    transform: translateX(3px);
+}
+
+.dashboard-page #btnVerPlanos.dashboard-plan-button:active {
+    transform: translateY(0);
+}
+

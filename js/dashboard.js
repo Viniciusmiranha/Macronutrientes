@@ -295,3 +295,64 @@ document.addEventListener("DOMContentLoaded", () => {
         "NUTRIQ: dashboard.js carregado com barras dinâmicas."
     );
 });
+
+/* =========================================================
+   CONTROLE DA JANELA DE PLANOS
+========================================================= */
+
+(() => {
+    const botao = document.getElementById("btnVerPlanos");
+    const modal = document.getElementById("modalPlanos");
+    const fechar = document.getElementById("fecharModalPlanos");
+
+    if (!botao || !modal || !fechar) {
+        console.warn(
+            "Verifique se btnVerPlanos, modalPlanos e fecharModalPlanos existem no HTML."
+        );
+        return;
+    }
+
+    let elementoAnterior = null;
+    let overflowAnterior = "";
+
+    function abrir() {
+        elementoAnterior = document.activeElement;
+        overflowAnterior = document.body.style.overflow;
+
+        modal.classList.add("is-open");
+        modal.setAttribute("aria-hidden", "false");
+
+        document.body.style.overflow = "hidden";
+
+        fechar.focus();
+    }
+
+    function fecharModal() {
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+
+        document.body.style.overflow = overflowAnterior;
+
+        if (elementoAnterior) {
+            elementoAnterior.focus();
+        }
+    }
+
+    botao.addEventListener("click", abrir);
+    fechar.addEventListener("click", fecharModal);
+
+    modal.addEventListener("click", evento => {
+        if (evento.target === modal) {
+            fecharModal();
+        }
+    });
+
+    document.addEventListener("keydown", evento => {
+        if (
+            evento.key === "Escape" &&
+            modal.classList.contains("is-open")
+        ) {
+            fecharModal();
+        }
+    });
+})();
