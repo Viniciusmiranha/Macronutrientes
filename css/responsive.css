@@ -125,323 +125,714 @@
 
 
 /* =========================================================
-   MOBILE
+   NUTRIQ — RESPONSIVIDADE MOBILE
 ========================================================= */
+
+/* Logo e navegação inferior não aparecem no desktop */
+
+.dashboard-mobile-brand,
+.dashboard-bottom-nav {
+    display: none;
+}
+
+/* Impedir rolagem horizontal no celular */
 
 @media (max-width: 700px) {
 
-    :root {
-        --margem-site: 28px;
+    body.dashboard-page {
+        overflow-x: hidden;
+        min-width: 0;
+        padding-bottom: env(safe-area-inset-bottom);
     }
 
-    .header {
-        height: 64px;
+    /* ================================================
+       CABEÇALHO MOBILE
+    ================================================ */
+
+    .dashboard-topbar {
+        position: sticky;
+        top: 0;
+        z-index: 1200;
+
+        display: grid !important;
+
+        grid-template-columns: 36px minmax(0, 1fr) auto;
+        grid-template-areas:
+            "menu brand actions"
+            "search search search";
+
+        align-items: center;
+        gap: 11px;
+
+        min-height: auto;
+        padding: 12px 14px;
+
+        background: rgba(255, 255, 255, 0.96);
+        border-bottom: 1px solid #e3eae7;
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
     }
 
-    .header-container {
-        width:
-            calc(100% - 28px);
+    /* Botão do menu */
+
+    .dashboard-menu-toggle {
+        display: inline-flex !important;
+        grid-area: menu;
+
+        align-items: center;
+        justify-content: center;
+
+        width: 36px;
+        height: 36px;
+        padding: 0;
+
+        border-radius: 10px;
     }
 
+    .dashboard-menu-toggle:hover {
+        background: #eef7f3;
+    }
 
-    /* =========================
-       MENU MOBILE
-    ========================= */
+    /* Logo centralizada */
 
-    .nav {
-        position: fixed;
-
-        top: 64px;
-
-        left: 0;
-
-        width: 100%;
-
-        padding:
-            15px 20px 20px;
-
-        background:
-            rgba(248, 250, 248, 0.98);
-
-        backdrop-filter: blur(15px);
-
-        -webkit-backdrop-filter: blur(15px);
-
-        border-bottom:
-            1px solid var(--borda);
-
+    .dashboard-mobile-brand {
         display: flex;
+        grid-area: brand;
 
-        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        justify-self: center;
 
-        gap: 0;
-
-        transform:
-            translateY(-120%);
-
-        opacity: 0;
-
-        pointer-events: none;
-
-        transition:
-            transform 0.3s ease,
-            opacity 0.3s ease;
-    }
-
-    .nav.mobile-open {
-        transform:
-            translateY(0);
-
-        opacity: 1;
-
-        pointer-events: auto;
-    }
-
-    body.dark-mode .nav {
-        background:
-            rgba(15, 31, 28, 0.98);
-    }
-
-    .nav-link {
         width: 100%;
+        min-width: 0;
+        height: 40px;
 
-        text-align: center;
-
-        padding: 13px;
+        text-decoration: none;
     }
 
-    .nav-link::after {
-        bottom: 7px;
-
-        left: 50%;
-
-        transform:
-            translateX(-50%);
-    }
-
-    .nav-link:hover::after,
-    .nav-link.active:hover::after {
-        width: 100%;
-    }
-
-    .nav-link.active::after {
-        width: 0;
-    }
-
-
-    /* =========================
-       BOTÕES HEADER
-    ========================= */
-
-    .menu-button {
+    .dashboard-mobile-brand img {
         display: block;
+
+        width: auto;
+        max-width: 145px;
+        height: auto;
+        max-height: 38px;
+
+        object-fit: contain;
+        object-position: center;
     }
 
-    .login-header-button {
-        display: none;
+    /* Notificações e perfil */
+
+    .dashboard-topbar-actions {
+        display: flex !important;
+        grid-area: actions;
+
+        align-items: center;
+        justify-self: end;
+
+        gap: 9px;
+        margin: 0;
     }
 
-
-    /* =========================
-       HERO
-    ========================= */
-
-    .hero {
-        padding-top: 95px;
-
-        padding-bottom: 50px;
+    .dashboard-icon-button {
+        width: 32px;
+        height: 36px;
     }
 
-    .hero-container {
-        width:
-            calc(100% - 28px);
-
-        gap: 35px;
+    .dashboard-icon-button svg {
+        width: 22px;
+        height: 22px;
     }
 
-    .hero-content {
-        padding-top: 10px;
+    .dashboard-profile-button {
+        gap: 0;
     }
 
-    .hero h1 {
-        font-size: 36px;
+    .dashboard-avatar-professional {
+        flex: 0 0 36px;
 
-        letter-spacing: -1px;
+        width: 36px;
+        height: 36px;
     }
 
-    .hero-description {
+    .dashboard-avatar-professional svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .dashboard-profile-details,
+    .dashboard-profile-chevron {
+        display: none !important;
+    }
+
+    /* Pesquisa continua funcionando abaixo do cabeçalho */
+
+    .dashboard-search {
+        grid-area: search;
+
+        display: flex !important;
+
+        width: 100%;
+        max-width: none;
+        min-height: 40px;
+        margin: 0;
+        padding: 0 12px;
+
+        background: #f8fbf9;
+        border: 1px solid #dbe6e0;
+        border-radius: 11px;
+    }
+
+    .dashboard-search input {
+        width: 100%;
+        min-width: 0;
         font-size: 13px;
     }
 
+    /* ================================================
+       MENU LATERAL MOBILE
+    ================================================ */
 
-    /* =========================
-       FEATURES
-    ========================= */
+    .dashboard-sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
 
-    .hero-features {
-        grid-template-columns:
-            repeat(2, 1fr);
+        z-index: 2000;
 
-        gap: 20px;
+        width: min(82vw, 285px);
+        max-width: 100%;
+
+        padding: 17px 13px;
+
+        background: #ffffff;
+
+        transform: translateX(-105%);
+        transition: transform 0.25s ease;
     }
 
-    .hero-feature {
-        border-right: none;
-
-        padding: 0;
+    .dashboard-sidebar.is-open {
+        transform: translateX(0);
+        box-shadow: 12px 0 40px rgba(18, 43, 33, 0.16);
     }
 
-
-    /* =========================
-       PROFILE CARD
-    ========================= */
-
-    .profile-card {
-        padding: 22px;
+    .dashboard-brand {
+        margin-bottom: 22px;
     }
 
-    .profile-card h2 {
-        font-size: 25px;
+    .dashboard-brand img {
+        width: 140px;
+        max-height: 42px;
     }
 
-    .profile-option {
-        grid-template-columns:
-            48px 1fr 35px;
-
-        padding: 13px;
+    .dashboard-nav-link {
+        min-height: 44px;
+        font-size: 13px;
     }
 
-    .profile-option-icon {
-        width: 45px;
+    /* ================================================
+       CONTEÚDO PRINCIPAL
+    ================================================ */
 
-        height: 45px;
-
-        font-size: 28px;
+    .dashboard-main {
+        width: 100%;
+        min-width: 0;
+        min-height: 100vh;
+        margin-left: 0;
     }
 
-    .profile-option-text p {
+    .dashboard-content {
+        display: grid;
+
+        width: 100%;
+        max-width: 100%;
+
+        gap: 15px;
+
+        margin: 0;
+        padding: 21px 13px 110px;
+    }
+
+    .dashboard-welcome {
+        padding: 0 3px 4px;
+    }
+
+    .dashboard-welcome h1 {
+        margin-bottom: 7px;
+
+        color: #101d42;
+        font-size: clamp(23px, 6vw, 29px);
+        font-weight: 750;
+        line-height: 1.2;
+        letter-spacing: -0.7px;
+    }
+
+    .dashboard-welcome p {
+        max-width: 40ch;
+
+        color: #7286b4;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    /* ================================================
+       CARTÕES DE MÉTRICAS — DUAS COLUNAS
+    ================================================ */
+
+    .dashboard-metrics {
+        display: grid !important;
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .dashboard-metric-card {
+        display: grid;
+
+        grid-template-columns: 40px minmax(0, 1fr);
+        align-content: start;
+        align-items: start;
+
+        gap: 10px;
+
+        min-width: 0;
+        min-height: 127px;
+        padding: 13px 10px;
+
+        border: 1px solid #e7efea;
+        border-radius: 15px;
+        box-shadow: none;
+    }
+
+    .dashboard-metric-card:nth-child(1) {
+        background: #edf8f3;
+    }
+
+    .dashboard-metric-card:nth-child(2) {
+        background: #eaf4fc;
+    }
+
+    .dashboard-metric-card:nth-child(3) {
+        background: #f0f0fc;
+    }
+
+    .dashboard-metric-card:nth-child(4) {
+        background: #eaf7f1;
+    }
+
+    .dashboard-metric-icon {
+        display: inline-flex;
+
+        flex: 0 0 40px;
+
+        width: 40px;
+        height: 40px;
+
+        border-radius: 12px;
+    }
+
+    .dashboard-metric-icon svg {
+        width: 23px;
+        height: 23px;
+    }
+
+    .dashboard-metric-info {
+        display: grid;
+
+        flex: initial;
+        gap: 6px;
+        min-width: 0;
+    }
+
+    .dashboard-metric-info > span {
+        min-height: 30px;
+
+        color: #24374d;
         font-size: 10px;
+        line-height: 1.4;
     }
 
-
-    /* =========================
-       BENEFÍCIOS
-    ========================= */
-
-    .benefits-grid {
-        grid-template-columns: 1fr;
+    .dashboard-metric-info > strong {
+        color: #0e1d42;
+        font-size: clamp(21px, 6vw, 26px);
+        line-height: 1.1;
     }
 
-    .benefit-card {
-        border-left: none;
-
-        border-bottom:
-            1px solid var(--borda);
-
-        padding: 15px 0;
+    .dashboard-growth {
+        overflow-wrap: anywhere;
+        font-size: 9px;
+        white-space: normal;
     }
 
-    .benefit-card:last-child {
-        border-bottom: none;
-    }
-
-
-    /* =========================
-       FUNCIONALIDADES
-    ========================= */
-
-    .functionalities-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .section-title-center h2 {
-        font-size: 29px;
-    }
-
-
-    /* =========================
-       CONTATO
-    ========================= */
-
-    .contact-content h2 {
-        font-size: 30px;
-    }
-
-
-    /* =========================
-       FOOTER
-    ========================= */
-
-    .footer-container {
-        flex-direction: column;
-
-        text-align: center;
-    }
-
-
-    /* =========================
-       MODAL
-    ========================= */
-
-    .modal {
-        padding:
-            28px 22px;
-    }
-}
-
-
-/* =========================================================
-   CELULARES PEQUENOS
-========================================================= */
-
-@media (max-width: 400px) {
-
-    .hero h1 {
-        font-size: 31px;
-    }
-
-    .theme-button {
+    .dashboard-mini-chart {
         display: none;
     }
 
-    .profile-option {
-        grid-template-columns:
-            40px 1fr 32px;
+    /* ================================================
+       PAINÉIS DE PACIENTES E CONSULTAS
+    ================================================ */
+
+    .dashboard-overview-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 13px;
     }
 
-    .profile-option-icon {
-        width: 38px;
+    .dashboard-panel {
+        min-width: 0;
+        padding: 15px 12px 11px;
 
-        height: 38px;
-
-        font-size: 23px;
+        border: 1px solid #e0e9e4;
+        border-radius: 15px;
+        box-shadow: none;
     }
 
-    .arrow {
-        width: 30px;
+    .dashboard-panel-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
 
-        height: 30px;
-
-        font-size: 17px;
+        margin-bottom: 12px;
     }
 
-    .profile-card {
-        padding: 18px;
+    .dashboard-panel-heading h2 {
+        min-width: 0;
+        font-size: 13px;
+        line-height: 1.4;
     }
 
-    .hero-features {
-        gap: 14px;
+    .dashboard-view-all {
+        gap: 4px;
+        font-size: 10px;
+        white-space: nowrap;
     }
 
-    .hero-feature h3 {
+    .dashboard-view-all span {
+        font-size: 16px;
+    }
+
+    /* Pacientes recentes */
+
+    .dashboard-patient-row {
+        display: grid;
+
+        grid-template-columns: 35px minmax(0, 1fr) 18px;
+        gap: 8px;
+
+        min-width: 0;
+        min-height: 59px;
+        padding: 9px 0;
+    }
+
+    .dashboard-patient-row > .dashboard-avatar {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+
+        width: 35px;
+        height: 35px;
+    }
+
+    .dashboard-patient-identity {
+        grid-column: 2;
+        grid-row: 1;
+        min-width: 0;
+    }
+
+    .dashboard-patient-identity strong {
         font-size: 11px;
     }
 
-    .hero-feature p {
+    .dashboard-patient-identity > span {
+        overflow-wrap: anywhere;
         font-size: 9px;
+    }
+
+    .dashboard-patient-row .dashboard-status {
+        grid-column: 2;
+        grid-row: 2;
+
+        justify-self: start;
+        max-width: 100%;
+
+        font-size: 9px;
+    }
+
+    .dashboard-patient-row time {
+        display: none;
+    }
+
+    .dashboard-patient-row .dashboard-more-button {
+        grid-column: 3;
+        grid-row: 1 / span 2;
+    }
+
+    /* Próximos atendimentos */
+
+    .dashboard-appointment-row {
+        display: grid;
+
+        grid-template-columns: 43px minmax(0, 1fr) auto;
+        gap: 9px;
+
+        min-width: 0;
+        min-height: 65px;
+        padding: 9px 0;
+    }
+
+    .dashboard-date-badge {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+
+        width: 42px;
+        min-height: 43px;
+    }
+
+    .dashboard-appointment-info {
+        grid-column: 2;
+        grid-row: 1;
+        min-width: 0;
+    }
+
+    .dashboard-appointment-info strong {
+        font-size: 11px;
+    }
+
+    .dashboard-appointment-info > span {
+        white-space: normal;
+        overflow-wrap: anywhere;
+        font-size: 10px;
+    }
+
+    .dashboard-appointment-row .dashboard-start-button {
+        grid-column: 2;
+        grid-row: 2;
+
+        justify-self: start;
+
+        min-height: 29px;
+        padding: 5px 12px;
+        font-size: 10px;
+    }
+
+    /* ================================================
+       RESUMO DE METAS
+    ================================================ */
+
+    .dashboard-progress-content {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 17px;
+    }
+
+    .dashboard-goal-summary {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+
+        min-height: auto;
+        padding: 8px 0 17px;
+
+        border-right: 0;
+        border-bottom: 1px solid #edf0ef;
+    }
+
+    .dashboard-progress-ring {
+        flex: 0 0 105px;
+
+        width: 105px;
+        height: 105px;
+    }
+
+    .dashboard-progress-ring strong {
+        font-size: 24px;
+    }
+
+    .dashboard-goal-summary p {
+        color: #7286b4;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .dashboard-goal-metrics {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 13px 0;
+    }
+
+    .dashboard-goal-item {
+        gap: 9px;
+        min-width: 0;
+        padding: 7px 9px 11px;
+    }
+
+    .dashboard-goal-item:nth-child(2) {
+        border-right: 0;
+    }
+
+    .dashboard-goal-heading {
+        gap: 7px;
+        min-height: 39px;
+    }
+
+    .dashboard-goal-heading .dashboard-metric-icon {
+        flex: 0 0 34px;
+        width: 34px;
+        height: 34px;
+    }
+
+    .dashboard-goal-heading .dashboard-metric-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .dashboard-goal-heading > span:last-child {
+        font-size: 10px;
+    }
+
+    .dashboard-goal-value {
+        font-size: 10px;
+    }
+
+    .dashboard-progress-track {
+        height: 8px;
+    }
+
+    /* Rodapé da página */
+
+    .dashboard-footer {
+        padding: 0 4px 15px;
+        font-size: 11px;
+    }
+
+    /* ================================================
+       NAVEGAÇÃO INFERIOR FIXA
+    ================================================ */
+
+    .dashboard-bottom-nav {
+        position: fixed;
+        inset: auto 0 0;
+        z-index: 1500;
+
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        align-items: center;
+        gap: 3px;
+
+        min-height: 70px;
+        padding: 7px 10px calc(7px + env(safe-area-inset-bottom));
+
+        background: rgba(255, 255, 255, 0.97);
+        border-top: 1px solid #e2eae6;
+
+        box-shadow: 0 -5px 20px rgba(20, 56, 42, 0.045);
+
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+    }
+
+    .dashboard-bottom-nav a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+
+        min-width: 0;
+        min-height: 54px;
+        padding: 5px 2px;
+
+        color: #7083b1;
+        font-size: 10px;
+        font-weight: 500;
+        text-align: center;
+        text-decoration: none;
+
+        border-radius: 12px;
+
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .dashboard-bottom-nav a svg {
+        width: 23px;
+        height: 23px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .dashboard-bottom-nav a.active,
+    .dashboard-bottom-nav a:hover {
+        color: #125b48;
+        font-weight: 700;
+        background: #e0f1e9;
+    }
+
+    .dashboard-bottom-nav a:focus-visible {
+        outline: 2px solid #176b58;
+        outline-offset: -2px;
     }
 }
 
+/* Telas muito estreitas */
+
+@media (max-width: 360px) {
+    .dashboard-content {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .dashboard-metrics {
+        gap: 7px;
+    }
+
+    .dashboard-metric-card {
+        grid-template-columns: 32px minmax(0, 1fr);
+        gap: 7px;
+        min-height: 119px;
+        padding: 10px 8px;
+    }
+
+    .dashboard-metric-icon {
+        flex-basis: 32px;
+        width: 32px;
+        height: 32px;
+        border-radius: 9px;
+    }
+
+    .dashboard-metric-icon svg {
+        width: 19px;
+        height: 19px;
+    }
+
+    .dashboard-metric-info > strong {
+        font-size: 21px;
+    }
+
+    .dashboard-goal-summary {
+        gap: 12px;
+    }
+
+    .dashboard-progress-ring {
+        flex-basis: 90px;
+        width: 90px;
+        height: 90px;
+    }
+
+    .dashboard-progress-ring strong {
+        font-size: 21px;
+    }
+
+    .dashboard-bottom-nav {
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+}
 
 /* =========================================================
    ACESSIBILIDADE
