@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f5f7f4">
+    <title>Calculadoras | NUTRIQ</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/calculadoras.css">
+
+    <script src="js/calculadoras.js" defer></script>
+</head>
+<body class="dashboard-page calculadoras-page">
+
+    <aside class="dashboard-sidebar" id="dashboardSidebar">
+        <div class="dashboard-logo">
+            <a href="pagina1.html">
+                <img src="img/logo (1).png" alt="NUTRIQ">
+            </a>
+        </div>
+
+        <nav class="dashboard-nav">
+            <a href="pagina1.html" class="dashboard-nav-link">
+                <span>⌂</span>
+                <span>Início</span>
+            </a>
+
+            <a href="pacientes.html" class="dashboard-nav-link">
+                <span>♙</span>
+                <span>Pacientes</span>
+            </a>
+
+            <a href="planos-alimentares.html" class="dashboard-nav-link">
+                <span>▤</span>
+                <span>Planos alimentares</span>
+            </a>
+
+            <a href="calculadoras.html" class="dashboard-nav-link active">
+                <span>▦</span>
+                <span>Calculadoras</span>
+            </a>
+
+            <a href="consultas.html" class="dashboard-nav-link">
+                <span>▣</span>
+                <span>Consultas</span>
+            </a>
+
+            <a href="agenda.html" class="dashboard-nav-link">
+                <span>▦</span>
+                <span>Agenda</span>
+            </a>
+
+            <a href="relatorios.html" class="dashboard-nav-link">
+                <span>▥</span>
+                <span>Relatórios</span>
+            </a>
+
+            <a href="perfil.html" class="dashboard-nav-link">
+                <span>⚙</span>
+                <span>Perfil</span>
+            </a>
+        </nav>
+
+        <div class="dashboard-sidebar-bottom">
+            <a href="index.html" class="dashboard-nav-link" id="btnSair">
+                <span>↪</span>
+                <span>Sair</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="dashboard-main">
+        <header class="calculadoras-header">
+            <button
+                type="button"
+                class="calculadoras-menu-toggle"
+                id="dashboardMenuToggle"
+                aria-label="Abrir menu"
+                aria-expanded="false">
+                ☰
+            </button>
+
+            <div>
+                <p class="calculadoras-eyebrow">FERRAMENTAS PROFISSIONAIS</p>
+                <h1>Calculadoras nutricionais</h1>
+                <p class="calculadoras-subtitle">
+                    Realize cálculos nutricionais de forma prática.
+                </p>
+            </div>
+        </header>
+
+        <main class="calculadoras-content">
+            <section class="calculadoras-intro">
+                <div>
+                    <h2>Qual cálculo deseja realizar?</h2>
+                    <p>Selecione uma das ferramentas abaixo.</p>
+                </div>
+            </section>
+
+            <div class="calculadoras-tabs" role="tablist">
+                <button
+                    type="button"
+                    class="calculadora-tab active"
+                    data-calculadora="macros"
+                    role="tab"
+                    aria-selected="true">
+                    Macronutrientes
+                </button>
+
+                <button
+                    type="button"
+                    class="calculadora-tab"
+                    data-calculadora="imc"
+                    role="tab"
+                    aria-selected="false">
+                    Índice de massa corporal
+                </button>
+
+                <button
+                    type="button"
+                    class="calculadora-tab"
+                    data-calculadora="agua"
+                    role="tab"
+                    aria-selected="false">
+                    Ingestão de água
+                </button>
+            </div>
+
+            <section
+                class="calculadora-panel active"
+                id="painel-macros"
+                role="tabpanel">
+
+                <div class="calculadora-panel-heading">
+                    <span class="calculadora-icon">⚖</span>
+                    <div>
+                        <h2>Calculadora de macronutrientes</h2>
+                        <p>Estime suas necessidades diárias de energia e macronutrientes.</p>
+                    </div>
+                </div>
+
+                <form id="macroForm" class="calculadora-form">
+                    <div class="calculadora-fields">
+                        <div class="calculadora-field">
+                            <label for="macro-sexo">Sexo utilizado no cálculo</label>
+                            <select id="macro-sexo" required>
+                                <option value="masculino">Masculino</option>
+                                <option value="feminino">Feminino</option>
+                            </select>
+                        </div>
+
+                        <div class="calculadora-field">
+                            <label for="macro-idade">Idade</label>
+                            <input id="macro-idade" type="number" min="18" max="120" placeholder="Ex.: 25" required>
+                        </div>
+
+                        <div class="calculadora-field">
+                            <label for="macro-peso">Peso (kg)</label>
+                            <input id="macro-peso" type="number" min="1" max="500" step="0.1" placeholder="Ex.: 70" required>
+                        </div>
+
+                        <div class="calculadora-field">
+                            <label for="macro-altura">Altura (cm)</label>
+                            <input id="macro-altura" type="number" min="50" max="250" placeholder="Ex.: 175" required>
+                        </div>
+
+                        <div class="calculadora-field">
+                            <label for="macro-atividade">Nível de atividade</label>
+                            <select id="macro-atividade" required>
+                                <option value="1.2">Sedentário</option>
+                                <option value="1.375">Levemente ativo</option>
+                                <option value="1.55">Moderadamente ativo</option>
+                                <option value="1.725">Muito ativo</option>
+                                <option value="1.9">Atleta / atividade intensa</option>
+                            </select>
+                        </div>
+
+                        <div class="calculadora-field">
+                            <label for="macro-objetivo">Objetivo</label>
+                            <select id="macro-objetivo" required>
+                                <option value="emagrecer">Emagrecimento</option>
+                                <option value="manter">Manutenção do peso</option>
+                                <option value="ganhar">Ganho de peso</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="calculadora-button">
+                        Calcular macronutrientes
+                    </button>
+                </form>
+
+                <div class="calculadora-result" id="resultadoMacros" aria-live="polite" hidden>
+                    <h3>Resultado estimado</h3>
+
+                    <div class="resultado-calorias">
+                        <span>Meta calórica diária</span>
+                        <strong id="macro-calorias">0 kcal</strong>
+                    </div>
+
+                    <div class="resultado-cards">
+                        <article class="resultado-card">
+                            <span>Proteínas</span>
+                            <strong id="macro-proteinas">0 g</strong>
+                            <small id="macro-proteinas-kcal">0 kcal</small>
+                        </article>
+
+                        <article class="resultado-card">
+                            <span>Carboidratos</span>
+                            <strong id="macro-carboidratos">0 g</strong>
+                            <small id="macro-carboidratos-kcal">0 kcal</small>
+                        </article>
+
+                        <article class="resultado-card">
+                            <span>Gorduras</span>
+                            <strong id="macro-gorduras">0 g</strong>
+                            <small id="macro-gorduras-kcal">0 kcal</small>
+                        </article>
+                    </div>
+
+                    <p class="calculadora-observacao">
+                        Estimativa matemática para adultos. A necessidade individual
+                        deve ser avaliada por um nutricionista.
+                    </p>
+                </div>
+            </section>
+
+            <section
+                class="calculadora-panel"
+                id="painel-imc"
+                role="tabpanel"
+                hidden>
+
+                <div class="calculadora-panel-heading">
+                    <span class="calculadora-icon">↗</span>
+                    <div>
+                        <h2>Índice de massa corporal (IMC)</h2>
+                        <p>Calcule o IMC com base no peso e na altura.</p>
+                    </div>
+                </div>
+
+                <form id="imcForm" class="calculadora-form">
+                    <div class="calculadora-fields">
+                        <div class="calculadora-field">
+                            <label for="imc-peso">Peso (kg)</label>
+                            <input id="imc-peso" type="number" min="1" max="500" step="0.1" placeholder="Ex.: 70" required>
+                        </div>
+
+                        <div class="calculadora-field">
+                            <label for="imc-altura">Altura (cm)</label>
+                            <input id="imc-altura" type="number" min="50" max="250" step="0.1" placeholder="Ex.: 175" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="calculadora-button">
+                        Calcular IMC
+                    </button>
+                </form>
+
+                <div class="calculadora-result" id="resultadoIMC" aria-live="polite" hidden>
+                    <h3>Resultado do IMC</h3>
+                    <div class="resultado-imc">
+                        <strong id="imc-valor">0,0</strong>
+                        <span id="imc-classificacao">—</span>
+                    </div>
+
+                    <p id="imc-mensagem" class="calculadora-observacao"></p>
+                    <p class="calculadora-observacao">
+                        As faixas apresentadas são referências para adultos e não
+                        substituem uma avaliação clínica.
+                    </p>
+                </div>
+            </section>
+
+            <section
+                class="calculadora-panel"
+                id="painel-agua"
+                role="tabpanel"
+                hidden>
+
+                <div class="calculadora-panel-heading">
+                    <span class="calculadora-icon">💧</span>
+                    <div>
+                        <h2>Calculadora de ingestão de água</h2>
+                        <p>Estime uma referência diária de ingestão de líquidos.</p>
+                    </div>
+                </div>
+
+                <form id="aguaForm" class="calculadora-form">
+                    <div class="calculadora-fields">
+                        <div class="calculadora-field">
+                            <label for="aguaPeso">Peso (kg)</label>
+                            <input id="aguaPeso" type="number" min="1" max="500" step="0.1" placeholder="Ex.: 70" required>
+                        </div>
+
+                        <div class="calculadora-field">
+                            <label for="aguaAtividade">Atividade física</label>
+                            <select id="aguaAtividade" required>
+                                <option value="0">Sem atividade adicional</option>
+                                <option value="350">Até 30 minutos</option>
+                                <option value="500">De 30 a 60 minutos</option>
+                                <option value="750">Mais de 60 minutos</option>
+                            </select>
+                        </div>
+
+                        <div class="calculadora-field">
+                            <label for="aguaClima">Clima</label>
+                            <select id="aguaClima" required>
+                                <option value="0">Ameno</option>
+                                <option value="350">Quente</option>
+                                <option value="500">Muito quente</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="calculadora-button">
+                        Calcular ingestão de água
+                    </button>
+                </form>
+
+                <div class="calculadora-result" id="aguaResult" aria-live="polite" hidden>
+                    <h3>Referência diária estimada</h3>
+                    <div class="resultado-agua">
+                        <strong id="aguaResultado">0 L</strong>
+                        <span>por dia</span>
+                    </div>
+                    <p class="calculadora-observacao">
+                        A necessidade de líquidos varia conforme saúde, alimentação,
+                        clima e exercício. Esta estimativa não é uma prescrição.
+                    </p>
+                </div>
+            </section>
+        </main>
+
+        <footer class="calculadoras-footer">
+            © 2026 NUTRIQ · Painel profissional
+        </footer>
+    </div>
+
+    <div class="calculadoras-sidebar-overlay" id="sidebarOverlay"></div>
+
+    <script src="js/main.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/database.js" defer></script>
+    <script src="js/dashboard.js" defer></script>
+    <script src="js/calculadoras.js" defer></script>
+</body>
+</html>
