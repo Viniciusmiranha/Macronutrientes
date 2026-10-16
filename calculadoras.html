@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#126b53">
+    <title>Calculadoras | NUTRIQ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/paginas.css">
+    <link rel="stylesheet" href="css/calculadoras.css">
+</head>
+<body class="dashboard-page">
+
+    <aside class="dashboard-sidebar" id="dashboardSidebar">
+        <a href="pagina1.html" class="dashboard-brand" aria-label="NUTRIQ - Início">
+            <img src="img/logo (1).png" alt="Logo NUTRIQ">
+        </a>
+
+        <nav class="dashboard-nav" aria-label="Menu principal">
+            <a href="pagina1.html" class="dashboard-nav-link">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m3 10 9-7 9 7"></path>
+                    <path d="M5 9v12h14V9"></path>
+                    <path d="M9 21v-7h6v7"></path>
+                </svg>
+                <span>Início</span>
+            </a>
+
+            <a href="pacientes.html" class="dashboard-nav-link">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="10" cy="7" r="4"></circle>
+                    <path d="M20 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span>Meus pacientes</span>
+            </a>
+
+            <a href="planos-alimentares.html" class="dashboard-nav-link">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="5" y="3" width="14" height="18" rx="2"></rect>
+                    <path d="M9 3V1h6v2M9 8h6M9 12h6M9 16h4"></path>
+                </svg>
+                <span>Planos alimentares</span>
+            </a>
+
+            <a href="calculadoras.html" class="dashboard-nav-link active" aria-current="page">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="5" y="2" width="14" height="20" rx="2"></rect>
+                    <path d="M9 6h6M8 11h2m4 0h2M8 15h2m4 0h2M8 18h8"></path>
+                </svg>
+                <span>Calculadoras</span>
+            </a>
+
+            <a href="consultas.html" class="dashboard-nav-link">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+                    <path d="M16 3v4M8 3v4M3 10h18"></path>
+                </svg>
+                <span>Consultas</span>
+            </a>
+
+            <a href="agenda.html" class="dashboard-nav-link">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+                    <path d="M16 3v4M8 3v4M3 10h18M8 14h2m4 0h2m-8 3h2"></path>
+                </svg>
+                <span>Agenda</span>
+            </a>
+
+            <a href="relatorios.html" class="dashboard-nav-link">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 21h18"></path>
+                    <rect x="5" y="11" width="4" height="10"></rect>
+                    <rect x="10" y="6" width="4" height="15"></rect>
+                    <rect x="15" y="3" width="4" height="18"></rect>
+                </svg>
+                <span>Relatórios</span>
+            </a>
+        </nav>
+
+        <div class="dashboard-plan-card">
+            <div class="dashboard-plan-info">
+                <span>☆</span>
+                <div>
+                    <small>Seu plano</small>
+                    <strong>Profissional</strong>
+                </div>
+            </div>
+            <a href="planos.html" class="dashboard-plan-button">
+                Ver planos <span>→</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="dashboard-main">
+        <header class="dashboard-topbar">
+            <button class="calculadoras-menu-toggle" id="dashboardMenuToggle"
+                    type="button" aria-label="Abrir menu" aria-expanded="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+
+            <div class="dashboard-search">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <path d="m16 16 4 4"></path>
+                </svg>
+                <input type="search" id="dashboardSearch"
+                       placeholder="Buscar pacientes..." aria-label="Buscar pacientes">
+            </div>
+
+            <div class="dashboard-topbar-actions">
+                <button type="button" class="calculadoras-notification"
+                        id="btnNotificacoes" aria-label="Notificações">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+                        <path d="M10 21h4"></path>
+                    </svg>
+                </button>
+
+                <a href="perfil.html" class="calculadoras-profile">
+                    <span class="calculadoras-avatar" aria-hidden="true">♙</span>
+                    <span>
+                        <strong id="professionalName">Meu perfil</strong>
+                        <small>Nutricionista</small>
+                    </span>
+                </a>
+            </div>
+        </header>
+
+        <main class="dashboard-content calculadoras-content">
+            <div class="calculadoras-heading">
+                <h1>Calculadoras</h1>
+                <p>Escolha o tipo de calculadora e veja o resultado diretamente nesta página.</p>
+            </div>
+
+            <div class="calculadoras-seletor" role="tablist" aria-label="Tipos de calculadora">
+                <button class="calculadora-tab active" id="tabMacros"
+                        type="button" role="tab" aria-selected="true"
+                        aria-controls="painelCalculadora" data-calculadora="macros">
+                    <span class="calculadora-tab-icon macros-icon" aria-hidden="true">♜</span>
+                    <span>
+                        <strong>Macronutrientes</strong>
+                        <small>Calcule proteínas, carboidratos e gorduras</small>
+                    </span>
+                </button>
+
+                <button class="calculadora-tab" id="tabIMC"
+                        type="button" role="tab" aria-selected="false"
+                        aria-controls="painelCalculadora" data-calculadora="imc">
+                    <span class="calculadora-tab-icon imc-icon" aria-hidden="true">▥</span>
+                    <span>
+                        <strong>IMC</strong>
+                        <small>Calcule e classifique o Índice de Massa Corporal</small>
+                    </span>
+                </button>
+
+                <button class="calculadora-tab" id="tabAgua"
+                        type="button" role="tab" aria-selected="false"
+                        aria-controls="painelCalculadora" data-calculadora="agua">
+                    <span class="calculadora-tab-icon agua-icon" aria-hidden="true">♢</span>
+                    <span>
+                        <strong>Quantidade de água</strong>
+                        <small>Estime a ingestão diária de água</small>
+                    </span>
+                </button>
+            </div>
+
+            <section class="calculadora-painel" id="painelCalculadora"
+                     role="tabpanel" aria-labelledby="tabMacros">
+
+                <div class="calculadora-form-area">
+                    <div class="calculadora-intro">
+                        <div class="calculadora-main-icon" id="iconeCalculadora" aria-hidden="true">♜</div>
+                        <div>
+                            <h2 id="tituloCalculadora">Calculadora de Macronutrientes</h2>
+                            <p id="descricaoCalculadora">
+                                Calcule a quantidade ideal de proteínas, carboidratos e gorduras
+                                de acordo com os objetivos e características do seu paciente.
+                            </p>
+                        </div>
+                    </div>
+
+                    <form id="formCalculadora" novalidate>
+                        <div id="camposCalculadora" class="calculadora-fields"></div>
+
+                        <p class="calculadora-erro" id="erroCalculadora"
+                           role="alert" hidden></p>
+
+                        <button class="calculadora-submit" type="submit" id="btnCalcular">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <rect x="5" y="2" width="14" height="20" rx="2"></rect>
+                                <path d="M9 6h6M8 11h2m4 0h2M8 15h2m4 0h2M8 18h8"></path>
+                            </svg>
+                            <span>Calcular macronutrientes</span>
+                        </button>
+                    </form>
+                </div>
+
+                <aside class="calculadora-result-area" aria-live="polite">
+                    <div id="estadoInicial" class="calculadora-empty">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <path d="M14 2v6h6"></path>
+                            <path d="M8 13h8M8 17h8"></path>
+                        </svg>
+                        <p>Preencha os dados ao lado<br>e clique em calcular para ver seus resultados.</p>
+
+                        <div class="calculadora-result-divider"></div>
+                        <strong>Os resultados incluirão:</strong>
+                        <ul id="listaBeneficios">
+                            <li>Necessidade calórica diária</li>
+                            <li>Quantidade de proteínas (g)</li>
+                            <li>Quantidade de carboidratos (g)</li>
+                            <li>Quantidade de gorduras (g)</li>
+                            <li>Distribuição em percentual (%)</li>
+                        </ul>
+                    </div>
+
+                    <div id="resultadoCalculadora" class="calculadora-resultados" hidden>
+                        <h3 id="tituloResultados">Seus resultados</h3>
+                        <p class="resultado-subtitulo" id="subtituloResultados"></p>
+                        <div id="resultadoCards" class="resultado-cards"></div>
+                        <div id="resultadoDetalhes" class="resultado-detalhes"></div>
+                        <button type="button" id="btnLimparResultado"
+                                class="calculadora-reset">Limpar resultados</button>
+                    </div>
+                </aside>
+            </section>
+
+            <p class="calculadoras-aviso">
+                Os valores são estimativas e devem ser interpretados por um profissional de nutrição.
+            </p>
+        </main>
+    </div>
+
+    <div class="calculadoras-sidebar-overlay" id="calculadorasOverlay"></div>
+
+    <script src="js/calculadoras.js" defer></script>
+</body>
+</html>
