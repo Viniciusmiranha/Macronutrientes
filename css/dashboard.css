@@ -136,24 +136,6 @@ body.dashboard-page {
     display: none;
 }
 
-.dashboard-nav-group .dashboard-chevron {
-    flex: 0 0 14px;
-    width: 14px;
-    height: 14px;
-    margin-left: auto;
-    transition: transform 0.2s ease;
-}
-
-.dashboard-nav-group:not([open]) .dashboard-chevron {
-    transform: rotate(-90deg);
-}
-
-.dashboard-submenu {
-    display: grid;
-    gap: 2px;
-    padding: 2px 0 7px 43px;
-}
-
 .dashboard-submenu a {
     padding: 7px 6px;
     color: #64717e;
