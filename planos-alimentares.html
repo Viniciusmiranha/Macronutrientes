@@ -2,13 +2,244 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planos alimentares | NUTRIQ</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/paginas.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#087f68">
+  <title>Página em desenvolvimento | NUTRIQ</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #163d46;
+      background: #f5f8f9;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .temporary-header {
+      min-height: 76px;
+      padding: 16px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      background: #fff;
+      border-bottom: 1px solid #e5ecef;
+    }
+
+    .temporary-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #123d49;
+      text-decoration: none;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+    }
+
+    .logo-symbol {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      color: #fff;
+      background: #087f68;
+      font-size: 20px;
+    }
+
+    .back-link {
+      color: #087f68;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .temporary-main {
+      width: 100%;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 20px;
+    }
+
+    .development-card {
+      width: min(100%, 620px);
+      padding: 55px 38px;
+      border: 1px solid #e4ecee;
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: 0 15px 45px rgba(24, 64, 72, 0.06);
+      text-align: center;
+    }
+
+    .development-icon {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 28px;
+      color: #087f68;
+      background: #e5f5ef;
+    }
+
+    .development-icon svg {
+      width: 52px;
+      height: 52px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .development-label {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 8px 13px;
+      border-radius: 30px;
+      color: #087f68;
+      background: #eaf7f2;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+    }
+
+    .development-card h1 {
+      margin: 0 0 18px;
+      font-size: clamp(27px, 5vw, 36px);
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+
+    .development-card p {
+      max-width: 440px;
+      margin: 0 auto;
+      color: #6d828a;
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .development-divider {
+      width: 65px;
+      height: 4px;
+      margin: 28px auto;
+      border-radius: 5px;
+      background: #087f68;
+    }
+
+    .development-note {
+      margin-top: 25px;
+      color: #8a9ba2;
+      font-size: 12px;
+    }
+
+    .temporary-footer {
+      padding: 22px 20px;
+      color: #84959c;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .temporary-header {
+        min-height: 66px;
+        padding: 12px 18px;
+      }
+
+      .temporary-logo {
+        font-size: 20px;
+      }
+
+      .logo-symbol {
+        width: 32px;
+        height: 32px;
+      }
+
+      .back-link {
+        font-size: 12px;
+      }
+
+      .development-card {
+        padding: 40px 22px;
+        border-radius: 19px;
+      }
+
+      .development-icon {
+        width: 82px;
+        height: 82px;
+        border-radius: 23px;
+      }
+
+      .development-card p {
+        font-size: 14px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <h6>em construção ;)  <3</h6>
+  <header class="temporary-header">
+    <a href="pagina1.html" class="temporary-logo">
+      <span class="logo-symbol">N</span>
+      NUTRIQ
+    </a>
+
+    <a href="pagina1.html" class="back-link">
+      ← Voltar ao painel
+    </a>
+  </header>
+
+  <main class="temporary-main">
+    <section class="development-card">
+      <div class="development-icon">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="9" y="8" width="30" height="32" rx="5"></rect>
+          <path d="M17 18h14"></path>
+          <path d="M17 25h14"></path>
+          <path d="M17 32h8"></path>
+          <path d="M18 4v8"></path>
+          <path d="M30 4v8"></path>
+        </svg>
+      </div>
+
+      <span class="development-label">Em desenvolvimento</span>
+
+      <h1>Estamos criando esta página!</h1>
+
+      <div class="development-divider"></div>
+
+      <p>
+        Estamos trabalhando para disponibilizar esta área do NUTRIQ.
+        Em breve, você poderá acessar novas funcionalidades para
+        organizar e gerenciar sua rotina profissional.
+      </p>
+
+      <div class="development-note">
+        Obrigado pela compreensão. Estamos preparando novidades!
+      </div>
+    </section>
+  </main>
+
+  <footer class="temporary-footer">
+    © 2026 NUTRIQ · Plataforma de gestão nutricional
+  </footer>
 </body>
 </html>
