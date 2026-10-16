@@ -68,7 +68,7 @@ body.dashboard-page {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 42px;
+    min-height: 60px;
     margin: 0 4px 28px;
     text-decoration: none;
 }
