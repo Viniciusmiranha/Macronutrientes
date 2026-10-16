@@ -2,83 +2,277 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu perfil | NUTRIQ</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/paginas.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#087f68">
+  <title>Meu Perfil | NUTRIQ</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/perfil.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body>
-    <main class="pagina-extra">
-        <div class="pagina-container">
-            <header class="pagina-topo">
-                <a class="marca" href="pagina1.html">NUTRIQ</a>
-                <a class="voltar" href="pagina1.html">← Voltar ao painel</a>
-            </header>
+<body class="perfil-page">
 
-            <section class="pagina-cabecalho">
-                <h1 class="pagina-titulo">Meu perfil</h1>
-                <p class="pagina-descricao">
-                    Gerencie suas informações profissionais.
-                </p>
-            </section>
+  <header class="perfil-header">
+    <a href="pagina1.html" class="perfil-logo" aria-label="NUTRIQ - voltar ao painel">
+      <span class="perfil-logo-symbol">N</span>
+      <span>NUTRIQ</span>
+    </a>
 
-            <section class="pagina-card">
-                <h2>Informações profissionais</h2>
+    <div class="perfil-header-actions">
+      <span class="perfil-status">
+        <span class="status-dot"></span>
+        Área profissional
+      </span>
 
-                <form id="formPerfil">
-                    <div class="form-grade">
-                        <div class="campo">
-                            <label for="nome">Nome completo</label>
-                            <input id="nome" value="Nutricionista Exemplo" required>
-                        </div>
+      <a href="pagina1.html" class="perfil-back">
+        <span aria-hidden="true">←</span>
+        Voltar ao painel
+      </a>
+    </div>
+  </header>
 
-                        <div class="campo">
-                            <label for="email">E-mail</label>
-                            <input id="email" type="email" value="nutricionista@exemplo.com" required>
-                        </div>
+  <main class="perfil-container">
 
-                        <div class="campo">
-                            <label for="registro">Registro profissional</label>
-                            <input id="registro" placeholder="Número do registro">
-                        </div>
+    <section class="perfil-hero">
+      <div class="perfil-identity">
+        <div class="perfil-avatar-wrap">
+          <div class="perfil-avatar" id="avatarPreview" aria-label="Foto do perfil">
+            <span id="avatarInitial">N</span>
+          </div>
 
-                        <div class="campo">
-                            <label for="telefone">Telefone</label>
-                            <input id="telefone" type="tel" placeholder="(00) 00000-0000">
-                        </div>
-
-                        <div class="campo" style="grid-column: 1 / -1">
-                            <label for="sobre">Sobre você</label>
-                            <textarea id="sobre" placeholder="Breve apresentação profissional"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="pagina-acoes">
-                        <button class="botao-principal" type="submit">
-                            Salvar alterações
-                        </button>
-                        <a class="botao-secundario" href="pagina1.html">
-                            Cancelar
-                        </a>
-                    </div>
-                </form>
-
-                <p id="mensagemPerfil" class="mensagem" role="status"></p>
-            </section>
+          <label for="fotoPerfil" class="avatar-edit" title="Alterar foto" aria-label="Alterar foto do perfil">
+            <span aria-hidden="true">✎</span>
+          </label>
+          <input type="file" id="fotoPerfil" accept="image/png,image/jpeg,image/webp" hidden>
         </div>
-    </main>
 
-    <script>
-        document.getElementById("formPerfil").addEventListener("submit", function(event) {
-            event.preventDefault();
+        <div class="perfil-identity-info">
+          <span class="eyebrow">SUA CONTA</span>
+          <h1 id="nomeExibicao">Meu perfil</h1>
+          <p id="cargoExibicao">Nutricionista</p>
 
-            const mensagem = document.getElementById("mensagemPerfil");
-            mensagem.textContent =
-                "Alterações preenchidas. O perfil ainda não foi salvo permanentemente.";
+          <div class="perfil-contact-summary">
+            <span><span aria-hidden="true">✉</span> <span id="emailExibicao">Adicione seu e-mail</span></span>
+            <span><span aria-hidden="true">⌖</span> <span id="cidadeExibicao">Adicione sua cidade</span></span>
+          </div>
+        </div>
+      </div>
 
-            mensagem.style.display = "block";
-        });
-    </script>
+      <div class="perfil-hero-actions">
+        <div class="conta-ativa">
+          <span class="status-dot"></span>
+          <div>
+            <strong>Perfil profissional</strong>
+            <small>Mantenha seus dados atualizados.</small>
+          </div>
+        </div>
+
+        <button type="submit" form="perfilForm" class="btn-salvar">
+          <span aria-hidden="true">✓</span>
+          Salvar alterações
+        </button>
+      </div>
+    </section>
+
+    <div class="perfil-layout">
+
+      <aside class="perfil-menu">
+        <span class="perfil-menu-heading">CONFIGURAÇÕES</span>
+
+        <a href="#dadosPessoais" class="perfil-menu-link active" data-section="dadosPessoais">
+          <span class="menu-icon" aria-hidden="true">♙</span>
+          Dados pessoais
+        </a>
+
+        <a href="#dadosProfissionais" class="perfil-menu-link" data-section="dadosProfissionais">
+          <span class="menu-icon" aria-hidden="true">✚</span>
+          Dados profissionais
+        </a>
+
+        <a href="#seguranca" class="perfil-menu-link" data-section="seguranca">
+          <span class="menu-icon" aria-hidden="true">◇</span>
+          Segurança
+        </a>
+
+        <a href="#preferencias" class="perfil-menu-link" data-section="preferencias">
+          <span class="menu-icon" aria-hidden="true">⚙</span>
+          Preferências
+        </a>
+
+        <div class="perfil-help">
+          <span class="help-icon" aria-hidden="true">?</span>
+          <div>
+            <strong>Precisa de ajuda?</strong>
+            <p>Confira seus dados e mantenha sua conta atualizada.</p>
+          </div>
+        </div>
+      </aside>
+
+      <form id="perfilForm" class="perfil-form">
+
+        <section class="perfil-card" id="dadosPessoais">
+          <div class="card-heading">
+            <div class="card-heading-icon" aria-hidden="true">♙</div>
+            <div>
+              <h2>Dados pessoais</h2>
+              <p>Informações básicas da sua conta.</p>
+            </div>
+            <button type="button" class="btn-editar" data-edit="dadosPessoais">Editar</button>
+          </div>
+
+          <div class="perfil-fields">
+            <label class="perfil-field">
+              <span>Nome completo</span>
+              <input id="nome" name="nome" type="text" placeholder="Seu nome completo" autocomplete="name" required>
+            </label>
+
+            <label class="perfil-field">
+              <span>E-mail</span>
+              <input id="email" name="email" type="email" placeholder="seu@email.com" autocomplete="email" required>
+            </label>
+
+            <label class="perfil-field">
+              <span>Telefone</span>
+              <input id="telefone" name="telefone" type="tel" placeholder="(00) 00000-0000" autocomplete="tel">
+            </label>
+
+            <label class="perfil-field">
+              <span>Cidade</span>
+              <input id="cidade" name="cidade" type="text" placeholder="Sua cidade">
+            </label>
+
+            <label class="perfil-field">
+              <span>Estado</span>
+              <input id="estado" name="estado" type="text" placeholder="Ex.: SP" maxlength="2">
+            </label>
+          </div>
+        </section>
+
+        <section class="perfil-card" id="dadosProfissionais">
+          <div class="card-heading">
+            <div class="card-heading-icon" aria-hidden="true">✚</div>
+            <div>
+              <h2>Dados profissionais</h2>
+              <p>Informações exibidas no seu perfil profissional.</p>
+            </div>
+            <button type="button" class="btn-editar" data-edit="dadosProfissionais">Editar</button>
+          </div>
+
+          <div class="perfil-fields">
+            <label class="perfil-field">
+              <span>Registro profissional (CRN)</span>
+              <input id="crn" name="crn" type="text" placeholder="Número do registro">
+            </label>
+
+            <label class="perfil-field">
+              <span>Especialidade</span>
+              <input id="especialidade" name="especialidade" type="text" placeholder="Ex.: Nutrição clínica">
+            </label>
+
+            <label class="perfil-field field-full">
+              <span>Apresentação profissional</span>
+              <textarea id="apresentacao" name="apresentacao" rows="4" maxlength="500" placeholder="Conte um pouco sobre sua experiência e sua atuação profissional."></textarea>
+              <small class="caracteres"><span id="contadorApresentacao">0</span>/500 caracteres</small>
+            </label>
+          </div>
+        </section>
+
+        <div class="perfil-bottom-grid">
+
+          <section class="perfil-card" id="seguranca">
+            <div class="card-heading">
+              <div class="card-heading-icon" aria-hidden="true">◇</div>
+              <div>
+                <h2>Segurança</h2>
+                <p>Cuide do acesso à sua conta.</p>
+              </div>
+            </div>
+
+            <div class="perfil-fields single-column">
+              <label class="perfil-field">
+                <span>Senha atual</span>
+                <input id="senhaAtual" type="password" autocomplete="current-password" placeholder="Preencha para trocar a senha">
+              </label>
+
+              <label class="perfil-field">
+                <span>Nova senha</span>
+                <input id="novaSenha" type="password" autocomplete="new-password" minlength="6" placeholder="Mínimo de 6 caracteres">
+              </label>
+
+              <label class="perfil-field">
+                <span>Confirmar nova senha</span>
+                <input id="confirmarSenha" type="password" autocomplete="new-password" placeholder="Repita a nova senha">
+              </label>
+
+              <p class="security-note">A troca de senha só será efetivada quando houver autenticação com o servidor.</p>
+            </div>
+          </section>
+
+          <section class="perfil-card" id="preferencias">
+            <div class="card-heading">
+              <div class="card-heading-icon" aria-hidden="true">⚙</div>
+              <div>
+                <h2>Preferências</h2>
+                <p>Personalize sua experiência.</p>
+              </div>
+            </div>
+
+            <div class="preference-list">
+              <label class="preference-item">
+                <span class="preference-icon" aria-hidden="true">✉</span>
+                <span class="preference-text">
+                  <strong>Notificações por e-mail</strong>
+                  <small>Receba novidades e atualizações.</small>
+                </span>
+                <input type="checkbox" id="notificacoesEmail" class="switch-input">
+                <span class="switch"></span>
+              </label>
+
+              <label class="preference-item">
+                <span class="preference-icon" aria-hidden="true">▣</span>
+                <span class="preference-text">
+                  <strong>Lembretes de consultas</strong>
+                  <small>Seja lembrado dos compromissos.</small>
+                </span>
+                <input type="checkbox" id="lembretesConsulta" class="switch-input">
+                <span class="switch"></span>
+              </label>
+
+              <label class="preference-item">
+                <span class="preference-icon" aria-hidden="true">◐</span>
+                <span class="preference-text">
+                  <strong>Modo escuro</strong>
+                  <small>Altere a aparência desta página.</small>
+                </span>
+                <input type="checkbox" id="modoEscuro" class="switch-input">
+                <span class="switch"></span>
+              </label>
+            </div>
+          </section>
+
+        </div>
+
+        <div class="perfil-form-footer">
+          <p id="perfilFeedback" role="status" aria-live="polite"></p>
+          <button type="button" id="descartarAlteracoes" class="btn-descartar">Descartar alterações</button>
+          <button type="submit" class="btn-salvar footer-save">Salvar alterações</button>
+        </div>
+
+      </form>
+    </div>
+
+    <footer class="perfil-footer">
+      <span>© 2026 NUTRIQ</span>
+      <span>Seu cuidado começa com organização.</span>
+    </footer>
+
+  </main>
+
+  <script src="js/perfil.js" defer></script>
 </body>
 </html>
