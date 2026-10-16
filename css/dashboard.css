@@ -1746,3 +1746,67 @@ body.dashboard-page #modalPlanos.is-open .plans-modal {
 }
 
 
+.sidebar-toggle-button {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e3ebed;
+  border-radius: 11px;
+  color: #087f68;
+  background: #ffffff;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.sidebar-toggle-button:hover {
+  background: #eaf6f1;
+  transform: translateY(-1px);
+}
+
+.sidebar-toggle-button svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dashboard-page.sidebar-collapsed #dashboardSidebar {
+  transform: translateX(-100%);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.dashboard-page.sidebar-collapsed .dashboard-main {
+  margin-left: 0 !important;
+  width: 100%;
+}
+
+.dashboard-page.sidebar-collapsed .dashboard-content {
+  width: 100%;
+  max-width: none;
+}
+
+#dashboardSidebar {
+  transition: transform 0.25s ease, visibility 0.25s ease;
+}
+
+.dashboard-main {
+  transition: margin-left 0.25s ease, width 0.25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #dashboardSidebar,
+  .dashboard-main,
+  .sidebar-toggle-button {
+    transition: none;
+  }
+}
+
+
+

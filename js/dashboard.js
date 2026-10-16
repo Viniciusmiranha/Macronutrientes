@@ -356,3 +356,42 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 })();
+
+
+(() => {
+  const botao = document.getElementById("alternarBarraLateral");
+  const pagina = document.querySelector(".dashboard-page");
+  const chave = "nutriqBarraLateralOculta";
+
+  if (!botao || !pagina) return;
+
+  function atualizarBotao(oculta) {
+    botao.setAttribute("aria-expanded", String(!oculta));
+    botao.setAttribute(
+      "aria-label",
+      oculta ? "Mostrar barra lateral" : "Esconder barra lateral"
+    );
+    botao.title = oculta ? "Mostrar barra lateral" : "Esconder barra lateral";
+  }
+
+  let oculta = false;
+
+  try {
+    oculta = localStorage.getItem(chave) === "true";
+  } catch {}
+
+  pagina.classList.toggle("sidebar-collapsed", oculta);
+  atualizarBotao(oculta);
+
+  botao.addEventListener("click", () => {
+    oculta = !pagina.classList.contains("sidebar-collapsed");
+
+    pagina.classList.toggle("sidebar-collapsed", oculta);
+    atualizarBotao(oculta);
+
+    try {
+      localStorage.setItem(chave, String(oculta));
+    } catch {}
+  });
+})();
+
