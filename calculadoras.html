@@ -1,447 +1,379 @@
-
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#f6faf8">
-    <meta name="description" content="Calculadoras nutricionais NUTRIQ: macronutrientes, IMC e ingestão de água.">
-    <title>Calculadoras nutricionais | NUTRIQ</title>
+    <meta name="theme-color" content="#f7f9fc">
+    <title>Calculadoras | NUTRIQ</title>
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/paginas.css">
     <link rel="stylesheet" href="css/calculadoras.css">
 </head>
 
-<body class="dashboard-page calculator-page">
+<body class="dashboard-page">
+
     <div class="dashboard-layout">
 
         <aside class="dashboard-sidebar" id="dashboardSidebar">
-            <a href="pagina1.html" class="dashboard-brand" aria-label="NUTRIQ - Página inicial">
-                <img src="img/logo (1).png" alt="Logo NUTRIQ">
-            </a>
+            <div class="dashboard-sidebar-header">
+                <a href="pagina1.html" class="dashboard-logo">
+                    <img src="img/logo (1).png" alt="NUTRIQ">
+                </a>
 
-            <nav class="dashboard-navigation" aria-label="Navegação principal">
+                <button
+                    type="button"
+                    class="dashboard-menu-toggle calculadoras-menu-toggle"
+                    id="fecharSidebar"
+                    aria-label="Fechar menu"
+                >
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+            <nav class="dashboard-nav" aria-label="Menu principal">
                 <a href="pagina1.html" class="dashboard-nav-link">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>
-                    </svg>
+                    <span class="dashboard-nav-icon">⌂</span>
                     <span>Início</span>
                 </a>
 
                 <a href="pacientes.html" class="dashboard-nav-link">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                        <circle cx="10" cy="7" r="4"/>
-                        <path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
+                    <span class="dashboard-nav-icon">♙</span>
                     <span>Meus pacientes</span>
                 </a>
 
                 <a href="planos-alimentares.html" class="dashboard-nav-link">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <rect x="5" y="3" width="14" height="18" rx="2"/>
-                        <path d="M9 3V1h6v2M9 8h6M9 12h6M9 16h4"/>
-                    </svg>
+                    <span class="dashboard-nav-icon">☷</span>
                     <span>Planos alimentares</span>
                 </a>
 
-                <details class="dashboard-nav-group" open>
-                    <summary class="dashboard-nav-link active">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <rect x="4" y="3" width="16" height="18" rx="2"/>
-                            <path d="M8 7h2m4 0h2M8 11h2m4 0h2M8 15h2m4 0h2"/>
-                        </svg>
-                        <span>Calculadoras</span>
-                        <svg class="dashboard-chevron" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="m6 9 6 6 6-6"/>
-                        </svg>
-                    </summary>
-
-                    <div class="dashboard-submenu">
-                        <a href="#macros" data-calculator-link="macros">Macronutrientes</a>
-                        <a href="#imc" data-calculator-link="imc">Índice de massa corporal</a>
-                        <a href="#agua" data-calculator-link="agua">Ingestão de água</a>
-                    </div>
-                </details>
+                <a href="calculadoras.html" class="dashboard-nav-link active" aria-current="page">
+                    <span class="dashboard-nav-icon">▦</span>
+                    <span>Calculadoras</span>
+                </a>
 
                 <a href="consultas.html" class="dashboard-nav-link">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <rect x="3" y="5" width="18" height="16" rx="2"/>
-                        <path d="M16 3v4M8 3v4M3 10h18"/>
-                    </svg>
+                    <span class="dashboard-nav-icon">▣</span>
                     <span>Consultas</span>
                 </a>
 
                 <a href="agenda.html" class="dashboard-nav-link">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <rect x="3" y="5" width="18" height="16" rx="2"/>
-                        <path d="M16 3v4M8 3v4M3 10h18M8 14h2m4 0h2m-8 3h2"/>
-                    </svg>
+                    <span class="dashboard-nav-icon">▦</span>
                     <span>Agenda</span>
                 </a>
 
                 <a href="relatorios.html" class="dashboard-nav-link">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M4 19V9h4v10M10 19V5h4v14M16 19V2h4v17M2 21h20"/>
-                    </svg>
+                    <span class="dashboard-nav-icon">▤</span>
                     <span>Relatórios</span>
                 </a>
             </nav>
 
-            <div class="dashboard-plan-card">
-                <div class="dashboard-plan-heading">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="m12 3 2.4 4.8 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z"/>
-                    </svg>
-                    <div>
-                        <span>Seu plano</span>
-                        <strong>Profissional</strong>
-                    </div>
+            <div class="dashboard-sidebar-bottom">
+                <div class="dashboard-plan-card">
+                    <span class="dashboard-plan-label">Seu plano</span>
+                    <strong>Profissional</strong>
+                    <span>Acesse suas ferramentas NUTRIQ</span>
                 </div>
-                <a class="dashboard-plan-button" href="pagina1.html">
-                    Voltar ao painel <span aria-hidden="true">→</span>
+
+                <a href="perfil.html" class="dashboard-nav-link">
+                    <span class="dashboard-nav-icon">⚙</span>
+                    <span>Meu perfil</span>
                 </a>
+
+                <button type="button" class="dashboard-nav-link" id="btnSair">
+                    <span class="dashboard-nav-icon">↪</span>
+                    <span>Sair da conta</span>
+                </button>
             </div>
         </aside>
 
-        <div class="dashboard-main">
-            <header class="dashboard-topbar">
-                <button
-                    class="dashboard-menu-toggle"
-                    id="dashboardMenuToggle"
-                    type="button"
-                    aria-label="Abrir menu"
-                    aria-expanded="false"
-                    aria-controls="dashboardSidebar"
-                >
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+        <div class="calculadoras-sidebar-overlay" id="calculadorasOverlay"></div>
 
-                <div class="calculator-topbar-title">
-                    <span>ÁREA PROFISSIONAL</span>
-                    <strong>Calculadoras nutricionais</strong>
+        <main class="dashboard-main">
+
+            <header class="dashboard-topbar">
+                <div class="dashboard-topbar-left">
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle calculadoras-menu-toggle"
+                        id="dashboardMenuToggle"
+                        aria-label="Abrir menu"
+                        aria-expanded="false"
+                        aria-controls="dashboardSidebar"
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+
+                    <div class="dashboard-page-heading">
+                        <span class="dashboard-breadcrumb">NUTRIQ / Ferramentas</span>
+                        <h1>Calculadoras</h1>
+                    </div>
                 </div>
 
-                <div class="dashboard-topbar-actions">
-                    <a href="perfil.html" class="dashboard-profile-button" aria-label="Abrir perfil profissional">
-                        <span class="dashboard-avatar dashboard-avatar-professional">
-                            <svg viewBox="0 0 24 24" aria-hidden="true">
-                                <circle cx="12" cy="8" r="4"/>
-                                <path d="M4 21a8 8 0 0 1 16 0"/>
-                            </svg>
-                        </span>
-                        <span class="dashboard-profile-details">
-                            <strong id="professionalName">Meu perfil</strong>
-                            <span>Nutricionista</span>
+                <div class="calculadoras-topbar-actions dashboard-topbar-actions">
+                    <button
+                        type="button"
+                        class="calculadoras-notification"
+                        id="btnNotificacoes"
+                        aria-label="Notificações"
+                    >
+                        <span aria-hidden="true">♧</span>
+                    </button>
+
+                    <a href="perfil.html" class="calculadoras-profile">
+                        <span class="calculadoras-avatar" id="professionalAvatar">N</span>
+                        <span class="calculadoras-profile-info">
+                            <strong id="professionalName">Nutricionista</strong>
+                            <small>Nutricionista</small>
                         </span>
                     </a>
                 </div>
             </header>
 
-            <main class="dashboard-content calculator-content">
-                <section class="calculator-heading">
+            <section class="calculadoras-content">
+
+                <div class="calculadoras-heading">
                     <div>
-                        <span class="calculator-eyebrow">FERRAMENTAS CLÍNICAS</span>
-                        <h1>Calculadoras nutricionais</h1>
-                        <p>Calcule indicadores e estime necessidades nutricionais em um só lugar.</p>
+                        <h2>Suas calculadoras nutricionais</h2>
+                        <p>
+                            Realize cálculos nutricionais e acompanhe os indicadores
+                            necessários para o atendimento dos seus pacientes.
+                        </p>
                     </div>
-                    <div class="calculator-heading-mark" aria-hidden="true">✳</div>
-                </section>
+                </div>
 
-                <nav class="calculator-tabs" aria-label="Selecionar calculadora">
-                    <button type="button" class="calculator-tab is-active" data-calculator="macros" aria-selected="true">
-                        <span>⌁</span> Macronutrientes
+                <div class="calculadoras-seletor" role="tablist" aria-label="Selecionar calculadora">
+
+                    <button
+                        type="button"
+                        class="calculadora-tab active"
+                        id="tabMacros"
+                        data-calculadora="macros"
+                        role="tab"
+                        aria-selected="true"
+                        aria-controls="painelCalculadora"
+                    >
+                        <span class="calculadora-tab-icon macros-icon" aria-hidden="true">◈</span>
+                        <span>Macronutrientes</span>
                     </button>
-                    <button type="button" class="calculator-tab" data-calculator="imc" aria-selected="false">
-                        <span>◉</span> Índice de massa corporal
+
+                    <button
+                        type="button"
+                        class="calculadora-tab"
+                        id="tabIMC"
+                        data-calculadora="imc"
+                        role="tab"
+                        aria-selected="false"
+                        aria-controls="painelCalculadora"
+                    >
+                        <span class="calculadora-tab-icon imc-icon" aria-hidden="true">⚖</span>
+                        <span>Índice de massa corporal</span>
                     </button>
-                    <button type="button" class="calculator-tab" data-calculator="agua" aria-selected="false">
-                        <span>♧</span> Ingestão de água
+
+                    <button
+                        type="button"
+                        class="calculadora-tab"
+                        id="tabAgua"
+                        data-calculadora="agua"
+                        role="tab"
+                        aria-selected="false"
+                        aria-controls="painelCalculadora"
+                    >
+                        <span class="calculadora-tab-icon agua-icon" aria-hidden="true">♧</span>
+                        <span>Consumo de água</span>
                     </button>
-                </nav>
 
-                <section class="calculator-view is-active" id="view-macros" data-view="macros">
-                    <div class="calculator-intro">
-                        <div>
-                            <h2>Calculadora de macronutrientes</h2>
-                            <p>Estime calorias diárias e a distribuição de proteínas, carboidratos e gorduras.</p>
-                        </div>
-                        <span class="calculator-status"><i></i> Cálculo individual</span>
-                    </div>
+                </div>
 
-                    <div class="calculator-grid">
-                        <section class="calculator-card calculator-form-card">
-                            <div class="card-heading">
-                                <span class="card-icon">☷</span>
-                                <div>
-                                    <h3>Dados do paciente</h3>
-                                    <p>Preencha as informações para calcular a estimativa.</p>
-                                </div>
-                            </div>
+                <section
+                    class="calculadora-painel"
+                    id="painelCalculadora"
+                    role="tabpanel"
+                    aria-labelledby="tabMacros"
+                >
 
-                            <form id="macrosForm" class="calculator-form">
-                                <div class="form-row">
-                                    <div class="calculator-field">
-                                        <label for="macroPeso">Peso (kg)</label>
-                                        <input id="macroPeso" name="peso" type="number" min="1" max="500" step="0.1" placeholder="Ex.: 70" required>
-                                    </div>
-                                    <div class="calculator-field">
-                                        <label for="macroAltura">Altura (cm)</label>
-                                        <input id="macroAltura" name="altura" type="number" min="50" max="250" step="0.1" placeholder="Ex.: 170" required>
-                                    </div>
-                                </div>
+                    <div class="calculadora-form-area">
 
-                                <div class="form-row">
-                                    <div class="calculator-field">
-                                        <label for="macroIdade">Idade</label>
-                                        <input id="macroIdade" name="idade" type="number" min="15" max="120" placeholder="Ex.: 28" required>
-                                    </div>
-                                    <div class="calculator-field">
-                                        <label for="macroSexo">Sexo biológico</label>
-                                        <select id="macroSexo" name="sexo" required>
-                                            <option value="">Selecione</option>
-                                            <option value="feminino">Feminino</option>
-                                            <option value="masculino">Masculino</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="calculator-field">
-                                    <label for="macroAtividade">Nível de atividade física</label>
-                                    <select id="macroAtividade" required>
-                                        <option value="">Selecione o nível</option>
-                                        <option value="1.2">Sedentário</option>
-                                        <option value="1.375">Levemente ativo (1–3 dias/semana)</option>
-                                        <option value="1.55">Moderadamente ativo (3–5 dias/semana)</option>
-                                        <option value="1.725">Muito ativo (6–7 dias/semana)</option>
-                                        <option value="1.9">Extremamente ativo</option>
-                                    </select>
-                                </div>
-
-                                <div class="calculator-field">
-                                    <label for="macroObjetivo">Objetivo</label>
-                                    <select id="macroObjetivo" required>
-                                        <option value="">Selecione o objetivo</option>
-                                        <option value="emagrecer">Redução de peso</option>
-                                        <option value="manter">Manutenção de peso</option>
-                                        <option value="ganhar">Ganho de peso</option>
-                                    </select>
-                                </div>
-
-                                <button class="calculator-submit" type="submit">
-                                    Calcular macronutrientes <span>→</span>
-                                </button>
-
-                                <p class="calculator-disclaimer">
-                                    Estimativa informativa. A conduta deve ser individualizada pelo profissional.
+                        <div class="calculadora-intro">
+                            <span class="calculadora-main-icon" id="iconeCalculadora" aria-hidden="true">◈</span>
+                            <div>
+                                <h3 id="tituloCalculadora">Calculadora de macronutrientes</h3>
+                                <p id="descricaoCalculadora">
+                                    Calcule as necessidades energéticas e a distribuição de macronutrientes.
                                 </p>
-                                <p class="calculator-feedback" id="macrosFeedback" role="status" aria-live="polite"></p>
-                            </form>
-                        </section>
-
-                        <div class="calculator-results-column">
-                            <section class="calculator-card calorie-card">
-                                <div class="result-card-heading">
-                                    <div>
-                                        <span class="result-kicker">NECESSIDADE ENERGÉTICA ESTIMADA</span>
-                                        <h3>Meta diária de calorias</h3>
-                                    </div>
-                                    <span class="result-symbol">✦</span>
-                                </div>
-                                <div class="calorie-number">
-                                    <strong id="macroCalorias">0</strong>
-                                    <span>kcal/dia</span>
-                                </div>
-                                <div class="calorie-track"><span id="calorieTrackFill"></span></div>
-                                <div class="calorie-foot">
-                                    <span>Meta calculada</span>
-                                    <strong id="macroObjetivoLabel">Aguardando dados</strong>
-                                </div>
-                            </section>
-
-                            <section class="calculator-card macros-result-card">
-                                <div class="card-heading">
-                                    <span class="card-icon">◌</span>
-                                    <div>
-                                        <h3>Distribuição de macros</h3>
-                                        <p>Quantidade estimada de cada nutriente por dia.</p>
-                                    </div>
-                                </div>
-
-                                <div class="macro-chart-layout">
-                                    <div class="macro-donut" id="macroDonut" role="img" aria-label="Distribuição de macronutrientes ainda não calculada">
-                                        <div>
-                                            <strong id="macroTotalGramas">0 g</strong>
-                                            <span>por dia</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="macro-legend">
-                                        <div>
-                                            <span class="legend-dot protein-dot"></span>
-                                            <div><span>Proteínas</span><strong id="macroProteina">0 g</strong></div>
-                                            <small id="macroProteinaPct">0%</small>
-                                        </div>
-                                        <div>
-                                            <span class="legend-dot carbs-dot"></span>
-                                            <div><span>Carboidratos</span><strong id="macroCarboidrato">0 g</strong></div>
-                                            <small id="macroCarboidratoPct">0%</small>
-                                        </div>
-                                        <div>
-                                            <span class="legend-dot fat-dot"></span>
-                                            <div><span>Gorduras</span><strong id="macroGordura">0 g</strong></div>
-                                            <small id="macroGorduraPct">0%</small>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="macro-result-note" id="macroResultNote">
-                                    Preencha os dados e calcule para visualizar os resultados.
-                                </div>
-                            </section>
+                            </div>
                         </div>
-                    </div>
-                </section>
 
-                <section class="calculator-view" id="view-imc" data-view="imc" hidden>
-                    <div class="calculator-intro">
-                        <div>
-                            <h2>Índice de massa corporal (IMC)</h2>
-                            <p>Calcule a relação entre peso e altura do paciente.</p>
-                        </div>
-                        <span class="calculator-status"><i></i> Indicador antropométrico</span>
-                    </div>
+                        <form id="formCalculadora" novalidate>
 
-                    <div class="calculator-grid single-calculator-grid">
-                        <section class="calculator-card calculator-form-card">
-                            <div class="card-heading">
-                                <span class="card-icon">◉</span>
-                                <div>
-                                    <h3>Dados antropométricos</h3>
-                                    <p>Informe peso e altura para calcular o IMC.</p>
-                                </div>
-                            </div>
+                            <div class="calculadora-fields" id="camposCalculadora">
 
-                            <form id="imcForm" class="calculator-form">
-                                <div class="calculator-field">
-                                    <label for="imcPeso">Peso (kg)</label>
-                                    <input id="imcPeso" type="number" min="1" max="500" step="0.1" placeholder="Ex.: 70" required>
-                                </div>
-                                <div class="calculator-field">
-                                    <label for="imcAltura">Altura (cm)</label>
-                                    <input id="imcAltura" type="number" min="50" max="250" step="0.1" placeholder="Ex.: 170" required>
-                                </div>
-                                <button class="calculator-submit" type="submit">Calcular IMC <span>→</span></button>
-                                <p class="calculator-feedback" id="imcFeedback" role="status" aria-live="polite"></p>
-                            </form>
-                        </section>
-
-                        <section class="calculator-card imc-result-card">
-                            <span class="result-kicker">RESULTADO DO CÁLCULO</span>
-                            <h3>Seu índice de massa corporal</h3>
-                            <div class="imc-number">
-                                <strong id="imcValor">0,0</strong>
-                                <span>kg/m²</span>
-                            </div>
-                            <div class="imc-meter"><span id="imcMeterFill"></span></div>
-                            <div class="imc-meter-labels">
-                                <span>Baixo peso</span>
-                                <span>Normal</span>
-                                <span>Sobrepeso</span>
-                                <span>Obesidade</span>
-                            </div>
-                            <div class="imc-classification" id="imcClassificacao">Aguardando dados</div>
-                            <p class="result-helper" id="imcDescricao">O resultado será exibido após preencher os campos.</p>
-                        </section>
-                    </div>
-                </section>
-
-                <section class="calculator-view" id="view-agua" data-view="agua" hidden>
-                    <div class="calculator-intro">
-                        <div>
-                            <h2>Calculadora de ingestão de água</h2>
-                            <p>Estime uma meta diária de hidratação conforme peso e rotina.</p>
-                        </div>
-                        <span class="calculator-status"><i></i> Meta estimada</span>
-                    </div>
-
-                    <div class="calculator-grid single-calculator-grid">
-                        <section class="calculator-card calculator-form-card">
-                            <div class="card-heading">
-                                <span class="card-icon">♧</span>
-                                <div>
-                                    <h3>Dados para hidratação</h3>
-                                    <p>Informe o peso e as condições gerais.</p>
-                                </div>
-                            </div>
-
-                            <form id="aguaForm" class="calculator-form">
-                                <div class="calculator-field">
-                                    <label for="aguaPeso">Peso (kg)</label>
-                                    <input id="aguaPeso" type="number" min="1" max="500" step="0.1" placeholder="Ex.: 70" required>
-                                </div>
-
-                                <div class="calculator-field">
-                                    <label for="aguaAtividade">Atividade física</label>
-                                    <select id="aguaAtividade" required>
-                                        <option value="0">Sem atividade física</option>
-                                        <option value="350">Atividade leve</option>
-                                        <option value="500">Atividade moderada</option>
-                                        <option value="750">Atividade intensa</option>
+                                <div class="calculadora-field">
+                                    <label for="calcSexo">Sexo biológico</label>
+                                    <select id="calcSexo" name="sexo" required>
+                                        <option value="">Selecione</option>
+                                        <option value="masculino">Masculino</option>
+                                        <option value="feminino">Feminino</option>
                                     </select>
                                 </div>
 
-                                <div class="calculator-field">
-                                    <label for="aguaClima">Clima habitual</label>
-                                    <select id="aguaClima" required>
-                                        <option value="0">Temperado</option>
-                                        <option value="300">Quente</option>
-                                        <option value="500">Muito quente</option>
+                                <div class="calculadora-field">
+                                    <label for="calcIdade">Idade (anos)</label>
+                                    <input
+                                        type="number"
+                                        id="calcIdade"
+                                        name="idade"
+                                        min="1"
+                                        max="120"
+                                        placeholder="Ex.: 25"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="calculadora-field">
+                                    <label for="calcPeso">Peso (kg)</label>
+                                    <input
+                                        type="number"
+                                        id="calcPeso"
+                                        name="peso"
+                                        min="1"
+                                        max="500"
+                                        step="0.1"
+                                        placeholder="Ex.: 70"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="calculadora-field">
+                                    <label for="calcAltura">Altura (cm)</label>
+                                    <input
+                                        type="number"
+                                        id="calcAltura"
+                                        name="altura"
+                                        min="50"
+                                        max="250"
+                                        placeholder="Ex.: 175"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="calculadora-field" id="campoAtividade">
+                                    <label for="calcAtividade">Nível de atividade física</label>
+                                    <select id="calcAtividade" name="atividade" required>
+                                        <option value="">Selecione</option>
+                                        <option value="sedentario">Sedentário</option>
+                                        <option value="leve">Levemente ativo</option>
+                                        <option value="moderado">Moderadamente ativo</option>
+                                        <option value="ativo">Muito ativo</option>
+                                        <option value="atleta">Atleta</option>
                                     </select>
                                 </div>
 
-                                <button class="calculator-submit" type="submit">
-                                    Calcular ingestão de água <span>→</span>
-                                </button>
+                                <div class="calculadora-field" id="campoObjetivo">
+                                    <label for="calcObjetivo">Objetivo nutricional</label>
+                                    <select id="calcObjetivo" name="objetivo" required>
+                                        <option value="">Selecione</option>
+                                        <option value="emagrecer">Emagrecer</option>
+                                        <option value="manter">Manter o peso</option>
+                                        <option value="ganhar">Ganhar massa muscular</option>
+                                    </select>
+                                </div>
 
-                                <p class="calculator-disclaimer">
-                                    A necessidade pode variar com saúde, alimentação, clima e orientação clínica.
-                                </p>
-                                <p class="calculator-feedback" id="aguaFeedback" role="status" aria-live="polite"></p>
-                            </form>
-                        </section>
+                                <div class="calculadora-field" id="campoAguaAtividade" hidden>
+                                    <label for="calcAguaAtividade">Atividade física</label>
+                                    <select id="calcAguaAtividade" name="aguaAtividade">
+                                        <option value="baixa">Baixa</option>
+                                        <option value="moderada">Moderada</option>
+                                        <option value="alta">Alta</option>
+                                    </select>
+                                </div>
 
-                        <section class="calculator-card water-result-card">
-                            <div class="water-glass" aria-hidden="true">
-                                <div id="waterFill"></div>
+                                <div class="calculadora-field" id="campoClima" hidden>
+                                    <label for="calcClima">Clima</label>
+                                    <select id="calcClima" name="clima">
+                                        <option value="ameno">Ameno</option>
+                                        <option value="quente">Quente</option>
+                                        <option value="muito-quente">Muito quente</option>
+                                    </select>
+                                </div>
+
                             </div>
-                            <span class="result-kicker">META DIÁRIA ESTIMADA</span>
-                            <div class="water-number">
-                                <strong id="aguaLitros">0,0</strong>
-                                <span>litros/dia</span>
-                            </div>
-                            <p id="aguaMililitros">0 ml por dia</p>
-                            <div class="water-result-divider"></div>
-                            <div class="water-result-foot">
-                                <span>Referência calculada</span>
-                                <strong id="aguaCopos">0 copos de 250 ml</strong>
-                            </div>
-                        </section>
+
+                            <p
+                                class="calculadora-erro"
+                                id="erroCalculadora"
+                                role="alert"
+                                aria-live="polite"
+                                hidden
+                            ></p>
+
+                            <button type="submit" class="calculadora-submit" id="btnCalcular">
+                                Calcular resultados
+                            </button>
+
+                        </form>
+
                     </div>
+
+                    <div class="calculadora-result-area">
+
+                        <div class="calculadora-empty" id="estadoInicial">
+                            <span class="calculadora-main-icon" aria-hidden="true">▤</span>
+                            <h3>Seus resultados aparecerão aqui</h3>
+                            <p>
+                                Preencha os campos e clique em calcular para visualizar
+                                os resultados da avaliação.
+                            </p>
+                        </div>
+
+                        <div class="calculadora-resultados" id="resultadoCalculadora" hidden>
+                            <div class="calculadora-result-heading">
+                                <h3 id="tituloResultados">Resultados</h3>
+                                <p id="subtituloResultados" class="resultado-subtitulo"></p>
+                            </div>
+
+                            <div class="resultado-cards" id="resultadoCards"></div>
+
+                            <div class="calculadora-result-divider"></div>
+
+                            <div class="resultado-detalhes" id="resultadoDetalhes"></div>
+
+                            <button
+                                type="button"
+                                class="calculadora-reset"
+                                id="btnLimparResultado"
+                            >
+                                Limpar resultados
+                            </button>
+                        </div>
+
+                    </div>
+
                 </section>
 
-                <footer class="dashboard-footer">
-                    <p>© 2026 NUTRIQ · Calculadoras nutricionais</p>
-                </footer>
-            </main>
-        </div>
+                <div class="calculadoras-aviso">
+                    <strong>Importante:</strong>
+                    os resultados são estimativas e devem ser interpretados
+                    por um profissional de nutrição considerando as necessidades
+                    individuais de cada paciente.
+                </div>
+
+                <div id="dashboardFeedback" role="status" aria-live="polite"></div>
+
+            </section>
+
+        </main>
+
     </div>
 
-    <div class="dashboard-sidebar-overlay" id="calculadorasOverlay"></div>
-
+    <script src="script.js" defer></script>
     <script src="js/calculadoras.js" defer></script>
+
 </body>
 </html>
+```
