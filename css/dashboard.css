@@ -1694,6 +1694,47 @@ body.dashboard-page #modalPlanos.is-open .plans-modal {
     }
 }
 
+
+#conteudoPrincipal {
+    min-width: 0;
+    width: 100%;
+}
+
+#conteudoPrincipal > .pagina-dinamica {
+    width: 100%;
+    min-width: 0;
+}
+
+#conteudoPrincipal > .pagina-dinamica .pagina-topo {
+    display: none;
+}
+
+#conteudoPrincipal > .pagina-dinamica .pagina-container {
+    width: 100%;
+    min-width: 0;
+}
+
+#conteudoPrincipal .pagina-dinamica table {
+    max-width: 100%;
+}
+
+@media (max-width: 700px) {
+    #conteudoPrincipal {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    #conteudoPrincipal > .pagina-dinamica {
+        overflow-wrap: anywhere;
+    }
+
+    #conteudoPrincipal .pagina-dinamica .pagina-painel {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+}
+
+
 /* Respeitar a preferência por menos animações */
 
 @media (prefers-reduced-motion: reduce) {
@@ -1703,4 +1744,5 @@ body.dashboard-page #modalPlanos.is-open .plans-modal {
         transition: none !important;
     }
 }
+
 
