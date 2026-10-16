@@ -7,11 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const menuToggle = document.getElementById("dashboardMenuToggle");
     const feedback = document.getElementById("dashboardFeedback");
 
-    if (!area) {
-        console.error("NUTRIQ: área central não encontrada.");
-        return;
-    }
-
     const paginasPermitidas = new Set([
         "pagina1.html",
         "pacientes.html",
@@ -24,38 +19,25 @@ document.addEventListener("DOMContentLoaded", () => {
     ]);
 
     let conteudoInicial = null;
-    let paginaAtual = "pagina1.html";
     let requisicaoAtual = 0;
 
     function nomeArquivo(caminho) {
-        return caminho.split("/").pop();
+        return caminho.split("/").pop().toLowerCase();
     }
 
     function mostrarFeedback(mensagem) {
-        if (feedback) {
-            feedback.textContent = mensagem;
-        }
+        if (feedback) feedback.textContent = mensagem;
     }
 
     function fecharMenu() {
-        sidebar?.classList.remove("is-open");
+        sidebar?.classList.remove("is-open", "active");
         menuToggle?.setAttribute("aria-expanded", "false");
     }
 
-    function salvarConteudoInicial() {
-        if (conteudoInicial) {
-            return;
-        }
-
-        conteudoInicial = document.createDocumentFragment();
-
-        while (area.firstChild) {
-            conteudoInicial.appendChild(area.firstChild);
-        }
-    }
-
     function atualizarMenu(arquivo) {
-        document.querySelectorAll(".dashboard-navigation a").forEach(link => {
+        document.querySelectorAll(
+            ".dashboard-navigation a, .dashboard-nav a"
+        ).forEach(link => {
             const url = new URL(link.href, window.location.href);
             const ativo = nomeArquivo(url.pathname) === arquivo;
 
@@ -89,8 +71,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function salvarConteudoInicial() {
+        if (conteudoInicial || !area) return;
+
+        conteudoInicial = document.createDocumentFragment();
+
+        while (area.firstChild) {
+            conteudoInicial.appendChild(area.firstChild);
+        }
+    }
+
     function inicializarAgenda() {
-        const formulario = area.querySelector("#formAgenda");
+        const formulario = area?.querySelector("#formAgenda");
 
         if (!formulario || formulario.dataset.inicializado === "true") {
             return;
@@ -98,8 +90,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         formulario.dataset.inicializado = "true";
 
-        formulario.addEventListener("submit", event => {
-            event.preventDefault();
+        formulario.addEventListener("submit", evento => {
+            evento.preventDefault();
 
             const nome = area.querySelector("#paciente")?.value.trim();
             const data = area.querySelector("#data")?.value;
@@ -107,15 +99,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const tipo = area.querySelector("#tipo")?.value;
             const mensagem = area.querySelector("#mensagemAgenda");
 
-            if (!nome || !data || !horario || !mensagem) {
-                return;
-            }
+            if (!nome || !data || !horario || !mensagem) return;
 
             mensagem.textContent =
-                "Dados preenchidos para " + nome +
-                ", em " + data + " às " + horario +
-                " (" + tipo + "). " +
-                "Este compromisso ainda não foi salvo.";
+                `Dados preenchidos para ${nome}, em ${data} às ${horario} (${tipo}). Este compromisso ainda não foi salvo.`;
 
             mensagem.style.display = "block";
             formulario.reset();
@@ -123,9 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function inicializarPagina(arquivo) {
-        if (arquivo === "agenda.html") {
-            inicializarAgenda();
-        }
+        if (arquivo === "agenda.html") inicializarAgenda();
 
         window.dispatchEvent(
             new CustomEvent("nutriqPaginaCarregada", {
@@ -135,25 +120,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function navegar(arquivo, adicionarHistorico = true) {
+        if (!area) {
+            window.location.href = arquivo;
+            return;
+        }
+
         if (!paginasPermitidas.has(arquivo)) {
-            mostrarFeedback("Página não permitida ou indisponível.");
+            window.location.href = arquivo;
             return;
         }
 
         const idRequisicao = ++requisicaoAtual;
 
         if (arquivo === "pagina1.html") {
-            if (!conteudoInicial) {
-                paginaAtual = arquivo;
-                atualizarMenu(arquivo);
-                fecharMenu();
-                atualizarEndereco(arquivo, adicionarHistorico);
+            if (conteudoInicial) {
+                area.replaceChildren(conteudoInicial);
+                conteudoInicial = null;
+            } else {
+                window.location.href = "./pagina1.html";
                 return;
             }
 
-            area.replaceChildren(conteudoInicial);
-            conteudoInicial = null;
-            paginaAtual = arquivo;
             document.title = "Painel Profissional | NUTRIQ";
 
             atualizarMenu(arquivo);
@@ -177,23 +164,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const resposta = await fetch(url.href, {
                 method: "GET",
-                headers: {
-                    Accept: "text/html"
-                },
+                headers: { Accept: "text/html" },
                 credentials: "same-origin"
             });
 
             if (!resposta.ok) {
-                throw new Error(
-                    "Falha ao carregar a página: " + resposta.status
-                );
+                throw new Error(`Falha ao carregar a página: ${resposta.status}`);
             }
 
             const html = await resposta.text();
 
-            if (idRequisicao !== requisicaoAtual) {
-                return;
-            }
+            if (idRequisicao !== requisicaoAtual) return;
 
             const documento = new DOMParser().parseFromString(
                 html,
@@ -223,10 +204,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const titulo = novoConteudo.querySelector("h1");
 
             document.title = titulo
-                ? titulo.textContent.trim() + " | NUTRIQ"
+                ? `${titulo.textContent.trim()} | NUTRIQ`
                 : documento.title || "NUTRIQ";
-
-            paginaAtual = arquivo;
 
             atualizarMenu(arquivo);
             fecharMenu();
@@ -234,54 +213,49 @@ document.addEventListener("DOMContentLoaded", () => {
             atualizarEndereco(arquivo, adicionarHistorico);
             inicializarPagina(arquivo);
 
-            window.scrollTo({
-                top: 0,
-                behavior: "auto"
-            });
+            window.scrollTo({ top: 0, behavior: "auto" });
         } catch (erro) {
-            if (idRequisicao !== requisicaoAtual) {
-                return;
-            }
+            if (idRequisicao !== requisicaoAtual) return;
 
             console.error("NUTRIQ: erro na navegação.", erro);
-
             mostrarFeedback(
                 "Não foi possível abrir a página. Verifique o arquivo e tente novamente."
             );
         }
     }
 
-    document.addEventListener("click", event => {
-        const link = event.target.closest("a[href]");
+    document.addEventListener("click", evento => {
+        const link = evento.target.closest("a[href]");
 
-        if (!link || link.target || link.hasAttribute("download")) {
-            return;
-        }
+        if (!link || link.target || link.hasAttribute("download")) return;
+
+        if (evento.defaultPrevented) return;
 
         const dentroDoPainel = link.closest(
             ".dashboard-navigation, " +
+            ".dashboard-nav, " +
             "#conteudoPrincipal, " +
             ".dashboard-brand, " +
-            ".dashboard-profile-button"
+            ".dashboard-logo, " +
+            ".dashboard-profile-button, " +
+            ".calculadoras-profile"
         );
 
-        if (!dentroDoPainel) {
-            return;
-        }
+        if (!dentroDoPainel) return;
 
         const url = new URL(link.href, window.location.href);
 
-        if (url.origin !== window.location.origin) {
-            return;
-        }
+        if (url.origin !== window.location.origin) return;
 
         const arquivo = nomeArquivo(url.pathname);
 
-        if (!paginasPermitidas.has(arquivo)) {
+        if (arquivo === "calculadoras.html") {
             return;
         }
 
-        event.preventDefault();
+        if (!paginasPermitidas.has(arquivo)) return;
+
+        evento.preventDefault();
         navegar(arquivo);
     });
 
@@ -290,23 +264,31 @@ document.addEventListener("DOMContentLoaded", () => {
             new URLSearchParams(window.location.search).get("pagina") ||
             "pagina1.html";
 
+        if (arquivo === "calculadoras.html") {
+            window.location.href = "./calculadoras.html";
+            return;
+        }
+
         navegar(arquivo, false);
     });
 
     if (menuToggle && sidebar) {
         menuToggle.addEventListener("click", () => {
-            const aberto = sidebar.classList.toggle("is-open");
+            const aberto = !sidebar.classList.contains("is-open");
 
+            sidebar.classList.toggle("is-open", aberto);
             menuToggle.setAttribute("aria-expanded", String(aberto));
         });
     }
 
-    atualizarMenu(paginaAtual);
+    if (area) {
+        atualizarMenu(nomeArquivo(window.location.pathname));
 
-    const paginaDaUrl =
-        new URLSearchParams(window.location.search).get("pagina");
+        const paginaDaUrl =
+            new URLSearchParams(window.location.search).get("pagina");
 
-    if (paginaDaUrl && paginasPermitidas.has(paginaDaUrl)) {
-        navegar(paginaDaUrl, false);
+        if (paginaDaUrl && paginasPermitidas.has(paginaDaUrl)) {
+            navegar(paginaDaUrl, false);
+        }
     }
 });
