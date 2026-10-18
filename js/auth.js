@@ -326,7 +326,11 @@ registerForm.addEventListener(
                 .getElementById("registerEmail")
                 .value
                 .trim();
-
+        const cpf =
+            document
+                .getElementById("registerCPF")
+                .value
+                .trim();
         const crn =
             document
                 .getElementById("registerCRN")
@@ -366,7 +370,16 @@ registerForm.addEventListener(
 
             valido = false;
         }
+        /* CPF */
 
+        if (!validarCPF(cpf)) {
+            mostrarErro(
+                "registerCPF",
+                "Digite um CPF válido."
+            );
+
+            valido = false;
+        }
         /* CRN */
 
         if (crn.length < 4) {
@@ -421,7 +434,37 @@ function validarEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         .test(email);
 }
+function validarCPF(cpf) {
+    cpf = cpf.replace(/\D/g, "");
 
+    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
+        return false;
+    }
+
+    let soma = 0;
+
+    for (let i = 0; i < 9; i++) {
+        soma += Number(cpf[i]) * (10 - i);
+    }
+
+    let resto = (soma * 10) % 11;
+    if (resto === 10) resto = 0;
+
+    if (resto !== Number(cpf[9])) {
+        return false;
+    }
+
+    soma = 0;
+
+    for (let i = 0; i < 10; i++) {
+        soma += Number(cpf[i]) * (11 - i);
+    }
+
+    resto = (soma * 10) % 11;
+    if (resto === 10) resto = 0;
+
+    return resto === Number(cpf[10]);
+}
 /* =========================================================
    MOSTRAR ERRO
 ========================================================= */
