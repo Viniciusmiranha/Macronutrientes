@@ -1,0 +1,20 @@
+.modal-feedback {
+    display: none;
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 7px;
+    font-size: 11px;
+    text-align: center;
+}
+
+.modal-feedback.success {
+    display: block;
+    color: #226044;
+    background: #e8f5ed;
+}
+
+.modal-feedback.error {
+    display: block;
+    color: #9c4141;
+    background: #faeaea;
+}
