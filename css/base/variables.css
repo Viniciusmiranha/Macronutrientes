@@ -1,0 +1,31 @@
+:root {
+    --verde-principal: #24594d;
+    --verde-escuro: #123f38;
+    --verde-claro: #eaf4ee;
+    --verde-suave: #f1f7f3;
+
+    --texto: #123d3b;
+    --texto-secundario: #607a76;
+
+    --fundo: #f8faf8;
+    --fundo-card: #ffffff;
+
+    --borda: #dce6e1;
+
+    --sombra:
+        0 18px 45px rgba(24, 68, 59, 0.08);
+
+    --sombra-forte:
+        0 25px 65px rgba(24, 68, 59, 0.13);
+
+    --raio: 14px;
+
+    --transicao: 0.3s ease;
+
+    /* Largura máxima do conteúdo */
+    --largura-site: 1320px;
+
+    /* Espaçamento lateral */
+    --margem-site: 60px;
+}
+

@@ -1,0 +1,540 @@
+.selected-profile {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--verde-claro);
+    color: var(--verde-principal);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0 15px;
+    color: #93a39e;
+    font-size: 10px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--borda);
+}
+
+.patient-info {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.patient-info-icon {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--verde-claro);
+    border-radius: 50%;
+    color: var(--verde-principal);
+    font-size: 34px;
+}
+
+.patient-info h3 {
+    color: var(--verde-escuro);
+    font-size: 17px;
+    line-height: 1.3;
+    margin-bottom: 10px;
+}
+
+.patient-info p {
+    color: var(--texto-secundario);
+    font-size: 11px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.patient-info .primary-button {
+    margin-top: 15px;
+}
+
+.dashboard-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 11px;
+}
+
+.dashboard-metric-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    min-height: 111px;
+    padding: 15px 13px;
+    background: var(--dashboard-surface);
+    border: 1px solid var(--dashboard-border);
+    border-radius: 9px;
+    box-shadow: var(--dashboard-shadow);
+}
+
+.dashboard-metric-icon {
+    display: inline-flex;
+    flex: 0 0 43px;
+    align-items: center;
+    justify-content: center;
+    width: 43px;
+    height: 43px;
+    border-radius: 10px;
+}
+
+.dashboard-metric-icon svg {
+    width: 25px;
+    height: 25px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.dashboard-icon-green {
+    color: #183f35;
+    background: #dff2eb;
+}
+
+.dashboard-icon-blue {
+    color: #203e60;
+    background: var(--dashboard-blue-soft);
+}
+
+.dashboard-metric-info {
+    display: grid;
+    flex: 1;
+    gap: 4px;
+    min-width: 0;
+}
+
+.dashboard-metric-info > span {
+    color: #394452;
+    font-size: 11px;
+    line-height: 1.35;
+}
+
+.dashboard-metric-info > strong {
+    color: #141d37;
+    font-size: clamp(22px, 1.8vw, 27px);
+    font-weight: 750;
+    line-height: 1.1;
+    letter-spacing: -0.4px;
+}
+
+.dashboard-growth {
+    color: var(--dashboard-green);
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.dashboard-mini-chart {
+    display: flex;
+    flex: 0 0 32px;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 3px;
+    height: 53px;
+    margin-left: auto;
+    padding-top: 5px;
+}
+
+.dashboard-mini-chart span {
+    display: block;
+    width: 6px;
+    min-height: 12px;
+    border-radius: 5px 5px 2px 2px;
+}
+
+.dashboard-mini-chart span:nth-child(1) {
+    height: 30%;
+}
+
+.dashboard-mini-chart span:nth-child(2) {
+    height: 48%;
+}
+
+.dashboard-mini-chart span:nth-child(3) {
+    height: 70%;
+}
+
+.dashboard-mini-chart span:nth-child(4) {
+    height: 94%;
+}
+
+.dashboard-chart-green span {
+    background: #9bcfbd;
+}
+
+.dashboard-chart-blue span {
+    background: #8ab5df;
+}
+
+.dashboard-overview-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+    gap: 11px;
+    align-items: stretch;
+}
+
+.dashboard-panel {
+    min-width: 0;
+    padding: 17px 17px 13px;
+    background: var(--dashboard-surface);
+    border: 1px solid var(--dashboard-border);
+    border-radius: 9px;
+    box-shadow: var(--dashboard-shadow);
+}
+
+.dashboard-panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.dashboard-panel-heading h2 {
+    margin: 0;
+    color: #17213b;
+    font-size: 14px;
+    font-weight: 750;
+    letter-spacing: -0.15px;
+}
+
+.dashboard-view-all {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 8px;
+    color: #275e50;
+    font-size: 11px;
+    font-weight: 550;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.dashboard-view-all:hover {
+    color: #0e392f;
+}
+
+.dashboard-view-all span {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.dashboard-patient-list,
+.dashboard-appointment-list {
+    display: grid;
+}
+
+.dashboard-patient-row {
+    display: grid;
+    grid-template-columns: 39px minmax(105px, 1fr) minmax(104px, auto) 82px 18px;
+    align-items: center;
+    gap: 10px;
+    min-height: 50px;
+    padding: 7px 0;
+    border-bottom: 1px solid #edf0ef;
+}
+
+.dashboard-patient-row:last-child,
+.dashboard-appointment-row:last-child {
+    border-bottom: 0;
+}
+
+.dashboard-patient-identity {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.dashboard-patient-identity strong,
+.dashboard-appointment-info strong {
+    overflow: hidden;
+    color: #273143;
+    font-size: 11px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dashboard-patient-identity > span {
+    color: #84909b;
+    font-size: 10px;
+}
+
+.dashboard-patient-row time {
+    color: #75818e;
+    font-size: 10px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.dashboard-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: start;
+    max-width: 100%;
+    padding: 5px 9px;
+    overflow: hidden;
+    font-size: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-radius: 20px;
+}
+
+.dashboard-status-progress,
+.dashboard-status-active {
+    color: #246a54;
+    background: #dff3e9;
+}
+
+.dashboard-status-pending {
+    color: #8d6530;
+    background: #fbefd9;
+}
+
+.dashboard-status-evaluation {
+    color: #326b91;
+    background: #e0eff9;
+}
+
+.dashboard-more-button {
+    width: 22px;
+    height: 30px;
+    color: #354252;
+    font-size: 22px;
+    line-height: 1;
+    border-radius: 5px;
+}
+
+.dashboard-more-button:hover {
+    color: var(--dashboard-green-dark);
+    background: #eef7f3;
+}
+
+.dashboard-appointment-row {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) 18px 88px;
+    align-items: center;
+    gap: 10px;
+    min-height: 59px;
+    padding: 6px 0;
+    border-bottom: 1px solid #edf0ef;
+}
+
+.dashboard-date-badge {
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 1px;
+    width: 45px;
+    min-height: 44px;
+    color: #264b42;
+    background: #e4f3ed;
+    border-radius: 7px;
+}
+
+.dashboard-date-badge strong {
+    font-size: 17px;
+    font-weight: 750;
+    line-height: 1.1;
+}
+
+.dashboard-date-badge span {
+    font-size: 9px;
+    font-weight: 650;
+    letter-spacing: 0.5px;
+}
+
+.dashboard-appointment-info {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+
+.dashboard-appointment-info > span {
+    overflow: hidden;
+    color: #7c8792;
+    font-size: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dashboard-start-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 7px 12px;
+    color: #285e50;
+    font-size: 11px;
+    font-weight: 650;
+    text-decoration: none;
+    background: #e2f2ec;
+    border-radius: 7px;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.dashboard-start-button:hover {
+    background: #d1eade;
+    transform: translateY(-1px);
+}
+
+.dashboard-progress-panel {
+    padding-bottom: 19px;
+}
+
+.dashboard-progress-content {
+    display: grid;
+    grid-template-columns: minmax(250px, 0.95fr) minmax(0, 2fr);
+    align-items: center;
+    gap: 20px;
+    padding-top: 3px;
+}
+
+.dashboard-goal-summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    min-height: 120px;
+    padding: 5px 18px 5px 0;
+    border-right: 1px solid #edf0ef;
+}
+
+.dashboard-progress-ring {
+    position: relative;
+    display: grid;
+    flex: 0 0 120px;
+    place-items: center;
+    width: 120px;
+    height: 120px;
+}
+
+.dashboard-progress-ring svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.dashboard-progress-ring circle {
+    fill: none;
+    stroke-width: 10;
+}
+
+.dashboard-ring-background {
+    stroke: #dcece6;
+}
+
+.dashboard-ring-value {
+    stroke: #12664f;
+    stroke-linecap: round;
+    stroke-dasharray: 301.59;
+    stroke-dashoffset: 66.35;
+}
+
+.dashboard-progress-ring strong {
+    color: #16203a;
+    font-size: 26px;
+    font-weight: 750;
+}
+
+.dashboard-goal-summary p {
+    margin: 0;
+    color: #6e7a87;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.dashboard-goal-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.dashboard-goal-item {
+    display: grid;
+    gap: 11px;
+    min-width: 0;
+    padding: 8px 13px;
+    border-right: 1px solid #edf0ef;
+}
+
+.dashboard-goal-item:last-child {
+    border-right: 0;
+}
+
+.dashboard-goal-heading {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 43px;
+}
+
+.dashboard-goal-heading .dashboard-metric-icon {
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+}
+
+.dashboard-goal-heading .dashboard-metric-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.dashboard-goal-heading > span:last-child {
+    color: #344151;
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+.dashboard-goal-value {
+    display: flex;
+    justify-content: flex-end;
+    color: #26384a;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.dashboard-progress-track {
+    width: 100%;
+    height: 9px;
+    overflow: hidden;
+    background: #e8eeeb;
+    border-radius: 20px;
+}
+
+.dashboard-progress-track > span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+}
+
+.dashboard-progress-green {
+    background: linear-gradient(90deg, #57b58d, #77c7a7);
+}
+
+.dashboard-progress-blue {
+    background: linear-gradient(90deg, #5594d2, #69a9e5);
+}
+
+.dashboard-progress-dark {
+    background: #176b58;
+}

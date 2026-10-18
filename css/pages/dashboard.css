@@ -1,0 +1,88 @@
+body.dashboard-page {
+    --dashboard-bg: #f5f8f7;
+    --dashboard-surface: #ffffff;
+    --dashboard-text: #17213b;
+    --dashboard-muted: #75818d;
+    --dashboard-border: #e3eae7;
+    --dashboard-green: #176b58;
+    --dashboard-green-dark: #105443;
+    --dashboard-green-soft: #dff2eb;
+    --dashboard-blue: #4f91cf;
+    --dashboard-blue-soft: #e1effb;
+    --dashboard-shadow: 0 4px 18px rgba(26, 58, 49, 0.035);
+
+    min-height: 100vh;
+    margin: 0;
+    background: var(--dashboard-bg);
+    color: var(--dashboard-text);
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.45;
+}
+
+.dashboard-page *,
+.dashboard-page *::before,
+.dashboard-page *::after {
+    box-sizing: border-box;
+}
+
+.dashboard-page button,
+.dashboard-page input {
+    font: inherit;
+}
+
+.dashboard-page button,
+.dashboard-page a,
+.dashboard-page summary {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.dashboard-page button:focus-visible,
+.dashboard-page a:focus-visible,
+.dashboard-page input:focus-visible,
+.dashboard-page summary:focus-visible {
+    outline: 3px solid rgba(23, 107, 88, 0.3);
+    outline-offset: 3px;
+}
+
+.dashboard-welcome {
+    padding: 0 4px 7px;
+}
+
+.dashboard-welcome h1 {
+    margin: 0 0 4px;
+    color: #121b35;
+    font-size: clamp(25px, 2.1vw, 32px);
+    font-weight: 750;
+    letter-spacing: -0.8px;
+    line-height: 1.2;
+}
+
+.dashboard-welcome p {
+    margin: 0;
+    color: #75818e;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+#conteudoPrincipal {
+    width: 100%;
+    min-width: 0;
+}
+
+#conteudoPrincipal > .pagina-dinamica {
+    width: 100%;
+    min-width: 0;
+}
+
+#conteudoPrincipal > .pagina-dinamica .pagina-topo {
+    display: none;
+}
+
+#conteudoPrincipal > .pagina-dinamica .pagina-container {
+    width: 100%;
+    min-width: 0;
+}
+
+#conteudoPrincipal .pagina-dinamica table {
+    max-width: 100%;
+}
