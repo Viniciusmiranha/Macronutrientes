@@ -1,0 +1,506 @@
+/* =====================================================
+   NUTRIQ · Relatórios (css/relatorios.css)
+   Complementa o css/pacientes.css (cabeçalho, botões e
+   rodapé). Carregue depois dele.
+===================================================== */
+
+.rel-panel {
+    background: var(--pac-surface);
+    border: 1px solid var(--pac-border);
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(26, 58, 49, 0.03);
+}
+
+/* ---------- Seleção do paciente ---------- */
+.rel-selector {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 22px 22px 24px;
+}
+
+.rel-select-field {
+    flex: 1;
+    min-width: 240px;
+    max-width: 480px;
+}
+
+.rel-select-field label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--pac-title);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.rel-select-field select {
+    width: 100%;
+    height: 42px;
+    padding: 0 40px 0 14px;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230f3d38' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center / 16px;
+    border: 1px solid var(--pac-border);
+    border-radius: 9px;
+    color: var(--pac-title);
+    font: inherit;
+    font-size: 13.5px;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+.rel-select-field select:focus {
+    outline: 3px solid rgba(23, 107, 88, 0.2);
+    border-color: var(--pac-green);
+}
+
+.rel-hint {
+    margin: 8px 0 0;
+    color: var(--pac-muted);
+    font-size: 12.5px;
+}
+
+.rel-hint[hidden] {
+    display: none;
+}
+
+.rel-hint a {
+    color: var(--pac-green);
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+/* ---------- Botões ---------- */
+.rel-btn:disabled {
+    background: #e4eeea;
+    box-shadow: none;
+    color: #9db2ac;
+    cursor: not-allowed;
+}
+
+.rel-btn:disabled svg {
+    stroke: #9db2ac;
+}
+
+.rel-btn-outline {
+    background: #fff;
+    border: 1px solid var(--pac-green);
+    color: var(--pac-green);
+}
+
+.rel-btn-outline:hover:not(:disabled) {
+    background: var(--pac-green-soft);
+}
+
+.rel-btn-outline:disabled {
+    border-color: transparent;
+}
+
+/* ---------- Resumo do paciente ---------- */
+.rel-summary {
+    padding: 22px 24px 24px;
+}
+
+.rel-summary h2,
+.rel-full h2 {
+    margin: 0;
+    color: var(--pac-title);
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.rel-panel-sub {
+    margin: 4px 0 18px;
+    color: var(--pac-muted);
+    font-size: 12.5px;
+}
+
+.rel-summary-row {
+    display: grid;
+    grid-template-columns: 1.5fr repeat(3, minmax(0, 1fr));
+    align-items: center;
+}
+
+.rel-patient {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-width: 0;
+    padding-right: 20px;
+}
+
+.rel-avatar {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 68px;
+    height: 68px;
+    background: var(--pac-green-soft);
+    border-radius: 50%;
+}
+
+.rel-avatar svg {
+    width: 34px;
+    height: 34px;
+}
+
+.rel-patient strong {
+    display: block;
+    overflow: hidden;
+    color: var(--pac-title);
+    font-size: 14.5px;
+    font-weight: 750;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rel-contact {
+    display: block;
+    margin: 4px 0 8px;
+    color: var(--pac-muted);
+    font-size: 13px;
+}
+
+.rel-patient small {
+    color: var(--pac-muted);
+    font-size: 12px;
+}
+
+.rel-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+    padding: 4px 18px;
+    border-left: 1px solid var(--pac-border);
+}
+
+.rel-info > div {
+    min-width: 0;
+}
+
+.rel-info small {
+    display: block;
+    color: var(--pac-muted);
+    font-size: 12px;
+}
+
+.rel-info strong {
+    display: block;
+    overflow: hidden;
+    margin-top: 4px;
+    color: var(--pac-title);
+    font-size: 15px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rel-info-icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    background: var(--pac-green-soft);
+    border-radius: 50%;
+}
+
+.rel-info-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.rel-avatar svg,
+.rel-info-icon svg,
+.rel-selector .pac-btn svg,
+.rel-full .pac-btn svg {
+    fill: none;
+    stroke: var(--pac-green);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ---------- Gráficos ---------- */
+.rel-charts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.rel-chart {
+    min-width: 0;
+    padding: 18px 20px 20px;
+}
+
+.rel-chart-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.rel-chart-head .rel-info-icon {
+    width: 38px;
+    height: 38px;
+}
+
+.rel-chart-head .rel-info-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.rel-chart-head h2 {
+    margin: 0 0 4px;
+    color: var(--pac-title);
+    font-size: 14px;
+    font-weight: 750;
+}
+
+.rel-chart-head p {
+    margin: 0;
+    color: var(--pac-muted);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.rel-chart-body svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.rel-chart-note {
+    margin: 10px 0 0;
+    color: var(--pac-muted);
+    font-size: 12.5px;
+    text-align: center;
+}
+
+.rel-chart-note[hidden] {
+    display: none;
+}
+
+/* Elementos desenhados nos gráficos */
+.rel-axis {
+    fill: var(--pac-muted);
+    font-size: 10px;
+}
+
+.rel-grid {
+    stroke: #e8efec;
+    stroke-width: 1;
+}
+
+.rel-line {
+    fill: none;
+    stroke: var(--pac-green);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.rel-point {
+    fill: #fff;
+    stroke: #bfd3cc;
+    stroke-width: 1.5;
+}
+
+.rel-point.is-filled {
+    fill: var(--pac-green);
+    stroke: #fff;
+    stroke-width: 2;
+}
+
+.rel-value {
+    fill: var(--pac-title);
+    font-size: 10px;
+    font-weight: 700;
+}
+
+/* ---------- Macronutrientes ---------- */
+.rel-macros {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-top: 6px;
+}
+
+.rel-donut {
+    position: relative;
+    flex: none;
+    width: 150px;
+    height: 150px;
+}
+
+.rel-donut svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.rel-donut svg circle {
+    fill: none;
+    stroke-width: 14;
+}
+
+.rel-donut-track {
+    stroke: #e3f0ea;
+}
+
+.rel-donut-seg-carb { stroke: #176b58; }
+.rel-donut-seg-prot { stroke: #4f91cf; }
+.rel-donut-seg-gord { stroke: #e0a73c; }
+
+.rel-donut span {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 0 28px;
+    color: var(--pac-title);
+    font-size: 12.5px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.rel-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+    min-width: 160px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.rel-legend li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--pac-title);
+    font-size: 12.5px;
+}
+
+.rel-legend li span {
+    flex: 1;
+}
+
+.rel-legend li strong {
+    font-weight: 700;
+}
+
+.rel-dot {
+    flex: none;
+    width: 10px;
+    height: 10px;
+    background: #9fcfbd;
+    border-radius: 50%;
+}
+
+.rel-macros.has-data .rel-dot-carb { background: #176b58; }
+.rel-macros.has-data .rel-dot-prot { background: #4f91cf; }
+.rel-macros.has-data .rel-dot-gord { background: #e0a73c; }
+
+/* ---------- Relatório completo ---------- */
+.rel-full {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 18px 22px;
+}
+
+.rel-full-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+}
+
+.rel-full-info p {
+    margin: 4px 0 0;
+    color: var(--pac-muted);
+    font-size: 12.5px;
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 1200px) {
+    .rel-summary-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 18px 0;
+    }
+
+    .rel-patient {
+        grid-column: 1 / -1;
+        padding-right: 0;
+    }
+
+    .rel-patient + .rel-info {
+        border-left: 0;
+        padding-left: 0;
+    }
+
+    .rel-charts {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .rel-charts .rel-chart:last-child {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 760px) {
+    .rel-selector .rel-btn,
+    .rel-full .rel-btn {
+        width: 100%;
+    }
+
+    .rel-summary-row {
+        grid-template-columns: 1fr;
+    }
+
+    .rel-info {
+        padding: 0;
+        border-left: 0;
+    }
+
+    .rel-charts {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---------- Impressão / salvar como PDF ---------- */
+@media print {
+    .dashboard-sidebar,
+    .dashboard-topbar,
+    .dashboard-menu-toggle,
+    .rel-selector,
+    .rel-full .rel-btn,
+    #dashboardFeedback {
+        display: none !important;
+    }
+
+    .dashboard-main {
+        width: 100% !important;
+        margin: 0 !important;
+        padding-left: 0 !important;
+    }
+
+    .rel-panel {
+        box-shadow: none;
+        break-inside: avoid;
+    }
+
+    body.dashboard-page {
+        background: #fff;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
