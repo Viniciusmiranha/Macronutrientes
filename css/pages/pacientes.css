@@ -1,0 +1,387 @@
+/* =====================================================
+   NUTRIQ · Meus pacientes (css/pacientes.css)
+   Só estilos da área de conteúdo. Barra lateral e topo
+   continuam vindo do dashboard.css.
+===================================================== */
+
+.pac-page {
+    --pac-green: #176b58;
+    --pac-green-dark: #105443;
+    --pac-green-soft: #e3f3ec;
+    --pac-title: #0f3d38;
+    --pac-subtitle: #2b7a6a;
+    --pac-muted: #6a8a85;
+    --pac-border: #e1ebe7;
+    --pac-surface: #ffffff;
+
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: 100%;
+    min-width: 0;
+}
+
+/* ---------- Cabeçalho ---------- */
+.pac-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding-top: 4px;
+}
+
+.pac-header-title {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    min-width: 0;
+}
+
+.pac-header-icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 46px;
+    height: 54px;
+}
+
+.pac-header-icon svg {
+    width: 44px;
+    height: 44px;
+}
+
+.pac-header h1 {
+    margin: 0 0 4px;
+    color: var(--pac-title);
+    font-size: clamp(26px, 2.4vw, 34px);
+    font-weight: 750;
+    letter-spacing: -0.8px;
+    line-height: 1.15;
+}
+
+.pac-header p {
+    margin: 0;
+    color: var(--pac-subtitle);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* Ícones de traço usados em toda a página */
+.pac-header-icon svg,
+.pac-stat-icon svg,
+.pac-empty-icon svg,
+.pac-btn svg {
+    fill: none;
+    stroke: var(--pac-green);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ---------- Botões ---------- */
+.pac-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 44px;
+    padding: 0 22px;
+    border: 0;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pac-btn svg {
+    width: 17px;
+    height: 17px;
+    stroke-width: 2.2;
+}
+
+.pac-btn-primary {
+    background: var(--pac-green);
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(23, 107, 88, 0.22);
+}
+
+.pac-btn-primary svg {
+    stroke: #fff;
+}
+
+.pac-btn-primary:hover {
+    background: var(--pac-green-dark);
+}
+
+/* ---------- Cartões de resumo ---------- */
+.pac-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.pac-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-width: 0;
+    padding: 24px 26px;
+    background: var(--pac-surface);
+    border: 1px solid var(--pac-border);
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(26, 58, 49, 0.035);
+}
+
+.pac-stat-icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 62px;
+    height: 62px;
+    background: var(--pac-green-soft);
+    border-radius: 50%;
+}
+
+.pac-stat-icon svg {
+    width: 28px;
+    height: 28px;
+}
+
+.pac-stat-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.pac-stat-label {
+    color: var(--pac-muted);
+    font-size: 13px;
+}
+
+.pac-stat-info strong {
+    color: var(--pac-title);
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.pac-stat-info small {
+    color: var(--pac-green);
+    font-size: 12.5px;
+}
+
+/* ---------- Painel principal ---------- */
+.pac-panel {
+    min-height: 360px;
+    background: var(--pac-surface);
+    border: 1px solid var(--pac-border);
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(26, 58, 49, 0.03);
+}
+
+.pac-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 54px 24px 60px;
+    text-align: center;
+}
+
+.pac-empty[hidden],
+.pac-table-wrap[hidden] {
+    display: none;
+}
+
+.pac-empty-icon {
+    display: grid;
+    place-items: center;
+    width: 122px;
+    height: 122px;
+    margin-bottom: 26px;
+    background: var(--pac-green-soft);
+    border-radius: 50%;
+}
+
+.pac-empty-icon svg {
+    width: 56px;
+    height: 56px;
+    stroke-width: 1.6;
+}
+
+.pac-empty h2 {
+    margin: 0 0 8px;
+    color: var(--pac-title);
+    font-size: 18px;
+    font-weight: 750;
+}
+
+.pac-empty p {
+    max-width: 460px;
+    margin: 0 0 26px;
+    color: var(--pac-muted);
+    font-size: 14.5px;
+    line-height: 1.55;
+}
+
+.pac-empty p:last-child {
+    margin-bottom: 0;
+}
+
+/* ---------- Tabela (quando houver pacientes) ---------- */
+.pac-table-wrap {
+    overflow-x: auto;
+}
+
+.pac-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.pac-table th {
+    padding: 16px 24px;
+    color: var(--pac-muted);
+    font-size: 12.5px;
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 1px solid var(--pac-border);
+}
+
+.pac-table td {
+    padding: 16px 24px;
+    color: var(--pac-title);
+    border-bottom: 1px solid var(--pac-border);
+    vertical-align: middle;
+}
+
+.pac-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.pac-table tbody tr:hover {
+    background: #f7fbf9;
+}
+
+.pac-person {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pac-person-avatar {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 38px;
+    height: 38px;
+    background: var(--pac-green-soft);
+    border-radius: 50%;
+    color: var(--pac-green);
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.pac-person strong {
+    display: block;
+    font-weight: 650;
+}
+
+.pac-person small {
+    color: var(--pac-muted);
+}
+
+.pac-badge {
+    display: inline-block;
+    padding: 4px 11px;
+    background: var(--pac-green-soft);
+    border-radius: 999px;
+    color: var(--pac-green);
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.pac-badge-off {
+    background: #eef1f0;
+    color: #6b7774;
+}
+
+.pac-row-link {
+    color: var(--pac-green);
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.pac-row-link:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Rodapé ---------- */
+.pac-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 8px;
+    padding-top: 22px;
+    border-top: 1px solid var(--pac-border);
+    color: var(--pac-muted);
+    font-size: 12.5px;
+}
+
+.pac-footer p {
+    margin: 0;
+}
+
+.pac-footer-slogan {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pac-footer-slogan svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--pac-green);
+}
+
+.pac-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 1100px) {
+    .pac-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .pac-header {
+        flex-direction: column;
+    }
+
+    .pac-header .pac-btn {
+        width: 100%;
+    }
+
+    .pac-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .pac-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .pac-empty {
+        padding: 40px 18px 44px;
+    }
+}

@@ -20,5 +20,9 @@
 @import url("./pages/pacientes.css");
 @import url("./pages/macros.css");
 @import url("./pages/perfil.css");
+@import url("./pages/planos-alimentares.css");
+@import url("./pages/agenda.css");
+@import url("./pages/consultas.css");
+@import url("./pages/paginas.css");
 
 @import url("./responsive.css");

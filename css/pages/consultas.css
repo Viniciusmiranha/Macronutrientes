@@ -1,0 +1,468 @@
+/* =====================================================
+   NUTRIQ · Consultas (css/consultas.css)
+   Complementa o css/pacientes.css (cabeçalho, cards de
+   resumo, botões e rodapé). Carregue depois dele.
+===================================================== */
+
+/* ---------- Grade principal ---------- */
+.cs-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+}
+
+.cs-column {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+}
+
+/* ---------- Painéis ---------- */
+.cs-panel {
+    padding: 20px 22px 22px;
+    background: var(--pac-surface);
+    border: 1px solid var(--pac-border);
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(26, 58, 49, 0.03);
+}
+
+.cs-panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.cs-panel-heading h2 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    color: var(--pac-title);
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.cs-panel-heading h2 svg {
+    flex: none;
+    width: 26px;
+    height: 26px;
+    fill: none;
+    stroke: var(--pac-green);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.cs-link {
+    color: var(--pac-green);
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.cs-link:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Estado vazio ---------- */
+.cs-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 12px 14px;
+    text-align: center;
+}
+
+.cs-empty[hidden],
+.cs-list[hidden],
+.cs-semresultado[hidden] {
+    display: none;
+}
+
+.cs-empty-icon {
+    display: grid;
+    place-items: center;
+    width: 70px;
+    height: 70px;
+    margin-bottom: 14px;
+    background: var(--pac-green-soft);
+    border-radius: 50%;
+}
+
+.cs-empty-icon svg {
+    width: 34px;
+    height: 34px;
+    fill: none;
+    stroke: var(--pac-green);
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.cs-empty strong {
+    color: var(--pac-title);
+    font-size: 13.5px;
+    font-weight: 750;
+}
+
+.cs-empty p {
+    margin: 4px 0 0;
+    color: var(--pac-muted);
+    font-size: 12.5px;
+}
+
+.cs-empty .pac-btn {
+    margin-top: 16px;
+}
+
+.cs-btn-small {
+    min-height: 36px;
+    padding: 0 22px;
+    font-size: 12.5px;
+}
+
+.cs-btn-small svg {
+    width: 14px;
+    height: 14px;
+}
+
+.cs-semresultado {
+    padding: 22px 12px;
+    color: var(--pac-muted);
+    font-size: 13px;
+    text-align: center;
+}
+
+/* ---------- Lista de consultas ---------- */
+.cs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.cs-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    background: #f7fbf9;
+    border: 1px solid var(--pac-border);
+    border-radius: 12px;
+}
+
+.cs-date {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 54px;
+    background: var(--pac-green-soft);
+    border-radius: 10px;
+    color: var(--pac-green);
+    line-height: 1.1;
+}
+
+.cs-date strong {
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.cs-date span {
+    font-size: 11px;
+    font-weight: 650;
+    text-transform: lowercase;
+}
+
+.cs-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.cs-item-info strong {
+    display: block;
+    overflow: hidden;
+    color: var(--pac-title);
+    font-size: 14px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cs-item-info small {
+    color: var(--pac-muted);
+    font-size: 12.5px;
+}
+
+.cs-item-actions {
+    display: flex;
+    flex: none;
+    gap: 14px;
+}
+
+.cs-item-btn {
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--pac-green);
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.cs-item-btn:hover {
+    text-decoration: underline;
+}
+
+.cs-item-btn-danger {
+    color: #b4483c;
+}
+
+.cs-badge-warn {
+    background: #fdf1dc;
+    color: #8a5a0b;
+}
+
+.cs-list-compact .cs-item {
+    padding: 10px 12px;
+}
+
+.cs-list-compact .cs-date {
+    width: 46px;
+    height: 48px;
+}
+
+.cs-list-compact .cs-date strong {
+    font-size: 16px;
+}
+
+/* ---------- Atalhos rápidos ---------- */
+.cs-shortcuts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cs-shortcut {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    min-height: 44px;
+    padding: 6px 14px 6px 10px;
+    background: #eef6f2;
+    border: 0;
+    border-radius: 9px;
+    color: var(--pac-title);
+    font-size: 13px;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cs-shortcut:hover {
+    background: var(--pac-green-soft);
+}
+
+.cs-shortcut svg {
+    flex: none;
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: var(--pac-green);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.cs-shortcut span {
+    flex: 1;
+}
+
+.cs-shortcut i {
+    color: var(--pac-muted);
+    font-style: normal;
+}
+
+/* ---------- Modal ---------- */
+.cs-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(12, 40, 34, 0.45);
+    overflow-y: auto;
+}
+
+.cs-overlay[hidden] {
+    display: none;
+}
+
+.cs-modal {
+    width: 100%;
+    max-width: 560px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    padding: 28px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 24px 60px rgba(12, 40, 34, 0.25);
+}
+
+.cs-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.cs-modal-header h2 {
+    margin: 0 0 4px;
+    color: var(--pac-title);
+    font-size: 22px;
+    font-weight: 750;
+}
+
+.cs-modal-header p {
+    margin: 0;
+    color: var(--pac-muted);
+    font-size: 14px;
+}
+
+.cs-close {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    background: #f1f6f4;
+    border: 0;
+    border-radius: 50%;
+    color: var(--pac-title);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.cs-close:hover {
+    background: var(--pac-green-soft);
+}
+
+.cs-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.cs-span-2 {
+    grid-column: 1 / -1;
+}
+
+.cs-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.cs-field label {
+    color: var(--pac-title);
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.cs-field input,
+.cs-field select,
+.cs-field textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 14px;
+    background: #fff;
+    border: 1px solid #d3e0db;
+    border-radius: 10px;
+    color: var(--pac-title);
+    font: inherit;
+    font-size: 14px;
+}
+
+.cs-field textarea {
+    resize: vertical;
+}
+
+.cs-field input:focus,
+.cs-field select:focus,
+.cs-field textarea:focus {
+    outline: 3px solid rgba(23, 107, 88, 0.2);
+    border-color: var(--pac-green);
+}
+
+.cs-field.has-error input {
+    border-color: #b4483c;
+}
+
+.cs-error {
+    color: #b4483c;
+    font-size: 12.5px;
+}
+
+.cs-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.cs-btn-ghost {
+    background: #f1f6f4;
+    color: var(--pac-title);
+}
+
+.cs-btn-ghost:hover {
+    background: var(--pac-green-soft);
+}
+
+body.cs-modal-open {
+    overflow: hidden;
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 1100px) {
+    .cs-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .cs-item {
+        flex-wrap: wrap;
+    }
+
+    .cs-item-actions {
+        width: 100%;
+        padding-left: 66px;
+    }
+
+    .cs-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cs-modal {
+        padding: 22px 18px;
+    }
+
+    .cs-actions .pac-btn {
+        flex: 1;
+    }
+}

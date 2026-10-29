@@ -1,0 +1,573 @@
+/* =====================================================
+   NUTRIQ · Agenda (css/agenda.css)
+   Complementa o css/pacientes.css (cabeçalho, badge e
+   rodapé). Carregue depois dele.
+===================================================== */
+
+.ag-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 2.3fr) minmax(300px, 1fr);
+    gap: 20px;
+    align-items: start;
+}
+
+.ag-panel {
+    background: var(--pac-surface);
+    border: 1px solid var(--pac-border);
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(26, 58, 49, 0.03);
+}
+
+/* ---------- Barra do calendário ---------- */
+.ag-calendar-panel {
+    min-width: 0;
+    padding: 18px 18px 20px;
+}
+
+.ag-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.ag-nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 22px;
+}
+
+.ag-nav-buttons {
+    display: inline-flex;
+    border: 1px solid var(--pac-border);
+    border-radius: 9px;
+    overflow: hidden;
+}
+
+.ag-nav-btn {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 36px;
+    background: #fff;
+    border: 0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.ag-nav-btn + .ag-nav-btn {
+    border-left: 1px solid var(--pac-border);
+}
+
+.ag-nav-btn:hover {
+    background: var(--pac-green-soft);
+}
+
+.ag-nav-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: var(--pac-title);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.ag-period {
+    margin: 0;
+    color: var(--pac-title);
+    font-size: 16px;
+    font-weight: 750;
+}
+
+.ag-today-btn {
+    padding: 6px 12px;
+    background: none;
+    border: 1px solid var(--pac-border);
+    border-radius: 8px;
+    color: var(--pac-green);
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.ag-today-btn:hover {
+    background: var(--pac-green-soft);
+}
+
+.ag-views {
+    display: inline-flex;
+    border: 1px solid var(--pac-border);
+    border-radius: 9px;
+    overflow: hidden;
+}
+
+.ag-view {
+    min-width: 76px;
+    height: 36px;
+    padding: 0 16px;
+    background: #fff;
+    border: 0;
+    color: var(--pac-muted);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.ag-view + .ag-view {
+    border-left: 1px solid var(--pac-border);
+}
+
+.ag-view:hover {
+    color: var(--pac-green);
+}
+
+.ag-view.is-active {
+    background: #cfeadf;
+    color: var(--pac-green-dark);
+    font-weight: 700;
+}
+
+/* ---------- Calendário (mês) ---------- */
+.ag-scroll {
+    overflow-x: auto;
+}
+
+.ag-month {
+    min-width: 560px;
+    border: 1px solid var(--pac-border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.ag-weekdays,
+.ag-month-body {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.ag-weekday {
+    padding: 14px 6px;
+    background: #f7faf9;
+    color: var(--pac-title);
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.ag-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    min-height: 84px;
+    padding: 10px 12px 8px;
+    background: #fff;
+    border: 0;
+    border-top: 1px solid var(--pac-border);
+    border-left: 1px solid var(--pac-border);
+    color: var(--pac-title);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.ag-cell:nth-child(7n + 1) {
+    border-left: 0;
+}
+
+.ag-cell:hover {
+    background: #f4faf7;
+}
+
+.ag-cell.is-outside {
+    color: #b7c5c1;
+}
+
+.ag-cell.is-selected {
+    background: #f0f8f4;
+    box-shadow: inset 0 0 0 2px var(--pac-green);
+}
+
+.ag-cell:focus-visible,
+.ag-col-head:focus-visible {
+    outline: 3px solid rgba(23, 107, 88, 0.35);
+    outline-offset: -3px;
+}
+
+.ag-daynum {
+    display: grid;
+    place-items: center;
+    min-width: 28px;
+    height: 28px;
+    margin: -4px 0 0 -6px;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.ag-cell.is-today .ag-daynum,
+.ag-col-head.is-today .ag-daynum {
+    width: 34px;
+    height: 34px;
+    background: #cfeadf;
+    color: var(--pac-green-dark);
+    font-weight: 800;
+}
+
+/* ---------- Atendimentos dentro das células ---------- */
+.ag-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 100%;
+    min-width: 0;
+}
+
+.ag-chip {
+    display: block;
+    overflow: hidden;
+    padding: 2px 6px;
+    background: var(--pac-green-soft);
+    border-radius: 5px;
+    color: var(--pac-green-dark);
+    font-size: 11px;
+    font-weight: 650;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ag-chip.is-done {
+    background: #eceff0;
+    color: #62706c;
+}
+
+.ag-chip.is-pending {
+    background: #fdf1dc;
+    color: #8a5a0b;
+}
+
+.ag-more {
+    color: var(--pac-muted);
+    font-size: 11px;
+    font-weight: 650;
+}
+
+.ag-count {
+    display: none;
+    min-width: 18px;
+    padding: 1px 6px;
+    background: var(--pac-green);
+    border-radius: 999px;
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* ---------- Visão semanal ---------- */
+.ag-week {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    min-width: 700px;
+    border: 1px solid var(--pac-border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.ag-col {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border-left: 1px solid var(--pac-border);
+}
+
+.ag-col:first-child {
+    border-left: 0;
+}
+
+.ag-col-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 6px;
+    background: #f7faf9;
+    border: 0;
+    border-bottom: 1px solid var(--pac-border);
+    color: var(--pac-title);
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.ag-col.is-selected .ag-col-head {
+    box-shadow: inset 0 -3px 0 var(--pac-green);
+}
+
+.ag-col-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 320px;
+    padding: 8px 6px;
+}
+
+.ag-col-body .ag-chip {
+    padding: 6px 7px;
+    font-size: 11.5px;
+    white-space: normal;
+}
+
+.ag-col-body .ag-chip small {
+    display: block;
+    font-weight: 500;
+    opacity: 0.85;
+}
+
+/* ---------- Visão diária ---------- */
+.ag-day-view {
+    min-width: 0;
+    border: 1px solid var(--pac-border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.ag-hour {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    min-height: 52px;
+    border-top: 1px solid var(--pac-border);
+}
+
+.ag-hour:first-child {
+    border-top: 0;
+}
+
+.ag-hour-label {
+    padding: 14px 10px;
+    background: #f7faf9;
+    color: var(--pac-muted);
+    font-size: 12.5px;
+    text-align: right;
+}
+
+.ag-hour-slot {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px 10px;
+}
+
+.ag-hour-slot .ag-chip {
+    padding: 7px 10px;
+    font-size: 12.5px;
+}
+
+/* ---------- Painel "Atendimentos do dia" ---------- */
+.ag-day-panel {
+    padding: 20px 22px 24px;
+}
+
+.ag-day-panel h2 {
+    margin: 0 0 8px;
+    color: var(--pac-title);
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.ag-day-date {
+    margin: 0 0 18px;
+    color: var(--pac-muted);
+    font-size: 13px;
+}
+
+.ag-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 64px 12px 56px;
+    text-align: center;
+}
+
+.ag-empty[hidden],
+.ag-day-list[hidden] {
+    display: none;
+}
+
+.ag-empty-icon {
+    display: grid;
+    place-items: center;
+    width: 78px;
+    height: 78px;
+    margin-bottom: 18px;
+    background: var(--pac-green-soft);
+    border-radius: 50%;
+}
+
+.ag-empty-icon svg {
+    width: 38px;
+    height: 38px;
+    fill: none;
+    stroke: var(--pac-green);
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.ag-empty strong {
+    color: var(--pac-title);
+    font-size: 14px;
+    font-weight: 750;
+}
+
+.ag-empty p {
+    margin: 6px 0 0;
+    color: var(--pac-muted);
+    font-size: 13px;
+}
+
+.ag-link {
+    margin-top: 16px;
+    color: var(--pac-green);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.ag-link:hover {
+    text-decoration: underline;
+}
+
+.ag-day-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ag-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: #f7fbf9;
+    border: 1px solid var(--pac-border);
+    border-radius: 12px;
+}
+
+.ag-item-time {
+    flex: none;
+    min-width: 54px;
+    padding: 8px 0;
+    background: var(--pac-green-soft);
+    border-radius: 9px;
+    color: var(--pac-green);
+    font-size: 14px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.ag-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.ag-item-info strong {
+    display: block;
+    overflow: hidden;
+    color: var(--pac-title);
+    font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ag-item-info small {
+    color: var(--pac-muted);
+    font-size: 12.5px;
+}
+
+.ag-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding-left: 66px;
+}
+
+.ag-item-btn {
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--pac-green);
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.ag-item-btn:hover {
+    text-decoration: underline;
+}
+
+.ag-item-btn-danger {
+    color: #b4483c;
+}
+
+.ag-badge-warn {
+    background: #fdf1dc;
+    color: #8a5a0b;
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 1100px) {
+    .ag-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .ag-empty {
+        padding: 40px 12px;
+    }
+}
+
+@media (max-width: 640px) {
+    .ag-nav {
+        gap: 12px;
+    }
+
+    .ag-views {
+        width: 100%;
+    }
+
+    .ag-view {
+        flex: 1;
+    }
+
+    .ag-month {
+        min-width: 0;
+    }
+
+    .ag-cell {
+        align-items: center;
+        min-height: 58px;
+        padding: 6px 2px;
+    }
+
+    .ag-daynum {
+        margin: 0;
+    }
+
+    .ag-chips {
+        display: none;
+    }
+
+    .ag-count {
+        display: inline-block;
+    }
+}
