@@ -72,6 +72,10 @@
 }
 
 /* ---------- Botões ---------- */
+.rel-selector .pac-btn-primary:not(:disabled) svg {
+    stroke: #fff;
+}
+
 .rel-btn:disabled {
     background: #e4eeea;
     box-shadow: none;
@@ -79,7 +83,8 @@
     cursor: not-allowed;
 }
 
-.rel-btn:disabled svg {
+.rel-selector .rel-btn:disabled svg,
+.rel-full .rel-btn:disabled svg {
     stroke: #9db2ac;
 }
 

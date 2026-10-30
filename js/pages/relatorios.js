@@ -1,44 +1,20 @@
 /* =====================================================
    NUTRIQ · Relatórios (js/relatorios.js)
-
-   >>> Ajuste apenas carregarPacientes(), carregarPlanos() e
-       carregarConsultas() para usar o seu js/database.js. <<<
-
-   Formato esperado dos dados (campos opcionais podem faltar):
-
-   Paciente:  { id, nome, email, telefone, nascimento (AAAA-MM-DD),
-                idade, genero, objetivo, altura (cm),
-                avaliacoes: [{ data (AAAA-MM-DD), peso (kg), altura (cm) }] }
-   Plano:     { paciente (nome), nome, objetivo, calorias, status,
-                criadoEm, macrosTipo: "g" | "%",
-                macros: { carboidratos, proteinas, gorduras } }
-   Consulta:  { paciente (nome), data, status }
+   Resumo do paciente, gráficos de peso, IMC e macronutrientes
+   e impressão / PDF. Usa js/nutriq-dados.js.
 ===================================================== */
 
 (function () {
     "use strict";
 
-    var CHAVES = {
-        pacientes: "nutriq_pacientes",
-        planos: "nutriq_planos",
-        consultas: "nutriq_consultas"
-    };
-
-    /* ---------- Acesso a dados (troque pelo seu database.js) ---------- */
-    function lerLista(chave) {
-        try {
-            var dados = JSON.parse(localStorage.getItem(chave) || "[]");
-            return Array.isArray(dados) ? dados : [];
-        } catch (e) {
-            return [];
-        }
+    var D = window.NutriqDados;
+    if (!D) {
+        console.error("NUTRIQ: carregue js/nutriq-dados.js antes de js/relatorios.js");
+        return;
     }
+    var U = D.util;
+    var esc = U.escapar;
 
-    function carregarPacientes() { return lerLista(CHAVES.pacientes); }
-    function carregarPlanos() { return lerLista(CHAVES.planos); }
-    function carregarConsultas() { return lerLista(CHAVES.consultas); }
-
-    /* ---------- Elementos ---------- */
     function $(id) { return document.getElementById(id); }
 
     var el = {
@@ -64,47 +40,13 @@
         prot: $("relProt"),
         gord: $("relGord"),
         macroNota: $("relMacroNota"),
-        completoTexto: $("relCompletoTexto"),
-        feedback: $("dashboardFeedback")
+        completoTexto: $("relCompletoTexto")
     };
 
-    var pacientes = [];
     var gerado = false;
     var nomeGerado = "";
 
     /* ---------- Utilidades ---------- */
-    function escapar(texto) {
-        var div = document.createElement("div");
-        div.textContent = texto == null ? "" : String(texto);
-        return div.innerHTML;
-    }
-
-    function normalizar(texto) {
-        return String(texto == null ? "" : texto).trim().toLowerCase();
-    }
-
-    function lerData(valor) {
-        var p = String(valor || "").split("T")[0].split("-");
-        if (p.length !== 3) return null;
-        var d = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
-        return isNaN(d) ? null : d;
-    }
-
-    function formatarData(d) {
-        if (!d) return "—";
-        return d.toLocaleDateString("pt-BR");
-    }
-
-    function aviso(mensagem) {
-        if (!el.feedback) return;
-        el.feedback.textContent = mensagem;
-        el.feedback.classList.add("is-visible");
-        clearTimeout(aviso._t);
-        aviso._t = setTimeout(function () {
-            el.feedback.classList.remove("is-visible");
-        }, 3000);
-    }
-
     function formatarNumero(n, casas) {
         return Number(n).toLocaleString("pt-BR", {
             minimumFractionDigits: 0,
@@ -113,25 +55,11 @@
     }
 
     /* ---------- Dados derivados do paciente ---------- */
-    function idadeDe(p) {
-        var nasc = lerData(p.nascimento);
-        if (nasc) {
-            var hoje = new Date();
-            var idade = hoje.getFullYear() - nasc.getFullYear();
-            var fezAniversario =
-                hoje.getMonth() > nasc.getMonth() ||
-                (hoje.getMonth() === nasc.getMonth() && hoje.getDate() >= nasc.getDate());
-            if (!fezAniversario) idade--;
-            return idade >= 0 ? idade : null;
-        }
-        return Number(p.idade) > 0 ? Number(p.idade) : null;
-    }
-
     function medicoesDe(p) {
         return (Array.isArray(p.avaliacoes) ? p.avaliacoes : [])
             .map(function (a) {
                 return {
-                    data: lerData(a.data),
+                    data: U.lerISO(a.data),
                     peso: Number(a.peso),
                     altura: Number(a.altura || p.altura)
                 };
@@ -140,33 +68,22 @@
             .sort(function (a, b) { return a.data - b.data; });
     }
 
-    function imcDe(m) {
-        var altura = m.altura > 3 ? m.altura / 100 : m.altura; // aceita cm ou m
-        return altura > 0 ? m.peso / (altura * altura) : null;
-    }
-
     function ultimaConsulta(p) {
-        var nome = normalizar(p.nome);
-        var datas = carregarConsultas()
-            .filter(function (c) {
-                return c.status === "realizada" && normalizar(c.paciente) === nome;
-            })
-            .map(function (c) { return lerData(c.data); })
+        var datas = D.consultas.doPaciente(p.id)
+            .filter(function (c) { return c.status === "realizada"; })
+            .map(function (c) { return U.lerISO(c.data); })
             .filter(Boolean)
             .sort(function (a, b) { return b - a; });
         return datas[0] || null;
     }
 
     function planoDe(p) {
-        var nome = normalizar(p.nome);
-        var lista = carregarPlanos()
-            .filter(function (pl) { return normalizar(pl.paciente) === nome; })
-            .sort(function (a, b) {
-                var ativoA = a.status !== "concluido" ? 1 : 0;
-                var ativoB = b.status !== "concluido" ? 1 : 0;
-                if (ativoA !== ativoB) return ativoB - ativoA;
-                return String(b.criadoEm || "").localeCompare(String(a.criadoEm || ""));
-            });
+        var lista = D.planos.doPaciente(p.id).sort(function (a, b) {
+            var ativoA = a.status !== "concluido" ? 1 : 0;
+            var ativoB = b.status !== "concluido" ? 1 : 0;
+            if (ativoA !== ativoB) return ativoB - ativoA;
+            return String(b.criadoEm || "").localeCompare(String(a.criadoEm || ""));
+        });
         return lista[0] || null;
     }
 
@@ -199,7 +116,7 @@
         function xDe(i) { return ML + plotW * (i + 0.5) / n; }
 
         var svg = '<svg viewBox="0 0 ' + W + " " + H + '" aria-hidden="true">';
-        svg += '<text class="rel-axis" x="0" y="12">' + escapar(cfg.unidade) + "</text>";
+        svg += '<text class="rel-axis" x="0" y="12">' + esc(cfg.unidade) + "</text>";
 
         ticks.forEach(function (t) {
             var y = yDe(t);
@@ -230,7 +147,7 @@
                 svg += '<text class="rel-axis" x="' + x + '" y="' + (H - MB + 18) + '" text-anchor="middle">' +
                     s.data.getDate() + "</text>";
                 svg += '<text class="rel-axis" x="' + x + '" y="' + (H - MB + 32) + '" text-anchor="middle">' +
-                    escapar(mes) + "</text>";
+                    esc(mes) + "</text>";
             });
         }
 
@@ -266,12 +183,12 @@
             return false;
         }
 
-        var porcentagens = energia.map(function (e) { return (e / total) * 100; });
+        var pct = energia.map(function (e) { return (e / total) * 100; });
         var classes = ["carb", "prot", "gord"];
         var deslocamento = 0;
 
-        el.donutSegmentos.innerHTML = porcentagens.map(function (pct, i) {
-            var comprimento = (pct / 100) * CIRCUNFERENCIA;
+        el.donutSegmentos.innerHTML = pct.map(function (p, i) {
+            var comprimento = (p / 100) * CIRCUNFERENCIA;
             var circulo =
                 '<circle class="rel-donut-seg-' + classes[i] + '" cx="60" cy="60" r="48"' +
                 ' stroke-dasharray="' + comprimento + " " + (CIRCUNFERENCIA - comprimento) + '"' +
@@ -282,13 +199,13 @@
 
         caixa.classList.add("has-data");
         el.donutCentro.textContent = plano.calorias ? plano.calorias + " kcal" : "Dieta";
-        el.carb.textContent = Math.round(porcentagens[0]) + "%";
-        el.prot.textContent = Math.round(porcentagens[1]) + "%";
-        el.gord.textContent = Math.round(porcentagens[2]) + "%";
+        el.carb.textContent = Math.round(pct[0]) + "%";
+        el.prot.textContent = Math.round(pct[1]) + "%";
+        el.gord.textContent = Math.round(pct[2]) + "%";
         el.donut.setAttribute(
             "aria-label",
-            "Carboidratos " + Math.round(porcentagens[0]) + "%, proteínas " +
-            Math.round(porcentagens[1]) + "%, gorduras " + Math.round(porcentagens[2]) + "%"
+            "Carboidratos " + Math.round(pct[0]) + "%, proteínas " + Math.round(pct[1]) +
+            "%, gorduras " + Math.round(pct[2]) + "%"
         );
         return true;
     }
@@ -297,9 +214,9 @@
     var CFG_PESO = { unidade: "kg", ticksVazio: [0, 50, 100], titulo: "Gráfico de evolução do peso" };
     var CFG_IMC = { unidade: "IMC", ticksVazio: [0, 15, 30, 45], titulo: "Gráfico de evolução do IMC" };
 
-    function mostrarNota(elemento, texto) {
-        elemento.textContent = texto || "";
-        elemento.hidden = !texto;
+    function mostrarNota(elemento, html) {
+        elemento.innerHTML = html || "";
+        elemento.hidden = !html;
     }
 
     function estadoVazio() {
@@ -325,51 +242,69 @@
         el.baixar.disabled = true;
     }
 
-    function gerarRelatorio() {
-        var indice = el.select.value;
-        var paciente = pacientes[Number(indice)];
-        if (indice === "" || !paciente) return;
+    function gerarRelatorio(silencioso) {
+        var paciente = el.select.value ? D.pacientes.obter(el.select.value) : null;
+        if (!paciente) return;
 
-        var idade = idadeDe(paciente);
-        var genero = paciente.genero || paciente.sexo;
+        var anos = U.idade(paciente);
         var plano = planoDe(paciente);
         var medicoes = medicoesDe(paciente).slice(-SLOTS);
+        var link = encodeURIComponent(paciente.id);
 
         // Resumo
         el.resumoTexto.textContent = "Informações gerais do paciente selecionado.";
         el.nome.textContent = paciente.nome || "Paciente sem nome";
         el.contato.textContent = paciente.telefone || paciente.email || "—";
-        el.meta.textContent = [idade != null ? idade + " anos" : "Idade", genero || "Gênero"].join(" · ");
-        el.ultima.textContent = formatarData(ultimaConsulta(paciente));
+        el.meta.textContent = [anos != null ? anos + " anos" : "Idade", paciente.genero || "Gênero"].join(" · ");
+        el.ultima.textContent = U.formatarData(ultimaConsulta(paciente));
         el.plano.textContent = plano && plano.nome ? plano.nome : "—";
         el.objetivo.textContent = paciente.objetivo || (plano && plano.objetivo) || "—";
 
         // Peso
         var seriePeso = medicoes.map(function (m) { return { data: m.data, valor: m.peso }; });
         desenharLinha(el.pesoGrafico, seriePeso, CFG_PESO);
-        mostrarNota(el.pesoNota, seriePeso.length ? "" : "Nenhuma avaliação com peso registrada para este paciente.");
+        if (!seriePeso.length) {
+            mostrarNota(el.pesoNota,
+                'Nenhuma avaliação com peso registrada. <a href="pacientes.html?ficha=' + link + '">Registrar na ficha do paciente</a>.');
+        } else if (seriePeso.length > 1) {
+            var delta = seriePeso[seriePeso.length - 1].valor - seriePeso[0].valor;
+            var texto = delta === 0 ? "Peso estável" : (delta > 0 ? "+" : "−") + formatarNumero(Math.abs(delta), 1) + " kg";
+            mostrarNota(el.pesoNota, esc("Variação no período: " + texto));
+        } else {
+            mostrarNota(el.pesoNota, "");
+        }
 
         // IMC
         var serieImc = medicoes
-            .map(function (m) { return { data: m.data, valor: imcDe(m) }; })
-            .filter(function (s) { return s.valor != null; })
-            .map(function (s) { return { data: s.data, valor: Math.round(s.valor * 10) / 10 }; });
+            .map(function (m) { return { data: m.data, valor: U.imc(m.peso, m.altura) }; })
+            .filter(function (s) { return s.valor != null; });
         desenharLinha(el.imcGrafico, serieImc, CFG_IMC);
-        mostrarNota(el.imcNota, serieImc.length ? "" : "Registre peso e altura nas avaliações para calcular o IMC.");
+        if (!serieImc.length) {
+            mostrarNota(el.imcNota,
+                'Para calcular o IMC, registre peso e altura. <a href="pacientes.html?ficha=' + link + '">Abrir ficha do paciente</a>.');
+        } else {
+            var ultimo = serieImc[serieImc.length - 1].valor;
+            var adulto = anos == null || anos >= 18;
+            mostrarNota(el.imcNota, esc(
+                "Último IMC: " + formatarNumero(ultimo, 1) +
+                (adulto ? " · " + U.classificarImc(ultimo) : " · para menores de 18 anos use as curvas de crescimento")
+            ));
+        }
 
         // Macronutrientes
         var temMacros = desenharMacros(plano);
-        mostrarNota(el.macroNota, temMacros ? "" : "Este paciente não possui plano alimentar com macronutrientes.");
+        mostrarNota(el.macroNota, temMacros ? "" :
+            'Este paciente não tem plano alimentar com macronutrientes. <a href="planos-alimentares.html?novo=1&amp;paciente=' + link + '">Criar plano</a>.');
 
         // Relatório completo
         gerado = true;
         nomeGerado = paciente.nome || "paciente";
         el.completoTexto.textContent =
-            "Relatório de " + nomeGerado + " gerado em " + formatarData(new Date()) +
+            "Relatório de " + nomeGerado + " gerado em " + U.formatarData(new Date()) +
             ". Use “Baixar relatório” e escolha “Salvar como PDF”.";
         el.baixar.disabled = false;
 
-        aviso("Relatório gerado.");
+        if (!silencioso) D.toast("Relatório gerado.");
     }
 
     function baixarRelatorio() {
@@ -382,16 +317,34 @@
 
     /* ---------- Lista de pacientes ---------- */
     function preencherPacientes() {
-        pacientes = carregarPacientes().sort(function (a, b) {
+        var anterior = el.select.value;
+        var lista = D.pacientes.listar().sort(function (a, b) {
             return String(a.nome || "").localeCompare(String(b.nome || ""), "pt-BR");
         });
 
         el.select.innerHTML = '<option value="">Escolha um paciente</option>' +
-            pacientes.map(function (p, i) {
-                return '<option value="' + i + '">' + escapar(p.nome || "Paciente sem nome") + "</option>";
+            lista.map(function (p) {
+                return '<option value="' + esc(p.id) + '">' + esc(p.nome || "Paciente sem nome") + "</option>";
             }).join("");
 
-        el.hint.hidden = pacientes.length > 0;
+        el.hint.hidden = lista.length > 0;
+
+        if (anterior && lista.some(function (p) { return p.id === anterior; })) {
+            el.select.value = anterior;
+        }
+        el.gerar.disabled = el.select.value === "";
+    }
+
+    // Quando os dados mudam em outra aba, mantém o relatório atualizado.
+    function aoMudarDados() {
+        var estavaGerado = gerado;
+        var selecionado = el.select.value;
+        preencherPacientes();
+        if (el.select.value !== selecionado) {
+            estadoVazio(); // o paciente selecionado foi excluído
+        } else if (estavaGerado) {
+            gerarRelatorio(true);
+        }
     }
 
     /* ---------- Eventos ---------- */
@@ -404,20 +357,20 @@
             el.gerar.disabled = el.select.value === "";
         });
 
-        el.gerar.addEventListener("click", gerarRelatorio);
+        el.gerar.addEventListener("click", function () { gerarRelatorio(false); });
         el.baixar.addEventListener("click", baixarRelatorio);
 
-        // Atualiza a lista ao voltar de outra página
-        window.addEventListener("pageshow", function () {
-            var atual = el.select.value;
-            var nomeAtual = atual !== "" && pacientes[Number(atual)] ? pacientes[Number(atual)].nome : null;
-            preencherPacientes();
-            if (nomeAtual != null) {
-                var novoIndice = pacientes.findIndex(function (p) { return p.nome === nomeAtual; });
-                el.select.value = novoIndice >= 0 ? String(novoIndice) : "";
-            }
-            el.gerar.disabled = el.select.value === "";
-        });
+        D.aoMudar(aoMudarDados);
+        window.addEventListener("pageshow", aoMudarDados);
+
+        // Vindo da ficha do paciente: relatorios.html?paciente=ID
+        var idUrl = U.parametro("paciente");
+        if (idUrl && D.pacientes.obter(idUrl)) {
+            el.select.value = idUrl;
+            el.gerar.disabled = false;
+            gerarRelatorio(true);
+        }
+        if (idUrl) U.limparParametros();
     }
 
     if (document.readyState === "loading") {

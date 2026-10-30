@@ -267,7 +267,7 @@
                                     </svg>
                                     Próximas consultas
                                 </h2>
-                                <a href="agenda.html" class="cs-link">Ver todas <span aria-hidden="true">→</span></a>
+                                <button type="button" class="cs-link" id="btnVerTodasProximas" aria-expanded="false" hidden>Ver todas <span aria-hidden="true">→</span></button>
                             </div>
 
                             <div class="cs-empty" id="csProximasVazio">
@@ -298,7 +298,7 @@
                                     </svg>
                                     Histórico de consultas
                                 </h2>
-                                <a href="relatorios.html" class="cs-link">Ver todas <span aria-hidden="true">→</span></a>
+                                <button type="button" class="cs-link" id="btnVerTodosHistorico" aria-expanded="false" hidden>Ver todas <span aria-hidden="true">→</span></button>
                             </div>
 
                             <div class="cs-empty" id="csHistoricoVazio">
@@ -410,39 +410,46 @@
 
     <div id="dashboardFeedback" role="status" aria-live="polite"></div>
 
-    <!-- ===== MODAL: NOVA CONSULTA ===== -->
-    <div class="cs-overlay" id="modalNovaConsulta" hidden>
-        <section class="cs-modal" role="dialog" aria-modal="true" aria-labelledby="csModalTitulo">
-            <header class="cs-modal-header">
+    <!-- ===== MODAL: NOVA / EDITAR CONSULTA ===== -->
+    <div class="nq-overlay" id="modalNovaConsulta" hidden>
+        <section class="nq-modal" role="dialog" aria-modal="true" aria-labelledby="csModalTitulo">
+            <header class="nq-modal-header">
                 <div>
                     <h2 id="csModalTitulo">Nova consulta</h2>
-                    <p>Informe o paciente e o horário do atendimento.</p>
+                    <p>Escolha o paciente e o horário do atendimento.</p>
                 </div>
-                <button type="button" class="cs-close" id="csFechar" aria-label="Fechar">&times;</button>
+                <button type="button" class="nq-close" data-fechar aria-label="Fechar">&times;</button>
             </header>
 
+            <div class="nq-aviso" id="csSemPacientes" hidden>
+                Cadastre um paciente antes de agendar uma consulta.
+                <a href="pacientes.html?novo=1">Cadastrar paciente</a>
+            </div>
+
             <form id="formConsulta" novalidate>
-                <div class="cs-form-grid">
-                    <div class="cs-field cs-span-2">
+                <input type="hidden" id="csId">
+                <div class="nq-form-grid">
+                    <div class="nq-field nq-span-2">
                         <label for="csPaciente">Paciente</label>
-                        <input type="text" id="csPaciente" list="csListaPacientes" placeholder="Digite ou escolha" autocomplete="off" required>
-                        <datalist id="csListaPacientes"></datalist>
-                        <span class="cs-error" data-erro-para="csPaciente"></span>
+                        <select id="csPaciente" required>
+                            <option value="">Selecione o paciente</option>
+                        </select>
+                        <span class="nq-error" data-erro-para="csPaciente"></span>
                     </div>
 
-                    <div class="cs-field">
+                    <div class="nq-field">
                         <label for="csData">Data</label>
                         <input type="date" id="csData" required>
-                        <span class="cs-error" data-erro-para="csData"></span>
+                        <span class="nq-error" data-erro-para="csData"></span>
                     </div>
 
-                    <div class="cs-field">
+                    <div class="nq-field">
                         <label for="csHora">Horário</label>
                         <input type="time" id="csHora" required>
-                        <span class="cs-error" data-erro-para="csHora"></span>
+                        <span class="nq-error" data-erro-para="csHora"></span>
                     </div>
 
-                    <div class="cs-field cs-span-2">
+                    <div class="nq-field">
                         <label for="csTipo">Tipo de consulta</label>
                         <select id="csTipo">
                             <option>Primeira consulta</option>
@@ -452,15 +459,37 @@
                         </select>
                     </div>
 
-                    <div class="cs-field cs-span-2">
-                        <label for="csObs">Observações</label>
-                        <textarea id="csObs" rows="3" placeholder="Anotações para o atendimento..."></textarea>
+                    <div class="nq-field">
+                        <label for="csStatus">Situação</label>
+                        <select id="csStatus">
+                            <option value="agendada">Agendada</option>
+                            <option value="realizada">Realizada</option>
+                            <option value="cancelada">Cancelada</option>
+                        </select>
+                    </div>
+
+                    <div class="nq-field nq-span-2" id="csAvaliacaoGrupo" hidden>
+                        <label for="csAvaliacao">Avaliação do paciente <span class="nq-opcional">(opcional)</span></label>
+                        <select id="csAvaliacao">
+                            <option value="">Sem avaliação</option>
+                            <option value="5">5 – Excelente</option>
+                            <option value="4">4 – Muito bom</option>
+                            <option value="3">3 – Bom</option>
+                            <option value="2">2 – Regular</option>
+                            <option value="1">1 – Ruim</option>
+                        </select>
+                        <span class="nq-error" data-erro-para="csAvaliacao"></span>
+                    </div>
+
+                    <div class="nq-field nq-span-2">
+                        <label for="csObs">Observações <span class="nq-opcional">(opcional)</span></label>
+                        <textarea id="csObs" rows="3" maxlength="1000" placeholder="Anotações para o atendimento..."></textarea>
                     </div>
                 </div>
 
-                <footer class="cs-actions">
-                    <button type="button" class="pac-btn cs-btn-ghost" id="csCancelar">Cancelar</button>
-                    <button type="submit" class="pac-btn pac-btn-primary">Agendar consulta</button>
+                <footer class="nq-actions">
+                    <button type="button" class="pac-btn nq-btn-ghost" data-fechar>Cancelar</button>
+                    <button type="submit" class="pac-btn pac-btn-primary" id="csSalvar">Agendar consulta</button>
                 </footer>
             </form>
         </section>
@@ -530,6 +559,7 @@
     <script src="js/database.js" defer></script>
     <script src="js/pages/dashboard.js" defer></script>
     <script src="js/navegacao.js" defer></script>
+    <script src="js/nutriq-dados.js" defer></script>
     <script src="js/pages/consultas.js" defer></script>
 </body>
 </html>

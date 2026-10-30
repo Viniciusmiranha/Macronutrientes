@@ -235,10 +235,11 @@
                             </span>
                             <strong>Nenhum atendimento agendado.</strong>
                             <p id="agVazioTexto">Você está com a agenda livre para hoje.</p>
-                            <a href="consultas.html" class="ag-link">Agendar consulta</a>
+                            <a href="consultas.html?novo=1" class="ag-link" id="agNovaConsulta">Agendar consulta</a>
                         </div>
 
                         <ul class="ag-day-list" id="agListaDia" hidden></ul>
+                        <a href="consultas.html?novo=1" class="ag-link ag-link-lista" id="agNovaConsultaLista" hidden>+ Agendar neste dia</a>
                     </aside>
                 </div>
 
@@ -321,6 +322,7 @@
     <script src="js/database.js" defer></script>
     <script src="js/pages/dashboard.js" defer></script>
     <script src="js/navegacao.js" defer></script>
+    <script src="js/nutriq-dados.js" defer></script>
     <script src="js/pages/agenda.js" defer></script>
 </body>
 </html>

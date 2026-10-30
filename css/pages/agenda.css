@@ -439,6 +439,15 @@
     font-weight: 700;
 }
 
+.ag-link[hidden] {
+    display: none;
+}
+
+.ag-link-lista {
+    display: inline-block;
+    margin-top: 16px;
+}
+
 .ag-link:hover {
     text-decoration: underline;
 }

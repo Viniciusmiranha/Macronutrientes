@@ -191,10 +191,10 @@
                         </div>
                     </div>
 
-                    <a href="cadastro-paciente.html" class="pac-btn pac-btn-primary" id="btnNovoPacienteTopo">
+                    <button type="button" class="pac-btn pac-btn-primary" id="btnNovoPacienteTopo" data-abrir-paciente>
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
                         Novo paciente
-                    </a>
+                    </button>
                 </header>
 
                 <section class="pac-stats" aria-label="Resumo dos pacientes">
@@ -258,6 +258,16 @@
 
                 <section class="pac-panel" aria-label="Lista de pacientes">
 
+                    <div class="nq-toolbar" id="pacToolbar" hidden>
+                        <div class="nq-filters" role="group" aria-label="Filtrar por situação">
+                            <button type="button" class="nq-filter is-active" data-filtro="todos" aria-pressed="true">Todos</button>
+                            <button type="button" class="nq-filter" data-filtro="ativo" aria-pressed="false">Ativos</button>
+                            <button type="button" class="nq-filter" data-filtro="inativo" aria-pressed="false">Inativos</button>
+                            <button type="button" class="nq-filter" data-filtro="alta" aria-pressed="false">Alta</button>
+                        </div>
+                        <span class="nq-count" id="pacContagem" aria-live="polite"></span>
+                    </div>
+
                     <!-- Estado vazio -->
                     <div class="pac-empty" id="pacEmpty">
                         <span class="pac-empty-icon" aria-hidden="true">
@@ -269,10 +279,10 @@
                         </span>
                         <h2>Nenhum paciente cadastrado.</h2>
                         <p>Cadastre seu primeiro paciente para começar a acompanhar sua evolução.</p>
-                        <a href="cadastro-paciente.html" class="pac-btn pac-btn-primary" id="btnNovoPacienteVazio">
+                        <button type="button" class="pac-btn pac-btn-primary" id="btnNovoPacienteVazio" data-abrir-paciente>
                             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
                             Novo paciente
-                        </a>
+                        </button>
                     </div>
 
                     <!-- Busca sem resultado -->
@@ -296,7 +306,7 @@
                                     <th scope="col"><span class="pac-sr-only">Ações</span></th>
                                 </tr>
                             </thead>
-                            <tbody id="listaPacientes"></tbody>
+                            <tbody id="pacLista"></tbody>
                         </table>
                     </div>
                 </section>
@@ -315,6 +325,109 @@
     </div>
 
     <div id="dashboardFeedback" role="status" aria-live="polite"></div>
+
+    <!-- ===== MODAL: CADASTRO / EDIÇÃO DE PACIENTE ===== -->
+    <div class="nq-overlay" id="modalPaciente" hidden>
+        <section class="nq-modal" role="dialog" aria-modal="true" aria-labelledby="pacModalTitulo">
+            <header class="nq-modal-header">
+                <div>
+                    <h2 id="pacModalTitulo">Novo paciente</h2>
+                    <p>Preencha os dados do paciente. Apenas o nome é obrigatório.</p>
+                </div>
+                <button type="button" class="nq-close" data-fechar aria-label="Fechar">&times;</button>
+            </header>
+
+            <form id="formPaciente" novalidate>
+                <input type="hidden" id="pacId">
+                <div class="nq-form-grid">
+                    <div class="nq-field nq-span-2">
+                        <label for="pacNome">Nome completo</label>
+                        <input type="text" id="pacNome" maxlength="120" autocomplete="off" required>
+                        <span class="nq-error" data-erro-para="pacNome"></span>
+                    </div>
+
+                    <div class="nq-field">
+                        <label for="pacEmail">E-mail <span class="nq-opcional">(opcional)</span></label>
+                        <input type="email" id="pacEmail" maxlength="120" autocomplete="off">
+                        <span class="nq-error" data-erro-para="pacEmail"></span>
+                    </div>
+
+                    <div class="nq-field">
+                        <label for="pacTelefone">Telefone <span class="nq-opcional">(opcional)</span></label>
+                        <input type="tel" id="pacTelefone" inputmode="tel" placeholder="(11) 99999-9999" autocomplete="off">
+                        <span class="nq-error" data-erro-para="pacTelefone"></span>
+                    </div>
+
+                    <div class="nq-field">
+                        <label for="pacNascimento">Data de nascimento <span class="nq-opcional">(opcional)</span></label>
+                        <input type="date" id="pacNascimento">
+                        <span class="nq-error" data-erro-para="pacNascimento"></span>
+                    </div>
+
+                    <div class="nq-field">
+                        <label for="pacGenero">Gênero <span class="nq-opcional">(opcional)</span></label>
+                        <select id="pacGenero">
+                            <option value="">Não informado</option>
+                            <option>Feminino</option>
+                            <option>Masculino</option>
+                            <option>Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="nq-field">
+                        <label for="pacAltura">Altura em cm <span class="nq-opcional">(opcional)</span></label>
+                        <input type="number" id="pacAltura" min="50" max="250" step="1" inputmode="numeric" placeholder="Ex.: 170">
+                        <span class="nq-error" data-erro-para="pacAltura"></span>
+                    </div>
+
+                    <div class="nq-field" id="pacPesoGrupo">
+                        <label for="pacPeso">Peso atual em kg <span class="nq-opcional">(opcional)</span></label>
+                        <input type="number" id="pacPeso" min="2" max="500" step="0.1" inputmode="decimal" placeholder="Ex.: 72,5">
+                        <span class="nq-error" data-erro-para="pacPeso"></span>
+                    </div>
+
+                    <div class="nq-field">
+                        <label for="pacStatus">Situação</label>
+                        <select id="pacStatus">
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                            <option value="alta">Alta nutricional</option>
+                        </select>
+                    </div>
+
+                    <div class="nq-field">
+                        <label for="pacObjetivo">Objetivo <span class="nq-opcional">(opcional)</span></label>
+                        <select id="pacObjetivo">
+                            <option value="">Não definido</option>
+                            <option>Emagrecimento</option>
+                            <option>Ganho de massa muscular</option>
+                            <option>Manutenção do peso</option>
+                            <option>Reeducação alimentar</option>
+                            <option>Controle clínico</option>
+                            <option>Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="nq-field nq-span-2">
+                        <label for="pacObs">Observações <span class="nq-opcional">(opcional)</span></label>
+                        <textarea id="pacObs" rows="3" maxlength="1000" placeholder="Alergias, restrições, histórico..."></textarea>
+                    </div>
+                </div>
+
+                <footer class="nq-actions">
+                    <button type="button" class="pac-btn nq-btn-ghost" data-fechar>Cancelar</button>
+                    <button type="submit" class="pac-btn pac-btn-primary" id="pacSalvar">Salvar paciente</button>
+                </footer>
+            </form>
+        </section>
+    </div>
+
+    <!-- ===== MODAL: FICHA DO PACIENTE (conteúdo montado pelo JS) ===== -->
+    <div class="nq-overlay" id="modalFicha" hidden>
+        <section class="nq-modal nq-modal-lg nq-ficha" role="dialog" aria-modal="true" aria-labelledby="fichaTitulo">
+            <div id="fichaConteudo"></div>
+        </section>
+    </div>
 
     <!-- ===== MODAL DE PLANOS (necessário para o botão "Ver planos" da barra lateral) ===== -->
     <div class="plans-modal-overlay" id="modalPlanos" aria-hidden="true">
@@ -380,6 +493,7 @@
     <script src="js/database.js" defer></script>
     <script src="js/pages/dashboard.js" defer></script>
     <script src="js/navegacao.js" defer></script>
+    <script src="js/nutriq-dados.js" defer></script>
     <script src="js/pages/pacientes.js" defer></script>
 </body>
 </html>

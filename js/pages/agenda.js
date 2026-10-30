@@ -1,41 +1,24 @@
 /* =====================================================
    NUTRIQ · Agenda (js/agenda.js)
 
-   Lê as mesmas consultas da página consultas.html.
-
-   >>> Ajuste apenas carregarConsultas() e salvarConsultas()
-       para usar o seu js/database.js. <<<
-
-   Consulta: { id, paciente, data (AAAA-MM-DD), hora (HH:MM),
-               tipo, status: "agendada" | "realizada" | "cancelada" }
+   Mostra as consultas cadastradas em consultas.html em
+   visão de mês, semana ou dia. Usa js/nutriq-dados.js.
 ===================================================== */
 
 (function () {
     "use strict";
 
-    var CHAVE_CONSULTAS = "nutriq_consultas";
+    var D = window.NutriqDados;
+    if (!D) {
+        console.error("NUTRIQ: carregue js/nutriq-dados.js antes de js/agenda.js");
+        return;
+    }
+
     var MAX_CHIPS_MES = 2;
     var HORA_INICIAL = 7;
     var HORA_FINAL = 20;
 
-    /* ---------- Acesso a dados (troque pelo seu database.js) ---------- */
-    function carregarConsultas() {
-        try {
-            var dados = JSON.parse(localStorage.getItem(CHAVE_CONSULTAS) || "[]");
-            return Array.isArray(dados) ? dados : [];
-        } catch (e) {
-            return [];
-        }
-    }
-
-    function salvarConsultas(lista) {
-        try {
-            localStorage.setItem(CHAVE_CONSULTAS, JSON.stringify(lista));
-            return true;
-        } catch (e) {
-            return false;
-        }
-    }
+    function carregarConsultas() { return D.consultas.listar(); }
 
     /* ---------- Estado e elementos ---------- */
     var consultas = carregarConsultas();
@@ -115,14 +98,8 @@
         return div.innerHTML;
     }
 
-    function aviso(mensagem) {
-        if (!el.feedback) return;
-        el.feedback.textContent = mensagem;
-        el.feedback.classList.add("is-visible");
-        clearTimeout(aviso._t);
-        aviso._t = setTimeout(function () {
-            el.feedback.classList.remove("is-visible");
-        }, 3000);
+    function aviso(mensagem, tipo) {
+        D.toast(mensagem, tipo);
     }
 
     /* ---------- Eventos por dia ---------- */
@@ -279,6 +256,7 @@
 
         el.listaDia.innerHTML = lista.map(function (c) {
             var passada = momento(c).getTime() < Date.now();
+            var comecou = momento(c).getTime() <= Date.now();
             var badge;
             var acoes = "";
 
@@ -288,8 +266,10 @@
                 badge = passada
                     ? '<span class="pac-badge ag-badge-warn">Pendente</span>'
                     : '<span class="pac-badge">Agendada</span>';
-                acoes =
-                    '<button type="button" class="ag-item-btn" data-acao="realizar" data-id="' + escapar(c.id) + '">Concluir</button>' +
+                if (comecou) {
+                    acoes += '<button type="button" class="ag-item-btn" data-acao="realizar" data-id="' + escapar(c.id) + '">Concluir</button>';
+                }
+                acoes += '<a class="ag-item-btn" href="consultas.html?editar=' + encodeURIComponent(c.id) + '">Editar</a>' +
                     '<button type="button" class="ag-item-btn ag-item-btn-danger" data-acao="cancelar" data-id="' + escapar(c.id) + '">Cancelar</button>';
             }
 
@@ -302,6 +282,12 @@
                 "</li>"
             );
         }).join("");
+
+        // Atalho para agendar já com a data do dia selecionado
+        var destino = "consultas.html?novo=1&data=" + iso(cursor);
+        $("agNovaConsulta").href = destino;
+        $("agNovaConsultaLista").href = destino;
+        $("agNovaConsultaLista").hidden = !tem;
     }
 
     /* ---------- Renderização geral ---------- */
@@ -349,16 +335,31 @@
 
         var id = botao.getAttribute("data-id");
         var acao = botao.getAttribute("data-acao");
+        var consulta = D.consultas.obter(id);
+        if (!consulta) return;
 
-        if (acao === "cancelar" && !window.confirm("Cancelar este atendimento?")) return;
-
-        consultas.forEach(function (c) {
-            if (c.id === id) c.status = acao === "realizar" ? "realizada" : "cancelada";
-        });
-
-        salvarConsultas(consultas);
-        renderizar();
-        aviso(acao === "realizar" ? "Atendimento marcado como realizado." : "Atendimento cancelado.");
+        if (acao === "realizar") {
+            if (momento(consulta).getTime() > Date.now()) {
+                aviso("Só é possível concluir o atendimento depois do horário marcado.", "erro");
+                return;
+            }
+            if (!D.consultas.atualizar(id, { status: "realizada" })) {
+                aviso("Não foi possível atualizar o atendimento.", "erro");
+                return;
+            }
+            consultas = carregarConsultas();
+            renderizar();
+            aviso("Atendimento marcado como realizado.");
+        } else if (acao === "cancelar") {
+            if (!window.confirm("Cancelar o atendimento de " + consulta.paciente + "?")) return;
+            if (!D.consultas.atualizar(id, { status: "cancelada" })) {
+                aviso("Não foi possível cancelar o atendimento.", "erro");
+                return;
+            }
+            consultas = carregarConsultas();
+            renderizar();
+            aviso("Atendimento cancelado.");
+        }
     }
 
     /* ---------- Eventos ---------- */
@@ -397,17 +398,15 @@
             el.formBusca.addEventListener("submit", function (e) { e.preventDefault(); });
         }
 
-        // Atualiza ao voltar de outra página (consultas.html) ou de outra aba
-        window.addEventListener("pageshow", function () {
+        // Atualiza quando os dados mudam (outra aba), ao voltar de outra página
+        // e a cada minuto (para marcar atendimentos que já passaram como pendentes).
+        function recarregar() {
             consultas = carregarConsultas();
             renderizar();
-        });
-        window.addEventListener("storage", function (e) {
-            if (e.key === CHAVE_CONSULTAS) {
-                consultas = carregarConsultas();
-                renderizar();
-            }
-        });
+        }
+        D.aoMudar(recarregar);
+        window.addEventListener("pageshow", recarregar);
+        setInterval(renderizar, 60000);
 
         renderizar();
     }

@@ -20,3 +20,486 @@ body {
 .hidden:not(.header) {
     display: none !important;
 }
+
+
+/* =====================================================
+   NUTRIQ · Estilos comuns (css/nutriq-comum.css)
+   Carregue em TODAS as páginas novas, antes do CSS próprio. 
+
+   FEITO PELO CLAUDE 
+===================================================== */
+
+/* As variáveis ficam em :root porque as janelas (modais) ficam
+   fora de .pac-page e precisam enxergá-las. */
+:root {
+    --pac-green: #176b58;
+    --pac-green-dark: #105443;
+    --pac-green-soft: #e3f3ec;
+    --pac-title: #0f3d38;
+    --pac-subtitle: #2b7a6a;
+    --pac-muted: #6a8a85;
+    --pac-border: #e1ebe7;
+    --pac-surface: #ffffff;
+    --pac-danger: #b4483c;
+}
+
+body.nq-modal-open {
+    overflow: hidden;
+}
+
+/* ---------- Aviso na tela ---------- */
+.nq-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 28px;
+    z-index: 1400;
+    max-width: calc(100vw - 32px);
+    padding: 12px 20px;
+    background: #123f38;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(12, 40, 34, 0.3);
+    color: #fff;
+    font: 600 14px/1.4 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 16px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.nq-toast.is-visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+.nq-toast.is-error {
+    background: #a73a2e;
+}
+
+/* ---------- Janela (modal) ---------- */
+.nq-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(12, 40, 34, 0.45);
+    overflow-y: auto;
+}
+
+.nq-overlay[hidden] {
+    display: none;
+}
+
+.nq-modal {
+    width: 100%;
+    max-width: 620px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    padding: 28px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 24px 60px rgba(12, 40, 34, 0.25);
+    color: var(--pac-title);
+}
+
+.nq-modal-lg {
+    max-width: 780px;
+}
+
+.nq-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.nq-modal-header h2 {
+    margin: 0 0 4px;
+    color: var(--pac-title);
+    font-size: 22px;
+    font-weight: 750;
+}
+
+.nq-modal-header p {
+    margin: 0;
+    color: var(--pac-muted);
+    font-size: 14px;
+}
+
+.nq-close {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    background: #f1f6f4;
+    border: 0;
+    border-radius: 50%;
+    color: var(--pac-title);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.nq-close:hover {
+    background: var(--pac-green-soft);
+}
+
+/* ---------- Formulário ---------- */
+.nq-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.nq-span-2 {
+    grid-column: 1 / -1;
+}
+
+.nq-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.nq-field[hidden] {
+    display: none;
+}
+
+.nq-field label {
+    color: var(--pac-title);
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.nq-field label .nq-opcional {
+    color: var(--pac-muted);
+    font-weight: 500;
+}
+
+.nq-field input,
+.nq-field select,
+.nq-field textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 14px;
+    background: #fff;
+    border: 1px solid #d3e0db;
+    border-radius: 10px;
+    color: var(--pac-title);
+    font: inherit;
+    font-size: 14px;
+}
+
+.nq-field textarea {
+    resize: vertical;
+}
+
+.nq-field input:focus,
+.nq-field select:focus,
+.nq-field textarea:focus {
+    outline: 3px solid rgba(23, 107, 88, 0.2);
+    border-color: var(--pac-green);
+}
+
+.nq-field.has-error input,
+.nq-field.has-error select,
+.nq-field.has-error textarea {
+    border-color: var(--pac-danger);
+}
+
+.nq-error {
+    color: var(--pac-danger);
+    font-size: 12.5px;
+}
+
+.nq-help {
+    color: var(--pac-muted);
+    font-size: 12.5px;
+}
+
+.nq-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.nq-btn-ghost {
+    background: #f1f6f4;
+    color: var(--pac-title);
+}
+
+.nq-btn-ghost:hover {
+    background: var(--pac-green-soft);
+}
+
+.nq-btn-danger {
+    background: #fbeceb;
+    color: var(--pac-danger);
+}
+
+.nq-btn-danger:hover {
+    background: #f6d9d6;
+}
+
+.pac-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.nq-aviso {
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    background: #fdf6e3;
+    border: 1px solid #f1e1b0;
+    border-radius: 10px;
+    color: #7a5a0b;
+    font-size: 13px;
+}
+
+.nq-aviso[hidden] {
+    display: none;
+}
+
+.nq-aviso a {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+/* ---------- Filtros em forma de abas ---------- */
+.nq-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--pac-border);
+}
+
+.nq-toolbar[hidden] {
+    display: none;
+}
+
+.nq-filters {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 4px;
+    background: #f1f6f4;
+    border-radius: 10px;
+}
+
+.nq-filter {
+    min-height: 34px;
+    padding: 0 16px;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    color: var(--pac-muted);
+    font-size: 13px;
+    font-weight: 650;
+    cursor: pointer;
+}
+
+.nq-filter:hover {
+    color: var(--pac-green);
+}
+
+.nq-filter.is-active {
+    background: #fff;
+    color: var(--pac-green);
+    box-shadow: 0 1px 4px rgba(26, 58, 49, 0.1);
+}
+
+.nq-count {
+    color: var(--pac-muted);
+    font-size: 13px;
+}
+
+/* ---------- Ações nas linhas ---------- */
+.nq-row-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+}
+
+.nq-row-btn {
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--pac-green);
+    font-size: 13px;
+    font-weight: 650;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.nq-row-btn:hover {
+    text-decoration: underline;
+}
+
+.nq-row-btn-danger {
+    color: var(--pac-danger);
+}
+
+/* ---------- Ficha do paciente ---------- */
+.nq-ficha-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.nq-ficha-avatar {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 60px;
+    height: 60px;
+    background: var(--pac-green-soft);
+    border-radius: 50%;
+    color: var(--pac-green);
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.nq-ficha-head h2 {
+    margin: 0 0 4px;
+    font-size: 21px;
+    font-weight: 750;
+}
+
+.nq-ficha-head small {
+    color: var(--pac-muted);
+    font-size: 13px;
+}
+
+.nq-ficha-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 24px;
+    margin: 0 0 22px;
+}
+
+.nq-ficha-grid div {
+    min-width: 0;
+}
+
+.nq-ficha-grid dt {
+    margin-bottom: 2px;
+    color: var(--pac-muted);
+    font-size: 12px;
+}
+
+.nq-ficha-grid dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.nq-ficha-resumo {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.nq-ficha-resumo div {
+    padding: 12px 14px;
+    background: #f7fbf9;
+    border: 1px solid var(--pac-border);
+    border-radius: 10px;
+}
+
+.nq-ficha-resumo small {
+    display: block;
+    color: var(--pac-muted);
+    font-size: 11.5px;
+}
+
+.nq-ficha-resumo strong {
+    font-size: 16px;
+}
+
+.nq-ficha h3 {
+    margin: 0 0 10px;
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.nq-ficha-tabela {
+    width: 100%;
+    margin-bottom: 14px;
+    border-collapse: collapse;
+    font-size: 13.5px;
+}
+
+.nq-ficha-tabela th,
+.nq-ficha-tabela td {
+    padding: 9px 8px;
+    border-bottom: 1px solid var(--pac-border);
+    text-align: left;
+}
+
+.nq-ficha-tabela th {
+    color: var(--pac-muted);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.nq-ficha-vazio {
+    margin: 0 0 14px;
+    color: var(--pac-muted);
+    font-size: 13px;
+}
+
+.nq-avaliacao-form {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+    align-items: end;
+    gap: 12px;
+    padding: 14px;
+    background: #f7fbf9;
+    border: 1px solid var(--pac-border);
+    border-radius: 12px;
+}
+
+.nq-ficha-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+@media (max-width: 640px) {
+    .nq-form-grid,
+    .nq-ficha-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nq-ficha-resumo {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .nq-avaliacao-form {
+        grid-template-columns: 1fr;
+    }
+
+    .nq-modal {
+        padding: 22px 18px;
+    }
+
+    .nq-actions .pac-btn {
+        flex: 1;
+    }
+}

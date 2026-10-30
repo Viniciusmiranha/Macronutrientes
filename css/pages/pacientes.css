@@ -232,6 +232,7 @@
 
 /* ---------- Tabela (quando houver pacientes) ---------- */
 .pac-table-wrap {
+    position: relative; /* mantém o texto oculto (.pac-sr-only) dentro da área rolável */
     overflow-x: auto;
 }
 
