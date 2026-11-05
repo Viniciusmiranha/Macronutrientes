@@ -1,18 +1,22 @@
 /* =====================================================
    NUTRIQ · Meus pacientes (js/pacientes.js)
-   Cadastro, edição, ficha com avaliações, busca, filtros
-   e exclusão. Usa js/nutriq-dados.js.
+   Cartões, busca (nome, e-mail, CPF, telefone), filtros,
+   ordenação, menu de ações, cadastro, edição, ficha com
+   avaliações e exclusão. Usa js/nutriq-dados.js.
 ===================================================== */
 
 (function () {
     "use strict";
 
     var D = window.NutriqDados;
-    if (!D) {
+    if (!D || !D.pacientes) {
         console.error("NUTRIQ: carregue js/nutriq-dados.js antes de js/pacientes.js");
         return;
     }
     var U = D.util;
+    var esc = U.escapar;
+
+    var JANELA_ADESAO_DIAS = 60;
 
     function $(id) { return document.getElementById(id); }
 
@@ -20,15 +24,23 @@
         total: $("statTotal"),
         ativos: $("statAtivos"),
         novos: $("statNovos"),
-        alta: $("statAlta"),
-        toolbar: $("pacToolbar"),
-        contagem: $("pacContagem"),
-        vazio: $("pacEmpty"),
-        semResultado: $("pacNoResults"),
-        tabelaWrap: $("pacTableWrap"),
-        lista: $("pacLista"),
-        busca: $("campoBusca"),
-        formBusca: $("dashboardSearch"),
+        adesao: $("statAdesao"),
+
+        busca: $("pcBusca"),
+        buscaTopo: $("campoBusca"),
+        formBuscaTopo: $("dashboardSearch"),
+        filtroPacientes: $("pcFiltroPacientes"),
+        filtroStatus: $("pcFiltroStatus"),
+        ordenar: $("pcOrdenar"),
+        resultado: $("pcResultado"),
+
+        lista: $("pcLista"),
+        vazio: $("pcEmpty"),
+        vazioTitulo: $("pcVazioTitulo"),
+        vazioTexto: $("pcVazioTexto"),
+        btnNovoVazio: $("btnNovoPacienteVazio"),
+        btnLimpar: $("pcLimpar"),
+
         modalForm: $("modalPaciente"),
         form: $("formPaciente"),
         pesoGrupo: $("pacPesoGrupo"),
@@ -37,19 +49,27 @@
     };
 
     var STATUS = {
-        ativo: { texto: "Ativo", classe: "pac-badge" },
-        inativo: { texto: "Inativo", classe: "pac-badge pac-badge-off" },
-        alta: { texto: "Alta nutricional", classe: "pac-badge pac-badge-off" }
+        ativo: "ativo",
+        inativo: "inativo",
+        alta: "alta"
     };
 
-    var filtro = "todos";
+    var ICONE_PESSOA = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>';
+    var ICONE_MENU = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="12" cy="19" r="1.8"/></svg>';
+
     var termoBusca = "";
     var fichaAtualId = null;
 
     /* ---------- Auxiliares ---------- */
-    var esc = U.escapar;
-
     function statusDe(p) { return STATUS[p.status] ? p.status : "ativo"; }
+
+    function rotuloStatus(p) {
+        var fem = p.genero === "Feminino";
+        var st = statusDe(p);
+        if (st === "ativo") return fem ? "Ativa" : "Ativo";
+        if (st === "inativo") return fem ? "Inativa" : "Inativo";
+        return "Alta nutricional";
+    }
 
     function iniciais(nome) {
         var partes = String(nome || "?").trim().split(/\s+/);
@@ -66,66 +86,242 @@
         return Number(n).toLocaleString("pt-BR", { maximumFractionDigits: casas == null ? 1 : casas });
     }
 
-    function ordenados() {
-        return D.pacientes.listar().sort(function (a, b) {
-            return String(a.nome || "").localeCompare(String(b.nome || ""), "pt-BR");
-        });
+    function soDigitos(texto) { return String(texto || "").replace(/\D/g, ""); }
+
+    /* ---------- CPF ---------- */
+    function mascaraCpf(valor) {
+        var d = soDigitos(valor).slice(0, 11);
+        if (d.length <= 3) return d;
+        if (d.length <= 6) return d.slice(0, 3) + "." + d.slice(3);
+        if (d.length <= 9) return d.slice(0, 3) + "." + d.slice(3, 6) + "." + d.slice(6);
+        return d.slice(0, 3) + "." + d.slice(3, 6) + "." + d.slice(6, 9) + "-" + d.slice(9);
     }
 
-    /* ---------- Lista e resumo ---------- */
-    function atualizarResumo(todos) {
-        var agora = new Date();
-        el.total.textContent = todos.length;
-        el.ativos.textContent = todos.filter(function (p) { return statusDe(p) === "ativo"; }).length;
-        el.alta.textContent = todos.filter(function (p) { return statusDe(p) === "alta"; }).length;
-        el.novos.textContent = todos.filter(function (p) {
-            var d = new Date(p.criadoEm);
-            return !isNaN(d) && d.getMonth() === agora.getMonth() && d.getFullYear() === agora.getFullYear();
+    function cpfValido(valor) {
+        var c = soDigitos(valor);
+        if (c.length !== 11 || /^(\d)\1{10}$/.test(c)) return false;
+        for (var t = 9; t <= 10; t++) {
+            var soma = 0;
+            for (var i = 0; i < t; i++) soma += Number(c.charAt(i)) * (t + 1 - i);
+            var digito = (soma * 10) % 11 % 10;
+            if (digito !== Number(c.charAt(t))) return false;
+        }
+        return true;
+    }
+
+    /* ---------- Taxa de adesão ---------- */
+    // Pacientes ativos com consulta (realizada nos últimos 60 dias ou já agendada)
+    // ou avaliação recente, dividido pelo total de pacientes ativos.
+    function calcularAdesao(pacientes, consultas) {
+        var ativos = pacientes.filter(function (p) { return statusDe(p) === "ativo"; });
+        if (!ativos.length) return null;
+
+        var agora = Date.now();
+        var limite = agora - JANELA_ADESAO_DIAS * 24 * 60 * 60 * 1000;
+
+        var acompanhados = ativos.filter(function (p) {
+            var comConsulta = consultas.some(function (c) {
+                if (c.pacienteId !== p.id) return false;
+                var m = U.momento(c.data, c.hora);
+                if (!m) return false;
+                return (c.status === "realizada" && m.getTime() >= limite) ||
+                    (c.status === "agendada" && m.getTime() >= agora);
+            });
+            var comAvaliacao = (p.avaliacoes || []).some(function (a) {
+                var d = U.lerISO(a.data);
+                return d && d.getTime() >= limite;
+            });
+            return comConsulta || comAvaliacao;
         }).length;
+
+        return Math.round((acompanhados / ativos.length) * 100);
     }
 
-    function correspondeBusca(p, termo) {
+    /* ---------- Filtros e ordenação ---------- */
+    function correspondeBusca(p) {
+        var termo = U.normalizar(termoBusca);
         if (!termo) return true;
-        var texto = U.normalizar([p.nome, p.email, p.telefone, String(p.telefone || "").replace(/\D/g, "")].join(" "));
-        return texto.indexOf(termo) !== -1;
+
+        var texto = U.normalizar([p.nome, p.email, p.cpf, p.telefone].join(" "));
+        if (texto.indexOf(termo) !== -1) return true;
+
+        var digitos = soDigitos(termoBusca);
+        return digitos.length >= 3 &&
+            (soDigitos(p.cpf).indexOf(digitos) !== -1 || soDigitos(p.telefone).indexOf(digitos) !== -1);
+    }
+
+    function ordenar(lista) {
+        var modo = el.ordenar.value;
+        var porNome = function (a, b) {
+            return String(a.nome || "").localeCompare(String(b.nome || ""), "pt-BR");
+        };
+        var porData = function (a, b) {
+            return String(a.criadoEm || "").localeCompare(String(b.criadoEm || ""));
+        };
+
+        if (modo === "nome-az") return lista.sort(porNome);
+        if (modo === "nome-za") return lista.sort(function (a, b) { return porNome(b, a); });
+        if (modo === "antigos") return lista.sort(porData);
+        // Padrão (e "Mais recentes"): quem foi cadastrado por último aparece primeiro.
+        return lista.sort(function (a, b) { return porData(b, a) || porNome(a, b); });
+    }
+
+    /* ---------- Renderização ---------- */
+    function itemMenu(texto, acao, id, perigo) {
+        return '<button type="button" role="menuitem" class="pc-menu-item' + (perigo ? " pc-menu-item-danger" : "") +
+            '" data-acao="' + acao + '" data-id="' + esc(id) + '">' + texto + "</button>";
+    }
+
+    function linkMenu(texto, href) {
+        return '<a role="menuitem" class="pc-menu-item" href="' + href + '">' + texto + "</a>";
+    }
+
+    function cartao(p) {
+        var anos = U.idade(p);
+        var partes = [];
+        if (anos != null) partes.push(anos + " anos");
+        if (p.genero) partes.push(esc(p.genero));
+        var meta = partes.length ? partes.join(" • ") : "Dados não informados";
+        var classe = statusDe(p) === "ativo" ? "pac-badge" : "pac-badge pac-badge-off";
+        var q = encodeURIComponent(p.id);
+
+        return (
+            '<li><article class="pc-card" data-id="' + esc(p.id) + '">' +
+                '<span class="pc-avatar">' + ICONE_PESSOA + "</span>" +
+                '<div class="pc-info">' +
+                    '<button type="button" class="pc-open" data-acao="ficha" data-id="' + esc(p.id) + '">' + esc(p.nome) + "</button>" +
+                    '<p class="pc-meta">' + meta + "</p>" +
+                    '<span class="' + classe + '">' + esc(rotuloStatus(p)) + "</span>" +
+                "</div>" +
+                '<button type="button" class="pc-kebab" data-menu aria-haspopup="menu" aria-expanded="false" aria-label="Ações para ' + esc(p.nome) + '">' + ICONE_MENU + "</button>" +
+                '<div class="pc-menu" role="menu" hidden>' +
+                    itemMenu("Ver ficha", "ficha", p.id) +
+                    itemMenu("Editar dados", "editar", p.id) +
+                    linkMenu("Novo plano alimentar", "planos-alimentares.html?novo=1&amp;paciente=" + q) +
+                    linkMenu("Agendar consulta", "consultas.html?novo=1&amp;paciente=" + q) +
+                    linkMenu("Ver relatório", "relatorios.html?paciente=" + q) +
+                    '<div class="pc-menu-sep" role="separator"></div>' +
+                    itemMenu("Excluir paciente", "excluir", p.id, true) +
+                "</div>" +
+            "</article></li>"
+        );
+    }
+
+    function filtrosAtivos() {
+        return !!(U.normalizar(termoBusca) || el.filtroPacientes.value !== "todos" || el.filtroStatus.value !== "todos");
     }
 
     function render() {
-        var todos = ordenados();
-        atualizarResumo(todos);
+        var todos = D.pacientes.listar();
+        var planos = D.planos.listar();
+        var consultas = D.consultas.listar();
+        var agora = Date.now();
 
-        var termo = U.normalizar(termoBusca);
-        var visiveis = todos.filter(function (p) {
-            return (filtro === "todos" || statusDe(p) === filtro) && correspondeBusca(p, termo);
+        // Resumo
+        var hoje = new Date();
+        el.total.textContent = todos.length;
+        el.ativos.textContent = todos.filter(function (p) { return statusDe(p) === "ativo"; }).length;
+        el.novos.textContent = todos.filter(function (p) {
+            var d = new Date(p.criadoEm);
+            return !isNaN(d) && d.getMonth() === hoje.getMonth() && d.getFullYear() === hoje.getFullYear();
+        }).length;
+        var adesao = calcularAdesao(todos, consultas);
+        el.adesao.textContent = adesao == null ? "—" : adesao + "%";
+
+        // Quem tem plano em andamento / consulta futura
+        var comPlano = {};
+        planos.forEach(function (pl) { if (pl.status !== "concluido") comPlano[pl.pacienteId] = true; });
+        var comConsulta = {};
+        consultas.forEach(function (c) {
+            var m = U.momento(c.data, c.hora);
+            if (c.status === "agendada" && m && m.getTime() >= agora) comConsulta[c.pacienteId] = true;
         });
 
-        el.vazio.hidden = todos.length > 0;
-        el.toolbar.hidden = todos.length === 0;
-        el.semResultado.hidden = !(todos.length > 0 && visiveis.length === 0);
-        el.tabelaWrap.hidden = visiveis.length === 0;
-        el.contagem.textContent = todos.length ? plural(visiveis.length, "paciente", "pacientes") : "";
+        var filtroPac = el.filtroPacientes.value;
+        var filtroSt = el.filtroStatus.value;
 
-        el.lista.innerHTML = visiveis.map(function (p) {
-            var st = STATUS[statusDe(p)];
-            var anos = U.idade(p);
-            return (
-                "<tr>" +
-                    '<td><div class="pac-person">' +
-                        '<span class="pac-person-avatar" aria-hidden="true">' + esc(iniciais(p.nome)) + "</span>" +
-                        "<div><strong>" + esc(p.nome) + "</strong>" +
-                        "<small>" + esc(p.email || (anos != null ? anos + " anos" : "")) + "</small></div>" +
-                    "</div></td>" +
-                    "<td>" + esc(p.telefone || "—") + "</td>" +
-                    "<td>" + esc(p.objetivo || "—") + "</td>" +
-                    '<td><span class="' + st.classe + '">' + st.texto + "</span></td>" +
-                    '<td><div class="nq-row-actions">' +
-                        '<button type="button" class="nq-row-btn" data-acao="ficha" data-id="' + esc(p.id) + '">Ver ficha</button>' +
-                        '<button type="button" class="nq-row-btn" data-acao="editar" data-id="' + esc(p.id) + '">Editar</button>' +
-                        '<button type="button" class="nq-row-btn nq-row-btn-danger" data-acao="excluir" data-id="' + esc(p.id) + '">Excluir</button>' +
-                    "</div></td>" +
-                "</tr>"
-            );
-        }).join("");
+        var visiveis = ordenar(todos.filter(function (p) {
+            if (filtroSt !== "todos" && statusDe(p) !== filtroSt) return false;
+            if (filtroPac === "com-plano" && !comPlano[p.id]) return false;
+            if (filtroPac === "sem-plano" && comPlano[p.id]) return false;
+            if (filtroPac === "com-consulta" && !comConsulta[p.id]) return false;
+            return correspondeBusca(p);
+        }));
+
+        // Lista ou estado vazio
+        var tem = visiveis.length > 0;
+        el.lista.hidden = !tem;
+        el.vazio.hidden = tem;
+        el.lista.innerHTML = visiveis.map(cartao).join("");
+
+        if (!tem) {
+            var semCadastro = todos.length === 0;
+            el.vazioTitulo.textContent = "Nenhum paciente encontrado";
+            el.vazioTexto.textContent = semCadastro
+                ? "Comece cadastrando seu primeiro paciente."
+                : "Revise a busca ou os filtros para ver outros pacientes.";
+            el.btnNovoVazio.hidden = !semCadastro;
+            el.btnLimpar.hidden = semCadastro || !filtrosAtivos();
+        }
+
+        el.resultado.textContent = tem
+            ? plural(visiveis.length, "paciente encontrado", "pacientes encontrados")
+            : "Nenhum paciente encontrado";
+    }
+
+    function limparFiltros() {
+        termoBusca = "";
+        el.busca.value = "";
+        if (el.buscaTopo) el.buscaTopo.value = "";
+        el.filtroPacientes.value = "todos";
+        el.filtroStatus.value = "todos";
+        el.ordenar.value = "";
+        render();
+    }
+
+    /* ---------- Menu de ações (⋮) ---------- */
+    function menuAberto() {
+        return el.lista.querySelector(".pc-menu:not([hidden])");
+    }
+
+    function fecharMenus(devolverFoco) {
+        var aberto = menuAberto();
+        el.lista.querySelectorAll(".pc-menu").forEach(function (m) { m.hidden = true; });
+        el.lista.querySelectorAll(".pc-kebab").forEach(function (k) { k.setAttribute("aria-expanded", "false"); });
+        el.lista.querySelectorAll(".pc-card.is-open").forEach(function (c) { c.classList.remove("is-open"); });
+        if (devolverFoco && aberto) {
+            var botao = aberto.parentNode.querySelector(".pc-kebab");
+            if (botao) botao.focus();
+        }
+    }
+
+    function alternarMenu(botao, focarPrimeiro) {
+        var cartaoEl = botao.closest(".pc-card");
+        var menu = cartaoEl.querySelector(".pc-menu");
+        var jaAberto = !menu.hidden;
+
+        fecharMenus(false);
+        if (jaAberto) return;
+
+        menu.hidden = false;
+        botao.setAttribute("aria-expanded", "true");
+        cartaoEl.classList.add("is-open");
+        if (focarPrimeiro) {
+            var primeiro = menu.querySelector(".pc-menu-item");
+            if (primeiro) primeiro.focus();
+        }
+    }
+
+    function navegarNoMenu(evento) {
+        var menu = evento.target.closest(".pc-menu");
+        if (!menu) return;
+        var itens = Array.prototype.slice.call(menu.querySelectorAll(".pc-menu-item"));
+        var i = itens.indexOf(document.activeElement);
+
+        if (evento.key === "ArrowDown") { evento.preventDefault(); itens[(i + 1) % itens.length].focus(); }
+        else if (evento.key === "ArrowUp") { evento.preventDefault(); itens[(i - 1 + itens.length) % itens.length].focus(); }
+        else if (evento.key === "Home") { evento.preventDefault(); itens[0].focus(); }
+        else if (evento.key === "End") { evento.preventDefault(); itens[itens.length - 1].focus(); }
     }
 
     /* ---------- Formulário de cadastro / edição ---------- */
@@ -146,6 +342,7 @@
             $("pacNome").value = paciente.nome || "";
             $("pacEmail").value = paciente.email || "";
             $("pacTelefone").value = paciente.telefone || "";
+            $("pacCpf").value = paciente.cpf || "";
             $("pacNascimento").value = paciente.nascimento || "";
             $("pacGenero").value = paciente.genero || "";
             $("pacAltura").value = paciente.altura || "";
@@ -166,6 +363,7 @@
     function lerFormulario() {
         limparErros();
         var primeiro = null;
+        var idEdicao = $("pacId").value;
 
         function falha(idCampo, mensagem) {
             var campo = $(idCampo);
@@ -182,8 +380,20 @@
         if (email && !U.emailValido(email)) falha("pacEmail", "Informe um e-mail válido.");
 
         var telefone = $("pacTelefone").value.trim();
-        if (telefone && telefone.replace(/\D/g, "").length < 10) {
+        if (telefone && soDigitos(telefone).length < 10) {
             falha("pacTelefone", "Informe o DDD e o número. Ex.: (11) 99999-9999");
+        }
+
+        var cpf = $("pacCpf").value.trim();
+        if (cpf) {
+            if (!cpfValido(cpf)) {
+                falha("pacCpf", "CPF inválido. Confira os números.");
+            } else {
+                var repetido = D.pacientes.listar().some(function (p) {
+                    return p.id !== idEdicao && soDigitos(p.cpf) === soDigitos(cpf);
+                });
+                if (repetido) falha("pacCpf", "Já existe um paciente com este CPF.");
+            }
         }
 
         var nascimento = $("pacNascimento").value;
@@ -214,6 +424,7 @@
             nome: nome,
             email: email,
             telefone: telefone,
+            cpf: cpf,
             nascimento: nascimento,
             genero: $("pacGenero").value,
             altura: altura !== "" ? Number(altura) : null,
@@ -252,7 +463,6 @@
             return;
         }
 
-        dados.avaliacoes = [];
         var novo = D.pacientes.criar(dados);
         if (!novo) {
             D.toast("Não foi possível salvar o paciente. O armazenamento do navegador pode estar indisponível.", "erro");
@@ -319,7 +529,7 @@
         var ultima = avaliacoes[0];
         var imcUltimo = ultima ? U.imc(ultima.peso, ultima.altura || p.altura) : null;
         var anos = U.idade(p);
-        var st = STATUS[statusDe(p)];
+        var classeStatus = statusDe(p) === "ativo" ? "pac-badge" : "pac-badge pac-badge-off";
 
         var linhas = avaliacoes.map(function (a) {
             var imc = U.imc(a.peso, a.altura || p.altura);
@@ -338,8 +548,8 @@
             '<div class="nq-modal-header">' +
                 '<div class="nq-ficha-head" style="margin-bottom:0">' +
                     '<span class="nq-ficha-avatar" aria-hidden="true">' + esc(iniciais(p.nome)) + "</span>" +
-                    "<div><h2 id=\"fichaTitulo\">" + esc(p.nome) + "</h2>" +
-                    '<small><span class="' + st.classe + '">' + st.texto + "</span> · Cadastrado em " +
+                    '<div><h2 id="fichaTitulo">' + esc(p.nome) + "</h2>" +
+                    '<small><span class="' + classeStatus + '">' + esc(rotuloStatus(p)) + "</span> · Cadastrado em " +
                     esc(U.formatarData(p.criadoEm)) + "</small></div>" +
                 "</div>" +
                 '<button type="button" class="nq-close" data-acao="fechar-ficha" aria-label="Fechar">&times;</button>' +
@@ -348,10 +558,11 @@
             '<dl class="nq-ficha-grid">' +
                 "<div><dt>Telefone</dt><dd>" + esc(p.telefone || "—") + "</dd></div>" +
                 "<div><dt>E-mail</dt><dd>" + esc(p.email || "—") + "</dd></div>" +
+                "<div><dt>CPF</dt><dd>" + esc(p.cpf || "—") + "</dd></div>" +
                 "<div><dt>Idade e gênero</dt><dd>" + esc((anos != null ? anos + " anos" : "—") + (p.genero ? " · " + p.genero : "")) + "</dd></div>" +
                 "<div><dt>Altura</dt><dd>" + (p.altura ? numero(p.altura, 0) + " cm" : "—") + "</dd></div>" +
                 "<div><dt>Objetivo</dt><dd>" + esc(p.objetivo || "—") + "</dd></div>" +
-                "<div><dt>Observações</dt><dd>" + esc(p.observacoes || "—") + "</dd></div>" +
+                '<div style="grid-column:1/-1"><dt>Observações</dt><dd>' + esc(p.observacoes || "—") + "</dd></div>" +
             "</dl>" +
 
             '<div class="nq-ficha-resumo">' +
@@ -441,7 +652,15 @@
     }
 
     /* ---------- Eventos ---------- */
+    function definirBusca(valor, origem) {
+        termoBusca = valor;
+        if (origem !== el.busca) el.busca.value = valor;
+        if (el.buscaTopo && origem !== el.buscaTopo) el.buscaTopo.value = valor;
+        render();
+    }
+
     function iniciar() {
+        // Botões "Novo paciente"
         document.querySelectorAll("[data-abrir-paciente]").forEach(function (b) {
             b.addEventListener("click", function () { abrirFormulario(null); });
         });
@@ -452,20 +671,52 @@
             if (alvo) D.fecharModal(alvo.closest(".nq-overlay"));
         });
 
+        // Formulário
         el.form.addEventListener("submit", aoSalvarPaciente);
-        $("pacTelefone").addEventListener("input", function (e) {
-            e.target.value = U.mascaraTelefone(e.target.value);
-        });
+        $("pacTelefone").addEventListener("input", function (e) { e.target.value = U.mascaraTelefone(e.target.value); });
+        $("pacCpf").addEventListener("input", function (e) { e.target.value = mascaraCpf(e.target.value); });
 
-        // Ações da tabela
+        // Cartões e menu ⋮
         el.lista.addEventListener("click", function (e) {
+            var kebab = e.target.closest("[data-menu]");
+            if (kebab) {
+                alternarMenu(kebab, e.detail === 0); // detail 0 = teclado: já foca o 1º item
+                return;
+            }
+
             var botao = e.target.closest("[data-acao]");
             if (!botao) return;
             var id = botao.getAttribute("data-id");
             var acao = botao.getAttribute("data-acao");
+            fecharMenus(false);
+
             if (acao === "ficha") abrirFicha(id);
             if (acao === "editar") abrirFormulario(D.pacientes.obter(id));
             if (acao === "excluir") excluirPaciente(id);
+        });
+
+        el.lista.addEventListener("keydown", function (e) {
+            if (e.key === "ArrowDown" && e.target.closest("[data-menu]")) {
+                e.preventDefault();
+                alternarMenu(e.target.closest("[data-menu]"), true);
+                return;
+            }
+            navegarNoMenu(e);
+        });
+
+        // Fecha o menu ao clicar fora, ao apertar Esc ou ao sair dele com o Tab
+        document.addEventListener("click", function (e) {
+            if (!e.target.closest(".pc-card")) fecharMenus(false);
+        });
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && menuAberto()) fecharMenus(true);
+        });
+        el.lista.addEventListener("focusout", function (e) {
+            var cartaoEl = e.target.closest(".pc-card");
+            if (cartaoEl && !cartaoEl.contains(e.relatedTarget)) {
+                var menu = cartaoEl.querySelector(".pc-menu");
+                if (menu && !menu.hidden) fecharMenus(false);
+            }
         });
 
         // Ações dentro da ficha
@@ -486,31 +737,21 @@
             if (e.target.id === "formAvaliacao") adicionarAvaliacao(e);
         });
 
-        // Filtros
-        document.querySelectorAll(".nq-filter").forEach(function (b) {
-            b.addEventListener("click", function () {
-                filtro = b.getAttribute("data-filtro");
-                document.querySelectorAll(".nq-filter").forEach(function (o) {
-                    var ativo = o === b;
-                    o.classList.toggle("is-active", ativo);
-                    o.setAttribute("aria-pressed", ativo ? "true" : "false");
-                });
-                render();
-            });
+        // Busca (a da página e a do topo ficam sincronizadas), filtros e ordenação
+        el.busca.addEventListener("input", function () { definirBusca(el.busca.value, el.busca); });
+        if (el.buscaTopo) {
+            el.buscaTopo.addEventListener("input", function () { definirBusca(el.buscaTopo.value, el.buscaTopo); });
+        }
+        if (el.formBuscaTopo) {
+            el.formBuscaTopo.addEventListener("submit", function (e) { e.preventDefault(); });
+        }
+        [el.filtroPacientes, el.filtroStatus, el.ordenar].forEach(function (s) {
+            s.addEventListener("change", render);
         });
-
-        // Busca do topo
-        if (el.busca) {
-            el.busca.addEventListener("input", function () {
-                termoBusca = el.busca.value;
-                render();
-            });
-        }
-        if (el.formBusca) {
-            el.formBusca.addEventListener("submit", function (e) { e.preventDefault(); });
-        }
+        el.btnLimpar.addEventListener("click", limparFiltros);
 
         D.aoMudar(render);
+        setInterval(render, 5 * 60 * 1000); // mantém "novos este mês" e a adesão em dia
         render();
 
         // Atalhos vindos de outras páginas: ?novo=1 ou ?ficha=ID

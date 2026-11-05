@@ -7,6 +7,9 @@
     <meta name="description" content="Gerencie os pacientes cadastrados no painel profissional NUTRIQ.">
     <title>Meus pacientes | NUTRIQ</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/nutriq-comum.css">
+    <link rel="stylesheet" href="css/pacientes.css">
 </head>
 <body class="dashboard-page">
     <div class="dashboard-layout">
@@ -174,7 +177,7 @@
             </header>
 
             <!-- ===== CONTEÚDO DA PÁGINA ===== -->
-            <main class="dashboard-content pac-page" id="conteudoPrincipal">
+            <main class="dashboard-content pac-page pc-page" id="conteudoPrincipal">
 
                 <header class="pac-header">
                     <div class="pac-header-title">
@@ -187,7 +190,7 @@
                         </span>
                         <div>
                             <h1>Meus pacientes</h1>
-                            <p>Cadastre, acompanhe e organize os pacientes do seu consultório.</p>
+                            <p>Gerencie seus pacientes, acompanhe seu progresso e mantenha um atendimento personalizado.</p>
                         </div>
                     </div>
 
@@ -203,7 +206,7 @@
                             <svg viewBox="0 0 24 24">
                                 <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                                 <circle cx="10" cy="7" r="4"/>
-                                <path d="M20 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
                             </svg>
                         </span>
                         <div class="pac-stat-info">
@@ -216,8 +219,8 @@
                     <article class="pac-stat-card">
                         <span class="pac-stat-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24">
-                                <circle cx="12" cy="8" r="4"/>
-                                <path d="M4 21a8 8 0 0 1 16 0"/>
+                                <rect x="3" y="5" width="18" height="16" rx="2"/>
+                                <path d="M16 3v4M8 3v4M3 10h18M9 15.5l2 2 4-4"/>
                             </svg>
                         </span>
                         <div class="pac-stat-info">
@@ -230,92 +233,93 @@
                     <article class="pac-stat-card">
                         <span class="pac-stat-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24">
-                                <path d="M12 21c-4.5 0-7-3-7-7 0-5 7-11 7-11s7 6 7 11c0 4-2.5 7-7 7z"/>
-                                <path d="M12 21v-8"/>
+                                <circle cx="12" cy="12" r="9"/>
+                                <path d="m8 12 3 3 5-6"/>
                             </svg>
                         </span>
                         <div class="pac-stat-info">
-                            <span class="pac-stat-label">Novos no mês</span>
+                            <span class="pac-stat-label">Novos este mês</span>
                             <strong id="statNovos">0</strong>
-                            <small>Cadastrados recentemente</small>
+                            <small>Cadastros recentes</small>
                         </div>
                     </article>
 
                     <article class="pac-stat-card">
                         <span class="pac-stat-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="9"/>
-                                <path d="m8 12 3 3 5-6"/>
+                                <path d="M4 19V9h4v10M10 19V5h4v14M16 19V2h4v17M2 21h20"/>
                             </svg>
                         </span>
                         <div class="pac-stat-info">
-                            <span class="pac-stat-label">Alta nutricional</span>
-                            <strong id="statAlta">0</strong>
-                            <small>Finalizados</small>
+                            <span class="pac-stat-label">Taxa de adesão</span>
+                            <strong id="statAdesao" title="Pacientes ativos com consulta (realizada nos últimos 60 dias ou já agendada) ou avaliação recente">—</strong>
+                            <small>Acompanhamento dos pacientes</small>
                         </div>
                     </article>
                 </section>
 
-                <section class="pac-panel" aria-label="Lista de pacientes">
+                <section class="pc-filters" aria-label="Buscar e filtrar pacientes">
+                    <label class="pc-search">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
+                        <input type="search" id="pcBusca" placeholder="Buscar por nome, e-mail ou CPF..." aria-label="Buscar por nome, e-mail ou CPF" autocomplete="off">
+                    </label>
 
-                    <div class="nq-toolbar" id="pacToolbar" hidden>
-                        <div class="nq-filters" role="group" aria-label="Filtrar por situação">
-                            <button type="button" class="nq-filter is-active" data-filtro="todos" aria-pressed="true">Todos</button>
-                            <button type="button" class="nq-filter" data-filtro="ativo" aria-pressed="false">Ativos</button>
-                            <button type="button" class="nq-filter" data-filtro="inativo" aria-pressed="false">Inativos</button>
-                            <button type="button" class="nq-filter" data-filtro="alta" aria-pressed="false">Alta</button>
-                        </div>
-                        <span class="nq-count" id="pacContagem" aria-live="polite"></span>
+                    <div class="pc-select">
+                        <select id="pcFiltroPacientes" aria-label="Filtrar pacientes">
+                            <option value="todos">Todos os pacientes</option>
+                            <option value="com-plano">Com plano em andamento</option>
+                            <option value="sem-plano">Sem plano em andamento</option>
+                            <option value="com-consulta">Com consulta agendada</option>
+                        </select>
                     </div>
 
-                    <!-- Estado vazio -->
-                    <div class="pac-empty" id="pacEmpty">
-                        <span class="pac-empty-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                                <circle cx="10" cy="7" r="4"/>
-                                <path d="M20 8v6M17 11h6"/>
-                            </svg>
-                        </span>
-                        <h2>Nenhum paciente cadastrado.</h2>
-                        <p>Cadastre seu primeiro paciente para começar a acompanhar sua evolução.</p>
-                        <button type="button" class="pac-btn pac-btn-primary" id="btnNovoPacienteVazio" data-abrir-paciente>
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-                            Novo paciente
-                        </button>
+                    <div class="pc-select">
+                        <select id="pcFiltroStatus" aria-label="Filtrar por situação">
+                            <option value="todos">Todos os status</option>
+                            <option value="ativo">Ativos</option>
+                            <option value="inativo">Inativos</option>
+                            <option value="alta">Alta nutricional</option>
+                        </select>
                     </div>
 
-                    <!-- Busca sem resultado -->
-                    <div class="pac-empty" id="pacNoResults" hidden>
-                        <span class="pac-empty-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
-                        </span>
-                        <h2>Nenhum paciente encontrado.</h2>
-                        <p>Revise o nome digitado ou limpe a busca para ver todos os pacientes.</p>
+                    <div class="pc-select pc-select-sort">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4v16M8 20l-4-4M8 20l4-4M16 20V4M16 4l-4 4M16 4l4 4"/></svg>
+                        <select id="pcOrdenar" aria-label="Ordenar pacientes">
+                            <option value="">Ordenar por</option>
+                            <option value="recentes">Mais recentes</option>
+                            <option value="antigos">Mais antigos</option>
+                            <option value="nome-az">Nome (A–Z)</option>
+                            <option value="nome-za">Nome (Z–A)</option>
+                        </select>
                     </div>
+                </section>
 
-                    <!-- Lista (aparece quando houver pacientes) -->
-                    <div class="pac-table-wrap" id="pacTableWrap" hidden>
-                        <table class="pac-table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Paciente</th>
-                                    <th scope="col">Contato</th>
-                                    <th scope="col">Objetivo</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col"><span class="pac-sr-only">Ações</span></th>
-                                </tr>
-                            </thead>
-                            <tbody id="pacLista"></tbody>
-                        </table>
-                    </div>
+                <p class="pac-sr-only" id="pcResultado" aria-live="polite"></p>
+
+                <ul class="pc-grid" id="pcLista" hidden></ul>
+
+                <section class="pc-empty" id="pcEmpty" aria-live="polite">
+                    <span class="pc-empty-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="10" cy="7" r="4"/>
+                            <path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </span>
+                    <h2 id="pcVazioTitulo">Nenhum paciente encontrado</h2>
+                    <p id="pcVazioTexto">Comece cadastrando seu primeiro paciente.</p>
+                    <button type="button" class="pac-btn pac-btn-primary" id="btnNovoPacienteVazio" data-abrir-paciente>
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                        Novo paciente
+                    </button>
+                    <button type="button" class="pac-btn nq-btn-ghost" id="pcLimpar" hidden>Limpar filtros</button>
                 </section>
 
                 <footer class="pac-footer">
                     <p>© 2026 NUTRIQ · Painel profissional</p>
                     <p class="pac-footer-slogan">
                         <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M20 4c-9 0-15 4-15 11 0 2 .6 3.800 1.600 5C7.200 14 11 11 15 9c-3.500 2.500-6 5.500-7.500 9.500C9 19.500 10.400 20 12 20c6 0 8-6 8-16z"/>
+                            <path d="M20 4c-9 0-15 4-15 11 0 2 .6 3.8 1.6 5C7.2 14 11 11 15 9c-3.5 2.5-6 5.5-7.5 9.5C9 19.5 10.4 20 12 20c6 0 8-6 8-16z"/>
                         </svg>
                         Mais saúde, mais vida.
                     </p>
@@ -356,6 +360,12 @@
                         <label for="pacTelefone">Telefone <span class="nq-opcional">(opcional)</span></label>
                         <input type="tel" id="pacTelefone" inputmode="tel" placeholder="(11) 99999-9999" autocomplete="off">
                         <span class="nq-error" data-erro-para="pacTelefone"></span>
+                    </div>
+
+                    <div class="nq-field">
+                        <label for="pacCpf">CPF <span class="nq-opcional">(opcional)</span></label>
+                        <input type="text" id="pacCpf" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" autocomplete="off">
+                        <span class="nq-error" data-erro-para="pacCpf"></span>
                     </div>
 
                     <div class="nq-field">
@@ -491,9 +501,9 @@
     <script src="js/main.js" defer></script>
     <script src="js/auth.js" defer></script>
     <script src="js/database.js" defer></script>
-    <script src="js/pages/dashboard.js" defer></script>
+    <script src="js/dashboard.js" defer></script>
     <script src="js/navegacao.js" defer></script>
     <script src="js/nutriq-dados.js" defer></script>
-    <script src="js/pages/pacientes.js" defer></script>
+    <script src="js/pacientes.js" defer></script>
 </body>
 </html>
