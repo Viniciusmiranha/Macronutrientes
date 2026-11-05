@@ -3,1093 +3,379 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NUTRIQ - A plataforma completa para nutricionistas gerenciarem pacientes, planos alimentares e consultas com praticidade e segurança.">
+    <meta name="theme-color" content="#e9f6ef">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <title>NUTRIQ | Saúde através da nutrição</title>
 
-    <meta
-        name="description"
-        content="nutriQ - Tecnologia e cuidado para uma nutrição mais inteligente."
-    >
-
-    <title>nutriQ | Nutrição inteligente</title>
+    <!-- Fonte do design (Montserrat). Se estiver offline, o navegador usa Inter/sistema. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages/landing.css">
 </head>
 
-<body>
+<body class="lp-body">
+
+<div class="lp-page">
+
+    <!-- Formas decorativas do fundo -->
+    <div class="lp-bg" aria-hidden="true"></div>
 
     <!-- =====================================================
          HEADER
     ====================================================== -->
+    <header class="header lp-header" id="topo">
+        <div class="lp-container lp-header-inner">
 
-    <header class="header" id="topo">
-
-        <div class="header-container">
-
-            <!-- LOGO -->
-            <a
-                href="#inicio"
-                class="logo-link"
-                aria-label="Voltar para o início"
-            >
-                <img
-                    src="img/logo (1).png"
-                    alt="nutriQ"
-                    class="logo"
-                >
+            <a href="#inicio" class="logo-link lp-logo" aria-label="NUTRIQ - Saúde através da nutrição">
+                <img src="img/logo (1).png" alt="NUTRIQ - Saúde através da nutrição" class="logo">
             </a>
 
-
-            <!-- NAVEGAÇÃO -->
-            <nav
-                class="nav"
-                id="mainNav"
-                aria-label="Navegação principal"
-            >
-
-                <a
-                    href="#inicio"
-                    class="nav-link active"
-                >
-                    Início
-                </a>
-
-                <a
-                    href="#sobre"
-                    class="nav-link"
-                >
-                    Sobre
-                </a>
-
-                <a
-                    href="#funcionalidades"
-                    class="nav-link"
-                >
-                    Funcionalidades
-                </a>
-
-                <a
-                    href="#contato"
-                    class="nav-link"
-                >
-                    Contato
-                </a>
-
-            </nav>
-
-
-            <!-- AÇÕES DO HEADER -->
-            <div class="header-actions">
-
-                <button
-                    class="theme-button"
-                    id="themeButton"
-                    type="button"
-                    aria-label="Alternar modo escuro"
-                    title="Alternar modo escuro"
-                >
-                    ☾
-                </button>
-
-                <button
-                    class="login-header-button"
-                    id="openLoginHeader"
-                    type="button"
-                >
-                    <span class="login-icon">♙</span>
-                    Entrar
-                </button>
-
-                <button
-                    class="menu-button"
-                    id="menuButton"
-                    type="button"
-                    aria-label="Abrir menu"
-                    aria-expanded="false"
-                >
-                    ☰
-                </button>
-
+            <!-- Mantidos apenas para compatibilidade com main.js e auth.js (não aparecem no design) -->
+            <div class="lp-legacy" hidden>
+                <nav class="nav" id="mainNav" aria-label="Navegação principal">
+                    <a href="#inicio" class="nav-link active">Início</a>
+                    <a href="#sobre" class="nav-link">Sobre</a>
+                    <a href="#funcionalidades" class="nav-link">Funcionalidades</a>
+                    <a href="#contato" class="nav-link">Contato</a>
+                </nav>
+                <button class="theme-button" id="themeButton" type="button" aria-label="Alternar modo escuro">☾</button>
+                <button class="login-header-button" id="openLoginHeader" type="button">Entrar</button>
+                <button class="menu-button" id="menuButton" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
+                <span id="sobre"></span>
+                <span id="funcionalidades"></span>
+                <span id="contato"></span>
             </div>
 
         </div>
-
     </header>
 
 
     <!-- =====================================================
          CONTEÚDO PRINCIPAL
     ====================================================== -->
+    <main class="lp-main" id="inicio">
+        <div class="lp-container lp-hero">
 
-    <main>
+            <!-- ---------- Texto e benefícios ---------- -->
+            <div class="lp-intro">
 
+                <h1 class="lp-title">
+                    <span class="lp-line">Sua rotina de</span>
+                    <span class="lp-line">nutrição mais</span>
+                    <span class="lp-line lp-accent">organizada e eficiente</span>
+                </h1>
 
-        <!-- =================================================
-             HERO / INÍCIO
-        ================================================== -->
+                <p class="lp-description">
+                    O <strong>NUTRIQ</strong> é a plataforma completa para nutricionistas
+                    gerenciarem pacientes, planos alimentares e consultas com
+                    praticidade e segurança.
+                </p>
 
-        <section
-            class="hero"
-            id="inicio"
-        >
+                <ul class="lp-features">
 
-            <div class="hero-container">
-
-
-                <!-- TEXTO -->
-                <div class="hero-content">
-
-                    <span class="section-label">
-                        NUTRIÇÃO INTELIGENTE
-                    </span>
-
-                    <h1>
-                        Tecnologia e cuidado
-                        <br>
-                        para uma nutrição
-                        <br>
-                        <span>mais inteligente.</span>
-                    </h1>
-
-                    <p class="hero-description">
-
-                        O <strong>nutriQ</strong> é um site de auxílio
-                        para nutricionistas que desejam gerenciar
-                        seus pacientes, dietas e acompanhamentos,
-                        além de oferecer ferramentas práticas para
-                        cálculos nutricionais, como macronutrientes,
-                        IMC e ingestão de água.
-
-                    </p>
-
-
-                    <!-- MINI FUNCIONALIDADES -->
-
-                    <div class="hero-features">
-
-
-                        <div class="hero-feature">
-
-                            <div class="feature-icon">
-                                ♧
-                            </div>
-
-                            <div>
-
-                                <h3>
-                                    Gerencie seus pacientes
-                                </h3>
-
-                                <p>
-                                    Organize e acompanhe o
-                                    progresso de cada um.
-                                </p>
-
-                            </div>
-
+                    <li class="lp-feature">
+                        <span class="lp-feature-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="10" cy="7" r="4"/>
+                                <path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <h3>Gerencie pacientes</h3>
+                            <p>Acompanhe a evolução de cada paciente.</p>
                         </div>
+                    </li>
 
-
-                        <div class="hero-feature">
-
-                            <div class="feature-icon">
-                                ♜
-                            </div>
-
-                            <div>
-
-                                <h3>
-                                    Crie e personalize dietas
-                                </h3>
-
-                                <p>
-                                    Planos alimentares com
-                                    mais eficiência.
-                                </p>
-
-                            </div>
-
+                    <li class="lp-feature">
+                        <span class="lp-feature-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="3" y="4" width="18" height="17" rx="2"/>
+                                <path d="M8 2v4M16 2v4M3 9h18M9 15l2 2 4-4"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <h3>Crie planos alimentares</h3>
+                            <p>Personalize planos de forma simples e rápida.</p>
                         </div>
+                    </li>
 
-
-                        <div class="hero-feature">
-
-                            <div class="feature-icon">
-                                ▣
-                            </div>
-
-                            <div>
-
-                                <h3>
-                                    Utilize calculadoras
-                                </h3>
-
-                                <p>
-                                    IMC, macronutrientes,
-                                    água e muito mais.
-                                </p>
-
-                            </div>
-
+                    <li class="lp-feature">
+                        <span class="lp-feature-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="3" y="4" width="18" height="17" rx="2"/>
+                                <path d="M8 2v4M16 2v4M3 9h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <h3>Organize sua agenda</h3>
+                            <p>Controle seus atendimentos.</p>
                         </div>
+                    </li>
 
-
-                        <div class="hero-feature">
-
-                            <div class="feature-icon">
-                                ↗
-                            </div>
-
-                            <div>
-
-                                <h3>
-                                    Acompanhe a evolução
-                                </h3>
-
-                                <p>
-                                    Veja resultados reais
-                                    e mantenha o foco.
-                                </p>
-
-                            </div>
-
+                    <li class="lp-feature">
+                        <span class="lp-feature-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M4 21v-6M10 21v-9M16 21v-7"/>
+                                <path d="M3 9l5-4 4 3 8-6M15 2h5v5"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <h3>Acompanhe resultados</h3>
+                            <p>Visualize o progresso dos seus pacientes.</p>
                         </div>
+                    </li>
 
-                    </div>
+                </ul>
+            </div>
 
+
+            <!-- ---------- Cartão de cadastro ---------- -->
+            <section class="lp-card" aria-labelledby="lpTitulo">
+
+                <div class="lp-badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M2 21a7 7 0 0 1 14 0"/>
+                        <path d="M19 8v6M16 11h6"/>
+                    </svg>
                 </div>
 
+                <h2 id="lpTitulo">Crie sua conta</h2>
+                <p class="lp-card-sub">Comece agora a aproveitar todos os recursos do NUTRIQ.</p>
 
-                <!-- CARD DE PERFIL -->
+                <!-- Cadastro de nutricionista (ids originais mantidos) -->
+                <form id="registerForm" class="access-form lp-form" novalidate>
 
-                <div class="profile-card">
-
-                    <div class="profile-logo">
-                        <img
-                            src="img/logo (1).png"
-                            alt="nutriQ"
-                        >
+                    <!-- Mantido para compatibilidade com auth.js (não aparece no design) -->
+                    <div class="register-title lp-legacy-block">
+                        <button type="button" id="backToLogin" class="back-button" tabindex="-1">← Voltar</button>
                     </div>
 
-                    <h2>
-                        Qual é o seu perfil?
-                    </h2>
+                    <div class="form-group lp-field">
+                        <label for="registerName">Nome completo</label>
+                        <svg class="lp-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+                        <input type="text" id="registerName" placeholder="Digite seu nome completo" autocomplete="name" required>
+                        <small class="error-message"></small>
+                    </div>
 
-                    <p class="profile-subtitle">
-                        Escolha como você vai utilizar o nutriQ
-                        e faça seu cadastro ou entre na sua conta.
-                    </p>
+                    <div class="form-group lp-field">
+                        <label for="registerEmail">E-mail profissional</label>
+                        <svg class="lp-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                        <input type="email" id="registerEmail" placeholder="Digite seu e-mail" autocomplete="email" required>
+                        <small class="error-message"></small>
+                    </div>
 
-
-                    <!-- NUTRICIONISTA -->
-
-                    <button
-                        class="profile-option nutritionist-option"
-                        id="nutritionistButton"
-                        type="button"
-                    >
-
-                        <div class="profile-option-icon">
-                            ♧
+                    <div class="lp-row">
+                        <div class="form-group lp-field">
+                            <label for="registerCPF">CPF</label>
+                            <svg class="lp-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16a3 3 0 0 1 6 0M14 10h4M14 14h4"/></svg>
+                            <input type="text" id="registerCPF" placeholder="000.000.000-00" autocomplete="off" maxlength="14" inputmode="numeric" required>
+                            <small class="error-message"></small>
                         </div>
 
-                        <div class="profile-option-text">
-
-                            <h3>
-                                Sou nutricionista
-                            </h3>
-
-                            <p>
-                                Gerencie seus pacientes, crie dietas,
-                                acompanhe resultados e tenha acesso
-                                a todas as ferramentas do sistema.
-                            </p>
-
+                        <div class="form-group lp-field">
+                            <label for="registerCRN">CRN</label>
+                            <svg class="lp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 5 3 8 7 10 4-2 7-5 7-10V6z"/><path d="m9 12 2 2 4-4"/></svg>
+                            <input type="text" id="registerCRN" placeholder="Ex.: CRN-3 12345" autocomplete="off" required>
+                            <small class="field-info">Informe o número do seu registro profissional.</small>
+                            <small class="error-message"></small>
                         </div>
+                    </div>
 
-                        <span class="arrow">
-                            →
-                        </span>
+                    <div class="form-group lp-field">
+                        <label for="registerPassword">Senha</label>
+                        <svg class="lp-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                        <button type="button" class="lp-eye" data-toggle-senha="registerPassword" aria-label="Mostrar senha" aria-pressed="false">
+                            <svg class="lp-eye-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 6.1A9.7 9.7 0 0 1 12 6c5 0 8.500 4 9.500 6a14 14 0 0 1-3.200 3.800M6.600 6.900C4.500 8.300 3 10.400 2.500 12c1 2 4.500 6 9.500 6 1.200 0 2.300-.2 3.300-.6M9.900 9.900a3 3 0 0 0 4.200 4.200"/></svg>
+                            <svg class="lp-eye-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.500 12C3.500 10 7 6 12 6s8.500 4 9.500 6c-1 2-4.500 6-9.500 6S3.500 14 2.500 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </button>
+                        <input type="password" id="registerPassword" placeholder="Crie uma senha segura" minlength="6" autocomplete="new-password" required>
+                        <small class="error-message"></small>
+                    </div>
 
+                    <div class="form-group lp-field">
+                        <label for="registerConfirmPassword">Confirmar senha</label>
+                        <svg class="lp-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                        <button type="button" class="lp-eye" data-toggle-senha="registerConfirmPassword" aria-label="Mostrar senha" aria-pressed="false">
+                            <svg class="lp-eye-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 6.1A9.7 9.7 0 0 1 12 6c5 0 8.500 4 9.500 6a14 14 0 0 1-3.200 3.800M6.600 6.900C4.500 8.300 3 10.400 2.500 12c1 2 4.500 6 9.500 6 1.200 0 2.300-.2 3.300-.6M9.900 9.900a3 3 0 0 0 4.200 4.200"/></svg>
+                            <svg class="lp-eye-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.500 12C3.500 10 7 6 12 6s8.500 4 9.500 6c-1 2-4.500 6-9.500 6S3.500 14 2.500 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </button>
+                        <input type="password" id="registerConfirmPassword" placeholder="Confirme sua senha" minlength="6" autocomplete="new-password" required>
+                        <small class="error-message"></small>
+                    </div>
+
+                    <button class="primary-button lp-submit" type="submit">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2 21a7 7 0 0 1 14 0"/><path d="M19 8v6M16 11h6"/></svg>
+                        Cadastrar
                     </button>
 
+                    <p class="lp-feedback" id="lpFeedback" role="status" hidden></p>
 
-                    <!-- PACIENTE -->
+                </form>
 
-                    <button
-                        class="profile-option patient-option"
-                        id="patientButton"
-                        type="button"
-                    >
+                <div class="lp-divider"><span>ou</span></div>
 
-                        <div class="profile-option-icon patient-icon">
-                            ♙
-                        </div>
-
-                        <div class="profile-option-text">
-
-                            <h3>
-                                Sou paciente
-                            </h3>
-
-                            <p>
-                                Acompanhe sua dieta, veja sua evolução,
-                                utilize as calculadoras e mantenha
-                                contato com seu nutricionista.
-                            </p>
-
-                        </div>
-
-                        <span class="arrow">
-                            →
-                        </span>
-
+                <!-- Quem já tem conta entra pelos botões abaixo (ids originais mantidos) -->
+                <div class="lp-login-row">
+                    <button class="profile-option nutritionist-option lp-login-btn" id="nutritionistButton" type="button">
+                        Entrar como nutricionista
                     </button>
-
-
-                    <div class="security-message">
-                        <span>♙</span>
-                        Seus dados estão seguros conosco.
-                    </div>
-
+                    <button class="profile-option patient-option lp-login-btn" id="patientButton" type="button">
+                        Entrar como paciente
+                    </button>
                 </div>
 
-            </div>
+                <p class="lp-secure">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.500 4 5.500v6c0 5 3.400 8.600 8 10 4.600-1.400 8-5 8-10v-6z"/><path d="m8.500 12 2.500 2.500 4.500-5"/></svg>
+                    Seus dados estão seguros conosco.
+                </p>
 
-        </section>
+            </section>
 
-
-        <!-- =================================================
-             SOBRE
-        ================================================== -->
-
-        <section
-            class="about-section"
-            id="sobre"
-        >
-
-            <div class="section-container">
-
-                <div class="section-heading">
-
-                    <span>
-                        POR QUE O NUTRIQ?
-                    </span>
-
-                    <h2>
-                        Mais praticidade para
-                        <br>
-                        o seu dia a dia.
-                    </h2>
-
-                    <div class="heading-line"></div>
-
-                </div>
-
-
-                <div class="benefits-grid">
-
-
-                    <article class="benefit-card">
-
-                        <div class="benefit-icon">
-                            ♢
-                        </div>
-
-                        <h3>
-                            Seguro e confiável
-                        </h3>
-
-                        <p>
-                            Seus dados protegidos com
-                            tecnologia de ponta.
-                        </p>
-
-                    </article>
-
-
-                    <article class="benefit-card">
-
-                        <div class="benefit-icon">
-                            ▣
-                        </div>
-
-                        <h3>
-                            Acesse de qualquer lugar
-                        </h3>
-
-                        <p>
-                            No computador, tablet
-                            ou celular.
-                        </p>
-
-                    </article>
-
-
-                    <article class="benefit-card">
-
-                        <div class="benefit-icon">
-                            ϟ
-                        </div>
-
-                        <h3>
-                            Simples e intuitivo
-                        </h3>
-
-                        <p>
-                            Mais tempo para o que
-                            realmente importa.
-                        </p>
-
-                    </article>
-
-
-                    <article class="benefit-card">
-
-                        <div class="benefit-icon">
-                            ♡
-                        </div>
-
-                        <h3>
-                            Feito para quem entende
-                        </h3>
-
-                        <p>
-                            Desenvolvido pensando
-                            na rotina do nutricionista.
-                        </p>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             FUNCIONALIDADES
-        ================================================== -->
-
-        <section
-            class="functionalities-section"
-            id="funcionalidades"
-        >
-
-            <div class="section-container">
-
-                <div class="section-title-center">
-
-                    <span>
-                        FUNCIONALIDADES
-                    </span>
-
-                    <h2>
-                        Tudo o que você precisa
-                        <br>
-                        em um só lugar.
-                    </h2>
-
-                    <p>
-                        Ferramentas desenvolvidas para
-                        facilitar a rotina nutricional.
-                    </p>
-
-                </div>
-
-
-                <div class="functionalities-grid">
-
-
-                    <article class="function-card">
-
-                        <div class="function-number">
-                            01
-                        </div>
-
-                        <h3>
-                            Gestão de pacientes
-                        </h3>
-
-                        <p>
-                            Cadastre e acompanhe seus pacientes
-                            de maneira organizada.
-                        </p>
-
-                    </article>
-
-
-                    <article class="function-card">
-
-                        <div class="function-number">
-                            02
-                        </div>
-
-                        <h3>
-                            Planos alimentares
-                        </h3>
-
-                        <p>
-                            Crie e personalize planos de acordo
-                            com as necessidades de cada paciente.
-                        </p>
-
-                    </article>
-
-
-                    <article class="function-card">
-
-                        <div class="function-number">
-                            03
-                        </div>
-
-                        <h3>
-                            Calculadora de IMC
-                        </h3>
-
-                        <p>
-                            Calcule rapidamente o índice de massa
-                            corporal.
-                        </p>
-
-                    </article>
-
-
-                    <article class="function-card">
-
-                        <div class="function-number">
-                            04
-                        </div>
-
-                        <h3>
-                            Macronutrientes
-                        </h3>
-
-                        <p>
-                            Faça cálculos nutricionais de maneira
-                            rápida e prática.
-                        </p>
-
-                    </article>
-
-
-                    <article class="function-card">
-
-                        <div class="function-number">
-                            05
-                        </div>
-
-                        <h3>
-                            Ingestão de água
-                        </h3>
-
-                        <p>
-                            Estime a quantidade de água necessária
-                            diariamente.
-                        </p>
-
-                    </article>
-
-
-                    <article class="function-card">
-
-                        <div class="function-number">
-                            06
-                        </div>
-
-                        <h3>
-                            Acompanhamento
-                        </h3>
-
-                        <p>
-                            Visualize a evolução dos pacientes
-                            ao longo do tempo.
-                        </p>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             CONTATO
-        ================================================== -->
-
-        <section
-            class="contact-section"
-            id="contato"
-        >
-
-            <div class="contact-container">
-
-                <div class="contact-content">
-
-                    <span>
-                        CONTATE-NOS
-                    </span>
-
-                    <h2>
-                        Vamos cuidar da
-                        <br>
-                        sua nutrição juntos.
-                    </h2>
-
-                    <p>
-                        Tem alguma dúvida, sugestão ou precisa
-                        de ajuda? Entre em contato com a equipe
-                        nutriQ.
-                    </p>
-
-                </div>
-
-
-                <div class="contact-card">
-
-                    <div class="contact-item">
-
-                        <span class="contact-icon">
-                            @
-                        </span>
-
-                        <div>
-
-                            <small>
-                                E-mail
-                            </small>
-
-                            <strong>
-                                contato@nutriq.com
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="contact-item">
-
-                        <span class="contact-icon">
-                            ☏
-                        </span>
-
-                        <div>
-
-                            <small>
-                                Atendimento
-                            </small>
-
-                            <strong>
-                                Segunda a sexta
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
+        </div>
     </main>
 
 
     <!-- =====================================================
          FOOTER
     ====================================================== -->
-
-    <footer class="footer">
-
-        <div class="footer-container">
-
-            <img
-                src="img/logo (1).png"
-                alt="nutriQ"
-                class="footer-logo"
-            >
-
-            <p>
-                © 2026 nutriQ. Todos os direitos reservados.
-            </p>
-
-            <a href="#inicio">
-                Voltar ao início ↑
-            </a>
-
+    <footer class="lp-footer">
+        <div class="lp-container">
+            <p>© 2026 NUTRIQ · Todos os direitos reservados.</p>
         </div>
-
     </footer>
 
+</div>
 
-    <!-- =====================================================
-         MODAL DE ACESSO
-    ====================================================== -->
 
-    <div
-        class="modal-overlay"
-        id="accessModal"
-        aria-hidden="true"
-    >
+<!-- =====================================================
+     MODAL DE ACESSO (login) — mesmo código e ids do original
+====================================================== -->
 
-        <div
-            class="modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="modalTitle"
-        >
+<div class="modal-overlay" id="accessModal" aria-hidden="true">
 
-            <button
-                class="modal-close"
-                id="closeModal"
-                type="button"
-                aria-label="Fechar"
-            >
-                ×
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+
+        <button class="modal-close" id="closeModal" type="button" aria-label="Fechar">×</button>
+
+        <img src="img/logo.png" alt="NUTRIQ" class="modal-logo">
+
+        <h2 id="modalTitle">Entrar no NUTRIQ</h2>
+
+        <p class="modal-description" id="modalDescription">
+            Acesse sua conta para continuar.
+        </p>
+
+        <div class="selected-profile" id="selectedProfile">
+            <span id="profileIcon">♙</span>
+            <span id="profileName">Perfil</span>
+        </div>
+
+        <form id="loginForm" class="access-form" novalidate>
+
+            <div class="form-group">
+                <label for="loginEmail">E-mail</label>
+                <input type="email" id="loginEmail" name="email" placeholder="seu@email.com" autocomplete="email" required>
+                <small class="error-message"></small>
+            </div>
+
+            <div class="form-group">
+                <label for="loginPassword">Senha</label>
+                <input type="password" id="loginPassword" name="password" placeholder="Digite sua senha" autocomplete="current-password" minlength="6" required>
+                <small class="error-message"></small>
+            </div>
+
+            <button class="primary-button" type="submit">Entrar</button>
+
+        </form>
+
+        <!-- O cadastro de nutricionista agora fica na própria página; este bloco é mantido
+             (oculto pelo landing.css) só para não quebrar o auth.js -->
+        <div class="nutritionist-register" id="nutritionistRegister">
+            <div class="divider"><span>ou</span></div>
+            <button class="secondary-button" id="showRegister" type="button">
+                Criar conta de nutricionista
             </button>
+        </div>
 
+        <div class="patient-info hidden" id="patientInfo">
 
-            <!-- LOGO -->
+            <div class="patient-info-icon">♙</div>
 
-            <img
-                src="img/logo.png"
-                alt="nutriQ"
-                class="modal-logo"
-            >
+            <h3>Cadastro realizado pelo nutricionista</h3>
 
+            <p>O paciente não pode criar uma conta diretamente no NUTRIQ.</p>
 
-            <!-- TÍTULO -->
-
-            <h2 id="modalTitle">
-                Entrar no nutriQ
-            </h2>
-
-            <p
-                class="modal-description"
-                id="modalDescription"
-            >
-                Acesse sua conta para continuar.
+            <p>
+                Seu nutricionista deverá realizar seu cadastro e fornecer
+                os dados necessários para o acesso.
             </p>
 
-
-            <!-- INDICADOR DE PERFIL -->
-
-            <div
-                class="selected-profile"
-                id="selectedProfile"
-            >
-                <span id="profileIcon">♙</span>
-
-                <span id="profileName">
-                    Perfil
-                </span>
-            </div>
-
-
-            <!-- FORMULÁRIO DE LOGIN -->
-
-            <form
-                id="loginForm"
-                class="access-form"
-                novalidate
-            >
-
-                <div class="form-group">
-
-                    <label for="loginEmail">
-                        E-mail
-                    </label>
-
-                    <input
-                        type="email"
-                        id="loginEmail"
-                        name="email"
-                        placeholder="seu@email.com"
-                        autocomplete="email"
-                        required
-                    >
-
-                    <small class="error-message"></small>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="loginPassword">
-                        Senha
-                    </label>
-
-                    <input
-                        type="password"
-                        id="loginPassword"
-                        name="password"
-                        placeholder="Digite sua senha"
-                        autocomplete="current-password"
-                        minlength="6"
-                        required
-                    >
-
-                    <small class="error-message"></small>
-
-                </div>
-
-
-                <button
-                    class="primary-button"
-                    type="submit"
-                >
-                    Entrar
-                </button>
-
-            </form>
-
-
-            <!-- ÁREA DO NUTRICIONISTA -->
-
-            <div
-                class="nutritionist-register"
-                id="nutritionistRegister"
-            >
-
-                <div class="divider">
-                    <span>
-                        ou
-                    </span>
-                </div>
-
-                <button
-                    class="secondary-button"
-                    id="showRegister"
-                    type="button"
-                >
-                    Criar conta de nutricionista
-                </button>
-
-            </div>
-
-
-            <!-- FORMULÁRIO DE CADASTRO -->
-
-            <form
-                id="registerForm"
-                class="access-form hidden"
-                novalidate
-            >
-
-                <div class="register-title">
-
-                    <button
-                        type="button"
-                        id="backToLogin"
-                        class="back-button"
-                    >
-                        ← Voltar
-                    </button>
-
-                    <h3>
-                        Criar conta
-                    </h3>
-
-                    <p>
-                        Cadastro exclusivo para nutricionistas.
-                    </p>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="registerName">
-                        Nome completo
-                    </label>
-
-                    <input
-                        type="text"
-                        id="registerName"
-                        placeholder="Seu nome completo"
-                        autocomplete="name"
-                        required
-                    >
-
-                    <small class="error-message"></small>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="registerEmail">
-                        E-mail
-                    </label>
-
-                    <input
-                        type="email"
-                        id="registerEmail"
-                        placeholder="seu@email.com"
-                        autocomplete="email"
-                        required
-                    >
-
-                    <small class="error-message"></small>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label for="registerCPF">
-                        CPF
-                    </label>
-
-                    <input
-                        type="text"
-                        id="registerCPF"
-                        placeholder="000.000.000-00"
-                        autocomplete="off"
-                        maxlength="14"
-                        inputmode="numeric"
-                        required
-                    >
-
-                    <small class="error-message"></small>
-
-                </div>
-                <div class="form-group">
-
-                    <label for="registerCRN">
-                        CRN
-                    </label>
-
-                    <input
-                        type="text"
-                        id="registerCRN"
-                        placeholder="Ex.: CRN-3 12345"
-                        autocomplete="off"
-                        required
-                    >
-
-                    <small class="field-info">
-                        Informe o número do seu registro profissional.
-                    </small>
-
-                    <small class="error-message"></small>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="registerPassword">
-                        Senha
-                    </label>
-
-                    <input
-                        type="password"
-                        id="registerPassword"
-                        placeholder="Mínimo de 6 caracteres"
-                        minlength="6"
-                        autocomplete="new-password"
-                        required
-                    >
-
-                    <small class="error-message"></small>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="registerConfirmPassword">
-                        Confirmar senha
-                    </label>
-
-                    <input
-                        type="password"
-                        id="registerConfirmPassword"
-                        placeholder="Digite a senha novamente"
-                        minlength="6"
-                        autocomplete="new-password"
-                        required
-                    >
-
-                    <small class="error-message"></small>
-
-                </div>
-
-
-                <button
-                    class="primary-button"
-                    type="submit"
-                >
-                    Criar minha conta
-                </button>
-
-            </form>
-
-
-            <!-- AVISO PACIENTE -->
-
-            <div
-                class="patient-info hidden"
-                id="patientInfo"
-            >
-
-                <div class="patient-info-icon">
-                    ♙
-                </div>
-
-                <h3>
-                    Cadastro realizado pelo nutricionista
-                </h3>
-
-                <p>
-                    O paciente não pode criar uma conta
-                    diretamente no nutriQ.
-                </p>
-
-                <p>
-                    Seu nutricionista deverá realizar seu
-                    cadastro e fornecer os dados necessários
-                    para o acesso.
-                </p>
-
-                <button
-                    class="primary-button"
-                    id="patientLoginButton"
-                    type="button"
-                >
-                    Entrar como paciente
-                </button>
-
-            </div>
-
-
-            <!-- FEEDBACK -->
-
-            <div
-                class="modal-feedback"
-                id="modalFeedback"
-                role="alert"
-            ></div>
+            <button class="primary-button" id="patientLoginButton" type="button">
+                Entrar como paciente
+            </button>
 
         </div>
+
+        <div class="modal-feedback" id="modalFeedback" role="alert"></div>
 
     </div>
 
+</div>
 
-    <script src="js/main.js" defer></script>
-    <script src="js/auth.js" defer></script>
-    <script src="js/database.js" defer></script>
-    <script src="js/pages/dashboard.js" defer></script>
-    <script src="js/navegacao.js" defer></script>
+
+<script>
+    /* Mostrar/ocultar senha e espelhar, no cartão, a mensagem de resultado do cadastro. */
+    document.addEventListener("DOMContentLoaded", function () {
+        "use strict";
+
+        document.querySelectorAll("[data-toggle-senha]").forEach(function (botao) {
+            botao.addEventListener("click", function () {
+                var campo = document.getElementById(botao.getAttribute("data-toggle-senha"));
+                if (!campo) return;
+                var mostrar = campo.type === "password";
+                campo.type = mostrar ? "text" : "password";
+                botao.classList.toggle("is-visible", mostrar);
+                botao.setAttribute("aria-pressed", mostrar ? "true" : "false");
+                botao.setAttribute("aria-label", mostrar ? "Ocultar senha" : "Mostrar senha");
+            });
+        });
+
+        var formulario = document.getElementById("registerForm");
+        var origem = document.getElementById("modalFeedback");
+        var destino = document.getElementById("lpFeedback");
+        if (!formulario || !origem || !destino) return;
+
+        var aguardando = false;
+        // "true" = fase de captura: roda antes do tratamento do auth.js
+        formulario.addEventListener("submit", function () {
+            aguardando = true;
+            destino.hidden = true;
+            destino.textContent = "";
+        }, true);
+
+        new MutationObserver(function () {
+            if (!aguardando) return;
+            var texto = origem.textContent.trim();
+            if (texto) {
+                destino.textContent = texto;
+                destino.hidden = false;
+            }
+        }).observe(origem, { childList: true, characterData: true, subtree: true, attributes: true });
+    });
+</script>
+
+<script src="js/main.js" defer></script>
+<script src="js/auth.js" defer></script>
+<script src="js/database.js" defer></script>
+<script src="js/pages/dashboard.js" defer></script>
+<script src="js/navegacao.js" defer></script>
 
 </body>
 
