@@ -1,0 +1,645 @@
+/* =====================================================
+   NUTRIQ · Página inicial (css/pages/landing.css)
+   Carregue DEPOIS do css/style.css.
+   Tudo usa o prefixo .lp- para não colidir com o style.css.
+   Objetivo: caber em uma tela (scroll leve ou nenhum).
+===================================================== */
+
+.lp-body {
+    margin: 0;
+    background: #e9f6ef;
+}
+
+.lp-page {
+    --lp-ink: #0e3c43;
+    --lp-green: #13795f;
+    --lp-green-dark: #0e6049;
+    --lp-text: #2b6a5e;
+    --lp-muted: #5f807a;
+    --lp-line: #d9e7e1;
+    --lp-soft: #dcf0e7;
+    --lp-danger: #b4483c;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #e5f5ed 0%, #f1faf6 48%, #e2f3eb 100%);
+    color: var(--lp-ink);
+    font-family: Montserrat, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+.lp-page *,
+.lp-page *::before,
+.lp-page *::after {
+    box-sizing: border-box;
+}
+
+.lp-legacy[hidden],
+.lp-legacy-block {
+    display: none !important;
+}
+
+.lp-container {
+    width: min(1380px, calc(100% - 2 * clamp(20px, 7.4vw, 125px)));
+    margin-inline: auto;
+}
+
+/* ---------- Fundo decorativo ---------- */
+.lp-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.lp-bg::before,
+.lp-bg::after {
+    position: absolute;
+    border-radius: 50%;
+    content: "";
+}
+
+.lp-bg::before {
+    top: -18%;
+    right: -14%;
+    width: 64%;
+    height: 135%;
+    background: radial-gradient(ellipse at 35% 45%, rgba(152, 213, 186, 0.5), rgba(152, 213, 186, 0.22) 60%, rgba(152, 213, 186, 0) 72%);
+}
+
+.lp-bg::after {
+    bottom: -38%;
+    left: -12%;
+    width: 78%;
+    height: 70%;
+    background: radial-gradient(ellipse at 50% 30%, rgba(180, 225, 205, 0.55), rgba(180, 225, 205, 0) 68%);
+}
+
+/* ---------- Header ---------- */
+/* "all: unset" apaga qualquer regra do .header do style.css (fixo, sombra, etc.). */
+.lp-page .lp-header.header {
+    all: unset;
+    position: relative;
+    z-index: 2;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    border-bottom: 1px solid rgba(23, 107, 88, 0.14);
+}
+
+.lp-header-inner {
+    display: flex;
+    align-items: center;
+    min-height: clamp(62px, 9.5vh, 96px);
+}
+
+.lp-page .lp-logo {
+    display: inline-flex;
+    align-items: center;
+}
+
+.lp-page .lp-logo .logo {
+    display: block;
+    width: auto;
+    height: clamp(38px, 6.2vh, 58px);
+    max-width: none;
+}
+
+/* ---------- Conteúdo principal ---------- */
+.lp-page main.lp-main {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    margin: 0;
+    padding: clamp(14px, 2.8vh, 40px) 0;
+}
+
+.lp-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(400px, 37%);
+    gap: clamp(32px, 5.4vw, 100px);
+    align-items: center;
+}
+
+.lp-intro {
+    min-width: 0;
+}
+
+.lp-title {
+    margin: 0 0 clamp(12px, 2.4vh, 28px);
+    color: var(--lp-ink);
+    font-size: clamp(2rem, min(4.7vw, 8vh), 4.6rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+}
+
+.lp-line {
+    display: block;
+}
+
+.lp-accent {
+    background: linear-gradient(90deg, #0f6b55, #1f9f75);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.lp-description {
+    max-width: 46rem;
+    margin: 0 0 clamp(16px, 3.2vh, 34px);
+    color: var(--lp-text);
+    font-size: clamp(0.95rem, 1.32vw, 1.2rem);
+    font-weight: 500;
+    line-height: 1.55;
+}
+
+.lp-description strong {
+    color: var(--lp-green);
+    font-weight: 700;
+}
+
+/* ---------- Benefícios ---------- */
+.lp-features {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(10px, 1.9vh, 18px) clamp(10px, 1.2vw, 18px);
+    max-width: 52rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lp-feature {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 1.2vw, 18px);
+    min-width: 0;
+    padding: clamp(10px, 1.9vh, 18px) clamp(14px, 1.4vw, 22px);
+    background: rgba(255, 255, 255, 0.74);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    border-radius: 14px;
+    box-shadow: 0 6px 22px rgba(20, 90, 70, 0.06);
+}
+
+.lp-feature-icon {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: clamp(46px, 7.2vh, 66px);
+    height: clamp(46px, 7.2vh, 66px);
+    background: var(--lp-soft);
+    border-radius: 50%;
+}
+
+.lp-feature-icon svg {
+    width: 52%;
+    height: 52%;
+}
+
+.lp-feature h3 {
+    margin: 0 0 2px;
+    color: var(--lp-ink);
+    font-size: clamp(0.92rem, 1.25vw, 1.1rem);
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.lp-feature p {
+    margin: 0;
+    color: var(--lp-muted);
+    font-size: clamp(0.78rem, 1vw, 0.9rem);
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* Ícones de traço (padrão do projeto) */
+.lp-feature-icon svg,
+.lp-badge svg,
+.lp-ico,
+.lp-eye svg,
+.lp-submit svg {
+    fill: none;
+    stroke: var(--lp-green);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ---------- Cartão de cadastro ---------- */
+.lp-card {
+    width: 100%;
+    min-width: 0;
+    padding: clamp(14px, 2.4vh, 26px) clamp(20px, 2.3vw, 36px) clamp(12px, 2vh, 22px);
+    background: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 22px 60px rgba(19, 100, 78, 0.14);
+}
+
+.lp-badge {
+    display: grid;
+    place-items: center;
+    width: clamp(54px, 8.6vh, 84px);
+    height: clamp(54px, 8.6vh, 84px);
+    margin: 0 auto clamp(6px, 1.2vh, 12px);
+    background: var(--lp-soft);
+    border-radius: 50%;
+}
+
+.lp-badge svg {
+    width: 50%;
+    height: 50%;
+}
+
+.lp-card h2 {
+    margin: 0;
+    color: var(--lp-ink);
+    font-size: clamp(1.35rem, min(2.5vw, 4vh), 2.2rem);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    text-align: center;
+}
+
+.lp-card-sub {
+    max-width: 26rem;
+    margin: clamp(4px, 0.8vh, 8px) auto clamp(10px, 1.8vh, 18px);
+    color: var(--lp-text);
+    font-size: clamp(0.78rem, 1.6vh, 0.95rem);
+    font-weight: 500;
+    line-height: 1.45;
+    text-align: center;
+}
+
+/* ---------- Formulário ---------- */
+.lp-card .lp-form {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(6px, 1.2vh, 12px);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+}
+
+.lp-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(8px, 1vw, 14px);
+}
+
+/* Cada campo mantém a estrutura do original: label, input, small.error-message.
+   Ícone e botão do olho ficam sobre o input usando a mesma célula da grade. */
+.lp-card .form-group.lp-field {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 4px;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.lp-card .lp-field label {
+    grid-row: 1;
+    margin: 0;
+    color: var(--lp-ink);
+    font-size: clamp(0.74rem, 1.55vh, 0.88rem);
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.lp-card .lp-field .lp-ico {
+    grid-row: 2;
+    grid-column: 1;
+    z-index: 1;
+    align-self: center;
+    justify-self: start;
+    width: 18px;
+    height: 18px;
+    margin-left: 14px;
+    stroke: #5f807a;
+    pointer-events: none;
+}
+
+.lp-card .lp-field input {
+    grid-row: 2;
+    grid-column: 1;
+    width: 100%;
+    min-width: 0;
+    height: clamp(38px, 5.1vh, 46px);
+    margin: 0;
+    padding: 0 14px 0 42px;
+    background: #fff;
+    border: 1px solid var(--lp-line);
+    border-radius: 10px;
+    box-shadow: none;
+    color: var(--lp-ink);
+    font: inherit;
+    font-size: clamp(0.8rem, 1.6vh, 0.92rem);
+    font-weight: 500;
+    outline: 0;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lp-card .lp-field input[type="password"],
+.lp-card .lp-field:has(.lp-eye) input {
+    padding-right: 46px;
+}
+
+.lp-card .lp-field input::placeholder {
+    color: #8aa29c;
+    font-weight: 500;
+}
+
+.lp-card .lp-field input:hover {
+    border-color: #c3d9d0;
+}
+
+.lp-card .lp-field input:focus {
+    border-color: var(--lp-green);
+    box-shadow: 0 0 0 3px rgba(19, 121, 95, 0.14);
+}
+
+.lp-card .lp-field:focus-within .lp-ico {
+    stroke: var(--lp-green);
+}
+
+/* Estados de erro (cobre as classes mais comuns que o auth.js pode aplicar) */
+.lp-card .form-group.error input,
+.lp-card .form-group.has-error input,
+.lp-card .form-group.invalid input,
+.lp-card .lp-field input.error,
+.lp-card .lp-field input.invalid,
+.lp-card .lp-field input.input-error,
+.lp-card .lp-field input[aria-invalid="true"] {
+    border-color: var(--lp-danger);
+}
+
+.lp-card .lp-field .error-message {
+    grid-row: 3;
+    display: block;
+    margin: 0;
+    color: var(--lp-danger);
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.lp-card .lp-field .error-message:empty,
+.lp-card .lp-field .field-info {
+    display: none;
+}
+
+.lp-card .lp-field .lp-eye {
+    grid-row: 2;
+    grid-column: 1;
+    z-index: 1;
+    align-self: center;
+    justify-self: end;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    margin: 0 6px 0 0;
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.lp-card .lp-eye:hover {
+    background: #eef6f2;
+}
+
+.lp-card .lp-eye:focus-visible {
+    outline: 3px solid rgba(19, 121, 95, 0.3);
+}
+
+.lp-eye svg {
+    width: 19px;
+    height: 19px;
+    stroke: #5f807a;
+}
+
+.lp-eye .lp-eye-on,
+.lp-eye.is-visible .lp-eye-off {
+    display: none;
+}
+
+.lp-eye.is-visible .lp-eye-on {
+    display: block;
+}
+
+/* ---------- Botão principal ---------- */
+.lp-card .lp-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height: clamp(40px, 5.6vh, 50px);
+    margin: clamp(2px, 0.6vh, 6px) 0 0;
+    padding: 0 18px;
+    background: var(--lp-green);
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 8px 18px rgba(19, 121, 95, 0.22);
+    color: #fff;
+    font: inherit;
+    font-size: clamp(0.88rem, 1.85vh, 1.05rem);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.lp-card .lp-submit:hover {
+    background: var(--lp-green-dark);
+}
+
+.lp-card .lp-submit:active {
+    transform: translateY(1px);
+}
+
+.lp-card .lp-submit:focus-visible,
+.lp-card .lp-login-btn:focus-visible {
+    outline: 3px solid rgba(19, 121, 95, 0.35);
+    outline-offset: 2px;
+}
+
+.lp-submit svg {
+    width: 21px;
+    height: 21px;
+    stroke: #fff;
+}
+
+.lp-feedback {
+    margin: 8px 0 0;
+    padding: 8px 12px;
+    background: #eef8f3;
+    border: 1px solid #cfe6db;
+    border-radius: 10px;
+    color: var(--lp-ink);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.lp-feedback[hidden] {
+    display: none;
+}
+
+/* ---------- "ou" + entrar ---------- */
+.lp-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: clamp(8px, 1.5vh, 14px) 0;
+    color: var(--lp-muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.lp-divider::before,
+.lp-divider::after {
+    flex: 1;
+    height: 1px;
+    background: var(--lp-line);
+    content: "";
+}
+
+.lp-login-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+/* "all: unset" remove o visual de .profile-option do style.css, mas mantém a classe para o JS. */
+.lp-page .lp-login-btn.profile-option {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    height: clamp(36px, 4.8vh, 44px);
+    padding: 0 10px;
+    background: #fff;
+    border: 1px solid #cfe3da;
+    border-radius: 10px;
+    color: var(--lp-green);
+    font-family: inherit;
+    font-size: clamp(0.72rem, 1.5vh, 0.84rem);
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.lp-page .lp-login-btn.profile-option:hover {
+    background: #eef8f3;
+    border-color: #a9d3c2;
+}
+
+.lp-secure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: clamp(8px, 1.5vh, 14px) 0 0;
+    color: #4f736c;
+    font-size: clamp(0.72rem, 1.45vh, 0.84rem);
+    font-weight: 500;
+}
+
+.lp-secure svg {
+    flex: none;
+    width: 19px;
+    height: 19px;
+    fill: var(--lp-green);
+    stroke: none;
+}
+
+.lp-secure svg path:last-child {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ---------- Footer ---------- */
+.lp-footer {
+    position: relative;
+    z-index: 1;
+    background: #1a6350;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: clamp(0.74rem, 1.4vh, 0.86rem);
+}
+
+.lp-footer .lp-container {
+    padding: clamp(14px, 2.4vh, 22px) 0;
+}
+
+.lp-footer p {
+    margin: 0;
+}
+
+/* ---------- Modal de login: o cadastro agora fica na página ---------- */
+#nutritionistRegister {
+    display: none !important;
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 1020px) {
+    .lp-hero {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+    }
+
+    .lp-page main.lp-main {
+        align-items: flex-start;
+        padding: 24px 0 36px;
+    }
+
+    .lp-title {
+        font-size: clamp(2rem, 8.4vw, 3.6rem);
+    }
+
+    .lp-card {
+        max-width: 600px;
+        margin-inline: auto;
+    }
+
+    .lp-features {
+        max-width: none;
+    }
+}
+
+@media (max-width: 560px) {
+    .lp-features,
+    .lp-row,
+    .lp-login-row {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .lp-card {
+        padding: 20px 18px 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lp-page * {
+        transition: none !important;
+    }
+}
