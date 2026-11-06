@@ -17,40 +17,6 @@ const menuButton = document.getElementById("menuButton");
 
 const themeButton = document.getElementById("themeButton");
 
-const openLoginHeader =
-    document.getElementById("openLoginHeader");
-
-/* =========================================================
-   MODAL
-========================================================= */
-
-const accessModal =
-    document.getElementById("accessModal");
-
-const closeModal =
-    document.getElementById("closeModal");
-
-const nutritionistButton =
-    document.getElementById("nutritionistButton");
-
-const patientButton =
-    document.getElementById("patientButton");
-
-const modalTitle =
-    document.getElementById("modalTitle");
-
-const modalDescription =
-    document.getElementById("modalDescription");
-
-const selectedProfile =
-    document.getElementById("selectedProfile");
-
-const profileIcon =
-    document.getElementById("profileIcon");
-
-const profileName =
-    document.getElementById("profileName");
-
 /* =========================================================
    FORMULÁRIOS
 ========================================================= */
@@ -61,29 +27,15 @@ const loginForm =
 const registerForm =
     document.getElementById("registerForm");
 
-const nutritionistRegister =
-    document.getElementById("nutritionistRegister");
-
-const patientInfo =
-    document.getElementById("patientInfo");
-
 const showRegister =
     document.getElementById("showRegister");
 
 const backToLogin =
     document.getElementById("backToLogin");
 
-const patientLoginButton =
-    document.getElementById("patientLoginButton");
-
-const modalFeedback =
-    document.getElementById("modalFeedback");
-
 /* =========================================================
    VARIÁVEIS
 ========================================================= */
-
-let perfilAtual = null;
 
 let headerEscondido = false;
 

@@ -1,228 +1,25 @@
 "use strict";
 
-/* =========================================================
-   ABRIR MODAL
-========================================================= */
+function atualizarTelaAuth(cadastro) {
+    if (!loginForm || !registerForm) return;
 
-function abrirModal(perfil) {
-    perfilAtual = perfil;
+    loginForm.classList.toggle("hidden", cadastro);
+    registerForm.classList.toggle("hidden", !cadastro);
 
-    resetarModal();
+    document.getElementById("lpTitulo").textContent = cadastro
+        ? "Criar conta profissional"
+        : "Entrar no NUTRIQ";
+    document.getElementById("lpCardDescription").textContent = cadastro
+        ? "Comece agora a aproveitar todos os recursos do NUTRIQ."
+        : "Acesse sua conta profissional.";
 
-    accessModal.classList.add("active");
-
-    accessModal.setAttribute(
-        "aria-hidden",
-        "false"
-    );
-
-    document.body.style.overflow = "hidden";
-
-    if (perfil === "nutricionista") {
-        modalTitle.textContent =
-            "Entrar como nutricionista";
-
-        modalDescription.textContent =
-            "Acesse sua conta profissional.";
-
-        profileIcon.textContent = "♧";
-
-        profileName.textContent = "Nutricionista";
-
-        nutritionistRegister.classList.remove("hidden");
-
-        patientInfo.classList.add("hidden");
-
-        loginForm.classList.remove("hidden");
-    }
-
-    if (perfil === "paciente") {
-        modalTitle.textContent =
-            "Acesso do paciente";
-
-        modalDescription.textContent =
-            "Entre utilizando os dados fornecidos pelo seu nutricionista.";
-
-        profileIcon.textContent = "♙";
-
-        profileName.textContent = "Paciente";
-
-        nutritionistRegister.classList.add("hidden");
-
-        patientInfo.classList.remove("hidden");
-
-        loginForm.classList.add("hidden");
-    }
-
-    setTimeout(
-        () => {
-            if (perfil === "nutricionista") {
-                document
-                    .getElementById("loginEmail")
-                    .focus();
-            } else {
-                patientLoginButton.focus();
-            }
-        },
-        200
-    );
+    limparErros();
+    limparFeedback();
+    document.getElementById(cadastro ? "registerName" : "loginEmail")?.focus();
 }
 
-/* =========================================================
-   FECHAR MODAL
-========================================================= */
-
-function fecharModal() {
-    accessModal.classList.remove("active");
-
-    accessModal.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    document.body.style.overflow = "";
-
-    perfilAtual = null;
-}
-
-/* =========================================================
-   EVENTOS DOS BOTÕES
-========================================================= */
-
-nutritionistButton?.addEventListener(
-    "click",
-    () => {
-        abrirModal("nutricionista");
-    }
-);
-
-patientButton?.addEventListener(
-    "click",
-    () => {
-        abrirModal("paciente");
-    }
-);
-
-openLoginHeader?.addEventListener(
-    "click",
-    () => {
-        abrirModal("nutricionista");
-    }
-);
-
-closeModal?.addEventListener(
-    "click",
-    fecharModal
-);
-
-/* =========================================================
-   FECHAR CLICANDO FORA
-========================================================= */
-
-accessModal?.addEventListener(
-    "click",
-    event => {
-        if (event.target === accessModal) {
-            fecharModal();
-        }
-    }
-);
-
-/* =========================================================
-   ESC
-========================================================= */
-
-document.addEventListener(
-    "keydown",
-    event => {
-        if (
-            accessModal &&
-            event.key === "Escape" &&
-            accessModal.classList.contains("active")
-        ) {
-            fecharModal();
-        }
-    }
-);
-
-/* =========================================================
-   MOSTRAR CADASTRO DO NUTRICIONISTA
-========================================================= */
-
-showRegister?.addEventListener(
-    "click",
-    () => {
-        loginForm.classList.add("hidden");
-
-        nutritionistRegister.classList.add("hidden");
-
-        registerForm.classList.remove("hidden");
-
-        modalTitle.textContent =
-            "Criar conta de nutricionista";
-
-        modalDescription.textContent =
-            "Preencha os dados para criar sua conta profissional.";
-
-        document
-            .getElementById("registerName")
-            .focus();
-    }
-);
-
-/* =========================================================
-   VOLTAR PARA LOGIN
-========================================================= */
-
-backToLogin?.addEventListener(
-    "click",
-    () => {
-        registerForm.classList.add("hidden");
-
-        loginForm.classList.remove("hidden");
-
-        nutritionistRegister.classList.remove("hidden");
-
-        modalTitle.textContent =
-            "Entrar como nutricionista";
-
-        modalDescription.textContent =
-            "Acesse sua conta profissional.";
-
-        limparFeedback();
-
-        document
-            .getElementById("loginEmail")
-            .focus();
-    }
-);
-
-/* =========================================================
-   BOTÃO PACIENTE
-========================================================= */
-
-patientLoginButton?.addEventListener(
-    "click",
-    () => {
-        patientInfo.classList.add("hidden");
-
-        loginForm.classList.remove("hidden");
-
-        modalTitle.textContent =
-            "Entrar como paciente";
-
-        modalDescription.textContent =
-            "Utilize os dados fornecidos pelo seu nutricionista.";
-
-        profileIcon.textContent = "♙";
-
-        profileName.textContent = "Paciente";
-
-        document
-            .getElementById("loginEmail")
-            .focus();
-    }
-);
+showRegister?.addEventListener("click", () => atualizarTelaAuth(true));
+backToLogin?.addEventListener("click", () => atualizarTelaAuth(false));
 
 /* =========================================================
    LOGIN
@@ -287,14 +84,9 @@ loginForm?.addEventListener(
             "true"
         );
 
-        /*
-           Salva o tipo de usuário:
-           paciente ou nutricionista
-        */
-
         sessionStorage.setItem(
             "perfilUsuario",
-            perfilAtual
+            "nutricionista"
         );
 
         /*
@@ -420,7 +212,7 @@ registerForm?.addEventListener(
 
         mostrarFeedback(
             "success",
-            "Cadastro validado com sucesso! O próximo passo será conectar este formulário ao banco de dados e validar o CRN."
+            "Cadastro validado com sucesso! O próximo passo será validar o CRN."
         );
 
         registerForm.reset();
@@ -528,37 +320,19 @@ function mostrarFeedback(
     tipo,
     mensagem
 ) {
-    modalFeedback.className = "modal-feedback";
+    const feedback = document.getElementById("lpFeedback");
+    if (!feedback) return;
 
-    modalFeedback.classList.add(tipo);
-
-    modalFeedback.textContent = mensagem;
+    feedback.className = "lp-feedback";
+    feedback.classList.add(tipo);
+    feedback.textContent = mensagem;
+    feedback.hidden = false;
 }
 
 function limparFeedback() {
-    modalFeedback.className = "modal-feedback";
+    const feedback = document.getElementById("lpFeedback");
+    if (!feedback) return;
 
-    modalFeedback.textContent = "";
-}
-
-/* =========================================================
-   RESETAR MODAL
-========================================================= */
-
-function resetarModal() {
-    limparErros();
-
-    limparFeedback();
-
-    loginForm.reset();
-
-    registerForm.reset();
-
-    loginForm.classList.remove("hidden");
-
-    registerForm.classList.add("hidden");
-
-    nutritionistRegister.classList.remove("hidden");
-
-    patientInfo.classList.add("hidden");
+    feedback.textContent = "";
+    feedback.hidden = true;
 }

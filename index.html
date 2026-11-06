@@ -43,7 +43,6 @@
                     <a href="#contato" class="nav-link">Contato</a>
                 </nav>
                 <button class="theme-button" id="themeButton" type="button" aria-label="Alternar modo escuro">☾</button>
-                <button class="login-header-button" id="openLoginHeader" type="button">Entrar</button>
                 <button class="menu-button" id="menuButton" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
                 <span id="sobre"></span>
                 <span id="funcionalidades"></span>
@@ -134,7 +133,7 @@
             </div>
 
 
-            <!-- ---------- Cartão de cadastro ---------- -->
+            <!-- ---------- Cartão de acesso ---------- -->
             <section class="lp-card" aria-labelledby="lpTitulo">
 
                 <div class="lp-badge" aria-hidden="true">
@@ -145,16 +144,33 @@
                     </svg>
                 </div>
 
-                <h2 id="lpTitulo">Crie sua conta</h2>
-                <p class="lp-card-sub">Comece agora a aproveitar todos os recursos do NUTRIQ.</p>
+                <h2 id="lpTitulo">Entrar no NUTRIQ</h2>
+                <p class="lp-card-sub" id="lpCardDescription">Acesse sua conta profissional.</p>
 
-                <!-- Cadastro de nutricionista (ids originais mantidos) -->
-                <form id="registerForm" class="access-form lp-form" novalidate>
-
-                    <!-- Mantido para compatibilidade com auth.js (não aparece no design) -->
-                    <div class="register-title lp-legacy-block">
-                        <button type="button" id="backToLogin" class="back-button" tabindex="-1">← Voltar</button>
+                <form id="loginForm" class="access-form lp-form" novalidate>
+                    <div class="form-group lp-field">
+                        <label for="loginEmail">E-mail profissional</label>
+                        <svg class="lp-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                        <input type="email" id="loginEmail" name="email" placeholder="Digite seu e-mail" autocomplete="email" required>
+                        <small class="error-message"></small>
                     </div>
+
+                    <div class="form-group lp-field">
+                        <label for="loginPassword">Senha</label>
+                        <svg class="lp-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                        <button type="button" class="lp-eye" data-toggle-senha="loginPassword" aria-label="Mostrar senha" aria-pressed="false">
+                            <svg class="lp-eye-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 6.1A9.7 9.7 0 0 1 12 6c5 0 8.5 4 9.5 6a14 14 0 0 1-3.2 3.8M6.6 6.9C4.5 8.3 3 10.4 2.5 12c1 2 4.5 6 9.5 6 1.2 0 2.3-.2 3.3-.6M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
+                            <svg class="lp-eye-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12C3.5 10 7 6 12 6s8.5 4 9.5 6c-1 2-4.5 6-9.5 6S3.5 14 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </button>
+                        <input type="password" id="loginPassword" name="password" placeholder="Digite sua senha" minlength="6" autocomplete="current-password" required>
+                        <small class="error-message"></small>
+                    </div>
+
+                    <button class="primary-button lp-submit" type="submit">Entrar</button>
+                    <p class="lp-auth-switch">Não possui uma conta? <button type="button" id="showRegister">Criar conta</button></p>
+                </form>
+
+                <form id="registerForm" class="access-form lp-form hidden" novalidate>
 
                     <div class="form-group lp-field">
                         <label for="registerName">Nome completo</label>
@@ -214,21 +230,10 @@
                         Cadastrar
                     </button>
 
+                    <p class="lp-auth-switch">Já possui uma conta? <button type="button" id="backToLogin">Entrar</button></p>
                     <p class="lp-feedback" id="lpFeedback" role="status" hidden></p>
 
                 </form>
-
-                <div class="lp-divider"><span>ou</span></div>
-
-                <!-- Quem já tem conta entra pelos botões abaixo (ids originais mantidos) -->
-                <div class="lp-login-row">
-                    <button class="profile-option nutritionist-option lp-login-btn" id="nutritionistButton" type="button">
-                        Entrar como nutricionista
-                    </button>
-                    <button class="profile-option patient-option lp-login-btn" id="patientButton" type="button">
-                        Entrar como paciente
-                    </button>
-                </div>
 
                 <p class="lp-secure">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.500 4 5.500v6c0 5 3.400 8.600 8 10 4.600-1.400 8-5 8-10v-6z"/><path d="m8.500 12 2.500 2.500 4.500-5"/></svg>
@@ -253,84 +258,8 @@
 </div>
 
 
-<!-- =====================================================
-     MODAL DE ACESSO (login) — mesmo código e ids do original
-====================================================== -->
-
-<div class="modal-overlay" id="accessModal" aria-hidden="true">
-
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-
-        <button class="modal-close" id="closeModal" type="button" aria-label="Fechar">×</button>
-
-        <img src="img/logo (1).png" alt="NUTRIQ" class="modal-logo">
-
-        <h2 id="modalTitle">Entrar no NUTRIQ</h2>
-
-        <p class="modal-description" id="modalDescription">
-            Acesse sua conta para continuar.
-        </p>
-
-        <div class="selected-profile" id="selectedProfile">
-            <span id="profileIcon">♙</span>
-            <span id="profileName">Perfil</span>
-        </div>
-
-        <form id="loginForm" class="access-form" novalidate>
-
-            <div class="form-group">
-                <label for="loginEmail">E-mail</label>
-                <input type="email" id="loginEmail" name="email" placeholder="seu@email.com" autocomplete="email" required>
-                <small class="error-message"></small>
-            </div>
-
-            <div class="form-group">
-                <label for="loginPassword">Senha</label>
-                <input type="password" id="loginPassword" name="password" placeholder="Digite sua senha" autocomplete="current-password" minlength="6" required>
-                <small class="error-message"></small>
-            </div>
-
-            <button class="primary-button" type="submit">Entrar</button>
-
-        </form>
-
-        <!-- O cadastro de nutricionista agora fica na própria página; este bloco é mantido
-             (oculto pelo landing.css) só para não quebrar o auth.js -->
-        <div class="nutritionist-register" id="nutritionistRegister">
-            <div class="divider"><span>ou</span></div>
-            <button class="secondary-button" id="showRegister" type="button">
-                Criar conta de nutricionista
-            </button>
-        </div>
-
-        <div class="patient-info hidden" id="patientInfo">
-
-            <div class="patient-info-icon">♙</div>
-
-            <h3>Cadastro realizado pelo nutricionista</h3>
-
-            <p>O paciente não pode criar uma conta diretamente no NUTRIQ.</p>
-
-            <p>
-                Seu nutricionista deverá realizar seu cadastro e fornecer
-                os dados necessários para o acesso.
-            </p>
-
-            <button class="primary-button" id="patientLoginButton" type="button">
-                Entrar como paciente
-            </button>
-
-        </div>
-
-        <div class="modal-feedback" id="modalFeedback" role="alert"></div>
-
-    </div>
-
-</div>
-
-
 <script>
-    /* Mostrar/ocultar senha e espelhar, no cartão, a mensagem de resultado do cadastro. */
+    /* Mostrar/ocultar senha. */
     document.addEventListener("DOMContentLoaded", function () {
         "use strict";
 
@@ -346,27 +275,6 @@
             });
         });
 
-        var formulario = document.getElementById("registerForm");
-        var origem = document.getElementById("modalFeedback");
-        var destino = document.getElementById("lpFeedback");
-        if (!formulario || !origem || !destino) return;
-
-        var aguardando = false;
-        // "true" = fase de captura: roda antes do tratamento do auth.js
-        formulario.addEventListener("submit", function () {
-            aguardando = true;
-            destino.hidden = true;
-            destino.textContent = "";
-        }, true);
-
-        new MutationObserver(function () {
-            if (!aguardando) return;
-            var texto = origem.textContent.trim();
-            if (texto) {
-                destino.textContent = texto;
-                destino.hidden = false;
-            }
-        }).observe(origem, { childList: true, characterData: true, subtree: true, attributes: true });
     });
 </script>
 

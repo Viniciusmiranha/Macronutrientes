@@ -511,6 +511,30 @@ body.dark-mode .lp-card .lp-login-btn:focus-visible {
     display: none;
 }
 
+.lp-auth-switch {
+    margin: 2px 0 0;
+    color: var(--lp-muted);
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.lp-auth-switch button {
+    padding: 2px 4px;
+    background: none;
+    border: 0;
+    color: var(--lp-green);
+    font: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+}
+
+.lp-auth-switch button:focus-visible {
+    outline: 3px solid var(--lp-green);
+    outline-offset: 2px;
+}
+
 /* ---------- "ou" + entrar ---------- */
 .lp-divider {
     display: flex;
