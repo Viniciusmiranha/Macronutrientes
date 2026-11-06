@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
         "pagina1.html",
         "pacientes.html",
         "planos-alimentares.html",
-        "macros.html",
         "consultas.html",
         "agenda.html",
         "relatorios.html",

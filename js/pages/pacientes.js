@@ -1,5 +1,5 @@
 /* =====================================================
-   NUTRIQ · Meus pacientes (js/pacientes.js)
+    NUTRIQ · Meus pacientes (js/pages/pacientes.js)
    Cartões, busca (nome, e-mail, CPF, telefone), filtros,
    ordenação, menu de ações, cadastro, edição, ficha com
    avaliações e exclusão. Usa js/nutriq-dados.js.
@@ -10,7 +10,7 @@
 
     var D = window.NutriqDados;
     if (!D || !D.pacientes) {
-        console.error("NUTRIQ: carregue js/nutriq-dados.js antes de js/pacientes.js");
+        console.error("NUTRIQ: carregue js/nutriq-dados.js antes de js/pages/pacientes.js");
         return;
     }
     var U = D.util;

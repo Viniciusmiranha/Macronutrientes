@@ -1,5 +1,5 @@
 /* =====================================================
-   NUTRIQ · Planos alimentares (js/planos-alimentares.js)
+    NUTRIQ · Planos alimentares (js/pages/planos-alimentares.js)
    Criar, editar, concluir/reabrir, excluir, filtrar e buscar.
    Usa js/nutriq-dados.js.
 ===================================================== */
@@ -9,7 +9,7 @@
 
     var D = window.NutriqDados;
     if (!D) {
-        console.error("NUTRIQ: carregue js/nutriq-dados.js antes de js/planos-alimentares.js");
+        console.error("NUTRIQ: carregue js/nutriq-dados.js antes de js/pages/planos-alimentares.js");
         return;
     }
     var U = D.util;

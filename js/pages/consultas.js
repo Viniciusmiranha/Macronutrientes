@@ -1,5 +1,5 @@
 /* =====================================================
-   NUTRIQ · Consultas (js/consultas.js)
+    NUTRIQ · Consultas (js/pages/consultas.js)
    Agendar, editar, concluir e cancelar consultas.
    Usa js/nutriq-dados.js.
 ===================================================== */
@@ -9,7 +9,7 @@
 
     var D = window.NutriqDados;
     if (!D) {
-        console.error("NUTRIQ: carregue js/nutriq-dados.js antes de js/consultas.js");
+        console.error("NUTRIQ: carregue js/nutriq-dados.js antes de js/pages/consultas.js");
         return;
     }
     var U = D.util;

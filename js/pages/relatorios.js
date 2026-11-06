@@ -1,5 +1,5 @@
 /* =====================================================
-   NUTRIQ · Relatórios (js/relatorios.js)
+    NUTRIQ · Relatórios (js/pages/relatorios.js)
    Resumo do paciente, gráficos de peso, IMC e macronutrientes
    e impressão / PDF. Usa js/nutriq-dados.js.
 ===================================================== */
@@ -9,7 +9,7 @@
 
     var D = window.NutriqDados;
     if (!D) {
-        console.error("NUTRIQ: carregue js/nutriq-dados.js antes de js/relatorios.js");
+        console.error("NUTRIQ: carregue js/nutriq-dados.js antes de js/pages/relatorios.js");
         return;
     }
     var U = D.util;

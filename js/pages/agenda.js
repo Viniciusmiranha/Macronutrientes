@@ -1,5 +1,5 @@
 /* =====================================================
-   NUTRIQ · Agenda (js/agenda.js)
+    NUTRIQ · Agenda (js/pages/agenda.js)
 
    Mostra as consultas cadastradas em consultas.html em
    visão de mês, semana ou dia. Usa js/nutriq-dados.js.
@@ -10,7 +10,7 @@
 
     var D = window.NutriqDados;
     if (!D) {
-        console.error("NUTRIQ: carregue js/nutriq-dados.js antes de js/agenda.js");
+        console.error("NUTRIQ: carregue js/nutriq-dados.js antes de js/pages/agenda.js");
         return;
     }
 
