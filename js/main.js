@@ -205,7 +205,7 @@ if (header) {
    MENU MOBILE
 ========================================================= */
 
-if (menuButton) {
+if (menuButton && nav) {
     menuButton.addEventListener(
         "click",
         () => {
@@ -234,6 +234,10 @@ document
             link.addEventListener(
                 "click",
                 () => {
+                        if (!nav || !menuButton) {
+                            return;
+                        }
+
                     nav.classList.remove("mobile-open");
 
                     menuButton.setAttribute(
@@ -298,26 +302,30 @@ const temaSalvo =
 if (temaSalvo === "dark") {
     document.body.classList.add("dark-mode");
 
-    themeButton.textContent = "☀";
+    if (themeButton) {
+        themeButton.textContent = "☀";
+    }
 }
 
-themeButton.addEventListener(
-    "click",
-    () => {
-        document.body.classList.toggle("dark-mode");
+if (themeButton) {
+    themeButton.addEventListener(
+        "click",
+        () => {
+            document.body.classList.toggle("dark-mode");
 
-        const dark =
-            document.body.classList.contains("dark-mode");
+            const dark =
+                document.body.classList.contains("dark-mode");
 
-        localStorage.setItem(
-            "nutriq-theme",
-            dark ? "dark" : "light"
-        );
+            localStorage.setItem(
+                "nutriq-theme",
+                dark ? "dark" : "light"
+            );
 
-        themeButton.textContent =
-            dark ? "☀" : "☾";
-    }
-);
+            themeButton.textContent =
+                dark ? "☀" : "☾";
+        }
+    );
+}
 
 /* =========================================================
    ANIMAÇÃO AO ENTRAR NA TELA

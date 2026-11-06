@@ -89,28 +89,28 @@ function fecharModal() {
    EVENTOS DOS BOTÕES
 ========================================================= */
 
-nutritionistButton.addEventListener(
+nutritionistButton?.addEventListener(
     "click",
     () => {
         abrirModal("nutricionista");
     }
 );
 
-patientButton.addEventListener(
+patientButton?.addEventListener(
     "click",
     () => {
         abrirModal("paciente");
     }
 );
 
-openLoginHeader.addEventListener(
+openLoginHeader?.addEventListener(
     "click",
     () => {
         abrirModal("nutricionista");
     }
 );
 
-closeModal.addEventListener(
+closeModal?.addEventListener(
     "click",
     fecharModal
 );
@@ -119,7 +119,7 @@ closeModal.addEventListener(
    FECHAR CLICANDO FORA
 ========================================================= */
 
-accessModal.addEventListener(
+accessModal?.addEventListener(
     "click",
     event => {
         if (event.target === accessModal) {
@@ -136,6 +136,7 @@ document.addEventListener(
     "keydown",
     event => {
         if (
+            accessModal &&
             event.key === "Escape" &&
             accessModal.classList.contains("active")
         ) {
@@ -148,7 +149,7 @@ document.addEventListener(
    MOSTRAR CADASTRO DO NUTRICIONISTA
 ========================================================= */
 
-showRegister.addEventListener(
+showRegister?.addEventListener(
     "click",
     () => {
         loginForm.classList.add("hidden");
@@ -173,7 +174,7 @@ showRegister.addEventListener(
    VOLTAR PARA LOGIN
 ========================================================= */
 
-backToLogin.addEventListener(
+backToLogin?.addEventListener(
     "click",
     () => {
         registerForm.classList.add("hidden");
@@ -200,7 +201,7 @@ backToLogin.addEventListener(
    BOTÃO PACIENTE
 ========================================================= */
 
-patientLoginButton.addEventListener(
+patientLoginButton?.addEventListener(
     "click",
     () => {
         patientInfo.classList.add("hidden");
@@ -227,7 +228,7 @@ patientLoginButton.addEventListener(
    LOGIN
 ========================================================= */
 
-loginForm.addEventListener(
+loginForm?.addEventListener(
     "submit",
     event => {
         event.preventDefault();
@@ -308,7 +309,7 @@ loginForm.addEventListener(
    CADASTRO DO NUTRICIONISTA
 ========================================================= */
 
-registerForm.addEventListener(
+registerForm?.addEventListener(
     "submit",
     event => {
         event.preventDefault();
