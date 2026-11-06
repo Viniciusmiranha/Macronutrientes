@@ -469,7 +469,17 @@
             return;
         }
         if (peso != null) {
-            D.pacientes.adicionarAvaliacao(novo.id, { data: U.hojeISO(), peso: peso, altura: dados.altura });
+            var avaliacao = D.pacientes.adicionarAvaliacao(novo.id, {
+                data: U.hojeISO(),
+                peso: peso,
+                altura: dados.altura
+            });
+            if (!avaliacao) {
+                D.fecharModal(el.modalForm);
+                render();
+                D.toast("Paciente cadastrado, mas não foi possível salvar o peso inicial.", "erro");
+                return;
+            }
         }
 
         D.fecharModal(el.modalForm);

@@ -3,6 +3,14 @@
 (() => {
     const CHAVE_NUTRIQ = "nutriq_dados_v1";
 
+    function listaDeRegistros(valor) {
+        return Array.isArray(valor)
+            ? valor.filter(registro =>
+                registro && typeof registro === "object" && !Array.isArray(registro)
+            )
+            : [];
+    }
+
     function obterDados() {
         try {
             const dados = JSON.parse(
@@ -10,21 +18,10 @@
             );
 
             return {
-                pacientes: Array.isArray(dados?.pacientes)
-                    ? dados.pacientes
-                    : [],
-
-                planos: Array.isArray(dados?.planos)
-                    ? dados.planos
-                    : [],
-
-                avaliacoes: Array.isArray(dados?.avaliacoes)
-                    ? dados.avaliacoes
-                    : [],
-
-                consultas: Array.isArray(dados?.consultas)
-                    ? dados.consultas
-                    : []
+                pacientes: listaDeRegistros(dados?.pacientes),
+                planos: listaDeRegistros(dados?.planos),
+                avaliacoes: listaDeRegistros(dados?.avaliacoes),
+                consultas: listaDeRegistros(dados?.consultas)
             };
         } catch {
             return {
