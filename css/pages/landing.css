@@ -15,7 +15,7 @@
     --lp-green: #13795f;
     --lp-green-dark: #0e6049;
     --lp-text: #2b6a5e;
-    --lp-muted: #5f807a;
+    --lp-muted: #526f69;
     --lp-line: #d9e7e1;
     --lp-soft: #dcf0e7;
     --lp-danger: #b4483c;
@@ -357,7 +357,7 @@
 }
 
 .lp-card .lp-field input::placeholder {
-    color: #8aa29c;
+    color: #526f69;
     font-weight: 500;
 }
 
@@ -368,6 +368,11 @@
 .lp-card .lp-field input:focus {
     border-color: var(--lp-green);
     box-shadow: 0 0 0 3px rgba(19, 121, 95, 0.14);
+}
+
+.lp-card .lp-field input:focus-visible {
+    outline: 3px solid #13795f;
+    outline-offset: 2px;
 }
 
 .lp-card .lp-field:focus-within .lp-ico {
@@ -423,13 +428,13 @@
 }
 
 .lp-card .lp-eye:focus-visible {
-    outline: 3px solid rgba(19, 121, 95, 0.3);
+    outline: 3px solid #13795f;
 }
 
 .lp-eye svg {
     width: 19px;
     height: 19px;
-    stroke: #5f807a;
+    stroke: #526f69;
 }
 
 .lp-eye .lp-eye-on,
@@ -473,8 +478,15 @@
 
 .lp-card .lp-submit:focus-visible,
 .lp-card .lp-login-btn:focus-visible {
-    outline: 3px solid rgba(19, 121, 95, 0.35);
+    outline: 3px solid #13795f;
     outline-offset: 2px;
+}
+
+body.dark-mode .lp-card .lp-eye:focus-visible,
+body.dark-mode .lp-card .lp-field input:focus-visible,
+body.dark-mode .lp-card .lp-submit:focus-visible,
+body.dark-mode .lp-card .lp-login-btn:focus-visible {
+    outline-color: #7bb69d;
 }
 
 .lp-submit svg {

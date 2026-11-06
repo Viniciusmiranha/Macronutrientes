@@ -10,7 +10,7 @@
     --pac-green-soft: #e3f3ec;
     --pac-title: #0f3d38;
     --pac-subtitle: #2b7a6a;
-    --pac-muted: #6a8a85;
+    --pac-muted: #526f69;
     --pac-border: #e1ebe7;
     --pac-surface: #ffffff;
 
@@ -416,6 +416,8 @@
 .pc-search:focus-within {
     border-color: var(--pac-green);
     box-shadow: 0 0 0 3px rgba(23, 107, 88, 0.12);
+    outline: 3px solid #176b58;
+    outline-offset: 2px;
 }
 
 .pc-search svg,
@@ -442,7 +444,7 @@
 }
 
 .pc-search input::placeholder {
-    color: #7e9690;
+    color: #526f69;
 }
 
 .pc-select {
@@ -474,6 +476,11 @@
     outline: 0;
     border-color: var(--pac-green);
     box-shadow: 0 0 0 3px rgba(23, 107, 88, 0.12);
+}
+
+.pc-select select:focus-visible {
+    outline: 3px solid #176b58;
+    outline-offset: 2px;
 }
 
 .pc-select-sort > svg {
@@ -582,7 +589,7 @@
 }
 
 .pc-open:focus-visible::after {
-    outline: 3px solid rgba(23, 107, 88, 0.35);
+    outline: 3px solid #176b58;
     outline-offset: -3px;
 }
 
@@ -655,7 +662,11 @@
 .pc-menu-item:hover,
 .pc-menu-item:focus-visible {
     background: #f1f6f4;
-    outline: 0;
+}
+
+.pc-menu-item:focus-visible {
+    outline: 2px solid #176b58;
+    outline-offset: -2px;
 }
 
 .pc-menu-item-danger {

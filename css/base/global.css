@@ -34,7 +34,7 @@ body {
     --pac-green-soft: #e3f3ec;
     --pac-title: #0f3d38;
     --pac-subtitle: #2b7a6a;
-    --pac-muted: #6a8a85;
+    --pac-muted: #526f69;
     --pac-border: #e1ebe7;
     --pac-surface: #ffffff;
     --pac-danger: #b4483c;
@@ -200,7 +200,7 @@ body.nq-modal-open {
 .nq-field input:focus,
 .nq-field select:focus,
 .nq-field textarea:focus {
-    outline: 3px solid rgba(23, 107, 88, 0.2);
+    outline: 3px solid #176b58;
     border-color: var(--pac-green);
 }
 

@@ -206,7 +206,7 @@
 }
 
 .calculadora-field input::placeholder {
-    color: #94a2b6;
+    color: #64748b;
 }
 
 .calculadora-field input:focus,
@@ -215,8 +215,14 @@
     box-shadow: 0 0 0 3px #22866b18;
 }
 
+.calculadora-field input:focus-visible,
+.calculadora-field select:focus-visible {
+    outline: 3px solid #176b58;
+    outline-offset: 2px;
+}
+
 .calculadora-field small {
-    color: #77869b;
+    color: #5f6f85;
     font-size: 11px;
     line-height: 1.4;
 }

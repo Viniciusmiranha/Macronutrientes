@@ -51,7 +51,7 @@
 }
 
 .rel-select-field select:focus {
-    outline: 3px solid rgba(23, 107, 88, 0.2);
+    outline: 3px solid #176b58;
     border-color: var(--pac-green);
 }
 

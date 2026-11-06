@@ -196,7 +196,7 @@
 
 .ag-cell:focus-visible,
 .ag-col-head:focus-visible {
-    outline: 3px solid rgba(23, 107, 88, 0.35);
+    outline: 3px solid #176b58;
     outline-offset: -3px;
 }
 

@@ -3,7 +3,7 @@
   --perfil-primary-dark: #066653;
   --perfil-primary-light: #e6f5f0;
   --perfil-text: #123d49;
-  --perfil-muted: #718894;
+  --perfil-muted: #5a7078;
   --perfil-border: #e5ecef;
   --perfil-surface: #ffffff;
   --perfil-background: #f5f8f9;
@@ -505,9 +505,15 @@ body.perfil-page {
   box-shadow: 0 0 0 3px rgba(8, 127, 104, 0.09);
 }
 
+.perfil-field input:focus-visible,
+.perfil-field textarea:focus-visible {
+  outline: 3px solid #087f68;
+  outline-offset: 2px;
+}
+
 .perfil-field input::placeholder,
 .perfil-field textarea::placeholder {
-  color: #9aabb3;
+  color: #64748b;
 }
 
 .field-full {
@@ -710,6 +716,16 @@ body.perfil-page {
 .dark-mode .perfil-field textarea {
   border-color: var(--perfil-border);
   background: #1b353a;
+}
+
+.dark-mode .perfil-field input:focus-visible,
+.dark-mode .perfil-field textarea:focus-visible {
+  outline-color: #8fd7c3;
+}
+
+.dark-mode .perfil-field input::placeholder,
+.dark-mode .perfil-field textarea::placeholder {
+  color: #9cb4b8;
 }
 
 .dark-mode .btn-editar,

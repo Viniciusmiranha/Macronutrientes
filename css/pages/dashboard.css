@@ -2,7 +2,7 @@ body.dashboard-page {
     --dashboard-bg: #f5f8f7;
     --dashboard-surface: #ffffff;
     --dashboard-text: #17213b;
-    --dashboard-muted: #75818d;
+    --dashboard-muted: #5f6b76;
     --dashboard-border: #e3eae7;
     --dashboard-green: #176b58;
     --dashboard-green-dark: #105443;
@@ -39,8 +39,10 @@ body.dashboard-page {
 .dashboard-page button:focus-visible,
 .dashboard-page a:focus-visible,
 .dashboard-page input:focus-visible,
+.dashboard-page select:focus-visible,
+.dashboard-page textarea:focus-visible,
 .dashboard-page summary:focus-visible {
-    outline: 3px solid rgba(23, 107, 88, 0.3);
+    outline: 3px solid #176b58;
     outline-offset: 3px;
 }
 
@@ -59,7 +61,7 @@ body.dashboard-page {
 
 .dashboard-welcome p {
     margin: 0;
-    color: #75818e;
+    color: #5f6c78;
     font-size: 13px;
     line-height: 1.6;
 }
