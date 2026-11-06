@@ -296,35 +296,71 @@ sections.forEach(
    TEMA ESCURO
 ========================================================= */
 
-const temaSalvo =
-    localStorage.getItem("nutriq-theme");
+const CHAVE_PREFERENCIAS = "nutriqPreferencias";
+const CHAVE_TEMA_LEGADA = "nutriq-theme";
 
-if (temaSalvo === "dark") {
-    document.body.classList.add("dark-mode");
+function modoEscuroSalvo() {
+    try {
+        const preferencias = JSON.parse(
+            localStorage.getItem(CHAVE_PREFERENCIAS) || "null"
+        );
 
-    if (themeButton) {
-        themeButton.textContent = "☀";
+        if (typeof preferencias?.modoEscuro === "boolean") {
+            return preferencias.modoEscuro;
+        }
+
+        return localStorage.getItem(CHAVE_TEMA_LEGADA) === "dark";
+    } catch {
+        return false;
     }
 }
 
+function aplicarTema(dark) {
+    document.body.classList.toggle("dark-mode", dark);
+
+    if (themeButton) {
+        themeButton.textContent = dark ? "☀" : "☾";
+    }
+}
+
+function persistirTema(dark) {
+    try {
+        const preferencias = JSON.parse(
+            localStorage.getItem(CHAVE_PREFERENCIAS) || "{}"
+        );
+        const dados = preferencias && typeof preferencias === "object" && !Array.isArray(preferencias)
+            ? preferencias
+            : {};
+
+        dados.modoEscuro = dark;
+        localStorage.setItem(CHAVE_PREFERENCIAS, JSON.stringify(dados));
+    } catch {
+        // A preferência continua aplicada nesta página se o armazenamento estiver indisponível.
+    }
+}
+
+aplicarTema(modoEscuroSalvo());
+
+window.addEventListener("nutriqTemaAlterado", evento => {
+    aplicarTema(Boolean(evento.detail?.modoEscuro));
+});
+
+window.addEventListener("storage", evento => {
+    if (evento.key === CHAVE_PREFERENCIAS || evento.key === CHAVE_TEMA_LEGADA) {
+        aplicarTema(modoEscuroSalvo());
+    }
+});
+
 if (themeButton) {
-    themeButton.addEventListener(
-        "click",
-        () => {
-            document.body.classList.toggle("dark-mode");
+    themeButton.addEventListener("click", () => {
+        const dark = !document.body.classList.contains("dark-mode");
+        aplicarTema(dark);
+        persistirTema(dark);
 
-            const dark =
-                document.body.classList.contains("dark-mode");
-
-            localStorage.setItem(
-                "nutriq-theme",
-                dark ? "dark" : "light"
-            );
-
-            themeButton.textContent =
-                dark ? "☀" : "☾";
-        }
-    );
+        window.dispatchEvent(new CustomEvent("nutriqTemaAlterado", {
+            detail: { modoEscuro: dark }
+        }));
+    });
 }
 
 /* =========================================================

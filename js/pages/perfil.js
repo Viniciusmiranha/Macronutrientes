@@ -101,6 +101,10 @@ document.addEventListener("DOMContentLoaded", () => {
       "dark-mode",
       Boolean(dados.modoEscuro)
     );
+
+    window.dispatchEvent(new CustomEvent("nutriqTemaAlterado", {
+      detail: { modoEscuro: Boolean(dados.modoEscuro) }
+    }));
   }
 
   function salvarPreferencias() {
@@ -113,11 +117,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function restaurarDados() {
     const dados = lerJSON(storageKey, {});
-    const prefs = lerJSON(preferenceKey, {
+    const preferenciasSalvas = lerJSON(preferenceKey, null);
+    const prefs = Object.assign({
       notificacoesEmail: true,
       lembretesConsulta: true,
       modoEscuro: false
-    });
+    }, preferenciasSalvas && typeof preferenciasSalvas === "object" ? preferenciasSalvas : {});
+
+    if (!preferenciasSalvas || typeof preferenciasSalvas.modoEscuro !== "boolean") {
+      try {
+        prefs.modoEscuro = localStorage.getItem("nutriq-theme") === "dark";
+      } catch {
+        prefs.modoEscuro = false;
+      }
+    }
 
     preencherCampos(dados);
     aplicarPreferencias(prefs);

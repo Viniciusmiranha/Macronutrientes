@@ -133,3 +133,284 @@ body.dark-mode .login-header-button {
 
     border-color: #42645a;
 }
+
+/* ---------- Preferência compartilhada no painel ---------- */
+body.dark-mode.dashboard-page {
+    color-scheme: dark;
+    --dashboard-bg: #0f1f1c;
+    --dashboard-surface: #172a26;
+    --dashboard-text: #e5f1ec;
+    --dashboard-muted: #a9bdb7;
+    --dashboard-border: #29443d;
+    --dashboard-green: #7bb69d;
+    --dashboard-green-dark: #8fd7c3;
+    --dashboard-green-soft: #1c3931;
+    --dashboard-blue: #93c2ec;
+    --dashboard-blue-soft: #243b50;
+    --dashboard-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+    --pac-green: #7bb69d;
+    --pac-green-dark: #8fd7c3;
+    --pac-green-soft: #1c3931;
+    --pac-title: #e5f1ec;
+    --pac-subtitle: #b8d2c7;
+    --pac-muted: #a9bdb7;
+    --pac-border: #29443d;
+    --pac-surface: #172a26;
+    background: var(--dashboard-bg);
+    color: var(--dashboard-text);
+}
+
+body.dark-mode.dashboard-page .pac-page {
+    --pac-green: #7bb69d;
+    --pac-green-dark: #8fd7c3;
+    --pac-green-soft: #1c3931;
+    --pac-title: #e5f1ec;
+    --pac-subtitle: #b8d2c7;
+    --pac-muted: #a9bdb7;
+    --pac-border: #29443d;
+    --pac-surface: #172a26;
+}
+
+body.dark-mode.dashboard-page .dashboard-sidebar,
+body.dark-mode.dashboard-page .dashboard-topbar,
+body.dark-mode.dashboard-page .dashboard-search,
+body.dark-mode.dashboard-page .dashboard-plan-card,
+body.dark-mode.dashboard-page .dashboard-panel,
+body.dark-mode.dashboard-page .dashboard-metric-card,
+body.dark-mode.dashboard-page .dashboard-goal-item,
+body.dark-mode.dashboard-page .pac-panel,
+body.dark-mode.dashboard-page .pac-stat-card,
+body.dark-mode.dashboard-page .pc-card,
+body.dark-mode.dashboard-page .pc-menu,
+body.dark-mode.dashboard-page .cs-panel,
+body.dark-mode.dashboard-page .ag-panel,
+body.dark-mode.dashboard-page .ag-cell,
+body.dark-mode.dashboard-page .ag-nav-btn,
+body.dark-mode.dashboard-page .ag-view,
+body.dark-mode.dashboard-page .rel-panel,
+body.dark-mode.dashboard-page .calculadora-painel,
+body.dark-mode.dashboard-page .calculadora-tab,
+body.dark-mode.dashboard-page .nq-modal,
+body.dark-mode.dashboard-page .calculadora-result-card,
+body.dark-mode.dashboard-page .resultado-card,
+body.dark-mode.dashboard-page .plans-modal,
+body.dark-mode.dashboard-page .plans-option {
+    background-color: var(--dashboard-surface);
+    border-color: var(--dashboard-border);
+}
+
+body.dark-mode.dashboard-page .dashboard-topbar {
+    background: rgba(15, 31, 28, 0.96);
+}
+
+body.dark-mode.dashboard-page .dashboard-nav-link,
+body.dark-mode.dashboard-page .dashboard-icon-button,
+body.dark-mode.dashboard-page .dashboard-more-button,
+body.dark-mode.dashboard-page .dashboard-welcome h1,
+body.dark-mode.dashboard-page h1,
+body.dark-mode.dashboard-page h2,
+body.dark-mode.dashboard-page h3,
+body.dark-mode.dashboard-page label,
+body.dark-mode.dashboard-page th,
+body.dark-mode.dashboard-page td,
+body.dark-mode.dashboard-page .dashboard-metric-info > span,
+body.dark-mode.dashboard-page .dashboard-metric-info > strong,
+body.dark-mode.dashboard-page .dashboard-goal-value,
+body.dark-mode.dashboard-page .pc-info,
+body.dark-mode.dashboard-page .pc-menu-item,
+body.dark-mode.dashboard-page .cs-item-info,
+body.dark-mode.dashboard-page .ag-period,
+body.dark-mode.dashboard-page .ag-daynum,
+body.dark-mode.dashboard-page .ag-weekday,
+body.dark-mode.dashboard-page .rel-patient,
+body.dark-mode.dashboard-page .calculadora-intro,
+body.dark-mode.dashboard-page .calculadora-field label,
+body.dark-mode.dashboard-page .calculadora-tab strong,
+body.dark-mode.dashboard-page .resultado-card span,
+body.dark-mode.dashboard-page .resultado-card strong,
+body.dark-mode.dashboard-page .nq-ficha-tabela td,
+body.dark-mode.dashboard-page .nq-ficha-tabela th,
+body.dark-mode.dashboard-page .plans-option h3,
+body.dark-mode.dashboard-page .plans-option li {
+    color: var(--dashboard-text);
+}
+
+body.dark-mode.dashboard-page .dashboard-welcome p,
+body.dark-mode.dashboard-page .dashboard-growth,
+body.dark-mode.dashboard-page .dashboard-patient-identity > span,
+body.dark-mode.dashboard-page .dashboard-patient-row time,
+body.dark-mode.dashboard-page .pac-header p,
+body.dark-mode.dashboard-page .pac-stat-label,
+body.dark-mode.dashboard-page .pac-stat-info small,
+body.dark-mode.dashboard-page .pc-meta,
+body.dark-mode.dashboard-page .cs-empty p,
+body.dark-mode.dashboard-page .ag-day-date,
+body.dark-mode.dashboard-page .rel-panel-sub,
+body.dark-mode.dashboard-page .rel-hint,
+body.dark-mode.dashboard-page .calculadoras-heading p,
+body.dark-mode.dashboard-page .calculadora-intro p,
+body.dark-mode.dashboard-page .calculadora-field small,
+body.dark-mode.dashboard-page .calculadora-tab small,
+body.dark-mode.dashboard-page .calculadora-empty > p,
+body.dark-mode.dashboard-page .calculadora-empty li,
+body.dark-mode.dashboard-page .resultado-subtitulo,
+body.dark-mode.dashboard-page .resultado-detalhes,
+body.dark-mode.dashboard-page .resultado-card small,
+body.dark-mode.dashboard-page .plans-option-description,
+body.dark-mode.dashboard-page .plans-modal-note,
+body.dark-mode.dashboard-page .nq-ficha-vazio {
+    color: var(--dashboard-muted);
+}
+
+body.dark-mode.dashboard-page .calculadora-main-icon,
+body.dark-mode.dashboard-page .calculadora-result-area,
+body.dark-mode.dashboard-page .nq-avaliacao-form,
+body.dark-mode.dashboard-page .ag-weekday,
+body.dark-mode.dashboard-page .ag-col-head {
+    background-color: #1c3931;
+    border-color: var(--dashboard-border);
+    color: var(--dashboard-text);
+}
+
+body.dark-mode.dashboard-page .calculadora-main-icon,
+body.dark-mode.dashboard-page .calculadora-empty > svg {
+    color: #b8d2c7;
+    stroke: #b8d2c7;
+}
+
+
+body.dark-mode.dashboard-page .rel-grid {
+    stroke: #35554a;
+}
+
+body.dark-mode.dashboard-page .rel-point {
+    fill: var(--dashboard-surface);
+    stroke: #7bb69d;
+}
+
+body.dark-mode.dashboard-page .rel-point.is-filled {
+    fill: var(--dashboard-green);
+    stroke: var(--dashboard-bg);
+}
+body.dark-mode.dashboard-page .calculadora-intro h2,
+body.dark-mode.dashboard-page .calculadora-resultados h3 {
+    color: var(--dashboard-text);
+}
+
+body.dark-mode.dashboard-page .calculadora-result-divider {
+    background: var(--dashboard-border);
+}
+
+body.dark-mode.dashboard-page .pac-table tbody tr:hover {
+    background: var(--dashboard-green-soft);
+}
+
+body.dark-mode.dashboard-page .nq-close,
+body.dark-mode.dashboard-page .ag-today-btn,
+body.dark-mode.dashboard-page .rel-btn-outline {
+    background-color: var(--dashboard-green-soft);
+    border-color: var(--dashboard-border);
+    color: var(--dashboard-text);
+}
+
+body.dark-mode.dashboard-page .pc-select select,
+body.dark-mode.dashboard-page .rel-select-field select {
+    background-color: #10211e;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b8d2c7' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    border-color: var(--dashboard-border);
+    color: var(--dashboard-text);
+}
+
+body.dark-mode.dashboard-page .dashboard-icon-green {
+    color: #b8d2c7;
+    background: #1c3931;
+}
+
+body.dark-mode.dashboard-page .dashboard-icon-blue,
+body.dark-mode.dashboard-page .imc-icon,
+body.dark-mode.dashboard-page .agua-icon {
+    color: #c4def5;
+    background: #243b50;
+}
+
+body.dark-mode.dashboard-page .plans-option-featured {
+    background: #1c3931;
+    border-color: #42645a;
+}
+
+body.dark-mode.dashboard-page .dashboard-search input,
+body.dark-mode.dashboard-page input:not([type="search"]),
+body.dark-mode.dashboard-page select,
+body.dark-mode.dashboard-page textarea {
+    background-color: #10211e;
+    border-color: var(--dashboard-border);
+    color: var(--dashboard-text);
+}
+
+body.dark-mode.dashboard-page .dashboard-search input {
+    background: transparent;
+    border: 0;
+}
+
+body.dark-mode.dashboard-page input::placeholder,
+body.dark-mode.dashboard-page textarea::placeholder {
+    color: #a9bdb7;
+}
+
+body.dark-mode.dashboard-page .dashboard-nav-link:hover,
+body.dark-mode.dashboard-page .dashboard-nav-link.active,
+body.dark-mode.dashboard-page .pln-filters,
+body.dark-mode.dashboard-page .pln-filter.is-active,
+body.dark-mode.dashboard-page .calculadora-tab.active,
+body.dark-mode.dashboard-page .pc-menu-item:hover,
+body.dark-mode.dashboard-page .pc-menu-item:focus-visible {
+    background: var(--dashboard-green-soft);
+    color: var(--dashboard-green-dark);
+}
+
+body.dark-mode.dashboard-page .calculadoras-content {
+    color: var(--dashboard-text);
+}
+
+body.dark-mode.dashboard-page .calculadoras-heading h1,
+body.dark-mode.dashboard-page .calculadora-tab.active strong,
+body.dark-mode.dashboard-page .calculadora-tab.active small {
+    color: var(--dashboard-text);
+}
+
+/* ---------- Landing ---------- */
+body.dark-mode.lp-body {
+    background: #0f1f1c;
+}
+
+body.dark-mode .lp-page {
+    --lp-ink: #e5f1ec;
+    --lp-green: #7bb69d;
+    --lp-green-dark: #8fd7c3;
+    --lp-text: #c9ddd5;
+    --lp-muted: #a9bdb7;
+    --lp-line: #35554a;
+    --lp-soft: #1c3931;
+    background: linear-gradient(135deg, #0f1f1c 0%, #132723 48%, #0f1f1c 100%);
+    color: var(--lp-ink);
+}
+
+body.dark-mode .lp-page .lp-header.header,
+body.dark-mode .lp-card {
+    background-color: #172a26;
+    border-color: #29443d;
+}
+
+body.dark-mode .lp-card .lp-field input {
+    background: #10211e;
+    border-color: #35554a;
+    color: var(--lp-ink);
+}
+
+body.dark-mode .lp-card .lp-field input::placeholder {
+    color: #b8d2c7;
+}
+
+body.dark-mode .lp-footer {
+    color: #a9bdb7;
+}
