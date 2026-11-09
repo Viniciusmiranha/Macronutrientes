@@ -1,9 +1,5 @@
 
 
-/* =========================================================
-   HEADER
-========================================================= */
-
 .header {
     position: fixed;
 
@@ -23,14 +19,7 @@
 
     z-index: 1000;
 
-    /*
-       O header será movimentado somente
-       através de transform.
-
-       IMPORTANTE:
-       não usar display:none aqui.
-    */
-    transform: translate3d(0, 0, 0);
+transform: translate3d(0, 0, 0);
 
     transition:
         transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
@@ -43,38 +32,41 @@
     -webkit-backface-visibility: hidden;
 }
 
-
-/* =========================================================
-   HEADER ESCONDIDO
-========================================================= */
-
 .header.hidden {
     transform: translate3d(0, -100%, 0);
 }
-
-
-/* =========================================================
-   HEADER VISÍVEL
-========================================================= */
 
 .header.visible {
     transform: translate3d(0, 0, 0);
 }
 
+.dashboard-topbar,
+.perfil-header {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+}
 
-/* =========================================================
-   HEADER APÓS ROLAR
-========================================================= */
+.header.scroll-header-hidden,
+.dashboard-topbar.scroll-header-hidden,
+.perfil-header.scroll-header-hidden {
+    transform: translate3d(0, -110%, 0);
+}
+
+.lp-page .lp-header.header.scroll-header-hidden {
+    transform: translate3d(0, -110%, 0);
+    pointer-events: none;
+}
+
+.header:not(.scroll-header-hidden),
+.dashboard-topbar:not(.scroll-header-hidden),
+.perfil-header:not(.scroll-header-hidden) {
+    transform: translate3d(0, 0, 0);
+}
 
 .header.scrolled {
     box-shadow:
         0 6px 25px rgba(18, 63, 56, 0.07);
 }
-
-
-/* =========================================================
-   CONTAINER DO HEADER
-========================================================= */
 
 .header-container {
     width:
@@ -96,11 +88,6 @@
     gap: 35px;
 }
 
-
-/* =========================================================
-   LOGO
-========================================================= */
-
 .logo-link {
     display: flex;
 
@@ -118,11 +105,6 @@
 
     object-fit: contain;
 }
-
-
-/* =========================================================
-   NAVEGAÇÃO
-========================================================= */
 
 .nav {
     display: flex;
@@ -155,11 +137,6 @@
     color: var(--verde-principal);
 }
 
-
-/* =========================================================
-   LINHA DOS LINKS
-========================================================= */
-
 .nav-link::after {
     content: "";
 
@@ -181,48 +158,21 @@
         width 0.3s ease;
 }
 
-
-/*
-   A linha aparece somente
-   quando o mouse estiver sobre o link.
-*/
 .nav-link:hover::after {
     width: 100%;
 }
 
-
-/*
-   IMPORTANTE:
-
-   Mesmo que o JavaScript adicione
-   a classe "active", ela NÃO deixa
-   a linha permanentemente visível.
-*/
 .nav-link.active::after {
     width: 0;
 }
 
-
-/*
-   Se o link estiver active E com mouse
-   em cima, a linha aparece normalmente.
-*/
 .nav-link.active:hover::after {
     width: 100%;
 }
 
-
-/*
-   Active altera somente a cor.
-*/
 .nav-link.active {
     color: var(--verde-principal);
 }
-
-
-/* =========================================================
-   AÇÕES DO HEADER
-========================================================= */
 
 .header-actions {
     display: flex;
@@ -233,11 +183,6 @@
 
     flex-shrink: 0;
 }
-
-
-/* =========================================================
-   BOTÃO TEMA
-========================================================= */
 
 .theme-button {
     border: none;
@@ -261,11 +206,6 @@
 .theme-button:hover {
     background: var(--verde-claro);
 }
-
-
-/* =========================================================
-   BOTÃO ENTRAR
-========================================================= */
 
 .login-header-button {
     display: flex;
@@ -305,11 +245,6 @@
 
     transform: translateY(-1px);
 }
-
-
-/* =========================================================
-   MENU MOBILE
-========================================================= */
 
 .menu-button {
     display: none;

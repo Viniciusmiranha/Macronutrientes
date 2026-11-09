@@ -156,6 +156,7 @@
                     </div>
 
                     <button class="primary-button lp-submit" type="submit">Entrar</button>
+                    <p class="lp-feedback" id="loginFeedback" role="status" aria-live="polite" hidden></p>
                     <p class="lp-auth-switch">Não possui uma conta? <button type="button" id="showRegister">Criar conta</button></p>
                 </form>
 
@@ -225,8 +226,8 @@
                 </form>
 
                 <p class="lp-secure">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.500 4 5.500v6c0 5 3.400 8.600 8 10 4.600-1.400 8-5 8-10v-6z"/><path d="m8.500 12 2.500 2.500 4.500-5"/></svg>
-                    Seus dados estão seguros conosco.
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01M8 13h8M8 16h5"/></svg>
+                    Conta local neste navegador; não substitui autenticação em servidor.
                 </p>
 
             </section>
@@ -264,6 +265,7 @@
 </script>
 
 <script src="js/main.js" defer></script>
+<script src="js/validacao.js" defer></script>
 <script src="js/auth.js" defer></script>
 
 </body>

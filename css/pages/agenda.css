@@ -1,8 +1,4 @@
-/* =====================================================
-   NUTRIQ · Agenda (css/agenda.css)
-   Complementa o css/pacientes.css (cabeçalho, badge e
-   rodapé). Carregue depois dele.
-===================================================== */
+
 
 .ag-layout {
     display: grid;
@@ -18,7 +14,6 @@
     box-shadow: 0 4px 18px rgba(26, 58, 49, 0.03);
 }
 
-/* ---------- Barra do calendário ---------- */
 .ag-calendar-panel {
     min-width: 0;
     padding: 18px 18px 20px;
@@ -132,7 +127,6 @@
     font-weight: 700;
 }
 
-/* ---------- Calendário (mês) ---------- */
 .ag-scroll {
     overflow-x: auto;
 }
@@ -220,7 +214,37 @@
     font-weight: 800;
 }
 
-/* ---------- Atendimentos dentro das células ---------- */
+body.dark-mode.dashboard-page .ag-cell.is-today .ag-daynum,
+body.dark-mode.dashboard-page .ag-col-head.is-today .ag-daynum {
+    background: #2b755b;
+    color: #ffffff;
+    box-shadow: 0 0 0 1px #78c9a7;
+}
+
+body.dark-mode.dashboard-page .ag-cell.is-selected {
+    background: #1c3931;
+    box-shadow: inset 0 0 0 2px #78c9a7;
+}
+
+body.dark-mode.dashboard-page .ag-cell.is-selected.is-today .ag-daynum {
+    background: #2b755b;
+    color: #ffffff;
+}
+
+body.dark-mode.dashboard-page .ag-cell:hover,
+body.dark-mode.dashboard-page .ag-col-head:hover {
+    background: #203d34;
+}
+
+body.dark-mode.dashboard-page .ag-cell.is-selected:hover {
+    background: #25473c;
+}
+
+body.dark-mode.dashboard-page .ag-cell:focus-visible,
+body.dark-mode.dashboard-page .ag-col-head:focus-visible {
+    outline-color: #8fd7c3;
+}
+
 .ag-chips {
     display: flex;
     flex-direction: column;
@@ -270,7 +294,6 @@
     text-align: center;
 }
 
-/* ---------- Visão semanal ---------- */
 .ag-week {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -330,7 +353,6 @@
     opacity: 0.85;
 }
 
-/* ---------- Visão diária ---------- */
 .ag-day-view {
     min-width: 0;
     border: 1px solid var(--pac-border);
@@ -369,7 +391,6 @@
     font-size: 12.5px;
 }
 
-/* ---------- Painel "Atendimentos do dia" ---------- */
 .ag-day-panel {
     padding: 20px 22px 24px;
 }
@@ -534,7 +555,6 @@
     color: #8a5a0b;
 }
 
-/* ---------- Responsivo ---------- */
 @media (max-width: 1100px) {
     .ag-layout {
         grid-template-columns: 1fr;

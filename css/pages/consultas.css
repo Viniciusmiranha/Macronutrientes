@@ -1,10 +1,5 @@
-/* =====================================================
-   NUTRIQ · Consultas (css/consultas.css)
-   Complementa o css/pacientes.css (cabeçalho, cards de
-   resumo, botões e rodapé). Carregue depois dele.
-===================================================== */
 
-/* ---------- Grade principal ---------- */
+
 .cs-grid {
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
@@ -19,7 +14,6 @@
     min-width: 0;
 }
 
-/* ---------- Painéis ---------- */
 .cs-panel {
     padding: 20px 22px 22px;
     background: var(--pac-surface);
@@ -80,7 +74,6 @@ button.cs-link {
     text-decoration: underline;
 }
 
-/* ---------- Estado vazio ---------- */
 .cs-empty {
     display: flex;
     flex-direction: column;
@@ -149,7 +142,6 @@ button.cs-link {
     text-align: center;
 }
 
-/* ---------- Lista de consultas ---------- */
 .cs-list {
     display: flex;
     flex-direction: column;
@@ -256,7 +248,6 @@ button.cs-link {
     font-size: 16px;
 }
 
-/* ---------- Atalhos rápidos ---------- */
 .cs-shortcuts {
     display: flex;
     flex-direction: column;
@@ -271,7 +262,7 @@ button.cs-link {
     min-height: 44px;
     padding: 6px 14px 6px 10px;
     background: #eef6f2;
-    border: 0;
+    border: 1px solid transparent;
     border-radius: 9px;
     color: var(--pac-title);
     font-size: 13px;
@@ -282,6 +273,15 @@ button.cs-link {
 
 .cs-shortcut:hover {
     background: var(--pac-green-soft);
+}
+
+.cs-shortcut:focus-visible {
+    outline: 3px solid var(--pac-green);
+    outline-offset: 2px;
+}
+
+.cs-shortcut:active {
+    background: #dcece5;
 }
 
 .cs-shortcut svg {
@@ -304,7 +304,34 @@ button.cs-link {
     font-style: normal;
 }
 
-/* ---------- Responsivo ---------- */
+body.dark-mode.dashboard-page .cs-shortcut {
+    background: #1c3931;
+    border-color: #35554a;
+    color: #e5f1ec;
+}
+
+body.dark-mode.dashboard-page .cs-shortcut svg {
+    stroke: #8fd7c3;
+}
+
+body.dark-mode.dashboard-page .cs-shortcut i {
+    color: #b8d2c7;
+}
+
+body.dark-mode.dashboard-page .cs-shortcut:hover {
+    background: #25473c;
+    border-color: #54806d;
+    color: #f0faf5;
+}
+
+body.dark-mode.dashboard-page .cs-shortcut:focus-visible {
+    outline-color: #8fd7c3;
+}
+
+body.dark-mode.dashboard-page .cs-shortcut:active {
+    background: #2b5144;
+}
+
 @media (max-width: 1100px) {
     .cs-grid {
         grid-template-columns: 1fr;

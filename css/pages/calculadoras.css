@@ -75,8 +75,16 @@
     width: 56px;
     height: 56px;
     border-radius: 14px;
-    font-size: 31px;
-    font-weight: 500;
+}
+
+.calculadora-tab-icon svg {
+    width: 30px;
+    height: 30px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .macros-icon {
@@ -152,7 +160,16 @@
     border-radius: 50%;
     background: #eaf4f0;
     color: #176c56;
-    font-size: 43px;
+}
+
+.calculadora-main-icon svg {
+    width: 43px;
+    height: 43px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .calculadora-intro h2 {

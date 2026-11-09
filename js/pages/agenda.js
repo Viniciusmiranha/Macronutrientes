@@ -1,9 +1,4 @@
-/* =====================================================
-    NUTRIQ · Agenda (js/pages/agenda.js)
 
-   Mostra as consultas cadastradas em consultas.html em
-   visão de mês, semana ou dia. Usa js/nutriq-dados.js.
-===================================================== */
 
 (function () {
     "use strict";
@@ -20,8 +15,7 @@
 
     function carregarConsultas() { return D.consultas.listar(); }
 
-    /* ---------- Estado e elementos ---------- */
-    var consultas = carregarConsultas();
+var consultas = carregarConsultas();
     var visao = "mes";
     var cursor = hoje();
     var termoBusca = "";
@@ -43,8 +37,7 @@
         feedback: $("dashboardFeedback")
     };
 
-    /* ---------- Datas ---------- */
-    function hoje() {
+function hoje() {
         var n = new Date();
         return new Date(n.getFullYear(), n.getMonth(), n.getDate());
     }
@@ -65,7 +58,7 @@
     }
 
     function inicioDaSemana(d) {
-        var deslocamento = (d.getDay() + 6) % 7; // segunda = 0
+        var deslocamento = (d.getDay() + 6) % 7;
         return somarDias(d, -deslocamento);
     }
 
@@ -91,8 +84,7 @@
         return new Date(Number(d[0]), Number(d[1]) - 1, Number(d[2]), Number(h[0]) || 0, Number(h[1]) || 0);
     }
 
-    /* ---------- Utilidades ---------- */
-    function escapar(texto) {
+function escapar(texto) {
         var div = document.createElement("div");
         div.textContent = texto == null ? "" : String(texto);
         return div.innerHTML;
@@ -102,8 +94,7 @@
         D.toast(mensagem, tipo);
     }
 
-    /* ---------- Eventos por dia ---------- */
-    function eventosPorDia() {
+function eventosPorDia() {
         var termo = termoBusca.trim().toLowerCase();
         var mapa = {};
         consultas.forEach(function (c) {
@@ -123,8 +114,7 @@
         return "ag-chip";
     }
 
-    /* ---------- Visão: mês ---------- */
-    function htmlMes(mapa) {
+function htmlMes(mapa) {
         var ano = cursor.getFullYear();
         var mes = cursor.getMonth();
         var primeiro = new Date(ano, mes, 1);
@@ -168,8 +158,7 @@
         return html + "</div></div>";
     }
 
-    /* ---------- Visão: semana ---------- */
-    function htmlSemana(mapa) {
+function htmlSemana(mapa) {
         var inicio = inicioDaSemana(cursor);
         var agora = hoje();
         var html = '<div class="ag-week">';
@@ -197,8 +186,7 @@
         return html + "</div>";
     }
 
-    /* ---------- Visão: dia ---------- */
-    function htmlDia(mapa) {
+function htmlDia(mapa) {
         var lista = mapa[iso(cursor)] || [];
         var primeira = HORA_INICIAL;
         var ultima = HORA_FINAL;
@@ -226,8 +214,7 @@
         return html + "</div>";
     }
 
-    /* ---------- Rótulo do período ---------- */
-    function rotuloPeriodo() {
+function rotuloPeriodo() {
         if (visao === "mes") {
             return capitalizar(formatar(cursor, { month: "long", year: "numeric" }));
         }
@@ -240,8 +227,7 @@
         return formatar(cursor, { day: "numeric", month: "long", year: "numeric" });
     }
 
-    /* ---------- Painel "Atendimentos do dia" ---------- */
-    function renderizarDia(mapa) {
+function renderizarDia(mapa) {
         el.diaData.textContent = capitalizar(
             formatar(cursor, { weekday: "long", day: "numeric", month: "long", year: "numeric" })
         );
@@ -283,15 +269,13 @@
             );
         }).join("");
 
-        // Atalho para agendar já com a data do dia selecionado
-        var destino = "consultas.html?novo=1&data=" + iso(cursor);
+var destino = "consultas.html?novo=1&data=" + iso(cursor);
         $("agNovaConsulta").href = destino;
         $("agNovaConsultaLista").href = destino;
         $("agNovaConsultaLista").hidden = !tem;
     }
 
-    /* ---------- Renderização geral ---------- */
-    function renderizar() {
+function renderizar() {
         var mapa = eventosPorDia();
         el.periodo.textContent = rotuloPeriodo();
 
@@ -302,8 +286,7 @@
         renderizarDia(mapa);
     }
 
-    /* ---------- Navegação ---------- */
-    function mover(sentido) {
+function mover(sentido) {
         if (visao === "mes") {
             var ano = cursor.getFullYear();
             var mes = cursor.getMonth() + sentido;
@@ -328,8 +311,7 @@
         renderizar();
     }
 
-    /* ---------- Ações nos atendimentos ---------- */
-    function aoClicarNaLista(evento) {
+function aoClicarNaLista(evento) {
         var botao = evento.target.closest("[data-acao]");
         if (!botao) return;
 
@@ -362,8 +344,7 @@
         }
     }
 
-    /* ---------- Eventos ---------- */
-    function iniciar() {
+function iniciar() {
         el.anterior.addEventListener("click", function () { mover(-1); });
         el.proximo.addEventListener("click", function () { mover(1); });
         el.botaoHoje.addEventListener("click", function () {
@@ -398,9 +379,7 @@
             el.formBusca.addEventListener("submit", function (e) { e.preventDefault(); });
         }
 
-        // Atualiza quando os dados mudam (outra aba), ao voltar de outra página
-        // e a cada minuto (para marcar atendimentos que já passaram como pendentes).
-        function recarregar() {
+function recarregar() {
             consultas = carregarConsultas();
             renderizar();
         }

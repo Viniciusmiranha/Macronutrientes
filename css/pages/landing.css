@@ -1,9 +1,4 @@
-/* =====================================================
-   NUTRIQ · Página inicial (css/pages/landing.css)
-   Carregue DEPOIS do css/style.css.
-   Tudo usa o prefixo .lp- para não colidir com o style.css.
-   Objetivo: caber em uma tela (scroll leve ou nenhum).
-===================================================== */
+
 
 .lp-body {
     margin: 0;
@@ -49,7 +44,6 @@
     margin-inline: auto;
 }
 
-/* ---------- Fundo decorativo ---------- */
 .lp-bg {
     position: absolute;
     inset: 0;
@@ -80,16 +74,36 @@
     background: radial-gradient(ellipse at 50% 30%, rgba(180, 225, 205, 0.55), rgba(180, 225, 205, 0) 68%);
 }
 
-/* ---------- Header ---------- */
-/* "all: unset" apaga qualquer regra do .header do style.css (fixo, sombra, etc.). */
 .lp-page .lp-header.header {
     all: unset;
-    position: relative;
+    position: fixed;
+    inset: 0 0 auto;
     z-index: 2;
     display: block;
     box-sizing: border-box;
     width: 100%;
     border-bottom: 1px solid rgba(23, 107, 88, 0.14);
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.35s ease;
+    will-change: transform;
+}
+
+body .lp-page .lp-header.header.hidden {
+    transform: translate3d(0, -100%, 0);
+    pointer-events: none;
+}
+
+body .lp-page .lp-header.header.scroll-header-hidden {
+    transform: translate3d(0, -110%, 0);
+    pointer-events: none;
+}
+
+body .lp-page .lp-header.header.visible {
+    transform: translate3d(0, 0, 0);
+}
+
+body .lp-page .lp-header.header:not(.scroll-header-hidden) {
+    pointer-events: auto;
 }
 
 .lp-header-inner {
@@ -110,7 +124,6 @@
     max-width: none;
 }
 
-/* ---------- Conteúdo principal ---------- */
 .lp-page main.lp-main {
     position: relative;
     z-index: 1;
@@ -118,7 +131,7 @@
     flex: 1;
     align-items: center;
     margin: 0;
-    padding: clamp(14px, 2.8vh, 40px) 0;
+    padding: calc(clamp(78px, 10vh, 100px) + clamp(14px, 2.8vh, 40px)) 0 clamp(14px, 2.8vh, 40px);
 }
 
 .lp-hero {
@@ -166,7 +179,6 @@
     font-weight: 700;
 }
 
-/* ---------- Benefícios ---------- */
 .lp-features {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -233,7 +245,6 @@
     line-height: 1.4;
 }
 
-/* Ícones de traço (padrão do projeto) */
 .lp-feature-icon svg,
 .lp-badge svg,
 .lp-ico,
@@ -246,7 +257,6 @@
     stroke-linejoin: round;
 }
 
-/* ---------- Cartão de cadastro ---------- */
 .lp-card {
     width: 100%;
     min-width: 0;
@@ -255,6 +265,74 @@
     border: 1px solid rgba(255, 255, 255, 0.9);
     border-radius: 20px;
     box-shadow: 0 22px 60px rgba(19, 100, 78, 0.14);
+}
+
+body.dark-mode .lp-page .lp-card {
+    background: #172a26;
+    border-color: #35554a;
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.32);
+    color: #e5f1ec;
+}
+
+body.dark-mode .lp-page .lp-card h2,
+body.dark-mode .lp-page .lp-card .lp-field label {
+    color: #e5f1ec;
+}
+
+body.dark-mode .lp-page .lp-card .lp-card-sub,
+body.dark-mode .lp-page .lp-card .lp-auth-switch {
+    color: #b8d2c7;
+}
+
+body.dark-mode .lp-page .lp-card .lp-badge {
+    background: #24443a;
+}
+
+body.dark-mode .lp-page .lp-card .lp-badge svg,
+body.dark-mode .lp-page .lp-card .lp-field .lp-ico,
+body.dark-mode .lp-page .lp-card .lp-eye svg {
+    stroke: #8fd7c3;
+}
+
+body.dark-mode .lp-page .lp-card .lp-field input {
+    background: #10211e;
+    border-color: #42645a;
+    color: #e5f1ec;
+}
+
+body.dark-mode .lp-page .lp-card .lp-field input::placeholder {
+    color: #a9bdb7;
+}
+
+body.dark-mode .lp-page .lp-card .lp-field input:hover {
+    border-color: #6a9c87;
+}
+
+body.dark-mode .lp-page .lp-card .lp-field input:focus {
+    border-color: #8fd7c3;
+    box-shadow: 0 0 0 3px rgba(143, 215, 195, 0.2);
+}
+
+body.dark-mode .lp-page .lp-card .lp-eye:hover {
+    background: #24443a;
+}
+
+body.dark-mode .lp-page .lp-card .lp-submit:hover {
+    background: #0e6049;
+}
+
+body.dark-mode .lp-page .lp-card .lp-auth-switch button {
+    color: #8fd7c3;
+}
+
+body.dark-mode .lp-page .lp-card .lp-auth-switch button:focus-visible {
+    outline-color: #8fd7c3;
+}
+
+body.dark-mode .lp-page .lp-card .lp-feedback {
+    background: #1c3931;
+    border-color: #42645a;
+    color: #e5f1ec;
 }
 
 .lp-badge {
@@ -292,7 +370,6 @@
     text-align: center;
 }
 
-/* ---------- Formulário ---------- */
 .lp-card .lp-form {
     display: flex;
     flex-direction: column;
@@ -311,8 +388,6 @@
     gap: clamp(8px, 1vw, 14px);
 }
 
-/* Cada campo mantém a estrutura do original: label, input, small.error-message.
-   Ícone e botão do olho ficam sobre o input usando a mesma célula da grade. */
 .lp-card .form-group.lp-field {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -392,7 +467,6 @@
     stroke: var(--lp-green);
 }
 
-/* Estados de erro (cobre as classes mais comuns que o auth.js pode aplicar) */
 .lp-card .form-group.error input,
 .lp-card .form-group.has-error input,
 .lp-card .form-group.invalid input,
@@ -459,7 +533,6 @@
     display: block;
 }
 
-/* ---------- Botão principal ---------- */
 .lp-card .lp-submit {
     display: inline-flex;
     align-items: center;
@@ -548,7 +621,6 @@ body.dark-mode .lp-card .lp-login-btn:focus-visible {
     outline-offset: 2px;
 }
 
-/* ---------- "ou" + entrar ---------- */
 .lp-divider {
     display: flex;
     align-items: center;
@@ -573,7 +645,6 @@ body.dark-mode .lp-card .lp-login-btn:focus-visible {
     gap: 10px;
 }
 
-/* "all: unset" remove o visual de .profile-option do style.css, mas mantém a classe para o JS. */
 .lp-page .lp-login-btn.profile-option {
     all: unset;
     box-sizing: border-box;
@@ -627,7 +698,6 @@ body.dark-mode .lp-card .lp-login-btn:focus-visible {
     stroke-linejoin: round;
 }
 
-/* ---------- Footer ---------- */
 .lp-footer {
     position: relative;
     z-index: 1;
@@ -644,12 +714,10 @@ body.dark-mode .lp-card .lp-login-btn:focus-visible {
     margin: 0;
 }
 
-/* ---------- Modal de login: o cadastro agora fica na página ---------- */
 #nutritionistRegister {
     display: none !important;
 }
 
-/* ---------- Responsivo ---------- */
 @media (max-width: 1020px) {
     .lp-hero {
         grid-template-columns: minmax(0, 1fr);
@@ -658,7 +726,7 @@ body.dark-mode .lp-card .lp-login-btn:focus-visible {
 
     .lp-page main.lp-main {
         align-items: flex-start;
-        padding: 24px 0 36px;
+        padding: calc(clamp(78px, 10vh, 100px) + 24px) 0 36px;
     }
 
     .lp-title {
@@ -678,6 +746,10 @@ body.dark-mode .lp-card .lp-login-btn:focus-visible {
 @media (max-width: 560px) {
     .lp-header-inner {
         min-height: 74px;
+    }
+
+    .lp-page main.lp-main {
+        padding-top: 98px;
     }
 
     .lp-page .lp-logo .logo {

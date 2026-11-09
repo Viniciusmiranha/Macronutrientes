@@ -1,5 +1,8 @@
 "use strict";
 
+const CHAVE_CONTAS_LOCAIS = "nutriq_contas_locais_v1";
+const ITERACOES_HASH_SENHA = 120000;
+
 function atualizarTelaAuth(cadastro) {
     if (!loginForm || !registerForm) return;
 
@@ -21,13 +24,77 @@ function atualizarTelaAuth(cadastro) {
 showRegister?.addEventListener("click", () => atualizarTelaAuth(true));
 backToLogin?.addEventListener("click", () => atualizarTelaAuth(false));
 
-/* =========================================================
-   LOGIN
-========================================================= */
+function obterContasLocais() {
+    const salvo = localStorage.getItem(CHAVE_CONTAS_LOCAIS);
+    if (!salvo) return [];
+
+    const contas = JSON.parse(salvo);
+    if (!Array.isArray(contas)) {
+        throw new Error("Os dados das contas locais estão inválidos.");
+    }
+
+    return contas;
+}
+
+function sincronizarPerfilLocal(conta, preencherSomenteAusentes) {
+    const salvo = localStorage.getItem("nutriqPerfil");
+    const perfil = salvo ? JSON.parse(salvo) : {};
+    if (!perfil || typeof perfil !== "object" || Array.isArray(perfil)) {
+        throw new Error("Os dados do perfil local estão inválidos.");
+    }
+
+    ["nome", "email", "crn"].forEach(campo => {
+        const valor = String(conta[campo] || "").trim();
+        if (valor && (!preencherSomenteAusentes || !String(perfil[campo] || "").trim())) {
+            perfil[campo] = valor;
+        }
+    });
+
+    localStorage.setItem("nutriqPerfil", JSON.stringify(perfil));
+}
+
+function exigirCriptografiaLocal() {
+    if (!window.crypto?.subtle || !window.crypto.getRandomValues) {
+        throw new Error("Use um navegador atualizado em HTTPS ou no Live Preview para criar ou acessar a conta local.");
+    }
+}
+
+function codificarBase64(bytes) {
+    return btoa(Array.from(bytes, byte => String.fromCharCode(byte)).join(""));
+}
+
+function decodificarBase64(valor) {
+    return Uint8Array.from(atob(valor), caractere => caractere.charCodeAt(0));
+}
+
+async function derivarHashSenha(senha, salt) {
+    exigirCriptografiaLocal();
+    const chave = await window.crypto.subtle.importKey(
+        "raw",
+        new TextEncoder().encode(senha),
+        "PBKDF2",
+        false,
+        ["deriveBits"]
+    );
+    const hash = await window.crypto.subtle.deriveBits({
+        name: "PBKDF2",
+        salt,
+        iterations: ITERACOES_HASH_SENHA,
+        hash: "SHA-256"
+    }, chave, 256);
+    return new Uint8Array(hash);
+}
+
+function hashesIguais(a, b) {
+    if (a.length !== b.length) return false;
+    let diferenca = 0;
+    for (let i = 0; i < a.length; i++) diferenca |= a[i] ^ b[i];
+    return diferenca === 0;
+}
 
 loginForm?.addEventListener(
     "submit",
-    event => {
+    async event => {
         event.preventDefault();
 
         limparErros();
@@ -43,67 +110,54 @@ loginForm?.addEventListener(
                 .getElementById("loginPassword")
                 .value;
 
-        let valido = true;
-
-        /* E-mail */
-
         if (!validarEmail(email)) {
             mostrarErro(
                 "loginEmail",
                 "Digite um e-mail válido."
             );
-
-            valido = false;
-        }
-
-        /* Senha */
-
-        if (senha.length < 6) {
-            mostrarErro(
-                "loginPassword",
-                "A senha deve ter pelo menos 6 caracteres."
-            );
-
-            valido = false;
-        }
-
-        if (!valido) {
             return;
         }
 
-        /* =========================================================
-           LOGIN VALIDADO
-        ========================================================= */
+        try {
+            const conta = obterContasLocais().find(item =>
+                item.email === email.toLowerCase() &&
+                item.perfil === "nutricionista"
+            );
+            if (!conta) {
+                mostrarFeedbackLogin("Este e-mail não está cadastrado. Verifique o endereço ou crie uma conta.");
+                return;
+            }
 
-        /*
-           Salva que o usuário passou pelo login.
-        */
+            if (senha.length < 6) {
+                mostrarErro(
+                    "loginPassword",
+                    "A senha deve ter pelo menos 6 caracteres."
+                );
+                return;
+            }
 
-        sessionStorage.setItem(
-            "usuarioLogado",
-            "true"
-        );
+            const hash = await derivarHashSenha(
+                senha,
+                decodificarBase64(conta.salt)
+            );
+            if (!hashesIguais(hash, decodificarBase64(conta.hashSenha))) {
+                mostrarFeedbackLogin("E-mail ou senha incorretos.");
+                return;
+            }
 
-        sessionStorage.setItem(
-            "perfilUsuario",
-            "nutricionista"
-        );
-
-        /*
-           Vai para a página principal
-        */
-
-        window.location.href = "pagina1.html";
+            sincronizarPerfilLocal(conta, true);
+            sessionStorage.setItem("usuarioLogado", "true");
+            sessionStorage.setItem("perfilUsuario", conta.perfil);
+            window.location.href = "pagina1.html";
+        } catch {
+            mostrarFeedbackLogin("Não foi possível verificar a conta local. Verifique o armazenamento do navegador e tente novamente.");
+        }
     }
 );
 
-/* =========================================================
-   CADASTRO DO NUTRICIONISTA
-========================================================= */
-
 registerForm?.addEventListener(
     "submit",
-    event => {
+    async event => {
         event.preventDefault();
 
         limparErros();
@@ -140,128 +194,102 @@ registerForm?.addEventListener(
                 .getElementById("registerConfirmPassword")
                 .value;
 
-        let valido = true;
+if (nome.length < 3) {
+    mostrarErro(
+        "registerName",
+        "Informe seu nome completo."
+    );
+    return;
+}
 
-        /* Nome */
+if (!validarEmail(email)) {
+    mostrarErro(
+        "registerEmail",
+        "Digite um e-mail válido."
+    );
+    return;
+}
 
-        if (nome.length < 3) {
-            mostrarErro(
-                "registerName",
-                "Informe seu nome completo."
-            );
-
-            valido = false;
+if (!NutriqValidacao.validarCPF(cpf)) {
+    mostrarErro(
+        "registerCPF",
+        "Digite um CPF válido."
+    );
+    return;
         }
 
-        /* E-mail */
+if (crn.length < 4) {
+    mostrarErro(
+        "registerCRN",
+        "Informe seu número de CRN."
+    );
+    return;
+}
 
-        if (!validarEmail(email)) {
-            mostrarErro(
-                "registerEmail",
-                "Digite um e-mail válido."
-            );
+if (senha.length < 6) {
+    mostrarErro(
+        "registerPassword",
+        "A senha deve ter pelo menos 6 caracteres."
+    );
+    return;
+}
 
-            valido = false;
-        }
-        /* CPF */
+if (senha !== confirmar) {
+    mostrarErro(
+        "registerConfirmPassword",
+        "As senhas não coincidem."
+    );
+    return;
+}
 
-        if (!validarCPF(cpf)) {
-            mostrarErro(
-                "registerCPF",
-                "Digite um CPF válido."
-            );
+try {
+    exigirCriptografiaLocal();
+    const contas = obterContasLocais();
+    const emailNormalizado = email.toLowerCase();
+    if (contas.some(conta => conta.email === emailNormalizado)) {
+        mostrarErro("registerEmail", "Já existe uma conta local com este e-mail.");
+        return;
+    }
 
-            valido = false;
-        }
-        /* CRN */
+    const salt = window.crypto.getRandomValues(new Uint8Array(16));
+    const hashSenha = await derivarHashSenha(senha, salt);
+    const conta = {
+        nome,
+        email: emailNormalizado,
+        crn,
+        perfil: "nutricionista",
+        salt: codificarBase64(salt),
+        hashSenha: codificarBase64(hashSenha),
+        criadoEm: new Date().toISOString()
+    };
+    contas.push(conta);
+    localStorage.setItem(CHAVE_CONTAS_LOCAIS, JSON.stringify(contas));
+    let perfilSincronizado = true;
+    try {
+        sincronizarPerfilLocal(conta);
+    } catch {
+        perfilSincronizado = false;
+    }
 
-        if (crn.length < 4) {
-            mostrarErro(
-                "registerCRN",
-                "Informe seu número de CRN."
-            );
-
-            valido = false;
-        }
-
-        /* Senha */
-
-        if (senha.length < 6) {
-            mostrarErro(
-                "registerPassword",
-                "A senha deve ter pelo menos 6 caracteres."
-            );
-
-            valido = false;
-        }
-
-        /* Confirmar senha */
-
-        if (senha !== confirmar) {
-            mostrarErro(
-                "registerConfirmPassword",
-                "As senhas não coincidem."
-            );
-
-            valido = false;
-        }
-
-        if (!valido) {
-            return;
-        }
-
-        mostrarFeedback(
-            "success",
-            "Cadastro validado com sucesso! O próximo passo será validar o CRN."
-        );
-
-        registerForm.reset();
+    registerForm.reset();
+    atualizarTelaAuth(false);
+    document.getElementById("loginEmail").value = emailNormalizado;
+    mostrarFeedback(
+        perfilSincronizado ? "success" : "error",
+        perfilSincronizado
+            ? "Conta profissional criada e salva neste navegador. A senha não é armazenada em texto puro. Este cadastro não verifica o CRN nem substitui autenticação em servidor."
+            : "Conta criada, mas não foi possível preencher o perfil local. Entre novamente para tentar sincronizar os dados."
+    );
+} catch {
+    mostrarFeedback("error", "Não foi possível salvar a conta local. Verifique o armazenamento do navegador e tente novamente.");
+}
     }
 );
-
-/* =========================================================
-   VALIDAR E-MAIL
-========================================================= */
 
 function validarEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         .test(email);
 }
-function validarCPF(cpf) {
-    cpf = cpf.replace(/\D/g, "");
-
-    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
-        return false;
-    }
-
-    let soma = 0;
-
-    for (let i = 0; i < 9; i++) {
-        soma += Number(cpf[i]) * (10 - i);
-    }
-
-    let resto = (soma * 10) % 11;
-    if (resto === 10) resto = 0;
-
-    if (resto !== Number(cpf[9])) {
-        return false;
-    }
-
-    soma = 0;
-
-    for (let i = 0; i < 10; i++) {
-        soma += Number(cpf[i]) * (11 - i);
-    }
-
-    resto = (soma * 10) % 11;
-    if (resto === 10) resto = 0;
-
-    return resto === Number(cpf[10]);
-}
-/* =========================================================
-   MOSTRAR ERRO
-========================================================= */
-
 function mostrarErro(
     inputId,
     mensagem
@@ -290,10 +318,6 @@ function mostrarErro(
     }
 }
 
-/* =========================================================
-   LIMPAR ERROS
-========================================================= */
-
 function limparErros() {
     document
         .querySelectorAll(".input-error")
@@ -312,10 +336,6 @@ function limparErros() {
         );
 }
 
-/* =========================================================
-   FEEDBACK
-========================================================= */
-
 function mostrarFeedback(
     tipo,
     mensagem
@@ -329,10 +349,25 @@ function mostrarFeedback(
     feedback.hidden = false;
 }
 
-function limparFeedback() {
-    const feedback = document.getElementById("lpFeedback");
+function mostrarFeedbackLogin(mensagem) {
+    const feedback = document.getElementById("loginFeedback");
     if (!feedback) return;
 
-    feedback.textContent = "";
-    feedback.hidden = true;
+    feedback.className = "lp-feedback error";
+    feedback.textContent = mensagem;
+    feedback.hidden = false;
+}
+
+function limparFeedback() {
+    const feedback = document.getElementById("lpFeedback");
+    if (feedback) {
+        feedback.textContent = "";
+        feedback.hidden = true;
+    }
+
+    const feedbackLogin = document.getElementById("loginFeedback");
+    if (feedbackLogin) {
+        feedbackLogin.textContent = "";
+        feedbackLogin.hidden = true;
+    }
 }

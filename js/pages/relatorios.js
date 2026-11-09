@@ -1,8 +1,4 @@
-/* =====================================================
-    NUTRIQ · Relatórios (js/pages/relatorios.js)
-   Resumo do paciente, gráficos de peso, IMC e macronutrientes
-   e impressão / PDF. Usa js/nutriq-dados.js.
-===================================================== */
+
 
 (function () {
     "use strict";
@@ -48,16 +44,14 @@
     var gerado = false;
     var nomeGerado = "";
 
-    /* ---------- Utilidades ---------- */
-    function formatarNumero(n, casas) {
+function formatarNumero(n, casas) {
         return Number(n).toLocaleString("pt-BR", {
             minimumFractionDigits: 0,
             maximumFractionDigits: casas
         });
     }
 
-    /* ---------- Dados derivados do paciente ---------- */
-    function medicoesDe(p) {
+function medicoesDe(p) {
         return (Array.isArray(p.avaliacoes) ? p.avaliacoes : [])
             .map(function (a) {
                 return {
@@ -89,8 +83,7 @@
         return lista[0] || null;
     }
 
-    /* ---------- Gráficos de linha (SVG) ---------- */
-    var W = 460, H = 200, ML = 42, MR = 14, MT = 24, MB = 46, SLOTS = 6;
+var W = 460, H = 200, ML = 42, MR = 14, MT = 24, MB = 46, SLOTS = 6;
 
     function desenharLinha(container, serie, cfg) {
         var vazio = serie.length === 0;
@@ -161,8 +154,7 @@
         );
     }
 
-    /* ---------- Gráfico de macronutrientes ---------- */
-    var CIRCUNFERENCIA = 2 * Math.PI * 48;
+var CIRCUNFERENCIA = 2 * Math.PI * 48;
 
     function desenharMacros(plano) {
         var caixa = el.donut.parentNode;
@@ -212,8 +204,7 @@
         return true;
     }
 
-    /* ---------- Estados da página ---------- */
-    var CFG_PESO = { unidade: "kg", ticksVazio: [0, 50, 100], titulo: "Gráfico de evolução do peso" };
+var CFG_PESO = { unidade: "kg", ticksVazio: [0, 50, 100], titulo: "Gráfico de evolução do peso" };
     var CFG_IMC = { unidade: "IMC", ticksVazio: [0, 15, 30, 45], titulo: "Gráfico de evolução do IMC" };
 
     function mostrarNota(elemento, html) {
@@ -255,8 +246,7 @@
         var medicoes = medicoesDe(paciente).slice(-SLOTS);
         var link = encodeURIComponent(paciente.id);
 
-        // Resumo
-        el.resumoTexto.textContent = "Informações gerais do paciente selecionado.";
+el.resumoTexto.textContent = "Informações gerais do paciente selecionado.";
         el.nome.textContent = paciente.nome || "Paciente sem nome";
         el.contato.textContent = paciente.telefone || paciente.email || "—";
         el.meta.textContent = [anos != null ? anos + " anos" : "Idade", paciente.genero || "Gênero"].join(" · ");
@@ -264,8 +254,7 @@
         el.plano.textContent = plano && plano.nome ? plano.nome : "—";
         el.objetivo.textContent = paciente.objetivo || (plano && plano.objetivo) || "—";
 
-        // Peso
-        var seriePeso = medicoes.map(function (m) { return { data: m.data, valor: m.peso }; });
+var seriePeso = medicoes.map(function (m) { return { data: m.data, valor: m.peso }; });
         desenharLinha(el.pesoGrafico, seriePeso, CFG_PESO);
         if (!seriePeso.length) {
             mostrarNota(el.pesoNota,
@@ -278,8 +267,7 @@
             mostrarNota(el.pesoNota, "");
         }
 
-        // IMC
-        var serieImc = medicoes
+var serieImc = medicoes
             .map(function (m) { return { data: m.data, valor: U.imc(m.peso, m.altura) }; })
             .filter(function (s) { return s.valor != null; });
         desenharLinha(el.imcGrafico, serieImc, CFG_IMC);
@@ -295,13 +283,11 @@
             ));
         }
 
-        // Macronutrientes
-        var temMacros = desenharMacros(plano);
+var temMacros = desenharMacros(plano);
         mostrarNota(el.macroNota, temMacros ? "" :
             'Este paciente não tem plano alimentar com macronutrientes. <a href="planos-alimentares.html?novo=1&amp;paciente=' + link + '">Criar plano</a>.');
 
-        // Relatório completo
-        gerado = true;
+gerado = true;
         nomeGerado = paciente.nome || "paciente";
         el.completoTexto.textContent =
             "Relatório de " + nomeGerado + " gerado em " + U.formatarData(new Date()) +
@@ -337,8 +323,7 @@
         D.toast("Envio automático não configurado. Nenhum e-mail foi enviado.", "erro");
     }
 
-    /* ---------- Lista de pacientes ---------- */
-    function preencherPacientes() {
+function preencherPacientes() {
         var anterior = el.select.value;
         var lista = D.pacientes.listar().sort(function (a, b) {
             return String(a.nome || "").localeCompare(String(b.nome || ""), "pt-BR");
@@ -357,20 +342,18 @@
         el.gerar.disabled = el.select.value === "";
     }
 
-    // Quando os dados mudam em outra aba, mantém o relatório atualizado.
-    function aoMudarDados() {
+function aoMudarDados() {
         var estavaGerado = gerado;
         var selecionado = el.select.value;
         preencherPacientes();
         if (el.select.value !== selecionado) {
-            estadoVazio(); // o paciente selecionado foi excluído
+            estadoVazio();
         } else if (estavaGerado) {
             gerarRelatorio(true);
         }
     }
 
-    /* ---------- Eventos ---------- */
-    function iniciar() {
+function iniciar() {
         preencherPacientes();
         estadoVazio();
 
@@ -386,8 +369,7 @@
         D.aoMudar(aoMudarDados);
         window.addEventListener("pageshow", aoMudarDados);
 
-        // Vindo da ficha do paciente: relatorios.html?paciente=ID
-        var idUrl = U.parametro("paciente");
+var idUrl = U.parametro("paciente");
         if (idUrl && D.pacientes.obter(idUrl)) {
             el.select.value = idUrl;
             el.gerar.disabled = false;

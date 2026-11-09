@@ -50,11 +50,7 @@
             : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
     }
 
-    /* =========================================================
-       CADASTRAR PACIENTE
-    ========================================================= */
-
-    function cadastrarPaciente(dadosPaciente) {
+function cadastrarPaciente(dadosPaciente) {
         const dados = obterDados();
 
         const nome = String(dadosPaciente.nome || "").trim();
@@ -80,29 +76,17 @@
         return paciente;
     }
 
-    /* =========================================================
-       LISTAR PACIENTES
-    ========================================================= */
-
-    function listarPacientes() {
+function listarPacientes() {
         return obterDados().pacientes;
     }
 
-    /* =========================================================
-       BUSCAR PACIENTE
-    ========================================================= */
-
-    function buscarPaciente(id) {
+function buscarPaciente(id) {
         return obterDados().pacientes.find(
             paciente => paciente.id === id
         ) || null;
     }
 
-    /* =========================================================
-       EDITAR PACIENTE
-    ========================================================= */
-
-    function editarPaciente(id, alteracoes) {
+function editarPaciente(id, alteracoes) {
         const dados = obterDados();
 
         const indice = dados.pacientes.findIndex(
@@ -134,11 +118,7 @@
         return dados.pacientes[indice];
     }
 
-    /* =========================================================
-       EXCLUIR PACIENTE
-    ========================================================= */
-
-    function excluirPaciente(id) {
+function excluirPaciente(id) {
         const dados = obterDados();
 
         dados.pacientes = dados.pacientes.filter(
@@ -160,11 +140,7 @@
         salvarDados(dados);
     }
 
-    /* =========================================================
-       CADASTRAR PLANO ALIMENTAR
-    ========================================================= */
-
-    function cadastrarPlano(plano) {
+function cadastrarPlano(plano) {
         const dados = obterDados();
 
         if (!dados.pacientes.some(
@@ -192,11 +168,7 @@
         return novoPlano;
     }
 
-    /* =========================================================
-       CADASTRAR AVALIAÇÃO
-    ========================================================= */
-
-    function cadastrarAvaliacao(avaliacao) {
+function cadastrarAvaliacao(avaliacao) {
         const dados = obterDados();
 
         if (!dados.pacientes.some(
@@ -221,11 +193,7 @@
         return novaAvaliacao;
     }
 
-    /* =========================================================
-       CADASTRAR CONSULTA
-    ========================================================= */
-
-    function cadastrarConsulta(consulta) {
+function cadastrarConsulta(consulta) {
         const dados = obterDados();
 
         if (!dados.pacientes.some(
@@ -273,35 +241,19 @@
         return novaConsulta;
     }
 
-    /* =========================================================
-       LISTAR PLANOS
-    ========================================================= */
-
-    function listarPlanos() {
+function listarPlanos() {
         return obterDados().planos;
     }
 
-    /* =========================================================
-       LISTAR AVALIAÇÕES
-    ========================================================= */
-
-    function listarAvaliacoes() {
+function listarAvaliacoes() {
         return obterDados().avaliacoes;
     }
 
-    /* =========================================================
-       LISTAR CONSULTAS
-    ========================================================= */
-
-    function listarConsultas() {
+function listarConsultas() {
         return obterDados().consultas;
     }
 
-    /* =========================================================
-       OBTER RESUMO
-    ========================================================= */
-
-    function obterResumo() {
+function obterResumo() {
         const dados = obterDados();
 
         return {
@@ -317,11 +269,82 @@
         };
     }
 
-    /* =========================================================
-       DISPONIBILIZAR FUNÇÕES PARA AS OUTRAS PÁGINAS
-    ========================================================= */
+function calcularTaxaAdesao(pacientes, consultas, avaliacoes) {
+    const agora = Date.now();
+    const limite = new Date();
+    limite.setDate(limite.getDate() - 60);
+    limite.setHours(0, 0, 0, 0);
+    const limiteMs = limite.getTime();
+    const acompanhamentos = new Map();
 
-    window.NutriqDados = {
+    function instanteDaData(valor) {
+        const partes = String(valor || "").split("T")[0]
+            .match(/^(\d{4})-(\d{2})-(\d{2})$/);
+        if (!partes) return null;
+        const data = new Date(Number(partes[1]), Number(partes[2]) - 1, Number(partes[3]));
+        if (
+            data.getFullYear() !== Number(partes[1]) ||
+            data.getMonth() !== Number(partes[2]) - 1 ||
+            data.getDate() !== Number(partes[3])
+        ) return null;
+        return data.getTime();
+    }
+
+    (avaliacoes || []).forEach(avaliacao => {
+        if (!avaliacao || !avaliacao.pacienteId) return;
+        const instante = instanteDaData(avaliacao.data);
+        if (instante != null && instante >= limiteMs) {
+            acompanhamentos.set(avaliacao.pacienteId, true);
+        }
+    });
+
+    (consultas || []).forEach(consulta => {
+        if (!consulta || !consulta.pacienteId) return;
+        const status = String(consulta.status || "")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .trim();
+        if (status !== "realizada" && status !== "agendada") return;
+
+        const instanteDia = instanteDaData(consulta.data);
+        const partesHora = String(consulta.hora || consulta.horario || "00:00")
+            .match(/^(?:([01]\d|2[0-3])):([0-5]\d)$/);
+        if (instanteDia == null || !partesHora) return;
+        const data = new Date(instanteDia);
+        data.setHours(Number(partesHora[1]), Number(partesHora[2]));
+        const instante = data.getTime();
+        if (
+            (status === "realizada" && instante >= limiteMs && instante <= agora) ||
+            (status === "agendada" && instante >= agora)
+        ) {
+            acompanhamentos.set(consulta.pacienteId, true);
+        }
+    });
+
+    const ativos = (pacientes || []).filter(paciente => {
+        const status = String(paciente.status || "ativo")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .trim();
+        return !["inativo", "alta"].includes(status);
+    });
+
+    if (!ativos.length) return null;
+
+    const acompanhados = ativos.filter(paciente =>
+        acompanhamentos.has(paciente.id) ||
+        (paciente.avaliacoes || []).some(avaliacao => {
+            const instante = instanteDaData(avaliacao.data);
+            return instante != null && instante >= limiteMs;
+        })
+    ).length;
+
+    return Math.round(acompanhados / ativos.length * 100);
+}
+
+window.NutriqDados = {
         cadastrarPaciente,
         listarPacientes,
         buscarPaciente,
@@ -337,6 +360,7 @@
         cadastrarConsulta,
         listarConsultas,
 
+        calcularTaxaAdesao,
         obterResumo
     };
 })();

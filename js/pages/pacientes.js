@@ -1,9 +1,4 @@
-/* =====================================================
-    NUTRIQ · Meus pacientes (js/pages/pacientes.js)
-   Cartões, busca (nome, e-mail, CPF, telefone), filtros,
-   ordenação, menu de ações, cadastro, edição, ficha com
-   avaliações e exclusão. Usa js/nutriq-dados.js.
-===================================================== */
+
 
 (function () {
     "use strict";
@@ -60,8 +55,7 @@
     var termoBusca = "";
     var fichaAtualId = null;
 
-    /* ---------- Auxiliares ---------- */
-    function statusDe(p) { return STATUS[p.status] ? p.status : "ativo"; }
+function statusDe(p) { return STATUS[p.status] ? p.status : "ativo"; }
 
     function rotuloStatus(p) {
         var fem = p.genero === "Feminino";
@@ -88,8 +82,7 @@
 
     function soDigitos(texto) { return String(texto || "").replace(/\D/g, ""); }
 
-    /* ---------- CPF ---------- */
-    function mascaraCpf(valor) {
+function mascaraCpf(valor) {
         var d = soDigitos(valor).slice(0, 11);
         if (d.length <= 3) return d;
         if (d.length <= 6) return d.slice(0, 3) + "." + d.slice(3);
@@ -97,48 +90,7 @@
         return d.slice(0, 3) + "." + d.slice(3, 6) + "." + d.slice(6, 9) + "-" + d.slice(9);
     }
 
-    function cpfValido(valor) {
-        var c = soDigitos(valor);
-        if (c.length !== 11 || /^(\d)\1{10}$/.test(c)) return false;
-        for (var t = 9; t <= 10; t++) {
-            var soma = 0;
-            for (var i = 0; i < t; i++) soma += Number(c.charAt(i)) * (t + 1 - i);
-            var digito = (soma * 10) % 11 % 10;
-            if (digito !== Number(c.charAt(t))) return false;
-        }
-        return true;
-    }
-
-    /* ---------- Taxa de adesão ---------- */
-    // Pacientes ativos com consulta (realizada nos últimos 60 dias ou já agendada)
-    // ou avaliação recente, dividido pelo total de pacientes ativos.
-    function calcularAdesao(pacientes, consultas) {
-        var ativos = pacientes.filter(function (p) { return statusDe(p) === "ativo"; });
-        if (!ativos.length) return null;
-
-        var agora = Date.now();
-        var limite = agora - JANELA_ADESAO_DIAS * 24 * 60 * 60 * 1000;
-
-        var acompanhados = ativos.filter(function (p) {
-            var comConsulta = consultas.some(function (c) {
-                if (c.pacienteId !== p.id) return false;
-                var m = U.momento(c.data, c.hora);
-                if (!m) return false;
-                return (c.status === "realizada" && m.getTime() >= limite) ||
-                    (c.status === "agendada" && m.getTime() >= agora);
-            });
-            var comAvaliacao = (p.avaliacoes || []).some(function (a) {
-                var d = U.lerISO(a.data);
-                return d && d.getTime() >= limite;
-            });
-            return comConsulta || comAvaliacao;
-        }).length;
-
-        return Math.round((acompanhados / ativos.length) * 100);
-    }
-
-    /* ---------- Filtros e ordenação ---------- */
-    function correspondeBusca(p) {
+function correspondeBusca(p) {
         var termo = U.normalizar(termoBusca);
         if (!termo) return true;
 
@@ -162,12 +114,11 @@
         if (modo === "nome-az") return lista.sort(porNome);
         if (modo === "nome-za") return lista.sort(function (a, b) { return porNome(b, a); });
         if (modo === "antigos") return lista.sort(porData);
-        // Padrão (e "Mais recentes"): quem foi cadastrado por último aparece primeiro.
+
         return lista.sort(function (a, b) { return porData(b, a) || porNome(a, b); });
     }
 
-    /* ---------- Renderização ---------- */
-    function itemMenu(texto, acao, id, perigo) {
+function itemMenu(texto, acao, id, perigo) {
         return '<button type="button" role="menuitem" class="pc-menu-item' + (perigo ? " pc-menu-item-danger" : "") +
             '" data-acao="' + acao + '" data-id="' + esc(id) + '">' + texto + "</button>";
     }
@@ -217,19 +168,20 @@
         var consultas = D.consultas.listar();
         var agora = Date.now();
 
-        // Resumo
-        var hoje = new Date();
+var hoje = new Date();
         el.total.textContent = todos.length;
         el.ativos.textContent = todos.filter(function (p) { return statusDe(p) === "ativo"; }).length;
         el.novos.textContent = todos.filter(function (p) {
             var d = new Date(p.criadoEm);
             return !isNaN(d) && d.getMonth() === hoje.getMonth() && d.getFullYear() === hoje.getFullYear();
         }).length;
-        var adesao = calcularAdesao(todos, consultas);
+        var adesao = D.calcularTaxaAdesao(
+            todos,
+            consultas
+        );
         el.adesao.textContent = adesao == null ? "—" : adesao + "%";
 
-        // Quem tem plano em andamento / consulta futura
-        var comPlano = {};
+var comPlano = {};
         planos.forEach(function (pl) { if (pl.status !== "concluido") comPlano[pl.pacienteId] = true; });
         var comConsulta = {};
         consultas.forEach(function (c) {
@@ -248,8 +200,7 @@
             return correspondeBusca(p);
         }));
 
-        // Lista ou estado vazio
-        var tem = visiveis.length > 0;
+var tem = visiveis.length > 0;
         el.lista.hidden = !tem;
         el.vazio.hidden = tem;
         el.lista.innerHTML = visiveis.map(cartao).join("");
@@ -279,8 +230,7 @@
         render();
     }
 
-    /* ---------- Menu de ações (⋮) ---------- */
-    function menuAberto() {
+function menuAberto() {
         return el.lista.querySelector(".pc-menu:not([hidden])");
     }
 
@@ -324,8 +274,7 @@
         else if (evento.key === "End") { evento.preventDefault(); itens[itens.length - 1].focus(); }
     }
 
-    /* ---------- Formulário de cadastro / edição ---------- */
-    function limparErros() {
+function limparErros() {
         el.form.querySelectorAll(".nq-error").forEach(function (s) { s.textContent = ""; });
         el.form.querySelectorAll(".has-error").forEach(function (f) { f.classList.remove("has-error"); });
     }
@@ -386,7 +335,7 @@
 
         var cpf = $("pacCpf").value.trim();
         if (cpf) {
-            if (!cpfValido(cpf)) {
+            if (!window.NutriqValidacao.validarCPF(cpf)) {
                 falha("pacCpf", "CPF inválido. Confira os números.");
             } else {
                 var repetido = D.pacientes.listar().some(function (p) {
@@ -490,8 +439,7 @@
         D.toast("Paciente cadastrado.");
     }
 
-    /* ---------- Exclusão ---------- */
-    function excluirPaciente(id) {
+function excluirPaciente(id) {
         var p = D.pacientes.obter(id);
         if (!p) return;
         var v = D.pacientes.vinculos(id);
@@ -516,8 +464,7 @@
         D.toast("Paciente excluído.");
     }
 
-    /* ---------- Ficha do paciente ---------- */
-    function renderFicha(id, focoPeso) {
+function renderFicha(id, focoPeso) {
         var p = D.pacientes.obter(id);
         if (!p) {
             D.fecharModal(el.modalFicha);
@@ -664,8 +611,7 @@
         D.toast("Avaliação removida.");
     }
 
-    /* ---------- Eventos ---------- */
-    function definirBusca(valor, origem) {
+function definirBusca(valor, origem) {
         termoBusca = valor;
         if (origem !== el.busca) el.busca.value = valor;
         if (el.buscaTopo && origem !== el.buscaTopo) el.buscaTopo.value = valor;
@@ -673,27 +619,24 @@
     }
 
     function iniciar() {
-        // Botões "Novo paciente"
+
         document.querySelectorAll("[data-abrir-paciente]").forEach(function (b) {
             b.addEventListener("click", function () { abrirFormulario(null); });
         });
 
-        // Botões "Cancelar" e "×" das janelas
-        document.addEventListener("click", function (e) {
+document.addEventListener("click", function (e) {
             var alvo = e.target.closest("[data-fechar]");
             if (alvo) D.fecharModal(alvo.closest(".nq-overlay"));
         });
 
-        // Formulário
-        el.form.addEventListener("submit", aoSalvarPaciente);
+el.form.addEventListener("submit", aoSalvarPaciente);
         $("pacTelefone").addEventListener("input", function (e) { e.target.value = U.mascaraTelefone(e.target.value); });
         $("pacCpf").addEventListener("input", function (e) { e.target.value = mascaraCpf(e.target.value); });
 
-        // Cartões e menu ⋮
-        el.lista.addEventListener("click", function (e) {
+el.lista.addEventListener("click", function (e) {
             var kebab = e.target.closest("[data-menu]");
             if (kebab) {
-                alternarMenu(kebab, e.detail === 0); // detail 0 = teclado: já foca o 1º item
+                alternarMenu(kebab, e.detail === 0);
                 return;
             }
 
@@ -717,8 +660,7 @@
             navegarNoMenu(e);
         });
 
-        // Fecha o menu ao clicar fora, ao apertar Esc ou ao sair dele com o Tab
-        document.addEventListener("click", function (e) {
+document.addEventListener("click", function (e) {
             if (!e.target.closest(".pc-card")) fecharMenus(false);
         });
         document.addEventListener("keydown", function (e) {
@@ -732,8 +674,7 @@
             }
         });
 
-        // Ações dentro da ficha
-        el.ficha.addEventListener("click", function (e) {
+el.ficha.addEventListener("click", function (e) {
             var botao = e.target.closest("[data-acao]");
             if (!botao) return;
             var acao = botao.getAttribute("data-acao");
@@ -750,8 +691,7 @@
             if (e.target.id === "formAvaliacao") adicionarAvaliacao(e);
         });
 
-        // Busca (a da página e a do topo ficam sincronizadas), filtros e ordenação
-        el.busca.addEventListener("input", function () { definirBusca(el.busca.value, el.busca); });
+el.busca.addEventListener("input", function () { definirBusca(el.busca.value, el.busca); });
         if (el.buscaTopo) {
             el.buscaTopo.addEventListener("input", function () { definirBusca(el.buscaTopo.value, el.buscaTopo); });
         }
@@ -764,11 +704,10 @@
         el.btnLimpar.addEventListener("click", limparFiltros);
 
         D.aoMudar(render);
-        setInterval(render, 5 * 60 * 1000); // mantém "novos este mês" e a adesão em dia
+        setInterval(render, 5 * 60 * 1000);
         render();
 
-        // Atalhos vindos de outras páginas: ?novo=1 ou ?ficha=ID
-        var idFicha = U.parametro("ficha");
+var idFicha = U.parametro("ficha");
         if (idFicha && D.pacientes.obter(idFicha)) abrirFicha(idFicha);
         else if (U.parametro("novo") === "1") abrirFormulario(null);
         if (idFicha || U.parametro("novo")) U.limparParametros();

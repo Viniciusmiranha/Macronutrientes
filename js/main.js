@@ -1,15 +1,6 @@
 "use strict";
 
-/* =========================================================
-   NUTRIQ
-   SCRIPT PRINCIPAL
-========================================================= */
-
-/* =========================================================
-   ELEMENTOS
-========================================================= */
-
-const header = document.querySelector(".header");
+const headers = [...document.querySelectorAll(".header, .dashboard-topbar, .perfil-header")];
 
 const nav = document.getElementById("mainNav");
 
@@ -29,10 +20,6 @@ landingLogo?.addEventListener("click", evento => {
     }
 });
 
-/* =========================================================
-   FORMULÁRIOS
-========================================================= */
-
 const loginForm =
     document.getElementById("loginForm");
 
@@ -45,18 +32,12 @@ const showRegister =
 const backToLogin =
     document.getElementById("backToLogin");
 
-/* =========================================================
-   VARIÁVEIS
-========================================================= */
-
-/* =========================================================
-   HEADER - ESCONDER AO ROLAR
-========================================================= */
-
-if (header) {
-    let pontoDirecao = window.scrollY;
+if (headers.length) {
+    let ultimaPosicao = window.scrollY;
+    let direcao = 0;
+    let distanciaNaDirecao = 0;
     let quadroPendente = false;
-    const LIMIAR_DIRECAO = 14;
+    const LIMIAR_DIRECAO = 28;
 
     function controlesAbertos() {
         return document.body.classList.contains("nq-modal-open") ||
@@ -67,33 +48,56 @@ if (header) {
     }
 
     function mostrarHeader() {
-        header.classList.remove("hidden");
-        header.classList.add("visible");
+        headers.forEach(header => {
+            header.classList.remove("scroll-header-hidden");
+            header.inert = false;
+        });
+    }
+
+    function ocultarHeader() {
+        headers.forEach(header => {
+            header.classList.add("scroll-header-hidden");
+            header.inert = true;
+        });
     }
 
     function atualizarHeader() {
         const posicaoAtual = window.scrollY;
-        if (posicaoAtual <= 30 || controlesAbertos()) {
+        const deslocamento = posicaoAtual - ultimaPosicao;
+        ultimaPosicao = posicaoAtual;
+
+        if (posicaoAtual <= 30 || controlesAbertos() || headers.some(header => header.contains(document.activeElement))) {
             mostrarHeader();
-            if (posicaoAtual <= 30) header.classList.remove("scrolled");
-            pontoDirecao = posicaoAtual;
+            distanciaNaDirecao = 0;
+            direcao = 0;
+            headers.forEach(header => {
+                if (posicaoAtual <= 30) header.classList.remove("scrolled");
+            });
             return;
         }
 
-        header.classList.add("scrolled");
-        const deslocamento = posicaoAtual - pontoDirecao;
-        if (Math.abs(deslocamento) < LIMIAR_DIRECAO) return;
+        headers.forEach(header => header.classList.add("scrolled"));
+        if (!deslocamento) return;
 
-        if (deslocamento > 0) {
-            header.classList.remove("visible");
-            header.classList.add("hidden");
+        const novaDirecao = Math.sign(deslocamento);
+        if (novaDirecao !== direcao) {
+            direcao = novaDirecao;
+            distanciaNaDirecao = Math.abs(deslocamento);
+        } else {
+            distanciaNaDirecao += Math.abs(deslocamento);
+        }
+
+        if (distanciaNaDirecao < LIMIAR_DIRECAO) return;
+
+        if (direcao > 0) {
+            ocultarHeader();
         } else {
             mostrarHeader();
         }
-        pontoDirecao = posicaoAtual;
+        distanciaNaDirecao = 0;
     }
 
-    header.classList.add("visible");
+    mostrarHeader();
     window.addEventListener("scroll", () => {
         if (quadroPendente) return;
         quadroPendente = true;
@@ -104,16 +108,20 @@ if (header) {
     }, { passive: true });
 
     document.addEventListener("focusin", () => {
+        if (headers.some(header => header.contains(document.activeElement))) {
+            mostrarHeader();
+            ultimaPosicao = window.scrollY;
+            distanciaNaDirecao = 0;
+            direcao = 0;
+        }
         if (controlesAbertos()) {
             mostrarHeader();
-            pontoDirecao = window.scrollY;
+            ultimaPosicao = window.scrollY;
+            distanciaNaDirecao = 0;
+            direcao = 0;
         }
     });
 }
-
-/* =========================================================
-   MENU MOBILE
-========================================================= */
 
 if (menuButton && nav) {
     menuButton.addEventListener(
@@ -132,10 +140,6 @@ if (menuButton && nav) {
         }
     );
 }
-
-/* =========================================================
-   FECHAR MENU AO CLICAR EM UMA ÂNCORA
-========================================================= */
 
 document
     .querySelectorAll(".nav-link")
@@ -160,10 +164,6 @@ document
             );
         }
     );
-
-/* =========================================================
-   NAVEGAÇÃO ATIVA
-========================================================= */
 
 const sections =
     document.querySelectorAll("main section");
@@ -201,10 +201,6 @@ const observer =
 sections.forEach(
     section => observer.observe(section)
 );
-
-/* =========================================================
-   TEMA ESCURO
-========================================================= */
 
 const CHAVE_PREFERENCIAS = "nutriqPreferencias";
 const CHAVE_TEMA_LEGADA = "nutriq-theme";
@@ -245,7 +241,7 @@ function persistirTema(dark) {
         dados.modoEscuro = dark;
         localStorage.setItem(CHAVE_PREFERENCIAS, JSON.stringify(dados));
     } catch {
-        // A preferência continua aplicada nesta página se o armazenamento estiver indisponível.
+
     }
 }
 
@@ -272,10 +268,6 @@ if (themeButton) {
         }));
     });
 }
-
-/* =========================================================
-   ANIMAÇÃO AO ENTRAR NA TELA
-========================================================= */
 
 const elementosAnimados =
     document.querySelectorAll(
@@ -318,10 +310,6 @@ elementosAnimados.forEach(
         animationObserver.observe(elemento);
     }
 );
-
-/* =========================================================
-   FINAL
-========================================================= */
 
 console.log(
     "nutriQ carregado com sucesso."

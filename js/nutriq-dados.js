@@ -1,26 +1,11 @@
-/* =====================================================
-   NUTRIQ · Camada de dados das páginas (js/nutriq-dados.js)
 
-   COMPATÍVEL COM O SEU js/database.js:
-   - usa a MESMA chave do localStorage: "nutriq_dados_v1"
-   - grava no MESMO formato { pacientes, planos, avaliacoes, consultas }
-   - dispara o MESMO evento: "nutriqDadosAtualizados"
-   - NÃO substitui o window.NutriqDados do database.js: apenas acrescenta
-     as funções novas (pacientes, planos, consultas, toast, abrirModal...)
-
-   Por isso a página inicial (dashboard) enxerga tudo o que for
-   cadastrado nas outras páginas, e vice-versa.
-
-   Carregue DEPOIS do database.js e ANTES do script da página.
-===================================================== */
 
 (function (global) {
     "use strict";
 
     var CHAVE = "nutriq_dados_v1";
 
-    // Chaves usadas por versões anteriores destas páginas (migradas e removidas).
-    var CHAVES_ANTIGAS = {
+var CHAVES_ANTIGAS = {
         pacientes: "nutriq_pacientes",
         planos: "nutriq_planos",
         consultas: "nutriq_consultas"
@@ -28,8 +13,7 @@
 
     var ouvintes = [];
 
-    /* ---------- Armazenamento ---------- */
-    function lista(valor) {
+function lista(valor) {
         return Array.isArray(valor)
             ? valor.filter(function (item) {
                 return item && typeof item === "object" && !Array.isArray(item);
@@ -41,7 +25,7 @@
         var bruto = null;
         try {
             bruto = JSON.parse(global.localStorage.getItem(CHAVE));
-        } catch (e) { /* dados ausentes ou corrompidos: começa vazio */ }
+        } catch (e) {   }
 
         var base = bruto && typeof bruto === "object" && !Array.isArray(bruto) ? bruto : {};
         return Object.assign({}, base, {
@@ -60,13 +44,13 @@
         }
         try {
             global.dispatchEvent(new CustomEvent("nutriqDadosAtualizados"));
-        } catch (e) { /* ignorar */ }
+        } catch (e) {   }
         return true;
     }
 
     function avisarMudanca() {
         ouvintes.forEach(function (fn) {
-            try { fn(); } catch (e) { /* um ouvinte com erro não trava os outros */ }
+            try { fn(); } catch (e) {   }
         });
     }
 
@@ -75,13 +59,12 @@
     }
 
     global.addEventListener("nutriqDadosAtualizados", avisarMudanca);
-    // Mudanças feitas em outra aba
+
     global.addEventListener("storage", function (evento) {
         if (evento.key === null || evento.key === CHAVE) avisarMudanca();
     });
 
-    /* ---------- Utilidades ---------- */
-    function escapar(texto) {
+function escapar(texto) {
         return String(texto == null ? "" : texto)
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
@@ -124,9 +107,7 @@
         return paraISO(new Date());
     }
 
-    // O database.js grava a data da avaliação como data/hora ISO (UTC).
-    // Aqui ela vira a data local AAAA-MM-DD para não "andar" um dia.
-    function dataLocal(valor) {
+function dataLocal(valor) {
         var texto = String(valor || "");
         if (texto.indexOf("T") === -1) return texto;
         var d = new Date(texto);
@@ -160,7 +141,7 @@
         var p = Number(peso);
         var a = Number(altura);
         if (!(p > 0) || !(a > 0)) return null;
-        var metros = a > 3 ? a / 100 : a; // aceita cm ou m
+        var metros = a > 3 ? a / 100 : a;
         return Math.round((p / (metros * metros)) * 10) / 10;
     }
 
@@ -195,7 +176,7 @@
     function limparParametros() {
         try {
             global.history.replaceState(null, "", global.location.pathname);
-        } catch (e) { /* ignorar */ }
+        } catch (e) {   }
     }
 
     function capitalizar(texto) {
@@ -203,8 +184,7 @@
         return t.charAt(0).toUpperCase() + t.slice(1);
     }
 
-    /* ---------- Aviso na tela (não depende do CSS do painel) ---------- */
-    function toast(mensagem, tipo) {
+function toast(mensagem, tipo) {
         var area = document.getElementById("nutriqToast");
         if (!area) {
             area = document.createElement("div");
@@ -221,8 +201,7 @@
         }, tipo === "erro" ? 4500 : 3000);
     }
 
-    /* ---------- Janelas (modais) ---------- */
-    var pilha = [];
+var pilha = [];
 
     function focaveis(janela) {
         return Array.prototype.slice.call(janela.querySelectorAll(
@@ -280,14 +259,7 @@
         if (topo && e.target === topo) fecharModal(topo);
     });
 
-    /* ---------- Tradução entre o formato do database.js e o das páginas ----------
-       database.js:  paciente.dataCadastro | consulta.horario | status "Agendada"
-       páginas:      paciente.criadoEm     | consulta.hora    | status "agendada"
-       As páginas trabalham com o formato delas; aqui o dado é convertido na
-       leitura e na gravação, então o database.js e o dashboard continuam
-       funcionando sem nenhuma alteração. */
-
-    function avaliacoesDe(store, pacienteId) {
+function avaliacoesDe(store, pacienteId) {
         return store.avaliacoes
             .filter(function (a) { return a.pacienteId === pacienteId && Number(a.peso) > 0; })
             .map(function (a) {
@@ -362,8 +334,7 @@
         return r;
     }
 
-    /* ---------- Coleções ---------- */
-    function acharIndice(itens, id) {
+function acharIndice(itens, id) {
         for (var i = 0; i < itens.length; i++) {
             if (itens[i].id === id) return i;
         }
@@ -426,8 +397,7 @@
         return momento(data, hora).getTime();
     }
 
-    // O intervalo é global ao consultório; consultas canceladas não ocupam horário.
-    consultas.conflito = function (data, hora, ignorarId) {
+consultas.conflito = function (data, hora, ignorarId) {
         var minuto = minutoDaConsulta(data, hora);
         if (minuto == null) return false;
         return lerStore().consultas.some(function (c) {
@@ -463,8 +433,7 @@
         };
     };
 
-    // Exclui o paciente e tudo que pertence a ele (igual ao database.js).
-    pacientes.excluir = function (id) {
+pacientes.excluir = function (id) {
         var s = lerStore();
         var existe = s.pacientes.some(function (p) { return p.id === id; });
         if (!existe) return null;
@@ -509,11 +478,7 @@
         return gravarStore(s);
     };
 
-    /* ---------- Migração de versões anteriores destas páginas ---------- */
-    // Antes, pacientes, planos e consultas ficavam em três chaves separadas e
-    // planos/consultas só guardavam o nome do paciente. Tudo é movido para a
-    // chave do database.js e ligado ao cadastro; nenhum dado se perde.
-    function lerAntiga(chave) {
+function lerAntiga(chave) {
         try {
             return lista(JSON.parse(global.localStorage.getItem(chave)));
         } catch (e) {
@@ -590,15 +555,13 @@
 
     function limparChavesAntigas() {
         Object.keys(CHAVES_ANTIGAS).forEach(function (k) {
-            try { global.localStorage.removeItem(CHAVES_ANTIGAS[k]); } catch (e) { /* ignorar */ }
+            try { global.localStorage.removeItem(CHAVES_ANTIGAS[k]); } catch (e) {   }
         });
     }
 
     migrar();
 
-    /* ---------- API pública ---------- */
-    // Acrescenta ao window.NutriqDados do database.js, sem substituí-lo.
-    global.NutriqDados = Object.assign(global.NutriqDados || {}, {
+global.NutriqDados = Object.assign(global.NutriqDados || {}, {
         pacientes: pacientes,
         planos: planos,
         consultas: consultas,

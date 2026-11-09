@@ -1,8 +1,4 @@
-/* =====================================================
-   NUTRIQ · Meus pacientes (css/pacientes.css)
-   Só estilos da área de conteúdo. Barra lateral e topo
-   continuam vindo do dashboard.css.
-===================================================== */
+
 
 .pac-page {
     --pac-green: #176b58;
@@ -21,7 +17,6 @@
     min-width: 0;
 }
 
-/* ---------- Cabeçalho ---------- */
 .pac-header {
     display: flex;
     align-items: flex-start;
@@ -66,7 +61,6 @@
     line-height: 1.5;
 }
 
-/* Ícones de traço usados em toda a página */
 .pac-header-icon svg,
 .pac-stat-icon svg,
 .pac-empty-icon svg,
@@ -78,7 +72,6 @@
     stroke-linejoin: round;
 }
 
-/* ---------- Botões ---------- */
 .pac-btn {
     display: inline-flex;
     align-items: center;
@@ -115,7 +108,6 @@
     background: var(--pac-green-dark);
 }
 
-/* ---------- Cartões de resumo ---------- */
 .pac-stats {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -173,7 +165,6 @@
     font-size: 12.5px;
 }
 
-/* ---------- Painel principal ---------- */
 .pac-panel {
     min-height: 360px;
     background: var(--pac-surface);
@@ -230,9 +221,8 @@
     margin-bottom: 0;
 }
 
-/* ---------- Tabela (quando houver pacientes) ---------- */
 .pac-table-wrap {
-    position: relative; /* mantém o texto oculto (.pac-sr-only) dentro da área rolável */
+    position: relative;
     overflow-x: auto;
 }
 
@@ -319,7 +309,6 @@
     text-decoration: underline;
 }
 
-/* ---------- Rodapé ---------- */
 .pac-footer {
     display: flex;
     align-items: center;
@@ -357,7 +346,6 @@
     white-space: nowrap;
 }
 
-/* ---------- Responsivo ---------- */
 @media (max-width: 1100px) {
     .pac-stats {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -387,12 +375,6 @@
     }
 }
 
-/* =====================================================
-   Página "Meus pacientes" (busca, filtros e cartões)
-   Tudo daqui para baixo usa o prefixo .pc-
-===================================================== */
-
-/* ---------- Busca e filtros ---------- */
 .pc-filters {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 210px 190px 210px;
@@ -420,6 +402,22 @@
     outline-offset: 2px;
 }
 
+body.dark-mode.dashboard-page .pc-search {
+    background: #10211e;
+    border-color: var(--dashboard-border);
+}
+
+body.dark-mode.dashboard-page .pc-search:hover {
+    border-color: #54806d;
+}
+
+body.dark-mode.dashboard-page .pc-search:focus-within {
+    background: #10211e;
+    border-color: #78c9a7;
+    box-shadow: 0 0 0 3px rgba(120, 201, 167, 0.18);
+    outline-color: #78c9a7;
+}
+
 .pc-search svg,
 .pc-select-sort > svg {
     flex: none;
@@ -430,6 +428,10 @@
     stroke-width: 1.8;
     stroke-linecap: round;
     stroke-linejoin: round;
+}
+
+body.dark-mode.dashboard-page .pc-search svg {
+    stroke: #b8d2c7;
 }
 
 .pc-search input {
@@ -443,8 +445,19 @@
     font-size: 15px;
 }
 
+body.dark-mode.dashboard-page .pc-search input {
+    background: transparent;
+    color: var(--dashboard-text);
+    caret-color: #8fd7c3;
+}
+
 .pc-search input::placeholder {
     color: #526f69;
+}
+
+body.dark-mode.dashboard-page .pc-search input::placeholder {
+    color: #a9bdb7;
+    opacity: 1;
 }
 
 .pc-select {
@@ -495,7 +508,6 @@
     padding-left: 48px;
 }
 
-/* ---------- Cartões dos pacientes ---------- */
 .pc-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -559,7 +571,6 @@
     padding-right: 28px;
 }
 
-/* O botão com o nome ocupa o cartão inteiro (::after), então o cartão todo abre a ficha. */
 .pc-open {
     display: block;
     max-width: 100%;
@@ -599,7 +610,6 @@
     font-size: 14px;
 }
 
-/* ---------- Menu de ações (⋮) ---------- */
 .pc-kebab {
     position: absolute;
     top: 16px;
@@ -684,7 +694,6 @@
     background: var(--pac-border);
 }
 
-/* ---------- Nenhum paciente ---------- */
 .pc-empty {
     display: flex;
     flex-direction: column;
@@ -734,7 +743,6 @@
     font-size: 15px;
 }
 
-/* ---------- Responsivo ---------- */
 @media (max-width: 1100px) {
     .pc-filters {
         grid-template-columns: repeat(3, minmax(0, 1fr));

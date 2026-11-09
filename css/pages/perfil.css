@@ -449,7 +449,16 @@ body.perfil-page {
   border-radius: 50%;
   color: var(--perfil-primary);
   background: var(--perfil-primary-light);
-  font-size: 22px;
+}
+
+.card-heading-icon svg {
+ width: 22px;
+ height: 22px;
+ fill: none;
+ stroke: currentColor;
+ stroke-width: 1.8;
+ stroke-linecap: round;
+ stroke-linejoin: round;
 }
 
 .card-heading > div:nth-child(2) {

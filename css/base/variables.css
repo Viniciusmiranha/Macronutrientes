@@ -22,10 +22,8 @@
 
     --transicao: 0.3s ease;
 
-    /* Largura máxima do conteúdo */
-    --largura-site: 1320px;
+--largura-site: 1320px;
 
-    /* Espaçamento lateral */
-    --margem-site: 60px;
+--margem-site: 60px;
 }
 

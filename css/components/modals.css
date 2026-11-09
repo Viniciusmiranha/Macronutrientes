@@ -228,6 +228,16 @@ body.dashboard-page #modalPlanos.is-open .plans-modal {
     border-radius: 12px;
 }
 
+.plans-option-icon svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
 .plans-option h3 {
     margin: 0 0 7px;
     color: #1b2b36;
@@ -289,4 +299,106 @@ body.dashboard-page #modalPlanos.is-open .plans-modal {
     font-size: 10px;
     line-height: 1.6;
     border-top: 1px solid #edf1ee;
+}
+
+body.dark-mode.dashboard-page .plans-modal {
+    color: var(--dashboard-text);
+}
+
+body.dark-mode.dashboard-page #modalPlanos .plans-modal {
+    background: #172a26;
+    border-color: var(--dashboard-border);
+}
+
+body.dark-mode.dashboard-page .plans-modal-header h2 {
+    color: var(--dashboard-text);
+}
+
+body.dark-mode.dashboard-page .plans-modal-header p {
+    color: var(--dashboard-muted);
+}
+
+body.dark-mode.dashboard-page .plans-modal-eyebrow,
+body.dark-mode.dashboard-page .plans-option-footer {
+    color: var(--dashboard-green-dark);
+}
+
+body.dark-mode.dashboard-page .plans-modal-close {
+    background: #1c3931;
+    border-color: var(--dashboard-border);
+    color: var(--dashboard-text);
+}
+
+body.dark-mode.dashboard-page .plans-modal-close:hover,
+body.dark-mode.dashboard-page .plans-modal-close:focus-visible {
+    background: #25473c;
+    border-color: #54806d;
+    color: #f0faf5;
+}
+
+body.dark-mode.dashboard-page .plans-modal-close:focus-visible,
+body.dark-mode.dashboard-page .dashboard-plan-button:focus-visible {
+    outline: 3px solid #8fd7c3;
+    outline-offset: 2px;
+}
+
+body.dark-mode.dashboard-page .plans-option {
+    background: #172a26;
+    border-color: var(--dashboard-border);
+    color: var(--dashboard-text);
+}
+
+body.dark-mode.dashboard-page .plans-option:hover {
+    background: #1c3931;
+    border-color: #54806d;
+}
+
+body.dark-mode.dashboard-page .plans-option-featured {
+    background: linear-gradient(180deg, #1c3931, #172a26 75%);
+    border-color: #54806d;
+}
+
+body.dark-mode.dashboard-page .plans-current-label {
+    background: #294d40;
+    color: #b8e4d3;
+}
+
+body.dark-mode.dashboard-page .plans-option-icon {
+    background: #24443a;
+    color: #9cddc5;
+}
+
+body.dark-mode.dashboard-page .plans-option ul,
+body.dark-mode.dashboard-page .plans-option-footer {
+    border-color: var(--dashboard-border);
+}
+
+body.dark-mode.dashboard-page .plans-option li::before {
+    color: #8fd7c3;
+}
+
+body.dark-mode.dashboard-page .plans-modal-note {
+    border-color: var(--dashboard-border);
+}
+
+body.dark-mode.dashboard-page .dashboard-plan-heading span {
+    color: #b8d2c7;
+}
+
+body.dark-mode.dashboard-page .dashboard-plan-heading strong {
+    color: #e5f1ec;
+}
+
+body.dark-mode.dashboard-page .dashboard-plan-heading > svg {
+    background: #24443a;
+}
+
+body.dark-mode.dashboard-page #btnVerPlanos.dashboard-plan-button:hover,
+body.dark-mode.dashboard-page #btnVerPlanos.dashboard-plan-button:focus-visible {
+    background: linear-gradient(135deg, #328b6f, #1c624e);
+    border-color: #73bda1;
+}
+
+body.dark-mode.dashboard-page #btnVerPlanos.dashboard-plan-button:active {
+    background: linear-gradient(135deg, #22694f, #164b3c);
 }

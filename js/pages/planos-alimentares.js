@@ -1,8 +1,4 @@
-/* =====================================================
-    NUTRIQ · Planos alimentares (js/pages/planos-alimentares.js)
-   Criar, editar, concluir/reabrir, excluir, filtrar e buscar.
-   Usa js/nutriq-dados.js.
-===================================================== */
+
 
 (function () {
     "use strict";
@@ -42,8 +38,7 @@
     var termoBusca = "";
     var TEXTO_AJUDA = "Os macronutrientes alimentam o gráfico do relatório do paciente.";
 
-    /* ---------- Auxiliares ---------- */
-    function ehConcluido(p) { return p.status === "concluido"; }
+function ehConcluido(p) { return p.status === "concluido"; }
 
     function periodo(p) {
         var ini = p.inicio ? U.formatarData(p.inicio) : "";
@@ -64,8 +59,7 @@
         return Math.round((c || 0) * 4 + (p || 0) * 4 + (g || 0) * 9);
     }
 
-    /* ---------- Lista e resumo ---------- */
-    function render() {
+function render() {
         var todos = D.planos.listar().sort(function (a, b) {
             return String(b.criadoEm || "").localeCompare(String(a.criadoEm || ""));
         });
@@ -112,8 +106,7 @@
         }).join("");
     }
 
-    /* ---------- Formulário ---------- */
-    function limparErros() {
+function limparErros() {
         el.form.querySelectorAll(".nq-error").forEach(function (s) { s.textContent = ""; });
         el.form.querySelectorAll(".has-error").forEach(function (f) { f.classList.remove("has-error"); });
     }
@@ -231,7 +224,7 @@
         var temMacros = carb != null || prot != null || gord != null;
         if (calorias == null && temMacros) {
             calorias = kcalDosMacros(carb, prot, gord);
-            if (calorias < 500) calorias = null; // soma pequena demais para ser uma meta diária
+            if (calorias < 500) calorias = null;
         }
 
         return {
@@ -276,8 +269,7 @@
         D.toast(id ? "Plano atualizado." : "Plano alimentar salvo.");
     }
 
-    /* ---------- Ações da tabela ---------- */
-    function aoClicarNaTabela(evento) {
+function aoClicarNaTabela(evento) {
         var botao = evento.target.closest("[data-acao]");
         if (!botao) return;
 
@@ -301,8 +293,7 @@
         }
     }
 
-    /* ---------- Eventos ---------- */
-    function iniciar() {
+function iniciar() {
         document.querySelectorAll("[data-abrir-plano]").forEach(function (b) {
             b.addEventListener("click", function () { abrirFormulario(null); });
         });
@@ -343,8 +334,7 @@
         D.aoMudar(render);
         render();
 
-        // Vindo da ficha do paciente: ?novo=1&paciente=ID
-        if (U.parametro("novo") === "1") {
+if (U.parametro("novo") === "1") {
             abrirFormulario(null, U.parametro("paciente"));
             U.limparParametros();
         }

@@ -1,7 +1,4 @@
 
-/* =========================================================
-   DARK MODE
-========================================================= */
 
 body.dark-mode {
     --fundo: #0f1f1c;
@@ -17,18 +14,12 @@ body.dark-mode {
     --borda: #29443d;
 }
 
-
-/* HEADER DARK */
-
 body.dark-mode .header {
     background:
         rgba(15, 31, 28, 0.94);
 
     border-color: #29443d;
 }
-
-
-/* NAV DARK */
 
 body.dark-mode .nav-link {
     color: #bdd0c9;
@@ -43,9 +34,6 @@ body.dark-mode .nav-link::after {
     background: #7bb69d;
 }
 
-
-/* TÍTULOS DARK */
-
 body.dark-mode .hero h1,
 body.dark-mode .profile-card h2,
 body.dark-mode .section-heading h2,
@@ -53,9 +41,6 @@ body.dark-mode .section-title-center h2,
 body.dark-mode .contact-content h2 {
     color: #e5f1ec;
 }
-
-
-/* CARDS DARK */
 
 body.dark-mode .profile-card,
 body.dark-mode .profile-option,
@@ -66,9 +51,6 @@ body.dark-mode .contact-card {
 
     border-color: #29443d;
 }
-
-
-/* TEXTOS DOS CARDS */
 
 body.dark-mode .profile-option-text h3,
 body.dark-mode .hero-feature h3,
@@ -88,9 +70,6 @@ body.dark-mode .profile-subtitle {
     color: #a9bdb7;
 }
 
-
-/* SEÇÕES DARK */
-
 body.dark-mode .about-section,
 body.dark-mode .contact-section {
     background: #132723;
@@ -102,9 +81,6 @@ body.dark-mode .functionalities-section {
     background: #0f1f1c;
 }
 
-
-/* INPUTS DARK */
-
 body.dark-mode .form-group input {
     background: #10211e;
 
@@ -112,9 +88,6 @@ body.dark-mode .form-group input {
 
     border-color: #35534b;
 }
-
-
-/* BOTÕES DARK */
 
 body.dark-mode .secondary-button {
     background: #172a26;
@@ -134,7 +107,6 @@ body.dark-mode .login-header-button {
     border-color: #42645a;
 }
 
-/* ---------- Preferência compartilhada no painel ---------- */
 body.dark-mode.dashboard-page {
     color-scheme: dark;
     --dashboard-bg: #0f1f1c;
@@ -278,7 +250,6 @@ body.dark-mode.dashboard-page .calculadora-empty > svg {
     stroke: #b8d2c7;
 }
 
-
 body.dark-mode.dashboard-page .rel-grid {
     stroke: #35554a;
 }
@@ -333,6 +304,10 @@ body.dark-mode.dashboard-page .dashboard-menu-toggle:focus-visible {
     outline-offset: 2px;
 }
 
+body.dark-mode.dashboard-page .ag-cell.is-today {
+    color: var(--dashboard-text);
+}
+
 body.dark-mode.dashboard-page .cs-item,
 body.dark-mode.dashboard-page .ag-item {
     background-color: var(--dashboard-surface);
@@ -343,6 +318,39 @@ body.dark-mode.dashboard-page .ag-item {
 body.dark-mode.dashboard-page .cs-item:hover,
 body.dark-mode.dashboard-page .ag-item:hover {
     background-color: var(--dashboard-green-soft);
+}
+
+body.dark-mode .lp-feature {
+    background: rgba(26, 52, 46, 0.96);
+    border-color: #35554a;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.14);
+}
+
+body.dark-mode .lp-feature:hover,
+body.dark-mode .lp-feature:focus-visible {
+    background: #213d35;
+    border-color: #54806d;
+    box-shadow: 0 7px 22px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .lp-feature:focus-visible {
+    outline-color: #78c9a7;
+}
+
+body.dark-mode .lp-feature-icon {
+    background: #24443a;
+}
+
+body.dark-mode .lp-feature h3 {
+    color: #e5f1ec;
+}
+
+body.dark-mode .lp-feature p {
+    color: #b8d2c7;
+}
+
+body.dark-mode .lp-feature-icon svg {
+    stroke: #8fd7c3;
 }
 
 body.dark-mode.dashboard-page .cs-item-info strong,
@@ -425,7 +433,6 @@ body.dark-mode.dashboard-page .calculadora-tab.active small {
     color: var(--dashboard-text);
 }
 
-/* ---------- Landing ---------- */
 body.dark-mode.lp-body {
     background: #0f1f1c;
 }

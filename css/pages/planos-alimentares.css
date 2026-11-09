@@ -1,12 +1,5 @@
-/* =====================================================
-   NUTRIQ · Planos alimentares (css/planos-alimentares.css)
-   Complementa o css/pacientes.css, que fornece os estilos
-   compartilhados (.pac-header, .pac-stats, .pac-panel,
-   .pac-empty, .pac-table, .pac-btn, .pac-footer...).
-   Carregue sempre depois do pacientes.css.
-===================================================== */
 
-/* ---------- Filtros ---------- */
+
 .pln-toolbar {
     display: flex;
     align-items: center;
@@ -57,7 +50,6 @@
     font-size: 13px;
 }
 
-/* ---------- Tabela: complementos ---------- */
 .pln-plan-name strong {
     display: block;
     font-weight: 650;

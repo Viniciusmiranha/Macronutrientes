@@ -1,32 +1,15 @@
 
 "use strict";
 
-/* =========================================================
-   NUTRIQ - DASHBOARD.JS
-   Métricas e barras de progresso das metas
-========================================================= */
-
 document.addEventListener("DOMContentLoaded", () => {
 
-    /*
-       METAS CONFIGURÁVEIS
-
-       Neste exemplo, a meta é de 10 registros para
-       cada categoria. Altere estes valores para definir
-       as metas reais do seu consultório.
-    */
-
-    const METAS = {
+const METAS = {
         pacientes: 10,
         planos: 10,
         avaliacoes: 10
     };
 
-    /* =====================================================
-       CALCULAR E LIMITAR PORCENTAGEM
-    ===================================================== */
-
-    function limitarPercentual(valor) {
+function limitarPercentual(valor) {
         return Math.max(0, Math.min(100, valor));
     }
 
@@ -38,46 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return limitarPercentual((atual / meta) * 100);
     }
 
-    /* =====================================================
-       CALCULAR TAXA DE ADESÃO
-
-       Considera consultas concluídas em relação
-       ao total de consultas cadastradas.
-    ===================================================== */
-
-    function calcularAdesao(consultas) {
-        if (!consultas.length) {
-            return 0;
-        }
-
-        const concluidas = consultas.filter(consulta => {
-            const status = String(consulta.status || "")
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "")
-                .toLowerCase()
-                .trim();
-
-            return [
-                "concluida",
-                "concluido",
-                "realizada",
-                "realizado",
-                "finalizada",
-                "finalizado",
-                "completed"
-            ].includes(status);
-        }).length;
-
-        return limitarPercentual(
-            (concluidas / consultas.length) * 100
-        );
-    }
-
-    /* =====================================================
-       ATUALIZAR UMA BARRA HORIZONTAL
-    ===================================================== */
-
-    function atualizarBarra(indice, percentual, idValor) {
+function atualizarBarra(indice, percentual, idValor) {
         const cards = document.querySelectorAll(
             ".dashboard-goal-item"
         );
@@ -90,7 +34,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const valor = document.getElementById(idValor);
 
-        const porcentagem = limitarPercentual(percentual);
+        const porcentagem = percentual == null
+            ? 0
+            : limitarPercentual(percentual);
 
         if (barra) {
             barra.style.width = `${porcentagem}%`;
@@ -98,15 +44,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (valor) {
-            valor.textContent = `${Math.round(porcentagem)}%`;
+            valor.textContent = percentual == null
+                ? "—"
+                : `${Math.round(porcentagem)}%`;
         }
     }
 
-    /* =====================================================
-       ATUALIZAR CÍRCULO DE METAS CONCLUÍDAS
-    ===================================================== */
-
-    function atualizarCirculo(percentual) {
+function atualizarCirculo(percentual) {
         const circulo = document.querySelector(
             ".dashboard-ring-value"
         );
@@ -121,12 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const porcentagem = limitarPercentual(percentual);
 
-        /*
-           O círculo SVG tem raio 48.
-           A circunferência é 2 × PI × raio.
-        */
-
-        const circunferencia = 2 * Math.PI * 48;
+const circunferencia = 2 * Math.PI * 48;
 
         const deslocamento =
             circunferencia * (1 - porcentagem / 100);
@@ -154,11 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    /* =====================================================
-       ATUALIZAR TODAS AS MÉTRICAS E BARRAS
-    ===================================================== */
-
-    function atualizarMetricas() {
+function atualizarMetricas() {
         if (!window.NutriqDados) {
             console.warn(
                 "NutriqDados não foi carregado. Verifique a ordem dos scripts."
@@ -169,11 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const resumo = window.NutriqDados.obterResumo();
 
-        /* ---------------------------------------------
-           CONTADORES PRINCIPAIS DO PAINEL
-        --------------------------------------------- */
-
-        const contadores = {
+const contadores = {
             totalPacientes: resumo.totalPacientes,
             totalPlanos: resumo.totalPlanos,
             totalAvaliacoes: resumo.totalAvaliacoes,
@@ -188,11 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        /* ---------------------------------------------
-           CALCULAR PORCENTAGENS DAS METAS
-        --------------------------------------------- */
-
-        const percentualPacientes = calcularPercentual(
+const percentualPacientes = calcularPercentual(
             resumo.totalPacientes,
             METAS.pacientes
         );
@@ -207,20 +134,19 @@ document.addEventListener("DOMContentLoaded", () => {
             METAS.avaliacoes
         );
 
-        const percentualAdesao = calcularAdesao(
-            resumo.consultas
+        const percentualAdesao = window.NutriqDados.calcularTaxaAdesao(
+            resumo.pacientes,
+            resumo.consultas,
+            resumo.avaliacoes
         );
+        const indicadorAdesao = document.getElementById("taxaAdesao");
+        if (indicadorAdesao) {
+            indicadorAdesao.textContent = percentualAdesao == null
+                ? "—"
+                : `${percentualAdesao}%`;
+        }
 
-        /* ---------------------------------------------
-           ATUALIZAR BARRAS HORIZONTAIS
-
-           Índice 0: Pacientes atendidos
-           Índice 1: Planos elaborados
-           Índice 2: Avaliações realizadas
-           Índice 3: Taxa de adesão
-        --------------------------------------------- */
-
-        atualizarBarra(
+atualizarBarra(
             0,
             percentualPacientes,
             "metaPacientesValor"
@@ -244,49 +170,29 @@ document.addEventListener("DOMContentLoaded", () => {
             "metaAdesaoValor"
         );
 
-        /* ---------------------------------------------
-           PORCENTAGEM GERAL DAS METAS
+const porcentagens = [
+    percentualPacientes,
+    percentualPlanos,
+    percentualAvaliacoes
+];
 
-           É a média das quatro porcentagens acima.
-        --------------------------------------------- */
-
-        const porcentagens = [
-            percentualPacientes,
-            percentualPlanos,
-            percentualAvaliacoes,
-            percentualAdesao
-        ];
-
-        const percentualGeral =
-            porcentagens.reduce(
-                (total, percentual) => total + percentual,
-                0
-            ) / porcentagens.length;
+if (percentualAdesao != null) porcentagens.push(percentualAdesao);
+const percentualGeral = porcentagens.reduce(
+    (total, percentual) => total + percentual,
+    0
+) / porcentagens.length;
 
         atualizarCirculo(percentualGeral);
     }
 
-    /* =====================================================
-       EVENTOS DE ATUALIZAÇÃO
-    ===================================================== */
+atualizarMetricas();
 
-    atualizarMetricas();
-
-    /*
-       Atualiza quando um cadastro, uma edição ou uma
-       exclusão dispara o evento do banco de dados local.
-    */
-
-    window.addEventListener(
+window.addEventListener(
         "nutriqDadosAtualizados",
         atualizarMetricas
     );
 
-    /*
-       Atualiza quando os dados mudam em outra aba.
-    */
-
-    window.addEventListener(
+window.addEventListener(
         "storage",
         atualizarMetricas
     );
@@ -546,10 +452,6 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 });
 
-/* =========================================================
-   CONTROLE DA JANELA DE PLANOS
-========================================================= */
-
 (() => {
     const botao = document.getElementById("btnVerPlanos");
     const modal = document.getElementById("modalPlanos");
@@ -607,7 +509,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 })();
 
-
 (() => {
   const botao = document.getElementById("alternarBarraLateral");
   const pagina = document.querySelector(".dashboard-page");
@@ -650,4 +551,3 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch {}
   });
 })();
-

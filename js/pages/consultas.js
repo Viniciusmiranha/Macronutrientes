@@ -1,8 +1,4 @@
-/* =====================================================
-    NUTRIQ · Consultas (js/pages/consultas.js)
-   Agendar, editar, concluir e cancelar consultas.
-   Usa js/nutriq-dados.js.
-===================================================== */
+
 
 (function () {
     "use strict";
@@ -55,8 +51,7 @@
     var expandirProximas = false;
     var expandirHistorico = false;
 
-    /* ---------- Situação de cada consulta ---------- */
-    function momentoDe(c) { return U.momento(c.data, c.hora); }
+function momentoDe(c) { return U.momento(c.data, c.hora); }
 
     function ehFutura(c) {
         var m = momentoDe(c);
@@ -76,8 +71,7 @@
         return !termo || U.normalizar(c.paciente).indexOf(termo) !== -1;
     }
 
-    /* ---------- Blocos de HTML ---------- */
-    function blocoData(c) {
+function blocoData(c) {
         var d = U.lerISO(c.data);
         if (!d) return '<div class="cs-date"><strong>—</strong></div>';
         var mes = d.toLocaleDateString("pt-BR", { month: "short" }).replace(".", "");
@@ -138,8 +132,7 @@
         );
     }
 
-    /* ---------- Renderização ---------- */
-    function atualizarResumo(todas) {
+function atualizarResumo(todas) {
         var realizadas = todas.filter(function (c) { return c.status === "realizada"; });
         var unicos = {};
         realizadas.forEach(function (c) { unicos[c.pacienteId || c.paciente] = true; });
@@ -190,8 +183,7 @@
         el.listaAtend.innerHTML = proximosDias.map(itemAtendimento).join("");
     }
 
-    /* ---------- Formulário ---------- */
-    function limparErros() {
+function limparErros() {
         el.form.querySelectorAll(".nq-error").forEach(function (s) { s.textContent = ""; });
         el.form.querySelectorAll(".has-error").forEach(function (f) { f.classList.remove("has-error"); });
     }
@@ -330,8 +322,7 @@
         D.toast(id ? "Consulta atualizada." : (dados.status === "agendada" ? "Consulta agendada." : "Consulta registrada."));
     }
 
-    /* ---------- Ações nas listas ---------- */
-    function aoClicarNaLista(evento) {
+function aoClicarNaLista(evento) {
         var b = evento.target.closest("[data-acao]");
         if (!b) return;
 
@@ -364,8 +355,7 @@
         }
     }
 
-    /* ---------- Eventos ---------- */
-    function iniciar() {
+function iniciar() {
         document.querySelectorAll("[data-abrir-consulta]").forEach(function (b) {
             b.addEventListener("click", function () { abrirFormulario(null); });
         });
@@ -400,11 +390,10 @@
         }
 
         D.aoMudar(render);
-        setInterval(render, 60000); // consultas que passam do horário vão para o histórico
+        setInterval(render, 60000);
         render();
 
-        // Atalhos vindos de outras páginas
-        var editar = U.parametro("editar");
+var editar = U.parametro("editar");
         if (editar && D.consultas.obter(editar)) {
             abrirFormulario(D.consultas.obter(editar));
         } else if (U.parametro("novo") === "1") {

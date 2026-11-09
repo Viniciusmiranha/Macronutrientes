@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
         macros: {
             titulo: "Calculadora de Macronutrientes",
             descricao: "Calcule a quantidade ideal de proteínas, carboidratos e gorduras de acordo com os objetivos e características do seu paciente.",
-            icone: "♜",
+            icone: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 7 5 5m2 0 5-5m-6 7-5 5m8-5 3 5"/><circle cx="5" cy="6" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="20" r="2"/></svg>',
             botao: "Calcular macronutrientes",
             beneficios: [
                 "Necessidade calórica diária",
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         imc: {
             titulo: "Calculadora de IMC",
             descricao: "Calcule o Índice de Massa Corporal e consulte a classificação correspondente para adultos.",
-            icone: "▥",
+            icone: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3m-7 0h14M5 6l-3 6h6L5 6Zm14 0-3 6h6l-3-6ZM8 12a3 3 0 0 0 6 0m-6 0a3 3 0 0 1 6 0m-2 3v5m-5 1h10"/></svg>',
             botao: "Calcular IMC",
             beneficios: [
                 "Índice de Massa Corporal",
@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
         agua: {
             titulo: "Calculadora de Quantidade de Água",
             descricao: "Estime a ingestão diária de água considerando o peso, a atividade física e as condições climáticas.",
-            icone: "♢",
+            icone: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3s7 7.2 7 12a7 7 0 1 1-14 0c0-4.8 7-12 7-12Z"/><path d="M9 16a3 3 0 0 0 3 3"/></svg>',
             botao: "Calcular quantidade de água",
             beneficios: [
                 "Estimativa diária de água",
@@ -192,17 +192,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         titulo.textContent = config.titulo;
         descricao.textContent = config.descricao;
-        icone.textContent = config.icone;
+        icone.innerHTML = config.icone;
         campos.innerHTML = config.campos;
-        botaoCalcular.querySelector("span").textContent = config.botao;
+        botaoCalcular.textContent = config.botao;
 
-        listaBeneficios.replaceChildren();
+        if (listaBeneficios) {
+            listaBeneficios.replaceChildren();
 
-        config.beneficios.forEach(texto => {
-            const item = document.createElement("li");
-            item.textContent = texto;
-            listaBeneficios.appendChild(item);
-        });
+            config.beneficios.forEach(texto => {
+                const item = document.createElement("li");
+                item.textContent = texto;
+                listaBeneficios.appendChild(item);
+            });
+        }
 
         limparResultado();
     }
