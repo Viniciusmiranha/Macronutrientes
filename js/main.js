@@ -49,119 +49,65 @@ const backToLogin =
    VARIÁVEIS
 ========================================================= */
 
-let headerEscondido = false;
-
 /* =========================================================
    HEADER - ESCONDER AO ROLAR
 ========================================================= */
 
-let ultimaPosicaoScroll = window.scrollY;
-let bloqueioHeader = false;
-
 if (header) {
-    header.classList.add("visible");
+    let pontoDirecao = window.scrollY;
+    let quadroPendente = false;
+    const LIMIAR_DIRECAO = 14;
+
+    function controlesAbertos() {
+        return document.body.classList.contains("nq-modal-open") ||
+            document.body.classList.contains("dashboard-menu-open") ||
+            Boolean(document.querySelector(
+                ".nq-overlay:not([hidden]), .plans-modal-overlay.is-open, .plans-modal-overlay[aria-hidden='false']"
+            ));
+    }
+
+    function mostrarHeader() {
+        header.classList.remove("hidden");
+        header.classList.add("visible");
+    }
 
     function atualizarHeader() {
         const posicaoAtual = window.scrollY;
-
-        /* ================================================
-           TOPO DA PÁGINA
-        ================================================= */
-
-        if (posicaoAtual <= 30) {
-            header.classList.remove("hidden");
-            header.classList.add("visible");
-            header.classList.remove("scrolled");
-
-            ultimaPosicaoScroll = posicaoAtual;
-
+        if (posicaoAtual <= 30 || controlesAbertos()) {
+            mostrarHeader();
+            if (posicaoAtual <= 30) header.classList.remove("scrolled");
+            pontoDirecao = posicaoAtual;
             return;
         }
-
-        /* ================================================
-           PÁGINA FOI ROLADA
-        ================================================= */
 
         header.classList.add("scrolled");
+        const deslocamento = posicaoAtual - pontoDirecao;
+        if (Math.abs(deslocamento) < LIMIAR_DIRECAO) return;
 
-        const diferenca =
-            posicaoAtual - ultimaPosicaoScroll;
-
-        /* ================================================
-           DESCENDO
-
-           Só esconde depois de uma movimentação
-           significativa.
-        ================================================= */
-
-        if (diferenca > 12) {
+        if (deslocamento > 0) {
             header.classList.remove("visible");
             header.classList.add("hidden");
-
-            ultimaPosicaoScroll = posicaoAtual;
-
-            return;
+        } else {
+            mostrarHeader();
         }
-
-        /* ================================================
-           SUBINDO
-
-           Também exige alguns pixels para evitar
-           que o header fique piscando.
-        ================================================= */
-
-        if (diferenca < -12) {
-            header.classList.remove("hidden");
-            header.classList.add("visible");
-
-            ultimaPosicaoScroll = posicaoAtual;
-
-            return;
-        }
+        pontoDirecao = posicaoAtual;
     }
 
-    /* =====================================================
-       SCROLL
-    ===================================================== */
-
+    header.classList.add("visible");
     window.addEventListener("scroll", () => {
-        if (bloqueioHeader) {
-            return;
-        }
-
-        bloqueioHeader = true;
-
+        if (quadroPendente) return;
+        quadroPendente = true;
         window.requestAnimationFrame(() => {
+            quadroPendente = false;
             atualizarHeader();
-
-            bloqueioHeader = false;
         });
-    }, {
-        passive: true
-    });
+    }, { passive: true });
 
-    /* =====================================================
-       MOUSE PRÓXIMO AO TOPO
-    ===================================================== */
-
-    document.addEventListener("mousemove", (evento) => {
-        if (evento.clientY <= 55) {
-            header.classList.remove("hidden");
-            header.classList.add("visible");
+    document.addEventListener("focusin", () => {
+        if (controlesAbertos()) {
+            mostrarHeader();
+            pontoDirecao = window.scrollY;
         }
-    });
-
-    /* =====================================================
-       GARANTE HEADER NO TOPO
-    ===================================================== */
-
-    window.addEventListener("scroll", () => {
-        if (window.scrollY <= 30) {
-            header.classList.remove("hidden");
-            header.classList.add("visible");
-        }
-    }, {
-        passive: true
     });
 }
 

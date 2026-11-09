@@ -513,19 +513,33 @@ document.addEventListener("DOMContentLoaded", () => {
         renderizarNotificacoes();
     }
 
-    try {
-        const perfil = JSON.parse(localStorage.getItem("nutriqPerfil") || "{}");
+    function sincronizarPerfilDoPainel() {
+        let perfil = {};
+        try { perfil = JSON.parse(localStorage.getItem("nutriqPerfil") || "{}"); } catch {}
         const nome = document.getElementById("professionalName");
-        if (nome && perfil.nome) nome.textContent = perfil.nome;
+        if (nome) nome.textContent = perfil.nome || "Meu perfil";
         const avatar = document.querySelector(".dashboard-avatar-professional");
-        if (avatar && perfil.foto) {
+        if (!avatar) return;
+        avatar.replaceChildren();
+        if (perfil.foto) {
             const imagem = document.createElement("img");
             imagem.src = perfil.foto;
             imagem.alt = "";
             imagem.className = "dashboard-profile-photo";
-            avatar.replaceChildren(imagem);
+            imagem.addEventListener("error", () => {
+                avatar.textContent = (perfil.nome || "N").trim().charAt(0).toUpperCase();
+            }, { once: true });
+            avatar.appendChild(imagem);
+        } else {
+            avatar.textContent = (perfil.nome || "N").trim().charAt(0).toUpperCase();
         }
-    } catch {}
+    }
+
+    sincronizarPerfilDoPainel();
+    window.addEventListener("nutriqPerfilAtualizado", sincronizarPerfilDoPainel);
+    window.addEventListener("storage", evento => {
+        if (evento.key === "nutriqPerfil") sincronizarPerfilDoPainel();
+    });
 
     console.log(
         "NUTRIQ: dashboard.js carregado com barras dinâmicas."

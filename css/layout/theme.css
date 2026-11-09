@@ -307,10 +307,57 @@ body.dark-mode.dashboard-page .pac-table tbody tr:hover {
 
 body.dark-mode.dashboard-page .nq-close,
 body.dark-mode.dashboard-page .ag-today-btn,
-body.dark-mode.dashboard-page .rel-btn-outline {
+body.dark-mode.dashboard-page .rel-btn-outline,
+body.dark-mode.dashboard-page .sidebar-toggle-button,
+body.dark-mode.dashboard-page .dashboard-menu-toggle {
     background-color: var(--dashboard-green-soft);
     border-color: var(--dashboard-border);
     color: var(--dashboard-text);
+}
+
+body.dark-mode.dashboard-page .dashboard-menu-toggle {
+    border-style: solid;
+    border-width: 1px;
+}
+
+body.dark-mode.dashboard-page .sidebar-toggle-button:hover,
+body.dark-mode.dashboard-page .dashboard-menu-toggle:hover {
+    background-color: var(--dashboard-surface);
+    border-color: var(--dashboard-green);
+    color: var(--dashboard-green-dark);
+}
+
+body.dark-mode.dashboard-page .sidebar-toggle-button:focus-visible,
+body.dark-mode.dashboard-page .dashboard-menu-toggle:focus-visible {
+    outline: 3px solid var(--dashboard-green);
+    outline-offset: 2px;
+}
+
+body.dark-mode.dashboard-page .cs-item,
+body.dark-mode.dashboard-page .ag-item {
+    background-color: var(--dashboard-surface);
+    border-color: var(--dashboard-border);
+    color: var(--dashboard-text);
+}
+
+body.dark-mode.dashboard-page .cs-item:hover,
+body.dark-mode.dashboard-page .ag-item:hover {
+    background-color: var(--dashboard-green-soft);
+}
+
+body.dark-mode.dashboard-page .cs-item-info strong,
+body.dark-mode.dashboard-page .ag-item-info strong {
+    color: var(--dashboard-text);
+}
+
+body.dark-mode.dashboard-page .ag-chip {
+    background-color: var(--dashboard-green-soft);
+    color: var(--dashboard-green-dark);
+}
+
+body.dark-mode.dashboard-page .ag-chip.is-done {
+    background-color: var(--dashboard-border);
+    color: var(--dashboard-muted);
 }
 
 body.dark-mode.dashboard-page .pc-select select,

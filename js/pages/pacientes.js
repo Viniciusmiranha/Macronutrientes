@@ -377,11 +377,11 @@
         if (nome.length < 2) falha("pacNome", "Informe o nome do paciente.");
 
         var email = $("pacEmail").value.trim();
-        if (email && !U.emailValido(email)) falha("pacEmail", "Informe um e-mail válido.");
+        if (!email || !U.emailValido(email)) falha("pacEmail", "Informe um e-mail válido.");
 
         var telefone = $("pacTelefone").value.trim();
-        if (telefone && soDigitos(telefone).length < 10) {
-            falha("pacTelefone", "Informe o DDD e o número. Ex.: (11) 99999-9999");
+        if (!telefone || !/^[\d()+ .-]+$/.test(telefone) || !/^\d{10,11}$/.test(soDigitos(telefone))) {
+            falha("pacTelefone", "Informe o DDD e um telefone válido com 10 ou 11 dígitos.");
         }
 
         var cpf = $("pacCpf").value.trim();
@@ -397,12 +397,15 @@
         }
 
         var nascimento = $("pacNascimento").value;
-        if (nascimento) {
-            if (!U.lerISO(nascimento) || nascimento < "1900-01-01") {
-                falha("pacNascimento", "Data de nascimento inválida.");
-            } else if (nascimento > U.hojeISO()) {
-                falha("pacNascimento", "A data de nascimento não pode ser futura.");
-            }
+        if (!nascimento || !U.lerISO(nascimento) || nascimento < "1900-01-01") {
+            falha("pacNascimento", "Informe uma data de nascimento válida.");
+        } else if (nascimento > U.hojeISO()) {
+            falha("pacNascimento", "A data de nascimento não pode ser futura.");
+        }
+
+        var genero = $("pacGenero").value;
+        if (!["Feminino", "Masculino", "Outro"].includes(genero)) {
+            falha("pacGenero", "Selecione o gênero.");
         }
 
         var altura = $("pacAltura").value;
@@ -426,7 +429,7 @@
             telefone: telefone,
             cpf: cpf,
             nascimento: nascimento,
-            genero: $("pacGenero").value,
+            genero: genero,
             altura: altura !== "" ? Number(altura) : null,
             status: $("pacStatus").value,
             objetivo: $("pacObjetivo").value,

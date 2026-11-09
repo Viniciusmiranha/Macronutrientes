@@ -140,6 +140,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (dados.foto) {
       mostrarFoto(dados.foto);
+    } else {
+      $("removerFoto").hidden = true;
     }
   }
 
@@ -159,6 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { once: true });
 
     avatar.appendChild(img);
+    $("removerFoto").hidden = false;
   }
 
   const seletorFoto = document.querySelector(".avatar-edit");
@@ -187,18 +190,65 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const leitor = new FileReader();
-
     leitor.onload = () => {
-      fotoTemporaria = leitor.result;
-      mostrarFoto(fotoTemporaria);
-      mostrarFeedback("Pré-visualização da foto atualizada.");
-    };
+      const imagem = new Image();
+      imagem.onload = () => {
+        if (imagem.width * imagem.height > 30000000) {
+          mostrarFeedback("A imagem tem resolução excessiva. Escolha uma imagem menor.", true);
+          return;
+        }
 
-    leitor.onerror = () => {
-      mostrarFeedback("Não foi possível abrir esta imagem.", true);
-    };
+        const escala = Math.min(1, 600 / Math.max(imagem.width, imagem.height));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(imagem.width * escala));
+        canvas.height = Math.max(1, Math.round(imagem.height * escala));
+        const contexto = canvas.getContext("2d");
+        if (!contexto) {
+          mostrarFeedback("Não foi possível processar esta imagem.", true);
+          return;
+        }
+        contexto.fillStyle = "#ffffff";
+        contexto.fillRect(0, 0, canvas.width, canvas.height);
+        contexto.drawImage(imagem, 0, 0, canvas.width, canvas.height);
 
+        canvas.toBlob((blob) => {
+          if (!blob || blob.size > 700 * 1024) {
+            mostrarFeedback("Não foi possível reduzir a foto para um tamanho seguro.", true);
+            return;
+          }
+          const leitorCompactado = new FileReader();
+          leitorCompactado.onload = () => {
+            fotoTemporaria = leitorCompactado.result;
+            mostrarFoto(fotoTemporaria);
+            mostrarFeedback("Prévia da foto atualizada. Salve o perfil para manter a alteração.");
+          };
+          leitorCompactado.onerror = () => mostrarFeedback("Não foi possível preparar a foto.", true);
+          leitorCompactado.readAsDataURL(blob);
+        }, "image/jpeg", 0.82);
+      };
+      imagem.onerror = () => mostrarFeedback("Não foi possível abrir esta imagem.", true);
+      imagem.src = leitor.result;
+    };
+    leitor.onerror = () => mostrarFeedback("Não foi possível abrir esta imagem.", true);
     leitor.readAsDataURL(arquivo);
+  });
+
+  $("removerFoto").addEventListener("click", () => {
+    if (!window.confirm("Remover a foto de perfil? Esta ação não pode ser desfeita.")) return;
+    const salvos = lerJSON(storageKey, {});
+    delete salvos.foto;
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(salvos));
+      fotoTemporaria = null;
+      $("fotoPerfil").value = "";
+      $("avatarPreview").replaceChildren($("avatarInitial"));
+      $("avatarInitial").textContent = (lerCampo("nome") || "N").charAt(0).toUpperCase();
+      $("removerFoto").hidden = true;
+      window.dispatchEvent(new CustomEvent("nutriqPerfilAtualizado"));
+      mostrarFeedback("Foto removida do armazenamento local.");
+    } catch {
+      mostrarFeedback("Não foi possível remover a foto do armazenamento local.", true);
+    }
   });
 
   form.addEventListener("input", (event) => {
@@ -269,6 +319,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       aplicarPreferencias(prefs);
       renderizarPerfil(dados);
+      window.dispatchEvent(new CustomEvent("nutriqPerfilAtualizado"));
 
       mostrarFeedback("Perfil salvo neste navegador com sucesso.");
     } catch {
@@ -294,6 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
       $("avatarPreview").replaceChildren($("avatarInitial"));
       $("avatarInitial").textContent =
         (dadosOriginais.nome || "N").charAt(0).toUpperCase();
+      $("removerFoto").hidden = true;
     }
 
     $("senhaAtual").value = "";

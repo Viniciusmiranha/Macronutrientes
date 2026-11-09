@@ -309,10 +309,10 @@
         el.baixar.disabled = false;
         el.enviarEmail.disabled = !U.emailValido(paciente.email);
         el.enviarEmail.title = U.emailValido(paciente.email)
-            ? "Conferir destinatário e abrir cliente de e-mail"
+            ? "Envio automático indisponível até configurar um provedor"
             : "Paciente sem e-mail válido cadastrado";
         el.emailStatus.textContent = U.emailValido(paciente.email)
-            ? "Destinatário cadastrado: " + paciente.email + ". Será solicitado antes de abrir o cliente de e-mail."
+            ? "Destinatário cadastrado: " + paciente.email + ". Nenhum e-mail foi enviado."
             : "Este paciente não tem um e-mail válido cadastrado; o botão fica indisponível.";
 
         if (!silencioso) D.toast("Relatório gerado.");
@@ -333,30 +333,8 @@
             D.toast("Este paciente não tem um e-mail válido cadastrado.", "erro");
             return;
         }
-
-        var destinatario = paciente.email.trim();
-        if (!window.confirm("Confira o destinatário antes de continuar:\n\n" + destinatario + "\n\nAbrir o cliente de e-mail padrão?")) return;
-
-        var assunto = "Relatório NUTRIQ - " + (paciente.nome || "Paciente");
-        var corpo = [
-            "Olá,",
-            "",
-            "Segue a mensagem para acompanhar o relatório nutricional.",
-            "",
-            "Paciente: " + (paciente.nome || "Paciente sem nome"),
-            "Data de geração: " + U.formatarData(new Date()),
-            "Última consulta: " + U.formatarData(ultimaConsulta(paciente)),
-            "Plano alimentar: " + (el.plano.textContent || "—"),
-            "Objetivo: " + (el.objetivo.textContent || "—"),
-            "",
-            "O relatório completo pode ser salvo em PDF pela opção Baixar relatório e anexado manualmente a esta mensagem.",
-            "",
-            "Atenciosamente"
-        ].join("\n");
-
-        D.toast("O cliente de e-mail abrirá com a mensagem preparada. Anexe manualmente o PDF salvo em Baixar relatório.");
-        window.location.href = "mailto:" + encodeURIComponent(destinatario) +
-            "?subject=" + encodeURIComponent(assunto) + "&body=" + encodeURIComponent(corpo);
+        el.emailStatus.textContent = "Envio não realizado. Configure um provedor de e-mail antes de usar este recurso.";
+        D.toast("Envio automático não configurado. Nenhum e-mail foi enviado.", "erro");
     }
 
     /* ---------- Lista de pacientes ---------- */

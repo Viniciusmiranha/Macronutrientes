@@ -333,7 +333,7 @@
             <header class="nq-modal-header">
                 <div>
                     <h2 id="pacModalTitulo">Novo paciente</h2>
-                    <p>Preencha os dados do paciente. Apenas o nome é obrigatório.</p>
+                    <p>Nome, telefone, e-mail, data de nascimento e gênero são obrigatórios.</p>
                 </div>
                 <button type="button" class="nq-close" data-fechar aria-label="Fechar">&times;</button>
             </header>
@@ -348,14 +348,14 @@
                     </div>
 
                     <div class="nq-field">
-                        <label for="pacEmail">E-mail <span class="nq-opcional">(opcional)</span></label>
-                        <input type="email" id="pacEmail" maxlength="120" autocomplete="off">
+                        <label for="pacEmail">E-mail</label>
+                        <input type="email" id="pacEmail" maxlength="120" autocomplete="email" required>
                         <span class="nq-error" data-erro-para="pacEmail"></span>
                     </div>
 
                     <div class="nq-field">
-                        <label for="pacTelefone">Telefone <span class="nq-opcional">(opcional)</span></label>
-                        <input type="tel" id="pacTelefone" inputmode="tel" placeholder="(11) 99999-9999" autocomplete="off">
+                        <label for="pacTelefone">Telefone</label>
+                        <input type="tel" id="pacTelefone" inputmode="tel" placeholder="(11) 99999-9999" autocomplete="tel" pattern="[0-9()+ .-]{10,20}" title="Use DDD e telefone com 10 ou 11 dígitos." required>
                         <span class="nq-error" data-erro-para="pacTelefone"></span>
                     </div>
 
@@ -366,19 +366,20 @@
                     </div>
 
                     <div class="nq-field">
-                        <label for="pacNascimento">Data de nascimento <span class="nq-opcional">(opcional)</span></label>
-                        <input type="date" id="pacNascimento">
+                        <label for="pacNascimento">Data de nascimento</label>
+                        <input type="date" id="pacNascimento" required>
                         <span class="nq-error" data-erro-para="pacNascimento"></span>
                     </div>
 
                     <div class="nq-field">
-                        <label for="pacGenero">Gênero <span class="nq-opcional">(opcional)</span></label>
-                        <select id="pacGenero">
-                            <option value="">Não informado</option>
+                        <label for="pacGenero">Gênero</label>
+                        <select id="pacGenero" required>
+                            <option value="">Selecione</option>
                             <option>Feminino</option>
                             <option>Masculino</option>
                             <option>Outro</option>
                         </select>
+                        <span class="nq-error" data-erro-para="pacGenero"></span>
                     </div>
 
                     <div class="nq-field">

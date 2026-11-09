@@ -68,9 +68,9 @@ body.perfil-page {
 
 .perfil-logo img {
   display: block;
-  width: 154px;
+  width: 168px;
   max-width: 100%;
-  max-height: 48px;
+  max-height: 52px;
   object-fit: contain;
 }
 
@@ -192,6 +192,27 @@ body.perfil-page {
 
 .avatar-edit:focus-visible {
   outline: 3px solid rgba(8, 127, 104, 0.45);
+  outline-offset: 3px;
+}
+
+.avatar-remove {
+  margin-top: 10px;
+  padding: 0;
+  color: var(--perfil-muted);
+  background: transparent;
+  border: 0;
+  font: inherit;
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.avatar-remove[hidden] {
+  display: none;
+}
+
+.avatar-remove:focus-visible {
+  outline: 2px solid var(--perfil-primary);
   outline-offset: 3px;
 }
 
