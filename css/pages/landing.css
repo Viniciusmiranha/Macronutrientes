@@ -772,3 +772,29 @@ body.dark-mode .lp-card .lp-login-btn:focus-visible {
         transition: none !important;
     }
 }
+
+
+/* =====================================
+   HEADER DA LANDING PAGE - MOBILE
+===================================== */
+
+@media (max-width: 700px) {
+
+    .lp-page .lp-header.header {
+        background: rgba(233, 246, 239, 0.97);
+
+        border-bottom: 1px solid #d9e7e1;
+
+        box-shadow: 0 3px 15px rgba(14, 96, 73, 0.07);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+    }
+
+    .lp-page .lp-header.header.scrolled {
+        background: rgba(233, 246, 239, 0.99);
+
+        box-shadow: 0 5px 20px rgba(14, 96, 73, 0.10);
+    }
+
+}
