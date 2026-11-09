@@ -13,20 +13,6 @@
     transition: transform 0.28s ease;
 }
 
-.dashboard-sidebar {
-    position: fixed;
-    inset: 0 auto 0 0;
-    z-index: 1100;
-    display: flex;
-    flex-direction: column;
-    width: 224px;
-    padding: 16px 12px 18px;
-    overflow-y: auto;
-    background: var(--dashboard-surface);
-    border-right: 1px solid var(--dashboard-border);
-    transition: transform 0.28s ease;
-}
-
 .dashboard-brand {
     display: flex;
     align-items: center;

@@ -11,7 +11,6 @@
 <body class="dashboard-page">
     <div class="dashboard-layout">
 
-        <!-- ===== BARRA LATERAL (idêntica à página 1; só muda o item ativo) ===== -->
         <aside class="dashboard-sidebar" id="dashboardSidebar">
             <a href="pagina1.html" class="dashboard-brand" aria-label="NUTRIQ - Página inicial">
                 <img src="img/logo (1).png" alt="Logo NUTRIQ">
@@ -100,7 +99,6 @@
 
         <div class="dashboard-main">
 
-            <!-- ===== TOPO (idêntico à página 1) ===== -->
             <header class="dashboard-topbar">
                 <button
                     class="dashboard-menu-toggle"
@@ -173,7 +171,6 @@
                 </div>
             </header>
 
-            <!-- ===== CONTEÚDO DA PÁGINA ===== -->
             <main class="dashboard-content pac-page pc-page" id="conteudoPrincipal">
 
                 <header class="pac-header">
@@ -327,7 +324,6 @@
 
     <div id="dashboardFeedback" role="status" aria-live="polite"></div>
 
-    <!-- ===== MODAL: CADASTRO / EDIÇÃO DE PACIENTE ===== -->
     <div class="nq-overlay" id="modalPaciente" hidden>
         <section class="nq-modal" role="dialog" aria-modal="true" aria-labelledby="pacModalTitulo">
             <header class="nq-modal-header">
@@ -430,14 +426,12 @@
         </section>
     </div>
 
-    <!-- ===== MODAL: FICHA DO PACIENTE (conteúdo montado pelo JS) ===== -->
     <div class="nq-overlay" id="modalFicha" hidden>
         <section class="nq-modal nq-modal-lg nq-ficha" role="dialog" aria-modal="true" aria-labelledby="fichaTitulo">
             <div id="fichaConteudo"></div>
         </section>
     </div>
 
-    <!-- ===== MODAL DE PLANOS (necessário para o botão "Ver planos" da barra lateral) ===== -->
     <div class="plans-modal-overlay" id="modalPlanos" aria-hidden="true">
         <section class="plans-modal" role="dialog" aria-modal="true" aria-labelledby="planosTitulo">
             <header class="plans-modal-header">
@@ -497,7 +491,6 @@
     </div>
 
     <script src="js/main.js" defer></script>
-    <script src="js/auth.js" defer></script>
     <script src="js/database.js" defer></script>
     <script src="js/pages/dashboard.js" defer></script>
     <script src="js/navegacao.js" defer></script>

@@ -11,7 +11,6 @@
 <body class="dashboard-page">
     <div class="dashboard-layout">
 
-        <!-- ===== BARRA LATERAL (idêntica à página 1; só muda o item ativo) ===== -->
         <aside class="dashboard-sidebar" id="dashboardSidebar">
             <a href="pagina1.html" class="dashboard-brand" aria-label="NUTRIQ - Página inicial">
                 <img src="img/logo (1).png" alt="Logo NUTRIQ">
@@ -100,7 +99,6 @@
 
         <div class="dashboard-main">
 
-            <!-- ===== TOPO (idêntico à página 1) ===== -->
             <header class="dashboard-topbar">
                 <button
                     class="dashboard-menu-toggle"
@@ -173,7 +171,6 @@
                 </div>
             </header>
 
-            <!-- ===== CONTEÚDO DA PÁGINA ===== -->
             <main class="dashboard-content pac-page" id="conteudoPrincipal">
 
                 <header class="pac-header">
@@ -256,7 +253,6 @@
 
                 <section class="pac-panel" aria-label="Lista de planos alimentares">
 
-                    <!-- Filtros (aparecem quando houver planos) -->
                     <div class="pln-toolbar" id="plnToolbar" hidden>
                         <div class="pln-filters" role="group" aria-label="Filtrar por situação">
                             <button type="button" class="pln-filter is-active" data-filtro="todos" aria-pressed="true">Todos</button>
@@ -266,7 +262,6 @@
                         <span class="pln-count" id="plnCount" aria-live="polite"></span>
                     </div>
 
-                    <!-- Estado vazio -->
                     <div class="pac-empty" id="plnEmpty">
                         <span class="pac-empty-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24">
@@ -282,7 +277,6 @@
                         </button>
                     </div>
 
-                    <!-- Busca / filtro sem resultado -->
                     <div class="pac-empty" id="plnNoResults" hidden>
                         <span class="pac-empty-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
@@ -291,7 +285,6 @@
                         <p>Revise a busca ou troque o filtro para ver outros planos.</p>
                     </div>
 
-                    <!-- Lista -->
                     <div class="pac-table-wrap" id="plnTableWrap" hidden>
                         <table class="pac-table">
                             <thead>
@@ -324,7 +317,6 @@
 
     <div id="dashboardFeedback" role="status" aria-live="polite"></div>
 
-    <!-- ===== MODAL: NOVO / EDITAR PLANO ALIMENTAR ===== -->
     <div class="nq-overlay" id="modalNovoPlano" hidden>
         <section class="nq-modal" role="dialog" aria-modal="true" aria-labelledby="plnModalTitulo">
             <header class="nq-modal-header">
@@ -429,7 +421,6 @@
         </section>
     </div>
 
-    <!-- ===== MODAL DE PLANOS NUTRIQ (botão "Ver planos" da barra lateral) ===== -->
     <div class="plans-modal-overlay" id="modalPlanos" aria-hidden="true">
         <section class="plans-modal" role="dialog" aria-modal="true" aria-labelledby="planosTitulo">
             <header class="plans-modal-header">
@@ -489,7 +480,6 @@
     </div>
 
     <script src="js/main.js" defer></script>
-    <script src="js/auth.js" defer></script>
     <script src="js/database.js" defer></script>
     <script src="js/pages/dashboard.js" defer></script>
     <script src="js/navegacao.js" defer></script>
