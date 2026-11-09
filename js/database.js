@@ -234,8 +234,27 @@
             throw new Error("Selecione um paciente cadastrado.");
         }
 
-        if (!consulta.data || !consulta.horario) {
+        function instanteConsulta(data, horario) {
+            const partesData = String(data || "").split("-").map(Number);
+            const partesHora = String(horario || "").match(/^(?:([01]\d|2[0-3])):([0-5]\d)$/);
+            if (partesData.length !== 3 || !partesHora || partesData.some(parte => !parte)) return null;
+            const dataHora = new Date(partesData[0], partesData[1] - 1, partesData[2], Number(partesHora[1]), Number(partesHora[2]));
+            if (dataHora.getFullYear() !== partesData[0] || dataHora.getMonth() !== partesData[1] - 1 || dataHora.getDate() !== partesData[2]) return null;
+            return dataHora.getTime();
+        }
+
+        const instante = instanteConsulta(consulta.data, consulta.horario);
+        if (instante == null) {
             throw new Error("Informe a data e o horário da consulta.");
+        }
+
+        const conflito = dados.consultas.some(item => {
+            if (String(item.status || "").toLowerCase() === "cancelada") return false;
+            const existente = instanteConsulta(item.data, item.horario || item.hora);
+            return existente != null && Math.abs(instante - existente) < 30 * 60 * 1000;
+        });
+        if (conflito) {
+            throw new Error("Respeite o intervalo mínimo de 30 minutos entre consultas.");
         }
 
         const novaConsulta = {

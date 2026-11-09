@@ -421,14 +421,38 @@
         return consultas.listar().filter(function (c) { return c.pacienteId === pacienteId; });
     };
 
-    // Um único nutricionista: dois atendimentos não podem ocupar o mesmo horário.
+    function minutoDaConsulta(data, hora) {
+        if (!lerISO(data) || !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(String(hora || ""))) return null;
+        return momento(data, hora).getTime();
+    }
+
+    // O intervalo é global ao consultório; consultas canceladas não ocupam horário.
     consultas.conflito = function (data, hora, ignorarId) {
+        var minuto = minutoDaConsulta(data, hora);
+        if (minuto == null) return false;
         return lerStore().consultas.some(function (c) {
-            return c.id !== ignorarId &&
-                String(c.status || "").toLowerCase() !== "cancelada" &&
-                c.data === data &&
-                (c.horario || c.hora) === hora;
+            if (c.id === ignorarId || String(c.status || "").toLowerCase() === "cancelada") return false;
+            var existente = minutoDaConsulta(c.data, c.horario || c.hora);
+            return existente != null && Math.abs(minuto - existente) < 30 * 60 * 1000;
         });
+    };
+
+    var criarConsulta = consultas.criar;
+    var atualizarConsulta = consultas.atualizar;
+
+    consultas.criar = function (dados) {
+        if (String(dados.status || "agendada").toLowerCase() !== "cancelada" &&
+            consultas.conflito(dados.data, dados.hora, null)) return null;
+        return criarConsulta(dados);
+    };
+
+    consultas.atualizar = function (id, dados) {
+        var atual = consultas.obter(id);
+        if (!atual) return null;
+        var novo = Object.assign({}, atual, dados);
+        if (String(novo.status || "agendada").toLowerCase() !== "cancelada" &&
+            consultas.conflito(novo.data, novo.hora, id)) return null;
+        return atualizarConsulta(id, dados);
     };
 
     pacientes.vinculos = function (id) {

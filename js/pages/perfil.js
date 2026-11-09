@@ -161,6 +161,14 @@ document.addEventListener("DOMContentLoaded", () => {
     avatar.appendChild(img);
   }
 
+  const seletorFoto = document.querySelector(".avatar-edit");
+  seletorFoto.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      $("fotoPerfil").click();
+    }
+  });
+
   $("fotoPerfil").addEventListener("change", (event) => {
     const arquivo = event.target.files[0];
 

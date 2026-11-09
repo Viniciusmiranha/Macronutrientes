@@ -106,7 +106,7 @@
 .lp-page .lp-logo .logo {
     display: block;
     width: auto;
-    height: clamp(38px, 6.2vh, 58px);
+    height: clamp(42px, 6.6vh, 62px);
     max-width: none;
 }
 
@@ -187,6 +187,19 @@
     border: 1px solid rgba(255, 255, 255, 0.95);
     border-radius: 14px;
     box-shadow: 0 6px 22px rgba(20, 90, 70, 0.06);
+    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lp-feature:hover,
+.lp-feature:focus-visible {
+    background: rgba(235, 248, 241, 0.96);
+    border-color: #c8e4d6;
+    box-shadow: 0 7px 22px rgba(20, 90, 70, 0.09);
+}
+
+.lp-feature:focus-visible {
+    outline: 3px solid rgba(19, 121, 95, 0.48);
+    outline-offset: 2px;
 }
 
 .lp-feature-icon {

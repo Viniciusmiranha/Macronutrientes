@@ -68,9 +68,9 @@ body.perfil-page {
 
 .perfil-logo img {
   display: block;
-  width: 145px;
+  width: 154px;
   max-width: 100%;
-  max-height: 44px;
+  max-height: 48px;
   object-fit: contain;
 }
 
@@ -188,6 +188,11 @@ body.perfil-page {
   color: white;
   background: var(--perfil-primary);
   cursor: pointer;
+}
+
+.avatar-edit:focus-visible {
+  outline: 3px solid rgba(8, 127, 104, 0.45);
+  outline-offset: 3px;
 }
 
 .eyebrow {

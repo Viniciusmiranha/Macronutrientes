@@ -322,8 +322,8 @@
     }
 
     .dashboard-brand img {
-        width: 140px;
-        max-height: 42px;
+        width: 148px;
+        max-height: 44px;
     }
 
     .dashboard-nav-link {
@@ -935,6 +935,25 @@
 }
 
 @media (max-width: 1050px) {
+    .sidebar-toggle-button {
+        display: none !important;
+    }
+
+    .dashboard-menu-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 1900;
+        background: rgba(15, 30, 25, 0.42);
+    }
+
+    .dashboard-menu-backdrop[hidden] {
+        display: none;
+    }
+
+    body.dashboard-menu-open {
+        overflow: hidden;
+    }
+
     .dashboard-sidebar {
         width: 215px;
         transform: translateX(-100%);

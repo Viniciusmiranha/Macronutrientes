@@ -272,7 +272,7 @@
         var status = $("csStatus").value;
 
         if (!U.lerISO(data)) falha("csData", "Informe a data.");
-        if (!/^\d{2}:\d{2}$/.test(hora)) falha("csHora", "Informe o horário.");
+        if (!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(hora)) falha("csHora", "Informe um horário válido.");
 
         if (!primeiro) {
             var m = U.momento(data, hora);
@@ -283,7 +283,7 @@
             } else if (status === "realizada" && m.getTime() > Date.now()) {
                 falha("csData", "Uma consulta realizada não pode estar no futuro.");
             } else if (status !== "cancelada" && D.consultas.conflito(data, hora, idEdicao)) {
-                falha("csHora", "Já existe um atendimento neste horário.");
+                falha("csHora", "Respeite o intervalo mínimo de 30 minutos entre consultas.");
             }
         }
 
@@ -317,6 +317,10 @@
         var id = $("csId").value;
         var salvo = id ? D.consultas.atualizar(id, dados) : D.consultas.criar(dados);
         if (!salvo) {
+            if (dados.status !== "cancelada" && D.consultas.conflito(dados.data, dados.hora, id)) {
+                D.toast("Respeite o intervalo mínimo de 30 minutos entre consultas.", "erro");
+                return;
+            }
             D.toast("Não foi possível salvar a consulta. O armazenamento do navegador pode estar indisponível.", "erro");
             return;
         }

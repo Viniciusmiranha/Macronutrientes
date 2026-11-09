@@ -399,39 +399,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     botaoLimpar.addEventListener("click", limparResultado);
 
-    const sidebar = document.getElementById("dashboardSidebar");
-    const toggle = document.getElementById("dashboardMenuToggle");
-    const overlay = document.getElementById("calculadorasOverlay");
-
-    function fecharMenu() {
-        if (sidebar) sidebar.classList.remove("active");
-        if (overlay) overlay.classList.remove("active");
-        if (toggle) toggle.setAttribute("aria-expanded", "false");
-    }
-
-    if (toggle && sidebar) {
-        toggle.addEventListener("click", () => {
-            const aberto = !sidebar.classList.contains("active");
-            sidebar.classList.toggle("active", aberto);
-
-            if (overlay) overlay.classList.toggle("active", aberto);
-            toggle.setAttribute("aria-expanded", String(aberto));
-        });
-    }
-
-    if (overlay) {
-        overlay.addEventListener("click", fecharMenu);
-    }
-
-    if (sidebar) {
-        sidebar.querySelectorAll("a").forEach(link => {
-            link.addEventListener("click", fecharMenu);
-        });
-    }
-
-    document.addEventListener("keydown", evento => {
-        if (evento.key === "Escape") fecharMenu();
-    });
-
     trocarCalculadora("macros");
 });

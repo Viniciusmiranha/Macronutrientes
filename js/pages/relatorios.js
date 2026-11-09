@@ -22,6 +22,8 @@
         hint: $("relHint"),
         gerar: $("btnGerar"),
         baixar: $("btnBaixar"),
+        enviarEmail: $("btnEnviarEmail"),
+        emailStatus: $("relEmailStatus"),
         resumoTexto: $("relResumoTexto"),
         nome: $("relNome"),
         contato: $("relContato"),
@@ -240,6 +242,8 @@
 
         el.completoTexto.textContent = "Selecione um paciente para visualizar o relatório completo.";
         el.baixar.disabled = true;
+        el.enviarEmail.disabled = true;
+        el.emailStatus.textContent = "Gere o relatório para conferir se há um e-mail cadastrado.";
     }
 
     function gerarRelatorio(silencioso) {
@@ -303,6 +307,13 @@
             "Relatório de " + nomeGerado + " gerado em " + U.formatarData(new Date()) +
             ". Use “Baixar relatório” e escolha “Salvar como PDF”.";
         el.baixar.disabled = false;
+        el.enviarEmail.disabled = !U.emailValido(paciente.email);
+        el.enviarEmail.title = U.emailValido(paciente.email)
+            ? "Conferir destinatário e abrir cliente de e-mail"
+            : "Paciente sem e-mail válido cadastrado";
+        el.emailStatus.textContent = U.emailValido(paciente.email)
+            ? "Destinatário cadastrado: " + paciente.email + ". Será solicitado antes de abrir o cliente de e-mail."
+            : "Este paciente não tem um e-mail válido cadastrado; o botão fica indisponível.";
 
         if (!silencioso) D.toast("Relatório gerado.");
     }
@@ -313,6 +324,39 @@
         document.title = "Relatorio - " + nomeGerado;
         window.print();
         document.title = tituloOriginal;
+    }
+
+    function prepararEmail() {
+        if (!gerado) return;
+        var paciente = el.select.value ? D.pacientes.obter(el.select.value) : null;
+        if (!paciente || !U.emailValido(paciente.email)) {
+            D.toast("Este paciente não tem um e-mail válido cadastrado.", "erro");
+            return;
+        }
+
+        var destinatario = paciente.email.trim();
+        if (!window.confirm("Confira o destinatário antes de continuar:\n\n" + destinatario + "\n\nAbrir o cliente de e-mail padrão?")) return;
+
+        var assunto = "Relatório NUTRIQ - " + (paciente.nome || "Paciente");
+        var corpo = [
+            "Olá,",
+            "",
+            "Segue a mensagem para acompanhar o relatório nutricional.",
+            "",
+            "Paciente: " + (paciente.nome || "Paciente sem nome"),
+            "Data de geração: " + U.formatarData(new Date()),
+            "Última consulta: " + U.formatarData(ultimaConsulta(paciente)),
+            "Plano alimentar: " + (el.plano.textContent || "—"),
+            "Objetivo: " + (el.objetivo.textContent || "—"),
+            "",
+            "O relatório completo pode ser salvo em PDF pela opção Baixar relatório e anexado manualmente a esta mensagem.",
+            "",
+            "Atenciosamente"
+        ].join("\n");
+
+        D.toast("O cliente de e-mail abrirá com a mensagem preparada. Anexe manualmente o PDF salvo em Baixar relatório.");
+        window.location.href = "mailto:" + encodeURIComponent(destinatario) +
+            "?subject=" + encodeURIComponent(assunto) + "&body=" + encodeURIComponent(corpo);
     }
 
     /* ---------- Lista de pacientes ---------- */
@@ -359,6 +403,7 @@
 
         el.gerar.addEventListener("click", function () { gerarRelatorio(false); });
         el.baixar.addEventListener("click", baixarRelatorio);
+        el.enviarEmail.addEventListener("click", prepararEmail);
 
         D.aoMudar(aoMudarDados);
         window.addEventListener("pageshow", aoMudarDados);

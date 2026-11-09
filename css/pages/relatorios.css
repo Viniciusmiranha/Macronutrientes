@@ -435,6 +435,20 @@
     font-size: 12.5px;
 }
 
+.rel-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.rel-email-note {
+    flex: 1 0 100%;
+    margin: -5px 0 0;
+    color: var(--pac-muted);
+    font-size: 11.5px;
+    line-height: 1.5;
+}
+
 /* ---------- Responsivo ---------- */
 @media (max-width: 1200px) {
     .rel-summary-row {
@@ -467,6 +481,10 @@
         width: 100%;
     }
 
+    .rel-actions {
+        width: 100%;
+    }
+
     .rel-summary-row {
         grid-template-columns: 1fr;
     }
@@ -487,6 +505,8 @@
     .dashboard-topbar,
     .dashboard-menu-toggle,
     .rel-selector,
+    .rel-actions,
+    .rel-email-note,
     .rel-full .rel-btn,
     #dashboardFeedback {
         display: none !important;

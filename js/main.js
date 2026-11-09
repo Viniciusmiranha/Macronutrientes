@@ -17,6 +17,18 @@ const menuButton = document.getElementById("menuButton");
 
 const themeButton = document.getElementById("themeButton");
 
+const landingLogo = document.querySelector(".lp-logo");
+landingLogo?.addEventListener("click", evento => {
+    evento.preventDefault();
+    if (window.location.hash !== "#topo") {
+        window.history.replaceState(null, "", window.location.pathname + window.location.search + "#topo");
+    }
+    if (window.scrollY > 0) {
+        const reduzirMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.scrollTo({ top: 0, behavior: reduzirMovimento ? "auto" : "smooth" });
+    }
+});
+
 /* =========================================================
    FORMULÁRIOS
 ========================================================= */
