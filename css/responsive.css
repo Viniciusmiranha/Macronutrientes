@@ -213,6 +213,10 @@
         height: 36px;
     }
 
+    .dashboard-notification-panel {
+        right: -45px;
+    }
+
     .dashboard-icon-button svg {
         width: 22px;
         height: 22px;
