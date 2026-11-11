@@ -5,7 +5,7 @@
 
     var D = window.NutriqDados;
     if (!D) {
-        console.error("NUTRIQ: carregue js/nutriq-dados.js antes de js/pages/consultas.js");
+        console.error("NUTRIQ: carregue js/data/nutriq-dados.js antes de js/pages/consultas.js");
         return;
     }
     var U = D.util;
