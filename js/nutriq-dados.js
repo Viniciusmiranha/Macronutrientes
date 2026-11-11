@@ -1,3 +1,5 @@
+
+
 (function (global) {
     "use strict";
 
@@ -391,7 +393,7 @@ function acharIndice(itens, id) {
     };
 
     function minutoDaConsulta(data, hora) {
-        if (!lerISO(data) || !/^(?:([01]\d|2[0-3])):([0-5]\d)$/.test(String(hora || ""))) return null;
+        if (!lerISO(data) || !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(String(hora || ""))) return null;
         return momento(data, hora).getTime();
     }
 

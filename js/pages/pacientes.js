@@ -5,7 +5,7 @@
 
     var D = window.NutriqDados;
     if (!D || !D.pacientes) {
-        console.error("NUTRIQ: carregue js/data/nutriq-dados.js antes de js/pages/pacientes.js");
+        console.error("NUTRIQ: carregue js/nutriq-dados.js antes de js/pages/pacientes.js");
         return;
     }
     var U = D.util;
